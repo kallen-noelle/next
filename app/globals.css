@@ -1,26 +1,205 @@
 @import "tailwindcss";
 
+/* ==========================================
+   主题 v3 — 低饱和冷色 · 真毛玻璃 · 极光渐变
+   ========================================== */
+
+/* ----- 亮色模式 ----- */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #1a1b2e;
+  --text: #e8e8f0;
+  --text-secondary: #9999aa;
+  --text-muted: #666677;
+
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-bg-hover: rgba(255, 255, 255, 0.13);
+  --card-border: rgba(255, 255, 255, 0.10);
+  --card-border-hover: rgba(255, 255, 255, 0.18);
+
+  --primary: #7B7BAE;
+  --primary-hover: #9090C0;
+  --primary-text: #e8e8f0;
+
+  --accent-cool: #7A9EB1;
+  --accent-warm: #A8909A;
+  --border: rgba(255, 255, 255, 0.08);
+
+  --glass-blur: 24px;
+  --radius-card: 1.25rem;
+  --radius-btn: 0.75rem;
 }
 
+/* ----- 暗色模式 ----- */
+
+[data-theme="dark"] {
+  --bg: #0c0d1a;
+  --text: #e8e8f0;
+  --text-secondary: #8a8a9a;
+  --text-muted: #5a5a6a;
+
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --card-bg-hover: rgba(255, 255, 255, 0.11);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border-hover: rgba(255, 255, 255, 0.15);
+
+  --primary: #8585B6;
+  --primary-hover: #9C9CC8;
+  --accent-cool: #6F95AA;
+  --accent-warm: #9C828C;
+  --border: rgba(255, 255, 255, 0.06);
+}
+
+/* ----- Tailwind v4 映射 ----- */
+
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-card-hover-bg: var(--card-bg-hover);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-text: var(--primary-text);
+  --color-accent-cool: var(--accent-cool);
+  --color-accent-warm: var(--accent-warm);
+  --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ----- 全局基础 ----- */
+
+html {
+  background: transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-sans, system-ui, sans-serif);
+  min-height: 100vh;
+  position: relative;
+  transition: color 0.4s ease;
+}
+
+/* ----- 极光光晕 (body::before) — 扩大 + 增强 ----- */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 700px 550px at 12% 8%, rgba(100, 90, 160, 0.22), transparent),
+    radial-gradient(ellipse 550px 500px at 88% 3%, rgba(80, 110, 150, 0.17), transparent),
+    radial-gradient(ellipse 450px 450px at 90% 94%, rgba(140, 110, 130, 0.14), transparent),
+    radial-gradient(ellipse 550px 500px at 5% 88%, rgba(70, 80, 140, 0.16), transparent),
+    radial-gradient(ellipse 400px 350px at 48% 22%, rgba(90, 95, 150, 0.11), transparent);
+  opacity: 0.95;
+  transition: opacity 0.5s ease;
+}
+
+[data-theme="dark"] body::before {
+  background:
+    radial-gradient(ellipse 700px 550px at 12% 8%, rgba(110, 95, 175, 0.26), transparent),
+    radial-gradient(ellipse 550px 500px at 88% 3%, rgba(85, 120, 165, 0.20), transparent),
+    radial-gradient(ellipse 450px 450px at 90% 94%, rgba(150, 115, 140, 0.16), transparent),
+    radial-gradient(ellipse 550px 500px at 5% 88%, rgba(75, 85, 150, 0.18), transparent),
+    radial-gradient(ellipse 400px 350px at 48% 22%, rgba(95, 100, 160, 0.13), transparent);
+  opacity: 1;
+}
+
+/* ----- 静态星光 (body::after) ----- */
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(1.3px 1.3px at 12% 18%, rgba(210, 220, 245, 0.55), transparent),
+    radial-gradient(1px 1px at 28% 55%, rgba(200, 210, 240, 0.45), transparent),
+    radial-gradient(1.6px 1.6px at 42% 12%, rgba(190, 205, 245, 0.5), transparent),
+    radial-gradient(1.1px 1.1px at 58% 68%, rgba(205, 215, 245, 0.45), transparent),
+    radial-gradient(1.4px 1.4px at 72% 28%, rgba(195, 210, 248, 0.55), transparent),
+    radial-gradient(1px 1px at 88% 48%, rgba(210, 218, 242, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 18% 78%, rgba(200, 210, 240, 0.45), transparent),
+    radial-gradient(1.2px 1.2px at 65% 8%, rgba(205, 218, 248, 0.5), transparent),
+    radial-gradient(1px 1px at 94% 72%, rgba(200, 210, 240, 0.45), transparent),
+    radial-gradient(1.4px 1.4px at 35% 40%, rgba(210, 222, 248, 0.4), transparent);
+  opacity: 0.75;
+  transition: opacity 0.5s ease;
+}
+
+[data-theme="dark"] body::after {
+  opacity: 0.9;
+}
+
+/* ----- 毛玻璃卡片 — 高光描边 ----- */
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  /* 高光渐变：顶部更亮，底部微暗 */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 4px 24px rgba(0, 0, 0, 0.12);
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.glass-card:hover {
+  background: var(--card-bg-hover);
+  border-color: var(--card-border-hover);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 8px 32px rgba(0, 0, 0, 0.18);
+  transform: translateY(-1px);
+}
+
+/* 毛玻璃按钮 */
+.glass-btn {
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-btn);
+  padding: 0.45rem 1rem;
+  color: var(--text);
+  font-size: 0.875rem;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.glass-btn:hover {
+  background: var(--card-bg-hover);
+  border-color: var(--card-border-hover);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+/* ----- 滚动条 ----- */
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.20);
+}
+
+/* ----- 选中文字 ----- */
+
+::selection {
+  background: rgba(125, 125, 175, 0.35);
+  color: var(--text);
 }
