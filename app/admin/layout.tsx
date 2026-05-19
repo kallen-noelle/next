@@ -1,10 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useAuthStore } from "@/stores/authStore";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/admin" },
@@ -20,14 +18,17 @@ const NAV_ITEMS = [
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isLoggedIn = useAuthStore((s) => s.isLoggedIn);
   const router = useRouter();
-
-  const hasToken = typeof window !== "undefined" && !!localStorage.getItem("token");
+  const [hasToken, setHasToken] = useState(false);
 
   useEffect(() => {
-    if (!hasToken) router.replace("/auth/login");
-  }, [hasToken, router]);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.replace("/auth/login");
+    } else {
+      setHasToken(true);
+    }
+  }, [router]);
 
   if (!hasToken) {
     return (
@@ -38,12 +39,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)]">
-      <aside className="w-56 glass-card !rounded-none border-r border-slate-200 dark:border-slate-700 p-6 flex-shrink-0">
+    <div className="flex flex-1 min-h-0 overflow-hidden">
+      <aside className="w-56 glass-card !rounded-none border-r border-slate-200 dark:border-slate-700 p-6 flex-shrink-0 overflow-y-auto">
         <Link href="/admin" className="text-lg font-black text-slate-900 dark:text-white font-[family-name:var(--font-geist-sans)] block mb-6">Admin</Link>
         <nav className="flex flex-col gap-0.5 text-sm">
           {NAV_ITEMS.map((item) => {
-            const active = pathname === item.href || pathname.startsWith(item.href + "/");
+            const active = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href + "/"));
             return (
               <Link
                 key={item.href}
@@ -60,7 +61,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
         </nav>
       </aside>
-      <main className="flex-1 p-8 overflow-auto">{children}</main>
+      <main className="flex-1 p-8 flex flex-col min-h-0">{children}</main>
     </div>
   );
 }

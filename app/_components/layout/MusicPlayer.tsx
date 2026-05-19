@@ -1,8 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useMusicStore } from "@/stores/musicStore";
 import { getMusic } from "@/lib/api/op";
+
+function fmt(sec: number) {
+  if (!sec || isNaN(sec)) return "00:00";
+  const m = Math.floor(sec / 60).toString().padStart(2, "0");
+  const s = Math.floor(sec % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
+}
 
 export default function MusicPlayer() {
   const currentTrack = useMusicStore((s) => s.currentTrack);
@@ -10,54 +17,285 @@ export default function MusicPlayer() {
   const toggle = useMusicStore((s) => s.toggle);
   const setTrack = useMusicStore((s) => s.setTrack);
   const pause = useMusicStore((s) => s.pause);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Fetch initial track
+  const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(0.8);
+  const [prevVolume, setPrevVolume] = useState(0.8);
+  const [isCoverSpinning, setIsCoverSpinning] = useState(false);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const progressRef = useRef<HTMLInputElement>(null);
+
+  const getAudio = useCallback(() => {
+    if (!audioRef.current) {
+      const a = new Audio();
+      a.volume = volume;
+      audioRef.current = a;
+    }
+    return audioRef.current;
+  }, []);
+
+  // 控制封面旋转动画
+  useEffect(() => {
+    if (isPlaying) {
+      setIsCoverSpinning(true);
+    } else {
+      // 延迟停止旋转，让动画有平滑过渡
+      const timer = setTimeout(() => setIsCoverSpinning(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isPlaying]);
+
   useEffect(() => {
     if (currentTrack) return;
-    getMusic()
-      .then((track) => setTrack(track))
-      .catch(() => {});
+    getMusic().then((t) => setTrack(t)).catch(() => {});
   }, [currentTrack, setTrack]);
 
-  // Control <audio> element
   useEffect(() => {
     if (!currentTrack) return;
-    if (!audioRef.current) {
-      audioRef.current = new Audio(currentTrack.url);
-      audioRef.current.addEventListener("ended", () => {
-        pause();
-        // Fetch next random track
-        getMusic().then((t) => setTrack(t)).catch(() => {});
-      });
-    }
-    if (isPlaying) {
-      audioRef.current.play().catch(() => {});
-    } else {
-      audioRef.current.pause();
-    }
-  }, [currentTrack, isPlaying, pause, setTrack]);
+    const a = getAudio();
+    a.src = currentTrack.url;
+    a.load();
+    if (isPlaying) a.play().catch(() => {});
+    // 重置旋转状态
+    setIsCoverSpinning(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTrack?.id]);
 
-  if (!currentTrack) return null;
+  useEffect(() => {
+    const a = audioRef.current;
+    if (!a || !currentTrack) return;
+    if (isPlaying) a.play().catch(() => {});
+    else a.pause();
+  }, [isPlaying, currentTrack]);
+
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.volume = volume;
+  }, [volume]);
+
+  useEffect(() => {
+    const a = getAudio();
+    const onTime = () => {
+      setCurrentTime(a.currentTime);
+      setDuration(a.duration || 0);
+      setProgress(a.duration ? (a.currentTime / a.duration) * 100 : 0);
+    };
+    const onEnd = () => {
+      pause();
+      getMusic().then((t) => setTrack(t)).catch(() => {});
+    };
+    a.addEventListener("timeupdate", onTime);
+    a.addEventListener("loadedmetadata", onTime);
+    a.addEventListener("ended", onEnd);
+    return () => {
+      a.removeEventListener("timeupdate", onTime);
+      a.removeEventListener("loadedmetadata", onTime);
+      a.removeEventListener("ended", onEnd);
+    };
+  }, [getAudio, pause, setTrack]);
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = Number(e.target.value) / 100;
+    setVolume(v);
+    setPrevVolume(v || 0.8);
+  };
+
+  const handleMuteToggle = () => {
+    if (volume > 0) {
+      setPrevVolume(volume);
+      setVolume(0);
+    } else {
+      setVolume(prevVolume);
+    }
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const pct = Number(e.target.value);
+    setProgress(pct);
+    if (audioRef.current && duration) {
+      audioRef.current.currentTime = (pct / 100) * duration;
+    }
+  };
+
+  const handleNext = () => {
+    pause();
+    getMusic().then((t) => setTrack(t)).catch(() => {});
+  };
+
+  if (!currentTrack) {
+    return (
+        <div className="relative rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-6 min-h-[220px] h-full flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 overflow-hidden group">
+          <div className="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4" />
+          <span className="text-xs font-bold tracking-widest uppercase animate-pulse">CONNECTING...</span>
+        </div>
+    );
+  }
 
   return (
-    <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-40">
-      <div className="glass-card !rounded-full px-4 py-2 flex items-center gap-3">
-        {currentTrack.pictureUrl && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={currentTrack.pictureUrl}
-            alt={currentTrack.title}
-            className="w-8 h-8 rounded-full object-cover ring-1 ring-white/20"
-          />
+      <div className="relative rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-5 sm:p-6 min-h-[220px] h-full flex flex-col justify-center transition-all duration-700 hover:scale-[1.01] group overflow-hidden">
+
+        {/* Playback glow orb */}
+        {isPlaying && (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-indigo-500/15 dark:bg-indigo-500/20 blur-[50px] rounded-full pointer-events-none animate-pulse" />
         )}
-        <p className="text-sm text-slate-500 dark:text-slate-400 truncate max-w-[160px]">
-          {currentTrack.title}
-        </p>
-        <button onClick={toggle} className="glass-btn !rounded-full !p-1.5 text-xs leading-none">
-          {isPlaying ? "⏸" : "▶"}
-        </button>
+
+        {/* Cover + Info */}
+        <div className="relative z-10 flex items-center gap-5 mb-4">
+          {/* Spinning cover */}
+          <div className={`relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 ${isCoverSpinning ? "animate-[spin_6s_linear_infinite]" : ""}`}
+               style={{ animationPlayState: isCoverSpinning ? "running" : "paused" }}>
+            {/* Outer glow ring */}
+            <div className={`absolute -inset-1 rounded-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 transition-all duration-500 ${
+                isPlaying ? "opacity-60 blur-[6px]" : "opacity-0"
+            }`} />
+
+            {/* Decorative ring */}
+            <div className="absolute -inset-0.5 rounded-full bg-gradient-to-tr from-indigo-400 to-purple-400 p-[2px]">
+              <div className="w-full h-full rounded-full bg-slate-50 dark:bg-slate-900" />
+            </div>
+
+            {/* Cover image */}
+            <div className="absolute inset-[3px] rounded-full overflow-hidden shadow-inner">
+              {currentTrack.pictureUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                      src={currentTrack.pictureUrl}
+                      alt=""
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+              ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-2xl">🎵</div>
+              )}
+            </div>
+          </div>
+
+          <div className="flex-1 min-w-0 relative z-10">
+            <span className="inline-block px-2 py-0.5 text-[10px] font-bold rounded-md bg-indigo-500/80 text-white backdrop-blur-lg mb-2">Cloud Music</span>
+            <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{currentTrack.title}</h3>
+          </div>
+        </div>
+
+        {/* Seek bar - 优化拖拽体验 */}
+        <div className="relative z-10 flex items-center gap-2 mb-3">
+          <span className="text-[11px] text-slate-500 dark:text-slate-400 w-10 text-right tabular-nums font-mono">{fmt(currentTime)}</span>
+          <div className="flex-1 relative group/seek">
+            <input
+                ref={progressRef}
+                type="range"
+                min={0}
+                max={100}
+                value={progress}
+                onChange={handleSeek}
+                className="w-full h-1.5 appearance-none bg-slate-200 dark:bg-slate-700 rounded-full cursor-pointer group-hover/seek:h-2 transition-all duration-200"
+                style={{
+                  background: `linear-gradient(to right, #818cf8 ${progress}%, rgba(148,163,184,0.4) ${progress}%)`,
+                }}
+            />
+            {/* 自定义滑块样式 */}
+            <style jsx>{`
+            input[type="range"]::-webkit-slider-thumb {
+              appearance: none;
+              width: 12px;
+              height: 12px;
+              background: #818cf8;
+              border-radius: 50%;
+              cursor: pointer;
+              transition: all 0.2s;
+              box-shadow: 0 0 6px rgba(129, 140, 248, 0.5);
+            }
+            input[type="range"]::-webkit-slider-thumb:hover {
+              transform: scale(1.3);
+              background: #6366f1;
+            }
+            input[type="range"]::-moz-range-thumb {
+              width: 12px;
+              height: 12px;
+              background: #818cf8;
+              border-radius: 50%;
+              cursor: pointer;
+              border: none;
+            }
+          `}</style>
+          </div>
+          <span className="text-[11px] text-slate-500 dark:text-slate-400 w-10 tabular-nums font-mono">{fmt(duration)}</span>
+        </div>
+
+        {/* Controls */}
+        <div className="relative z-10 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-4">
+            {/* Play/Pause */}
+            <button
+                onClick={(e) => { e.stopPropagation(); e.preventDefault(); toggle(); }}
+                className="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white flex items-center justify-center text-xl transition-all duration-300 hover:scale-110 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:shadow-xl"
+            >
+              {isPlaying ? (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                  </svg>
+              ) : (
+                  <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+              )}
+            </button>
+
+            {/* Random Next */}
+            <button
+                onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleNext(); }}
+                className="w-10 h-10 rounded-full text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 hover:scale-110 transition-all duration-300 flex items-center justify-center"
+                title="Random next"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Volume control */}
+          <div className="flex items-center gap-1.5 group/vol">
+            {/* Mute toggle */}
+            <button
+                onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleMuteToggle(); }}
+                className="w-8 h-8 rounded-full text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-all duration-200 flex items-center justify-center"
+                title={volume === 0 ? "Unmute" : "Mute"}
+            >
+              {volume === 0 ? (
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.47 4.47 0 002.5-3.5zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+                    <line x1="3" y1="4" x2="21" y2="20" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+              ) : volume < 0.4 ? (
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm10 3.5A2.5 2.5 0 0011.5 10v4a2.5 2.5 0 001.5-1.5z" />
+                  </svg>
+              ) : volume < 0.7 ? (
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm11 3a3 3 0 00-3-3v6a3 3 0 003-3z" />
+                  </svg>
+              ) : (
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.47 4.47 0 002.5-3.5z" />
+                    <path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+                  </svg>
+              )}
+            </button>
+
+            {/* Volume slider */}
+            <input
+                type="range"
+                min={0}
+                max={100}
+                value={volume * 100}
+                onChange={handleVolumeChange}
+                className="w-20 h-1 appearance-none bg-slate-200 dark:bg-slate-700 rounded-full cursor-pointer hover:h-1.5 transition-all duration-200"
+                style={{
+                  background: `linear-gradient(to right, #818cf8 ${volume * 100}%, rgba(148,163,184,0.4) ${volume * 100}%)`,
+                }}
+            />
+          </div>
+        </div>
       </div>
-    </div>
   );
 }

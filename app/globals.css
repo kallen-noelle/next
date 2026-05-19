@@ -66,3 +66,20 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(99, 102, 241, 0.3) transparent;
 }
+
+/* 毛玻璃卡片工具类 */
+@layer components {
+  .glass-card {
+    @apply rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl transition-all duration-700;
+  }
+  .glass-card:hover {
+    @apply bg-white/50 dark:bg-slate-700/50 scale-[1.01];
+  }
+  .glass-btn {
+    @apply rounded-xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-sm transition-all duration-300;
+  }
+  .glass-btn:hover {
+    @apply bg-white/60 dark:bg-slate-700/60;
+  }
+}
+

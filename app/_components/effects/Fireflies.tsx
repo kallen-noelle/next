@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Firefly {
   id: number;
@@ -14,22 +14,24 @@ interface Firefly {
   floatPath: string;
 }
 
-function generateFlies(): Firefly[] {
-  return Array.from({ length: 50 }, (_, i) => ({
-    id: i,
-    top: `${Math.random() * 100}%`,
-    left: `${Math.random() * 100}%`,
-    size: 3 + Math.random() * 4,
-    breatheDuration: 3 + Math.random() * 5,
-    breatheDelay: Math.random() * -10,
-    floatDuration: 15 + Math.random() * 20,
-    floatDelay: Math.random() * -20,
-    floatPath: `float${Math.floor(Math.random() * 4) + 1}`,
-  }));
-}
-
 export default function Fireflies() {
-  const [flies] = useState(generateFlies);
+  const [flies, setFlies] = useState<Firefly[]>([]);
+
+  useEffect(() => {
+    setFlies(
+      Array.from({ length: 50 }, (_, i) => ({
+        id: i,
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        size: 3 + Math.random() * 4,
+        breatheDuration: 3 + Math.random() * 5,
+        breatheDelay: Math.random() * -10,
+        floatDuration: 15 + Math.random() * 20,
+        floatDelay: Math.random() * -20,
+        floatPath: `float${Math.floor(Math.random() * 4) + 1}`,
+      }))
+    );
+  }, []);
 
   return (
     <div className="fixed inset-0 w-full h-full pointer-events-none z-10 overflow-hidden mix-blend-screen">

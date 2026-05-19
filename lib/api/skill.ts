@@ -1,8 +1,12 @@
 import api from "@/lib/axios";
-import type { Skill } from "@/lib/types";
+import type { PageVO, Skill, PageDTO } from "@/lib/types";
 
-export async function getList() {
-  return api.get<Skill[], Skill[]>("/skill/list");
+export async function getList(keyword?: string, pageNum = 1, pageSize = 20) {
+  return api.post<PageVO<Skill>, PageVO<Skill>>("/skill/page", {
+    pageNum,
+    pageSize,
+    query: keyword ? ({ name: keyword } as Skill) : undefined,
+  } satisfies PageDTO<Skill>);
 }
 
 export async function create(data: Skill) { return api.post("/skill", data); }

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "../layout/ThemeProvider";
 
 interface WildBlade {
@@ -7,19 +7,21 @@ interface WildBlade {
   duration: number; opacity: number; left: string; isLeftCurve: boolean;
 }
 
-function generateBlades(): WildBlade[] {
-  return Array.from({ length: 150 }, (_, i) => ({
-    id: i, height: 30 + Math.random() * 50, width: 1 + Math.random() * 2,
-    delay: Math.random() * -10, duration: 3 + Math.random() * 4,
-    opacity: 0.2 + Math.random() * 0.4,
-    left: `${(i / 150) * 100 + (Math.random() - 0.5) * 0.5}%`,
-    isLeftCurve: Math.random() > 0.5,
-  }));
-}
-
 export default function WindyGrass() {
-  const [blades] = useState(generateBlades);
+  const [blades, setBlades] = useState<WildBlade[]>([]);
   const { isDark } = useTheme();
+
+  useEffect(() => {
+    setBlades(
+      Array.from({ length: 150 }, (_, i) => ({
+        id: i, height: 30 + Math.random() * 50, width: 1 + Math.random() * 2,
+        delay: Math.random() * -10, duration: 3 + Math.random() * 4,
+        opacity: 0.2 + Math.random() * 0.4,
+        left: `${(i / 150) * 100 + (Math.random() - 0.5) * 0.5}%`,
+        isLeftCurve: Math.random() > 0.5,
+      }))
+    );
+  }, []);
 
   return (
     <div className="fixed bottom-0 left-0 w-full h-32 pointer-events-none z-10 overflow-hidden transition-colors duration-1000">

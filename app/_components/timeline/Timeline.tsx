@@ -10,8 +10,8 @@ export default function Timeline() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getList()
-      .then((data) => setItems(data.sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime())))
+    getList(undefined, 1, 200)
+      .then((data) => setItems(data.rows.sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime())))
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
   }, []);

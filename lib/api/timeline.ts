@@ -1,8 +1,12 @@
 import api from "@/lib/axios";
-import type { Timeline } from "@/lib/types";
+import type { PageVO, Timeline, PageDTO } from "@/lib/types";
 
-export async function getList() {
-  return api.get<Timeline[], Timeline[]>("/timeline/list");
+export async function getList(keyword?: string, pageNum = 1, pageSize = 20) {
+  return api.post<PageVO<Timeline>, PageVO<Timeline>>("/timeline/page", {
+    pageNum,
+    pageSize,
+    query: keyword ? ({ title: keyword } as Timeline) : undefined,
+  } satisfies PageDTO<Timeline>);
 }
 
 export async function create(data: Timeline) { return api.post("/timeline", data); }

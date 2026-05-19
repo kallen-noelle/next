@@ -1,6 +1,5 @@
 import Header from "@/app/_components/layout/Header";
 import Footer from "@/app/_components/layout/Footer";
-import MusicPlayer from "@/app/_components/layout/MusicPlayer";
 
 export default function MainLayout({
   children,
@@ -14,7 +13,6 @@ export default function MainLayout({
         {children}
       </main>
       <Footer />
-      <MusicPlayer />
     </>
   );
 }
