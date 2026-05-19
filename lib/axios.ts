@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Result } from "./types";
+import { showErrorToast } from "./toast";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE || "/api",
@@ -19,11 +19,15 @@ instance.interceptors.request.use((config) => {
 
 instance.interceptors.response.use(
   (response) => {
-    const result = response.data as Result<unknown>;
-    if (result.code !== 0) {
-      return Promise.reject(new Error(result.message || "Request failed"));
+    const result = response.data as { code: number; message?: string; data?: unknown };
+    if (result.code !== 1) {
+      const msg = result.message || "Request failed";
+      const detail = `${response.config.method?.toUpperCase()} ${response.config.url}  →  code=${result.code}`;
+      showErrorToast(msg, detail);
+      return Promise.reject(new Error(msg));
     }
-    return result.data as never;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return result.data as any;
   },
   (error) => {
     if (error.response?.status === 401) {
@@ -32,8 +36,11 @@ instance.interceptors.response.use(
         window.dispatchEvent(new CustomEvent("auth:logout"));
       }
     }
-    const message = error.response?.data?.message || error.message || "Network error";
-    return Promise.reject(new Error(message));
+    const status = error.response?.status || "NET";
+    const url = error.config?.url || "?";
+    const msg = error.response?.data?.message || error.message || "Network error";
+    showErrorToast(`[${status}] ${msg}`, `${error.config?.method?.toUpperCase() || ""} ${url}`);
+    return Promise.reject(new Error(msg));
   },
 );
 
