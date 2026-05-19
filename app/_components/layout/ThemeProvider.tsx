@@ -1,10 +1,11 @@
 "use client";
-import { createContext, useContext, useState, useCallback, useSyncExternalStore } from "react";
+import { createContext, useContext, useEffect, useCallback, useSyncExternalStore } from "react";
 
 const ThemeContext = createContext({ isDark: true, toggleTheme: () => {} });
 
-function subscribe() {
-  return () => {};
+function subscribe(callback: () => void) {
+  window.addEventListener("theme-changed", callback);
+  return () => window.removeEventListener("theme-changed", callback);
 }
 
 function getSnapshot(): string | null {
@@ -18,21 +19,31 @@ function getServerSnapshot() {
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const stored = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-  const [isDark, setIsDark] = useState(() => stored !== "light");
+  // Derive isDark directly from stored snapshot to avoid SSR/hydration mismatch
+  const isDark = stored === null ? true : stored !== "light";
+
+  // Sync isDark to <html> classList on mount and on every change
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDark) {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+  }, [isDark]);
 
   const toggleTheme = useCallback(() => {
-    setIsDark((prev) => {
-      const next = !prev;
-      const root = document.documentElement;
-      if (next) {
-        root.classList.add("dark");
-      } else {
-        root.classList.remove("dark");
-      }
-      window.localStorage.setItem("blog-theme", next ? "dark" : "light");
-      return next;
-    });
-  }, []);
+    const next = !isDark;
+    const root = document.documentElement;
+    if (next) {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    window.localStorage.setItem("blog-theme", next ? "dark" : "light");
+    // Force re-render by dispatching a custom event that subscribe picks up
+    window.dispatchEvent(new Event("theme-changed"));
+  }, [isDark]);
 
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>

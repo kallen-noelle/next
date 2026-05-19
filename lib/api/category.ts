@@ -1,10 +1,11 @@
 import api from "@/lib/axios";
 import type { PageVO, Category, PageDTO } from "@/lib/types";
 
-export async function getList() {
+export async function getList(keyword?: string, pageNum = 1, pageSize = 20) {
   return api.post<PageVO<Category>, PageVO<Category>>("/category/page", {
-    pageNum: 1,
-    pageSize: 200,
+    pageNum,
+    pageSize,
+    query: keyword ? ({ name: keyword } as Category) : undefined,
   } satisfies PageDTO<Category>);
 }
 

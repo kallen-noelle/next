@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "./_components/layout/ThemeProvider";
 import BackgroundSlider from "./_components/layout/BackgroundSwitcher";
 import BackgroundEffects from "./_components/common/ParticleBg";
+import DanmakuBackground from "./_components/layout/DanmakuBackground";
+import ClickEffect from "./_components/common/ClickEffect";
 import { siteConfig } from "@/lib/siteConfig";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -31,7 +33,7 @@ export default function RootLayout({
     >
       <body className="w-screen overflow-x-hidden min-h-full flex flex-col relative transition-colors duration-1000 bg-slate-50 dark:bg-slate-950 font-serif">
         <ThemeProvider>
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col min-h-0">
             {/* Background layers */}
             <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
               {!siteConfig.useGradient && <BackgroundSlider />}
@@ -52,7 +54,11 @@ export default function RootLayout({
             </div>
 
             {/* Content */}
-            <div className="relative z-10 flex-1 flex flex-col">{children}</div>
+            <div className="hidden md:block">
+              <DanmakuBackground />
+            </div>
+            <div className="relative z-10 flex-1 flex flex-col min-h-0">{children}</div>
+            <ClickEffect />
           </div>
 
           <style
