@@ -7,8 +7,9 @@ interface AuthState {
   isLoggedIn: boolean;
   setAuth: (token: string, user: User) => void;
   logout: () => void;
-  setUser: (user: User) => void;
 }
+
+const USER_KEY = "blog-user";
 
 export const useAuthStore = create<AuthState>()((set) => ({
   user: null,
@@ -17,21 +18,27 @@ export const useAuthStore = create<AuthState>()((set) => ({
 
   setAuth: (token, user) => {
     localStorage.setItem("token", token);
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
     set({ token, user, isLoggedIn: true });
   },
 
   logout: () => {
     localStorage.removeItem("token");
+    localStorage.removeItem(USER_KEY);
     set({ token: null, user: null, isLoggedIn: false });
   },
-
-  setUser: (user) => set({ user }),
 }));
 
-// Hydrate from localStorage on client side
+// Restore from localStorage on load (sync — no flash)
 if (typeof window !== "undefined") {
   const token = localStorage.getItem("token");
   if (token) {
-    useAuthStore.setState({ token, isLoggedIn: true });
+    let user: User | null = null;
+    try {
+      const raw = localStorage.getItem(USER_KEY);
+      if (raw) user = JSON.parse(raw);
+    } catch { /* ignore */ }
+
+    useAuthStore.setState({ token, user, isLoggedIn: true });
   }
 }

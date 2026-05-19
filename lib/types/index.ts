@@ -52,9 +52,9 @@ export interface User {
   avatar?: string;
   email?: string;
   githubId?: string;
-  deleted: number;
-  createTime: string;
-  updateTime: string;
+  deleted?: number;
+  createTime?: string;
+  updateTime?: string;
 }
 
 // ========== Tag ==========
