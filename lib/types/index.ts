@@ -60,7 +60,7 @@ export interface User {
 // ========== Tag ==========
 
 export interface Tag {
-  id: number;
+  id?: number;
   name: string;
   deleted?: number;
   createTime?: string;
@@ -75,7 +75,7 @@ export interface TagBrief {
 // ========== Category ==========
 
 export interface Category {
-  id: number;
+  id?: number;
   name: string;
   type: "ARTICLE" | "PROJECT";
   sortOrder?: number;

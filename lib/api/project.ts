@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import type { PageVO, ProjectVO, ProjectDetailVO, PageDTO } from "@/lib/types";
+import type { PageVO, Project, ProjectVO, ProjectDetailVO, PageDTO } from "@/lib/types";
 
 export async function getPublicList(params: PageDTO<Record<string, unknown>>) {
   return api.post<PageVO<ProjectVO>, PageVO<ProjectVO>>("/project/public/page", params);
@@ -12,3 +12,12 @@ export async function getPublicDetail(id: number) {
 export async function getById(id: number) {
   return api.get("/project/{id}".replace("{id}", String(id)));
 }
+
+// Admin CRUD
+export async function getList(params: PageDTO<Project>) {
+  return api.post<PageVO<Project>, PageVO<Project>>("/project/page", params);
+}
+
+export async function create(data: Project) { return api.post("/project", data); }
+export async function update(data: Project) { return api.put("/project", data); }
+export async function remove(id: number) { return api.delete(`/project/${id}`); }
