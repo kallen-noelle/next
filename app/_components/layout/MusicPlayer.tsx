@@ -1,11 +1,42 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useMusicStore } from "@/stores/musicStore";
+import { getMusic } from "@/lib/api/op";
 
 export default function MusicPlayer() {
   const currentTrack = useMusicStore((s) => s.currentTrack);
   const isPlaying = useMusicStore((s) => s.isPlaying);
   const toggle = useMusicStore((s) => s.toggle);
+  const setTrack = useMusicStore((s) => s.setTrack);
+  const pause = useMusicStore((s) => s.pause);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Fetch initial track
+  useEffect(() => {
+    if (currentTrack) return;
+    getMusic()
+      .then((track) => setTrack(track))
+      .catch(() => {});
+  }, [currentTrack, setTrack]);
+
+  // Control <audio> element
+  useEffect(() => {
+    if (!currentTrack) return;
+    if (!audioRef.current) {
+      audioRef.current = new Audio(currentTrack.url);
+      audioRef.current.addEventListener("ended", () => {
+        pause();
+        // Fetch next random track
+        getMusic().then((t) => setTrack(t)).catch(() => {});
+      });
+    }
+    if (isPlaying) {
+      audioRef.current.play().catch(() => {});
+    } else {
+      audioRef.current.pause();
+    }
+  }, [currentTrack, isPlaying, pause, setTrack]);
 
   if (!currentTrack) return null;
 
