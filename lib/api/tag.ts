@@ -7,3 +7,15 @@ export async function getList() {
     pageSize: 200,
   } satisfies PageDTO<Tag>);
 }
+
+export async function create(data: Tag) {
+  return api.post("/tag", data);
+}
+
+export async function update(data: Tag) {
+  return api.put("/tag", data);
+}
+
+export async function remove(id: number) {
+  return api.delete(`/tag/${id}`);
+}
