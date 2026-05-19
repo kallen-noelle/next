@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useAuthStore } from "@/stores/authStore";
 import { create } from "@/lib/api/comment";
+import Link from "next/link";
 
 export default function CommentForm({ articleId, onSuccess }: { articleId: number; onSuccess: () => void }) {
   const [content, setContent] = useState("");
@@ -28,7 +29,11 @@ export default function CommentForm({ articleId, onSuccess }: { articleId: numbe
     return (
       <div className="glass-card !rounded-2xl p-5 text-center">
         <p className="text-sm text-slate-400 dark:text-slate-500">
-          Please log in to leave a comment.
+          Please{" "}
+          <Link href="/auth/login" className="text-indigo-500 hover:underline font-bold">
+            sign in
+          </Link>{" "}
+          to leave a comment.
         </p>
       </div>
     );
