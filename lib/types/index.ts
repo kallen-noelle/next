@@ -233,16 +233,6 @@ export interface SocialLink {
   url: string;
 }
 
-export interface About {
-  id?: number;
-  content: string;
-  contactEmail?: string;
-  githubUrl?: string;
-  socialLinks?: string; // JSON string of SocialLink[]
-  deleted?: number;
-  createTime?: string;
-  updateTime?: string;
-}
 
 // ========== Media ==========
 
