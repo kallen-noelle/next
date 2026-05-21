@@ -3,10 +3,14 @@
 import { useState, useEffect, useCallback } from "react";
 import type { Timeline } from "@/lib/types";
 import { getList, create, update, remove } from "@/lib/api/timeline";
+import Tooltip from "@/app/_components/common/Tooltip";
 import Dialog from "@/app/_components/common/Dialog";
+import { showSuccessToast } from "@/lib/toast";
+import { useConfirm } from "@/app/_components/common/ConfirmDialog";
 import Pagination from "@/app/_components/common/Pagination";
 
 export default function AdminTimelinePage() {
+  const { confirm, ConfirmDialog } = useConfirm();
   const [items, setItems] = useState<Timeline[]>([]);
   const [loading, setLoading] = useState(true);
   const [keyword, setKeyword] = useState("");
@@ -53,15 +57,15 @@ export default function AdminTimelinePage() {
 
   const handleSave = async () => {
     if (!title.trim() || !eventDate.trim()) return;
-    if (editingId) await update({ id: editingId, title: title.trim(), description, eventDate });
-    else await create({ title: title.trim(), description, eventDate });
+    if (editingId) { await update({ id: editingId, title: title.trim(), description, eventDate }); showSuccessToast("Updated"); }
+    else { await create({ title: title.trim(), description, eventDate }); showSuccessToast("Created"); }
     setDialogOpen(false);
     refresh(keyword || undefined, pageNum, pageSize);
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm("Delete?")) return;
-    await remove(id);
+    const ok = await confirm("Delete?"); if (!ok) return;
+    await remove(id); showSuccessToast("Deleted");
     refresh(keyword || undefined, pageNum, pageSize);
   };
 
@@ -92,12 +96,16 @@ export default function AdminTimelinePage() {
             <span className="flex-1 text-sm font-bold">{t.title}</span>
             <span className="text-xs text-slate-500 flex-1 truncate">{t.description}</span>
             <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-              <button onClick={() => openEdit(t)} title="Edit" className="p-1 text-indigo-400 hover:text-indigo-600 transition-colors">
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-              </button>
-              <button onClick={() => handleDelete(t.id!)} title="Delete" className="p-1 text-red-400 hover:text-red-600 transition-colors">
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-              </button>
+              <Tooltip text="Edit">
+                <button onClick={() => openEdit(t)} className="p-1 text-indigo-400 hover:text-indigo-600 transition-colors">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                </button>
+              </Tooltip>
+              <Tooltip text="Delete">
+                <button onClick={() => handleDelete(t.id!)} className="p-1 text-red-400 hover:text-red-600 transition-colors">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                </button>
+              </Tooltip>
             </div>
           </div>
         ))}
@@ -132,6 +140,7 @@ export default function AdminTimelinePage() {
           <button onClick={handleSave} className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-bold rounded-xl transition-colors">Save</button>
         </div>
       </Dialog>
+      {ConfirmDialog}
     </div>
   );
 }

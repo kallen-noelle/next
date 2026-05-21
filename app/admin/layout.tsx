@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { label: "Skills", href: "/admin/skill" },
   { label: "Categories", href: "/admin/category" },
   { label: "Tags", href: "/admin/tag" },
+  { label: "Tech", href: "/admin/tech" },
   { label: "Media", href: "/admin/media" },
   { label: "About", href: "/admin/about" },
 ];

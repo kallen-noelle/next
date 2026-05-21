@@ -3,9 +3,13 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import type { Media } from "@/lib/types";
 import { getList, upload, remove } from "@/lib/api/media";
+import Tooltip from "@/app/_components/common/Tooltip";
+import { showSuccessToast } from "@/lib/toast";
+import { useConfirm } from "@/app/_components/common/ConfirmDialog";
 import Pagination from "@/app/_components/common/Pagination";
 
 export default function AdminMediaPage() {
+  const { confirm, ConfirmDialog } = useConfirm();
   const [items, setItems] = useState<Media[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
@@ -38,15 +42,15 @@ export default function AdminMediaPage() {
     if (!f) return;
     setUploading(true);
     try {
-      await upload(f);
+      await upload(f); showSuccessToast("Uploaded");
       refresh(keyword || undefined, pageNum, pageSize);
-    } catch { alert("Upload failed."); }
+    } catch { alert("Upload failed.");  }
     finally { setUploading(false); }
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm("Delete?")) return;
-    await remove(id);
+    const ok = await confirm("Delete?"); if (!ok) return;
+    await remove(id); showSuccessToast("Deleted");
     refresh(keyword || undefined, pageNum, pageSize);
   };
 
@@ -79,9 +83,11 @@ export default function AdminMediaPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={m.fileUrl} alt={m.originalFilename || ""} className="w-full h-24 object-cover rounded-lg" />
               <p className="text-[10px] text-slate-400 truncate mt-1">{m.originalFilename}</p>
-              <button onClick={() => handleDelete(m.id!)} title="Delete" className="absolute top-1 right-1 w-5 h-5 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-              </button>
+              <Tooltip text="Delete">
+                <button onClick={() => handleDelete(m.id!)} className="absolute top-1 right-1 w-5 h-5 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                </button>
+              </Tooltip>
             </div>
           ))}
         </div>

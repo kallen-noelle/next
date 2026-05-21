@@ -141,6 +141,16 @@ export interface ArticleSaveRequest extends Article {
 
 // ========== Project ==========
 
+export interface TechnologyVO {
+  id: number;
+  name: string;
+}
+
+export interface Technology {
+  id?: number;
+  name: string;
+}
+
 export interface Project {
   id?: number;
   name: string;
@@ -148,7 +158,7 @@ export interface Project {
   content?: string;
   coverImage?: string;
   categoryId: number;
-  techStack?: string;
+  techIds?: number[];
   githubUrl?: string;
   demoUrl?: string;
   sortOrder?: number;
@@ -166,7 +176,7 @@ export interface ProjectVO {
   coverImage?: string;
   categoryId: number;
   categoryName: string;
-  techStack?: string;
+  techs: TechnologyVO[];
   githubUrl?: string;
   demoUrl?: string;
   isPublished: number;
