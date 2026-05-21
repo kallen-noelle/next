@@ -6,6 +6,7 @@ import BackgroundSlider from "./_components/layout/BackgroundSwitcher";
 import BackgroundEffects from "./_components/common/ParticleBg";
 import DanmakuBackground from "./_components/layout/DanmakuBackground";
 import ClickEffect from "./_components/common/ClickEffect";
+import SplashScreen from "./_components/layout/SplashScreen";
 import { siteConfig } from "@/lib/siteConfig";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -31,9 +32,31 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${notoSerif.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              #app-mount-root { opacity: 0; visibility: hidden; pointer-events: none; }
+              html.splash-seen #app-mount-root { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+            `,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (sessionStorage.getItem('hasSeenSplash') === 'true') {
+                  document.documentElement.classList.add('splash-seen');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body className="w-screen overflow-x-hidden min-h-full flex flex-col relative transition-colors duration-1000 bg-slate-50 dark:bg-slate-950 font-serif">
         <ThemeProvider>
-          <div className="flex-1 flex flex-col min-h-0">
+          <SplashScreen />
+          <div id="app-mount-root" className="flex-1 flex flex-col min-h-0 transition-opacity duration-1000">
             {/* Background layers */}
             <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
               {!siteConfig.useGradient && <BackgroundSlider />}
