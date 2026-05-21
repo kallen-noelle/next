@@ -8,6 +8,12 @@ import Dialog from "@/app/_components/common/Dialog";
 import { showSuccessToast } from "@/lib/toast";
 import { useConfirm } from "@/app/_components/common/ConfirmDialog";
 import Pagination from "@/app/_components/common/Pagination";
+import SelectDropdown from "@/app/_components/admin/SelectDropdown";
+
+const typeOptions = [
+  { value: "ARTICLE", label: "ARTICLE" },
+  { value: "PROJECT", label: "PROJECT" },
+];
 
 export default function AdminCategoryPage() {
   const { confirm, ConfirmDialog } = useConfirm();
@@ -119,14 +125,14 @@ export default function AdminCategoryPage() {
           placeholder="Category name"
           className="w-full glass-card !rounded-xl px-4 py-2.5 text-sm outline-none bg-white/50 dark:bg-slate-800/50 mb-3"
         />
-        <select
+        <SelectDropdown
+          options={typeOptions}
           value={type}
-          onChange={(e) => setType(e.target.value as Category["type"])}
-          className="w-full glass-card !rounded-xl px-4 py-2.5 text-sm outline-none bg-white/50 dark:bg-slate-800/50 mb-4"
-        >
-          <option value="ARTICLE">ARTICLE</option>
-          <option value="PROJECT">PROJECT</option>
-        </select>
+          onChange={(v) => setType(v as Category["type"])}
+          placeholder="Select type"
+          renderOption={(o) => o.label}
+          getValue={(o) => o.value}
+        />
         <div className="flex justify-end gap-3">
           <button onClick={() => setDialogOpen(false)} className="px-4 py-2 text-sm text-slate-400 hover:text-slate-600 transition-colors">Cancel</button>
           <button onClick={handleSave} className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-bold rounded-xl transition-colors">Save</button>
