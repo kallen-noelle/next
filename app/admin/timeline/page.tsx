@@ -8,6 +8,7 @@ import Dialog from "@/app/_components/common/Dialog";
 import { showSuccessToast } from "@/lib/toast";
 import { useConfirm } from "@/app/_components/common/ConfirmDialog";
 import Pagination from "@/app/_components/common/Pagination";
+import DatePicker from "@/app/_components/admin/DatePicker";
 
 export default function AdminTimelinePage() {
   const { confirm, ConfirmDialog } = useConfirm();
@@ -129,12 +130,13 @@ export default function AdminTimelinePage() {
           placeholder="Description"
           className="w-full glass-card !rounded-xl px-4 py-2.5 text-sm outline-none bg-white/50 dark:bg-slate-800/50 mb-3"
         />
-        <input
-          value={eventDate}
-          onChange={(e) => setEventDate(e.target.value)}
-          placeholder="Date (YYYY-MM)"
-          className="w-full glass-card !rounded-xl px-4 py-2.5 text-sm outline-none bg-white/50 dark:bg-slate-800/50 mb-4"
-        />
+        <div className="mb-4">
+          <DatePicker
+            value={eventDate}
+            onChange={setEventDate}
+            placeholder="Select date"
+          />
+        </div>
         <div className="flex justify-end gap-3">
           <button onClick={() => setDialogOpen(false)} className="px-4 py-2 text-sm text-slate-400 hover:text-slate-600 transition-colors">Cancel</button>
           <button onClick={handleSave} className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-bold rounded-xl transition-colors">Save</button>
