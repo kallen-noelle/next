@@ -1,10 +1,11 @@
 import api from "@/lib/axios";
-import type { About } from "@/lib/types";
+
+export type AboutMap = Record<string, string>;
 
 export async function get() {
-  return api.get<About, About>("/about");
+  return api.get<AboutMap, AboutMap>("/about");
 }
 
-export async function update(data: Partial<About>) {
-  return api.put("/about", data);
+export async function update(data: AboutMap) {
+  return api.put<AboutMap, AboutMap>("/about", data);
 }
