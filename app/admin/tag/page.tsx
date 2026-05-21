@@ -3,10 +3,14 @@
 import { useState, useEffect, useCallback } from "react";
 import type { Tag } from "@/lib/types";
 import { getList, create, update, remove } from "@/lib/api/tag";
+import Tooltip from "@/app/_components/common/Tooltip";
 import Dialog from "@/app/_components/common/Dialog";
 import Pagination from "@/app/_components/common/Pagination";
+import { showSuccessToast } from "@/lib/toast";
+import { useConfirm } from "@/app/_components/common/ConfirmDialog";
 
 export default function AdminTagPage() {
+  const { confirm, ConfirmDialog } = useConfirm();
   const [items, setItems] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
   const [keyword, setKeyword] = useState("");
@@ -51,15 +55,15 @@ export default function AdminTagPage() {
 
   const handleSave = async () => {
     if (!name.trim()) return;
-    if (editingId) await update({ id: editingId, name: name.trim() });
-    else await create({ name: name.trim() } satisfies Tag);
+    if (editingId) { await update({ id: editingId, name: name.trim() }); showSuccessToast("Updated"); }
+    else { await create({ name: name.trim() } satisfies Tag); showSuccessToast("Created"); }
     setDialogOpen(false);
     refresh(keyword || undefined, pageNum, pageSize);
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm("Delete?")) return;
-    await remove(id);
+    const ok = await confirm("Delete this tag?"); if (!ok) return;
+    await remove(id); showSuccessToast("Deleted");
     refresh(keyword || undefined, pageNum, pageSize);
   };
 
@@ -88,12 +92,16 @@ export default function AdminTagPage() {
           <span key={t.id} className="glass-card !rounded-xl px-4 py-2 text-sm flex items-center gap-3 group">
             {t.name}
             <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-              <button onClick={() => openEdit(t)} title="Edit" className="p-0.5 text-indigo-400 hover:text-indigo-600 transition-colors">
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-              </button>
-              <button onClick={() => handleDelete(t.id!)} title="Delete" className="p-0.5 text-red-400 hover:text-red-600 transition-colors">
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-              </button>
+              <Tooltip text="Edit">
+                <button onClick={() => openEdit(t)} className="p-0.5 text-indigo-400 hover:text-indigo-600 transition-colors">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                </button>
+              </Tooltip>
+              <Tooltip text="Delete">
+                <button onClick={() => handleDelete(t.id!)} className="p-0.5 text-red-400 hover:text-red-600 transition-colors">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                </button>
+              </Tooltip>
             </div>
           </span>
         ))}
@@ -116,6 +124,7 @@ export default function AdminTagPage() {
           <button onClick={handleSave} className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-bold rounded-xl transition-colors">Save</button>
         </div>
       </Dialog>
+      {ConfirmDialog}
     </div>
   );
 }

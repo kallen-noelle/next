@@ -60,11 +60,11 @@ export default function ProjectDetailPage(props: { params: Promise<{ id: string 
                 <p className="text-slate-500 dark:text-slate-400 text-base leading-relaxed mb-4">{project.summary}</p>
               )}
 
-              {project.techStack && (
+              {project.techs && project.techs.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {project.techStack.split(",").map((t) => (
-                    <span key={t} className="text-xs text-pink-500 dark:text-pink-400 font-medium">
-                      #{t.trim()}
+                  {project.techs.map((t) => (
+                    <span key={t.id} className="text-xs text-pink-500 dark:text-pink-400 font-medium">
+                      #{t.name}
                     </span>
                   ))}
                 </div>

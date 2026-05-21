@@ -6,7 +6,11 @@ import type { Category, Tag } from "@/lib/types";
 import api from "@/lib/axios";
 import { getList as getCategories } from "@/lib/api/category";
 import { getList as getTags } from "@/lib/api/tag";
+import { showSuccessToast, showErrorToast } from "@/lib/toast";
 import AdminMarkdownEditor from "@/app/_components/admin/MarkdownEditor";
+import CoverImageInput from "@/app/_components/admin/CoverImageInput";
+import SelectDropdown from "@/app/_components/admin/SelectDropdown";
+import TagDropdown from "@/app/_components/admin/TagDropdown";
 
 export default function EditArticlePage(props: { params: Promise<{ id: string }> }) {
   const { id } = use(props.params);
@@ -32,7 +36,8 @@ export default function EditArticlePage(props: { params: Promise<{ id: string }>
       setContent(String(a.content || ""));
       setCoverImage(String(a.coverImage || ""));
       setCategoryId(Number(a.categoryId || 0));
-      setTagIds((a.tagIds as number[]) || []);
+      const tags = (a.tags as { id: number }[]) || [];
+      setTagIds(tags.map((t) => t.id));
     }).catch(() => {}).finally(() => setLoading(false));
   }, [id]);
 
@@ -41,8 +46,9 @@ export default function EditArticlePage(props: { params: Promise<{ id: string }>
     setSaving(true);
     try {
       await api.put("/article", { id: Number(id), title: title.trim(), summary, content, coverImage, categoryId, tagIds });
+      showSuccessToast("Saved");
       router.push("/admin/article");
-    } catch { alert("Save failed."); }
+    } catch { showErrorToast("Save failed"); }
     finally { setSaving(false); }
   };
 
@@ -54,20 +60,24 @@ export default function EditArticlePage(props: { params: Promise<{ id: string }>
       <div className="glass-card p-4 space-y-4">
         <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" className="glass-card !rounded-xl px-4 py-2.5 w-full text-sm outline-none bg-white/50 dark:bg-slate-800/50" />
         <input value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Summary" className="glass-card !rounded-xl px-4 py-2.5 w-full text-sm outline-none bg-white/50 dark:bg-slate-800/50" />
-        <input value={coverImage} onChange={(e) => setCoverImage(e.target.value)} placeholder="Cover image URL" className="glass-card !rounded-xl px-4 py-2.5 w-full text-sm outline-none bg-white/50 dark:bg-slate-800/50" />
+        <CoverImageInput value={coverImage} onChange={setCoverImage} />
         <div className="flex gap-4">
-          <select value={categoryId} onChange={(e) => setCategoryId(Number(e.target.value))} className="glass-card !rounded-xl px-4 py-2.5 text-sm outline-none bg-white/50 dark:bg-slate-800/50">
-            <option value={0}>Select category</option>
-            {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-          </select>
-          <div className="flex flex-wrap gap-1">
-            {tags.map((t) => (
-              <label key={t.id} className={`px-3 py-1 text-xs rounded-full cursor-pointer border ${tagIds.includes(t.id!) ? "bg-indigo-500 text-white border-indigo-500" : "glass-card"}`}>
-                <input type="checkbox" checked={tagIds.includes(t.id!)} onChange={() => setTagIds((prev) => prev.includes(t.id!) ? prev.filter((x) => x !== t.id) : [...prev, t.id!])} className="sr-only" />
-                {t.name}
-              </label>
-            ))}
-          </div>
+          <SelectDropdown
+            options={categories}
+            value={categoryId}
+            onChange={(v) => setCategoryId(Number(v))}
+            placeholder="Select category"
+            renderOption={(c) => c.name}
+            getValue={(c) => c.id!}
+          />
+          <TagDropdown
+            options={tags}
+            selected={tagIds}
+            onChange={(v) => setTagIds(v as number[])}
+            placeholder="Select tags..."
+            renderOption={(t) => t.name}
+            getValue={(t) => t.id!}
+          />
         </div>
         <label className="block text-xs font-bold text-slate-500">Content (Markdown)</label>
         <AdminMarkdownEditor value={content} onChange={setContent} />

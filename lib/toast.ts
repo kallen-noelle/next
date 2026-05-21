@@ -11,6 +11,25 @@ function getContainer() {
   return container;
 }
 
+export function showSuccessToast(message: string) {
+  const c = getContainer();
+  if (!c) return;
+
+  const el = document.createElement("div");
+  el.style.cssText =
+    "pointer-events:auto;background:rgba(34,197,94,0.92);backdrop-filter:blur(12px);color:#fff;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.5;box-shadow:0 4px 20px rgba(34,197,94,0.3);animation:fadeIn 0.3s ease;font-family:system-ui,sans-serif;word-break:break-all;";
+
+  el.innerHTML = `<strong>${escapeHtml(message)}</strong>`;
+
+  c.appendChild(el);
+
+  setTimeout(() => {
+    el.style.opacity = "0";
+    el.style.transition = "opacity 0.4s";
+    setTimeout(() => el.remove(), 400);
+  }, 3000);
+}
+
 export function showErrorToast(message: string, detail?: string) {
   const c = getContainer();
   if (!c) return;

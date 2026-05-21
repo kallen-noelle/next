@@ -14,7 +14,7 @@ export const useMusicStore = create<MusicState>()((set) => ({
   currentTrack: null,
   isPlaying: false,
 
-  setTrack: (track) => set({ currentTrack: track, isPlaying: true }),
+  setTrack: (track) => set({ currentTrack: track }),
   toggle: () => set((s) => ({ isPlaying: !s.isPlaying })),
   pause: () => set({ isPlaying: false }),
   play: () => set({ isPlaying: true }),
