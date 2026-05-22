@@ -3,13 +3,16 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteConfig } from "@/lib/siteConfig";
+import { get as getAbout } from "@/lib/api/about";
 
 export default function SplashScreen() {
   const [show, setShow] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [authorName, setAuthorName] = useState(siteConfig.authorName);
 
   useEffect(() => {
     setIsMounted(true);
+    getAbout().then((d) => { if (d["name"]) setAuthorName(d["name"]); }).catch(() => {});
     try {
       const hasSeenSplash = sessionStorage.getItem("hasSeenSplash") === "true";
       if (!hasSeenSplash) {
@@ -58,7 +61,7 @@ export default function SplashScreen() {
             </div>
 
             <h1 className="text-2xl font-black text-slate-800 dark:text-white mb-2 tracking-[0.2em] uppercase">
-              {siteConfig.authorName}
+              {authorName}
             </h1>
             <p className="text-[10px] font-black text-slate-400 tracking-[0.5em] mb-12">INITIALIZING SYSTEM</p>
 

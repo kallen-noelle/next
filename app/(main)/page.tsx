@@ -8,6 +8,7 @@ import { get } from "@/lib/api/dashboard";
 import { get as getAbout } from "@/lib/api/about";
 import ThemeToggleBlock from "@/app/_components/common/ThemeToggle";
 import Tooltip from "@/app/_components/common/Tooltip";
+import SiteDashboard from "@/app/_components/layout/SiteDashboard";
 import MusicPlayer from "@/app/_components/layout/MusicPlayer";
 
 export default function Home() {
@@ -136,6 +137,9 @@ export default function Home() {
           <ThemeToggleBlock />
         </div>
       </div>
+
+      {/* Row 4: Site Dashboard */}
+      <SiteDashboard />
     </div>
   );
 }
