@@ -3,18 +3,24 @@
 import { useState, useEffect } from "react";
 import { siteConfig } from "@/lib/siteConfig";
 import { getPublicList } from "@/lib/api/article";
+import { get as getAbout } from "@/lib/api/about";
 import type { ArticleVO } from "@/lib/types";
 import Link from "next/link";
 import ArticleTOC from "./ArticleTOC";
 
 export default function ArticleSidebar({ content }: { content: string }) {
   const [recentPosts, setRecentPosts] = useState<ArticleVO[]>([]);
+  const [about, setAbout] = useState<Record<string, string>>({});
 
   useEffect(() => {
     getPublicList({ pageNum: 1, pageSize: 3, query: { keyword: "" } })
       .then((d) => setRecentPosts(d.rows))
       .catch(() => {});
+    getAbout().then(setAbout).catch(() => {});
   }, []);
+
+  const authorName = about["name"] || siteConfig.authorName;
+  const bio = about["summery"] || siteConfig.bio;
 
   return (
     <aside className="w-full lg:w-[320px] flex flex-col gap-6 flex-shrink-0">
@@ -25,8 +31,8 @@ export default function ArticleSidebar({ content }: { content: string }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={siteConfig.avatarUrl} alt="" className="relative w-full h-full rounded-full object-cover shadow-lg" />
         </div>
-        <h3 className="text-base font-black text-slate-800 dark:text-white">{siteConfig.authorName}</h3>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{siteConfig.bio}</p>
+        <h3 className="text-base font-black text-slate-800 dark:text-white">{authorName}</h3>
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{bio}</p>
         {(siteConfig.social.github || siteConfig.social.email) && (
           <div className="flex justify-center gap-3 mt-4">
             {siteConfig.social.github && (
