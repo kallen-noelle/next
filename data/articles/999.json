@@ -1,0 +1,28 @@
+{
+  "id": 999,
+  "title": "Test Article - GitHub Pages Deploy",
+  "summary": "This is a test article to verify data branch trigger deployment.",
+  "content": "# Test Article
+
+This is a test article to verify that the data branch can trigger a deployment.
+
+## What this tests
+
+1. GitHub Actions trigger from data branch push
+2. Checkout master source code
+3. Copy data files from data branch
+4. Build and deploy to GitHub Pages
+
+If you can see this, the pipeline is working correctly!",
+  "categoryId": 1,
+  "categoryName": "测试",
+  "tags": [{"id": 1, "name": "test"}],
+  "isPinned": 0,
+  "isPublished": 1,
+  "viewCount": 0,
+  "commentCount": 0,
+  "createdAt": "2026-05-24T00:00:00",
+  "coverImage": null,
+  "prev": null,
+  "next": {"id": 1000, "title": "第二篇测试文章 - Data Branch 自动部署"}
+}
