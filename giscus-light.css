@@ -1,0 +1,292 @@
+/* Giscus Light Theme — 博客玻璃拟态风格 */
+main {
+  --color-prettylights-syntax-comment: #6e7781;
+  --color-prettylights-syntax-constant: #0550ae;
+  --color-prettylights-syntax-entity: #8250df;
+  --color-prettylights-syntax-storage-modifier-import: #24292f;
+  --color-prettylights-syntax-entity-tag: #116329;
+  --color-prettylights-syntax-keyword: #cf222e;
+  --color-prettylights-syntax-string: #0a3069;
+  --color-prettylights-syntax-variable: #953800;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
+  --color-prettylights-syntax-invalid-illegal-text: #f6f8fa;
+  --color-prettylights-syntax-invalid-illegal-bg: #82071e;
+  --color-prettylights-syntax-carriage-return-text: #f6f8fa;
+  --color-prettylights-syntax-carriage-return-bg: #cf222e;
+  --color-prettylights-syntax-string-regexp: #116329;
+  --color-prettylights-syntax-markup-list: #3b2300;
+  --color-prettylights-syntax-markup-heading: #0550ae;
+  --color-prettylights-syntax-markup-italic: #24292f;
+  --color-prettylights-syntax-markup-bold: #24292f;
+  --color-prettylights-syntax-markup-deleted-text: #82071e;
+  --color-prettylights-syntax-markup-deleted-bg: #ffebe9;
+  --color-prettylights-syntax-markup-inserted-text: #116329;
+  --color-prettylights-syntax-markup-inserted-bg: #dafbe1;
+  --color-prettylights-syntax-markup-changed-text: #953800;
+  --color-prettylights-syntax-markup-changed-bg: #ffd8b5;
+  --color-prettylights-syntax-markup-ignored-text: #eaeef2;
+  --color-prettylights-syntax-markup-ignored-bg: #0550ae;
+  --color-prettylights-syntax-meta-diff-range: #8250df;
+  --color-prettylights-syntax-brackethighlighter-angle: #57606a;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
+  --color-prettylights-syntax-constant-other-reference-link: #0a3069;
+
+  --color-btn-text: #1e293b;
+  --color-btn-bg: rgba(255,255,255,0.6);
+  --color-btn-border: rgba(255,255,255,0.4);
+  --color-btn-hover-bg: rgba(255,255,255,0.8);
+  --color-btn-hover-border: rgba(99,102,241,0.25);
+  --color-btn-active-bg: rgba(241,242,246,0.9);
+  --color-btn-active-border: rgba(99,102,241,0.3);
+  --color-btn-selected-bg: rgba(241,242,246,0.9);
+  --color-btn-primary-text: #fff;
+  --color-btn-primary-bg: #6366f1;
+  --color-btn-primary-border: #6366f1;
+  --color-btn-primary-hover-bg: #4f46e5;
+  --color-btn-primary-hover-border: #4f46e5;
+  --color-btn-primary-selected-bg: #4f46e5;
+  --color-btn-primary-disabled-text: rgba(255,255,255,0.8);
+  --color-btn-primary-disabled-bg: #a5b4fc;
+  --color-btn-primary-disabled-border: #a5b4fc;
+
+  --color-fg-default: #0f172a;
+  --color-fg-muted: #64748b;
+  --color-fg-subtle: #94a3b8;
+
+  --color-canvas-default: transparent;
+  --color-canvas-overlay: rgba(255,255,255,0.6);
+  --color-canvas-inset: rgba(248,250,252,0.7);
+  --color-canvas-subtle: rgba(248,250,252,0.4);
+
+  --color-border-default: rgba(226,232,240,0.7);
+  --color-border-muted: rgba(226,232,240,0.4);
+  --color-neutral-muted: rgba(148,163,184,0.12);
+
+  --color-accent-fg: #6366f1;
+  --color-accent-emphasis: #6366f1;
+  --color-accent-muted: rgba(99,102,241,0.3);
+  --color-accent-subtle: rgba(99,102,241,0.1);
+  --color-success-fg: #16a34a;
+  --color-attention-fg: #d97706;
+  --color-attention-muted: rgba(217,119,6,0.3);
+  --color-attention-subtle: rgba(217,119,6,0.1);
+  --color-danger-fg: #dc2626;
+  --color-danger-muted: rgba(220,38,38,0.3);
+  --color-danger-subtle: rgba(220,38,38,0.1);
+}
+
+/* ===== 评论区整体容器 ===== */
+.gsc-comments {
+  --gsc-backdrop-blur: 12px;
+}
+
+/* ===== 评论输入框容器 - 统一玻璃拟态 ===== */
+.gsc-comment-box {
+  border-radius: 24px !important;
+  background: rgba(255,255,255,0.4) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255,255,255,0.4) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Tab 栏 - 透明背景 + 圆角按钮 */
+.gsc-comment-box-tabs {
+  border-radius: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(226,232,240,0.3) !important;
+  padding: 6px 8px !important;
+  gap: 4px !important;
+}
+
+.gsc-comment-box-tabs button {
+  border-radius: 20px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 6px 16px !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  color: var(--color-fg-muted) !important;
+  transition: all 0.2s !important;
+}
+.gsc-comment-box-tabs button:hover {
+  background: rgba(99,102,241,0.06) !important;
+  color: var(--color-fg-default) !important;
+}
+.gsc-comment-box-tabs button[data-active="true"],
+.gsc-comment-box-tabs button.active {
+  background: rgba(255,255,255,0.5) !important;
+  border-color: rgba(226,232,240,0.5) !important;
+  color: #6366f1 !important;
+}
+
+/* 输入框 - 与容器融为一体 */
+.gsc-comment-box-textarea {
+  border-radius: 0 !important;
+  padding: 16px !important;
+  background: transparent !important;
+  border: none !important;
+  color: #0f172a !important;
+  font-size: 14px !important;
+  min-height: 100px !important;
+  box-shadow: none !important;
+}
+.gsc-comment-box-textarea:focus {
+  box-shadow: inset 0 0 20px rgba(99,102,241,0.06) !important;
+  background: rgba(255,255,255,0.1) !important;
+  outline: none !important;
+}
+
+/* 输入框底部栏（格式化提示 + 按钮） */
+.gsc-comment-box-bottom {
+  border-radius: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-top: 1px solid rgba(226,232,240,0.3) !important;
+  padding: 8px 12px !important;
+}
+
+.gsc-markdown-hint {
+  color: #94a3b8 !important;
+  font-size: 12px !important;
+  border-radius: 8px !important;
+}
+
+/* md 语法工具栏图标容器 */
+.gsc-markdown-hint .gsc-btn {
+  border-radius: 8px !important;
+  padding: 4px 6px !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  transition: all 0.15s !important;
+}
+.gsc-markdown-hint .gsc-btn:hover {
+  background: rgba(99,102,241,0.08) !important;
+  border-color: rgba(99,102,241,0.2) !important;
+}
+
+/* 按钮（发布、取消等） */
+.gsc-comment-box-buttons {
+  display: flex !important;
+  gap: 8px !important;
+}
+.gsc-comment-box-buttons .gsc-btn {
+  border-radius: 10px !important;
+  padding: 7px 18px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  transition: all 0.2s !important;
+}
+
+/* ===== 评论卡片 ===== */
+.gsc-comment {
+  border-radius: 24px !important;
+  border: 1px solid rgba(255,255,255,0.4) !important;
+  background: rgba(255,255,255,0.4) !important;
+  backdrop-filter: blur(10px) !important;
+  padding: 16px !important;
+  margin-bottom: 12px !important;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02) !important;
+  transition: all 0.3s ease !important;
+}
+.gsc-comment:hover {
+  background: rgba(255,255,255,0.55) !important;
+}
+
+/* 评论头部 */
+.gsc-comment-header {
+  padding: 4px 8px !important;
+}
+
+/* 评论内容 */
+.gsc-comment-content {
+  padding: 8px 12px !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+  color: #0f172a !important;
+}
+.gsc-comment-content p {
+  margin: 4px 0 !important;
+}
+
+/* 作者标签 */
+.gsc-comment-author-tag {
+  border-radius: 6px !important;
+  background: #eef2ff !important;
+  color: #6366f1 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 2px 8px !important;
+  border: none !important;
+}
+
+/* 头像 */
+.gsc-comment-profile-avatar {
+  border-radius: 50% !important;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.5) !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+}
+
+/* 分页 */
+.gsc-pagination {
+  padding: 16px 0 !important;
+}
+.gsc-pagination-button {
+  background: rgba(255,255,255,0.4) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255,255,255,0.4) !important;
+  border-radius: 12px !important;
+  padding: 8px 20px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #64748b !important;
+  transition: all 0.2s !important;
+}
+.gsc-pagination-button:hover {
+  background: rgba(255,255,255,0.6) !important;
+  border-color: rgba(99,102,241,0.25) !important;
+  color: #6366f1 !important;
+}
+
+/* 登录提示 */
+.gsc-sign-out-link {
+  color: #6366f1 !important;
+  font-size: 13px !important;
+}
+
+/* 表情反应按钮 */
+.gsc-reactions-count {
+  margin-bottom: 12px !important;
+}
+.gsc-reaction-button {
+  border-radius: 8px !important;
+  padding: 4px 10px !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  transition: all 0.2s !important;
+}
+.gsc-reaction-button:hover {
+  background: rgba(99,102,241,0.08) !important;
+  border-color: rgba(99,102,241,0.2) !important;
+}
+
+/* 回复框 */
+.gsc-reply-box {
+  border-radius: 24px !important;
+  background: rgba(255,255,255,0.3) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  padding: 8px !important;
+}
+
+/* 时间线条目 */
+.gsc-timeline-item {
+  border-bottom: 1px solid rgba(226,232,240,0.4) !important;
+}
+
+/* 加载占位 */
+.gsc-loading-image {
+  opacity: 0.6;
+}
