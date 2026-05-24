@@ -1,31 +1,4 @@
 {
-  "total": 2,
-  "rows": [
-    {
-      "id": 1000,
-      "title": "第二篇测试文章 - Data Branch 自动部署",
-      "summary": "这是通过 data branch 提交的第二篇测试文章，验证 CI/CD 流程。",
-      "categoryName": "测试",
-      "tags": [{"id": 1, "name": "test"}],
-      "isPinned": 0,
-      "isPublished": 1,
-      "viewCount": 0,
-      "commentCount": 0,
-      "createdAt": "2026-05-24T12:00:00",
-      "coverImage": null
-    },
-    {
-      "id": 999,
-      "title": "Test Article - GitHub Pages Deploy",
-      "summary": "This is a test article to verify data branch trigger deployment.",
-      "categoryName": "测试",
-      "tags": [{"id": 1, "name": "test"}],
-      "isPinned": 0,
-      "isPublished": 1,
-      "viewCount": 0,
-      "commentCount": 0,
-      "createdAt": "2026-05-24T00:00:00",
-      "coverImage": null
-    }
-  ]
+  "total": 0,
+  "rows": []
 }
