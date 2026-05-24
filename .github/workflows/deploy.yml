@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master, data]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout master (source code)
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          path: source
+
+      - name: Checkout data branch
+        uses: actions/checkout@v4
+        with:
+          ref: data
+          path: data-tmp
+
+      - name: Copy data files into public directory
+        run: |
+          rm -rf data-tmp/.git
+          mkdir -p source/public
+          cp -r data-tmp/. source/public/data/
+          rm -rf data-tmp
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        working-directory: ./source
+        run: npm ci
+
+      - name: Build static site
+        working-directory: ./source
+        run: npm run build:static
+        env:
+          NEXT_PUBLIC_API_BASE: ${{ secrets.API_BASE_URL || 'http://localhost:18016/api' }}
+          NEXT_PUBLIC_BASE_PATH: /next
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./source/out

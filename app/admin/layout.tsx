@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { detectMode } from "@/lib/static-data";
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/admin" },
@@ -21,6 +22,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const router = useRouter();
   const [hasToken, setHasToken] = useState(false);
+  const [isStatic, setIsStatic] = useState(false);
+
+  useEffect(() => {
+    detectMode().then((m) => setIsStatic(m === "static"));
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -30,6 +36,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       setHasToken(true);
     }
   }, [router]);
+
+  if (isStatic) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen gap-4 p-8 text-center">
+        <h1 className="text-2xl font-black text-slate-800 dark:text-white">管理面板不可用</h1>
+        <p className="text-sm text-slate-500 dark:text-slate-400 max-w-md">
+          管理端仅在本地开发环境中可用。请通过 Docker 或 dev 模式启动应用后访问。
+        </p>
+      </div>
+    );
+  }
 
   if (!hasToken) {
     return (

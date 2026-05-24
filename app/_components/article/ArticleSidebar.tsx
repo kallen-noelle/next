@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { siteConfig } from "@/lib/siteConfig";
+import { assetUrl } from "@/lib/asset-url";
 import { getPublicList } from "@/lib/api/article";
 import { get as getAbout } from "@/lib/api/about";
 import type { ArticleVO } from "@/lib/types";
@@ -29,7 +30,7 @@ export default function ArticleSidebar({ content }: { content: string }) {
         <div className="relative w-20 h-20 mx-auto mb-4">
           <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 opacity-40 blur-[2px]" />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={siteConfig.avatarUrl} alt="" className="relative w-full h-full rounded-full object-cover shadow-lg" />
+          <img src={assetUrl(siteConfig.avatarUrl)} alt="" className="relative w-full h-full rounded-full object-cover shadow-lg" />
         </div>
         <h3 className="text-base font-black text-slate-800 dark:text-white">{authorName}</h3>
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{bio}</p>

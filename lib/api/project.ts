@@ -1,11 +1,18 @@
 import api from "@/lib/axios";
 import type { PageVO, Project, ProjectVO, ProjectDetailVO, Technology, PageDTO } from "@/lib/types";
+import { detectMode, ensureData, getDetailData } from "@/lib/static-data";
 
 export async function getPublicList(params: PageDTO<Record<string, unknown>>) {
+  if ((await detectMode()) === "static") {
+    return (await ensureData<PageVO<ProjectVO>>("projects")) ?? { rows: [], total: 0 };
+  }
   return api.post<PageVO<ProjectVO>, PageVO<ProjectVO>>("/project/public/page", params);
 }
 
 export async function getPublicDetail(id: number) {
+  if ((await detectMode()) === "static") {
+    return getDetailData<ProjectDetailVO>("projects", id);
+  }
   return api.get<ProjectDetailVO, ProjectDetailVO>(`/project/public/${id}`);
 }
 
