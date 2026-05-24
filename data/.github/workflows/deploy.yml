@@ -13,6 +13,7 @@ jobs:
       - name: Checkout master (source code)
         uses: actions/checkout@v4
         with:
+          ref: master
           path: source
 
       - name: Checkout data branch
