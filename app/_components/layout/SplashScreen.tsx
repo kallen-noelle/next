@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteConfig } from "@/lib/siteConfig";
+import { assetUrl } from "@/lib/asset-url";
 import { get as getAbout } from "@/lib/api/about";
 
 export default function SplashScreen() {
@@ -56,7 +57,7 @@ export default function SplashScreen() {
               />
               <div className="relative w-full h-full rounded-full p-1.5 bg-white dark:bg-slate-900 shadow-xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={siteConfig.avatarUrl} alt="Avatar" className="w-full h-full rounded-full object-cover" />
+                <img src={assetUrl(siteConfig.avatarUrl)} alt="Avatar" className="w-full h-full rounded-full object-cover" />
               </div>
             </div>
 

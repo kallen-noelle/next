@@ -1,7 +1,11 @@
 import api from "@/lib/axios";
 import type { PageVO, Category, PageDTO } from "@/lib/types";
+import { detectMode, ensureData } from "@/lib/static-data";
 
 export async function getList(keyword?: string, pageNum = 1, pageSize = 20) {
+  if ((await detectMode()) === "static") {
+    return (await ensureData<PageVO<Category>>("categories")) ?? { rows: [], total: 0 };
+  }
   return api.post<PageVO<Category>, PageVO<Category>>("/category/page", {
     pageNum,
     pageSize,

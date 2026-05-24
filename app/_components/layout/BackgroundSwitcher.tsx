@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { siteConfig } from "@/lib/siteConfig";
+import { assetUrl } from "@/lib/asset-url";
 
 export default function BackgroundSlider() {
   const [index, setIndex] = useState(0);
@@ -21,7 +22,7 @@ export default function BackgroundSlider() {
           key={img}
           className="absolute inset-0 transition-opacity duration-[2000ms] ease-in-out transform-gpu"
           style={{
-            backgroundImage: `url(${img})`,
+            backgroundImage: `url(${assetUrl(img)})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             opacity: i === index ? 1 : 0,

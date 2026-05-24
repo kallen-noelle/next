@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useMusicStore } from "@/stores/musicStore";
 import { getMusic } from "@/lib/api/op";
+import { detectMode } from "@/lib/static-data";
 
 function fmt(sec: number) {
   if (!sec || isNaN(sec)) return "00:00";
@@ -12,6 +13,12 @@ function fmt(sec: number) {
 }
 
 export default function MusicPlayer() {
+  const [isStatic, setIsStatic] = useState(false);
+
+  useEffect(() => {
+    detectMode().then((m) => setIsStatic(m === "static"));
+  }, []);
+
   const currentTrack = useMusicStore((s) => s.currentTrack);
   const isPlaying = useMusicStore((s) => s.isPlaying);
   const toggle = useMusicStore((s) => s.toggle);
@@ -50,7 +57,7 @@ export default function MusicPlayer() {
 
   useEffect(() => {
     if (currentTrack) return;
-    getMusic().then((t) => setTrack(t)).catch(() => {});
+    getMusic().then((t) => t && setTrack(t)).catch(() => {});
   }, [currentTrack, setTrack]);
 
   useEffect(() => {
@@ -84,7 +91,7 @@ export default function MusicPlayer() {
     };
     const onEnd = () => {
       pause();
-      getMusic().then((t) => setTrack(t)).catch(() => {});
+      getMusic().then((t) => t && setTrack(t)).catch(() => {});
     };
     a.addEventListener("timeupdate", onTime);
     a.addEventListener("loadedmetadata", onTime);
@@ -121,8 +128,10 @@ export default function MusicPlayer() {
 
   const handleNext = () => {
     pause();
-    getMusic().then((t) => setTrack(t)).catch(() => {});
+    getMusic().then((t) => t && setTrack(t)).catch(() => {});
   };
+
+  if (isStatic) return null;
 
   if (!currentTrack) {
     return (

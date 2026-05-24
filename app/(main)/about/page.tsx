@@ -5,6 +5,7 @@ import { get } from "@/lib/api/about";
 import ArticleProse from "@/app/_components/article/ArticleProse";
 import Loading from "@/app/_components/common/Loading";
 import { siteConfig } from "@/lib/siteConfig";
+import { assetUrl } from "@/lib/asset-url";
 
 const linkStyles = "inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors";
 
@@ -16,7 +17,7 @@ export default function AboutPage() {
     get().then(setAbout).catch(() => setAbout({})).finally(() => setLoading(false));
   }, []);
 
-  const coverImage = useMemo(() => siteConfig.bgImages[Math.floor(Math.random() * siteConfig.bgImages.length)], []);
+  const coverImage = useMemo(() => assetUrl(siteConfig.bgImages[Math.floor(Math.random() * siteConfig.bgImages.length)]), []);
 
   if (loading) return <div className="py-24"><Loading /></div>;
 
@@ -37,7 +38,7 @@ export default function AboutPage() {
               <div className="relative w-24 h-24 md:w-28 md:h-28">
                 <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-60 blur-[3px]" />
                 <div className="relative w-full h-full rounded-full p-1 bg-white dark:bg-slate-900 shadow-xl">
-                  <img src={siteConfig.avatarUrl} alt="" className="w-full h-full rounded-full object-cover" />
+                  <img src={assetUrl(siteConfig.avatarUrl)} alt="" className="w-full h-full rounded-full object-cover" />
                 </div>
               </div>
             </div>
