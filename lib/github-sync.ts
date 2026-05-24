@@ -112,11 +112,19 @@ async function collectAllData(): Promise<{ path: string; content: string }[]> {
     }
   }
 
+  // Comments
+  try {
+    const comments = await apiPost<unknown, unknown>("/comment/page", PAGE);
+    files.push({ path: "comments.json", content: JSON.stringify(comments, null, 2) });
+  } catch {
+    // skip if comment endpoint unavailable
+  }
+
   // Index manifest
   files.push({
     path: "index.json",
     content: JSON.stringify(
-      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills"],
+      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "comments"],
       null,
       2
     ),
