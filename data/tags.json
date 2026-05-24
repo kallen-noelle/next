@@ -1,0 +1,26 @@
+{
+  "total": 3,
+  "rows": [
+    {
+      "createTime": "2026-05-21T20:32:43.775231",
+      "deleted": 0,
+      "id": 22,
+      "name": "随笔",
+      "updateTime": null
+    },
+    {
+      "createTime": "2026-05-21T20:32:39.890075",
+      "deleted": 0,
+      "id": 21,
+      "name": "杂谈",
+      "updateTime": null
+    },
+    {
+      "createTime": "2026-05-21T20:32:35.498871",
+      "deleted": 0,
+      "id": 20,
+      "name": "教程",
+      "updateTime": null
+    }
+  ]
+}

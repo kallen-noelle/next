@@ -1,0 +1,167 @@
+{
+  "total": 6,
+  "rows": [
+    {
+      "categoryId": 35,
+      "categoryName": "软件",
+      "coverImage": "",
+      "createTime": "2026-05-23T20:04:40.90848",
+      "demoUrl": "",
+      "githubUrl": "",
+      "id": 19,
+      "isPublished": 1,
+      "name": "PlaneWar",
+      "sortOrder": 0,
+      "summary": "飞机大战 PlaneWar ✈️",
+      "techs": [
+        {
+          "id": 9,
+          "name": "Python"
+        }
+      ]
+    },
+    {
+      "categoryId": 34,
+      "categoryName": "全栈",
+      "coverImage": "",
+      "createTime": "2026-05-22T10:13:45.904614",
+      "demoUrl": "",
+      "githubUrl": "https://github.com/pc-Blog",
+      "id": 18,
+      "isPublished": 1,
+      "name": "Dream Blog",
+      "sortOrder": 0,
+      "summary": "Dream Blog — 全栈个人博客",
+      "techs": [
+        {
+          "id": 8,
+          "name": "Java"
+        },
+        {
+          "id": 11,
+          "name": "SpringBoot"
+        },
+        {
+          "id": 14,
+          "name": "Next.js"
+        }
+      ]
+    },
+    {
+      "categoryId": 32,
+      "categoryName": "嵌入式",
+      "coverImage": "",
+      "createTime": "2026-05-21T22:16:49.247206",
+      "demoUrl": "",
+      "githubUrl": "https://github.com/Guardian-Elf",
+      "id": 17,
+      "isPublished": 1,
+      "name": "守护精灵",
+      "sortOrder": 0,
+      "summary": "Guardian-Elf（守护精灵）—— 从零搭建的物联网多传感器监测平台",
+      "techs": [
+        {
+          "id": 11,
+          "name": "SpringBoot"
+        },
+        {
+          "id": 13,
+          "name": "Vue3"
+        },
+        {
+          "id": 17,
+          "name": "Stm32"
+        },
+        {
+          "id": 18,
+          "name": "Esp32"
+        }
+      ]
+    },
+    {
+      "categoryId": 34,
+      "categoryName": "全栈",
+      "coverImage": "",
+      "createTime": "2026-05-21T21:46:11.501405",
+      "demoUrl": "http://localhost:8050",
+      "githubUrl": "https://github.com/OmniPavilion",
+      "id": 16,
+      "isPublished": 1,
+      "name": "万象阁",
+      "sortOrder": 0,
+      "summary": "OmniPavilion —— 全栈个人知识管理与效率工具集",
+      "techs": [
+        {
+          "id": 8,
+          "name": "Java"
+        },
+        {
+          "id": 11,
+          "name": "SpringBoot"
+        },
+        {
+          "id": 13,
+          "name": "Vue3"
+        }
+      ]
+    },
+    {
+      "categoryId": 33,
+      "categoryName": "Ai智能体",
+      "coverImage": "",
+      "createTime": "2026-05-21T21:45:11.097575",
+      "demoUrl": "",
+      "githubUrl": "https://github.com/medrec-sys",
+      "id": 15,
+      "isPublished": 1,
+      "name": "医知库 | 智疗助手",
+      "sortOrder": 0,
+      "summary": "基于 Spring AI + RAG 的企业级智能客服问答系统",
+      "techs": [
+        {
+          "id": 8,
+          "name": "Java"
+        },
+        {
+          "id": 11,
+          "name": "SpringBoot"
+        },
+        {
+          "id": 12,
+          "name": "SpringAi"
+        },
+        {
+          "id": 13,
+          "name": "Vue3"
+        }
+      ]
+    },
+    {
+      "categoryId": 28,
+      "categoryName": "微服务",
+      "coverImage": "",
+      "createTime": "2026-05-21T20:38:05.708809",
+      "demoUrl": "",
+      "githubUrl": "https://github.com/smart-mall",
+      "id": 14,
+      "isPublished": 1,
+      "name": "SmartMall",
+      "sortOrder": 0,
+      "summary": "基于 Spring Cloud Alibaba 的分布式 B2C 电商全栈项目。",
+      "techs": [
+        {
+          "id": 8,
+          "name": "Java"
+        },
+        {
+          "id": 11,
+          "name": "SpringBoot"
+        },
+        {
+          "id": 13,
+          "name": "Vue3"
+        }
+      ]
+    }
+  ]
+}
