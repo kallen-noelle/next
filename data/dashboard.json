@@ -1,16 +1,10 @@
 {
-  "articleCount": 1,
+  "articleCount": 0,
   "commentCount": 0,
   "latestComments": [],
   "projectCount": 6,
   "skillCount": 6,
   "timelineCount": 6,
-  "topArticles": [
-    {
-      "id": 30,
-      "title": "11",
-      "viewCount": 0
-    }
-  ],
+  "topArticles": [],
   "totalViews": 0
 }
