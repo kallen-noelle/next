@@ -7,15 +7,13 @@ import ArticleProse from "@/app/_components/article/ArticleProse";
 import ArticleSidebar from "@/app/_components/article/ArticleSidebar";
 import ArticleNav from "@/app/_components/article/ArticleNav";
 import BackButton from "@/app/_components/article/BackButton";
-import CommentList from "@/app/_components/comment/CommentList";
-import CommentForm from "@/app/_components/comment/CommentForm";
+import Giscus from "@/app/_components/comment/Giscus";
 import Loading from "@/app/_components/common/Loading";
 
 export default function ArticleDetailClient(props: { params: Promise<{ id: string }> }) {
   const { id } = use(props.params);
   const [article, setArticle] = useState<ArticleDetailVO | null>(null);
   const [loading, setLoading] = useState(true);
-  const [commentKey, setCommentKey] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -84,10 +82,7 @@ export default function ArticleDetailClient(props: { params: Promise<{ id: strin
             <ArticleNav prev={article.prev} next={article.next} />
 
             <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
-              <CommentForm articleId={article.id} onSuccess={() => setCommentKey((k) => k + 1)} />
-              <div className="mt-6">
-                <CommentList key={commentKey} articleId={article.id} />
-              </div>
+              <Giscus />
             </div>
           </div>
         </article>
