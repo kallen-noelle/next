@@ -1,4 +1,16 @@
 {
-  "total": 0,
-  "rows": []
+  "total": 1,
+  "rows": [
+    {
+      "id": 999,
+      "title": "Test Article - GitHub Pages Deploy",
+      "summery": "This is a test article to verify data branch trigger deployment.",
+      "categoryName": "测试",
+      "tags": ["test"],
+      "createdAt": "2026-05-24T00:00:00",
+      "updatedAt": "2026-05-24T00:00:00",
+      "status": "published",
+      "top": false
+    }
+  ]
 }
