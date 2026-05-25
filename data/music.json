@@ -5,7 +5,7 @@
       "duration": 286,
       "favorite": false,
       "id": 162,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "Grido",
       "url": "http://localhost:8090/music/music/default/1751798559823.flac"
     },
@@ -21,7 +21,7 @@
       "duration": 266,
       "favorite": false,
       "id": 785,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "三月は夜の底",
       "url": "http://localhost:8090/music/music/default/1751798611749.mp3"
     },
@@ -61,7 +61,7 @@
       "duration": 258,
       "favorite": false,
       "id": 1065,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "Rindu Semalam",
       "url": "http://localhost:8090/music/music/default/1753208436457.flac"
     },
@@ -69,7 +69,7 @@
       "duration": 143,
       "favorite": false,
       "id": 1083,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "Cupid",
       "url": "http://localhost:8090/music/music/default/1753208438260.flac"
     },
@@ -77,7 +77,7 @@
       "duration": 358,
       "favorite": false,
       "id": 1096,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "Nuvole Bianche",
       "url": "http://localhost:8090/music/music/default/1753208440026.flac"
     },
@@ -101,7 +101,7 @@
       "duration": 264,
       "favorite": false,
       "id": 1159,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "For フルーツバスケット",
       "url": "http://localhost:8090/music/music/default/1759480223665.mp3"
     },
@@ -109,7 +109,7 @@
       "duration": 246,
       "favorite": false,
       "id": 1165,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "ありがとう",
       "url": "http://localhost:8090/music/music/default/1759480225134.mp3"
     },
@@ -117,7 +117,7 @@
       "duration": 274,
       "favorite": false,
       "id": 1216,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "ForestDayMorning",
       "url": "http://localhost:8090/music/music/default/1769452678276.ogg"
     },
@@ -125,7 +125,7 @@
       "duration": 147,
       "favorite": false,
       "id": 1219,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "GlowingMushroomFields",
       "url": "http://localhost:8090/music/music/default/1769452678548.ogg"
     },
@@ -133,7 +133,7 @@
       "duration": 207,
       "favorite": false,
       "id": 1243,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "LanternFestival",
       "url": "http://localhost:8090/music/music/default/1769453175624.ogg"
     },
@@ -141,7 +141,7 @@
       "duration": 95,
       "favorite": false,
       "id": 1244,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "OceanRain",
       "url": "http://localhost:8090/music/music/default/1769453175683.ogg"
     },
@@ -149,7 +149,7 @@
       "duration": 200,
       "favorite": false,
       "id": 1245,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "PumpkinMoon",
       "url": "http://localhost:8090/music/music/default/1769453175740.ogg"
     },
@@ -157,7 +157,7 @@
       "duration": 144,
       "favorite": false,
       "id": 1252,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "TownParty",
       "url": "http://localhost:8090/music/music/default/1769453176249.ogg"
     },
@@ -165,7 +165,7 @@
       "duration": 204,
       "favorite": false,
       "id": 1317,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "DevourerofGodsEulogy",
       "url": "http://localhost:8090/music/music/default/1769454570241.ogg"
     },
@@ -173,7 +173,7 @@
       "duration": 264,
       "favorite": false,
       "id": 1393,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "If You",
       "url": "http://localhost:8090/music/music/default/1769459084354.mp3"
     },
@@ -181,7 +181,7 @@
       "duration": 216,
       "favorite": false,
       "id": 1394,
-      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
       "title": "Mr. _Broken Heart_",
       "url": "http://localhost:8090/music/music/default/1769459084444.mp3"
     }
