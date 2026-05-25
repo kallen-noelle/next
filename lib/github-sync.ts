@@ -1,6 +1,6 @@
 "use client";
 
-import type { Media } from "@/lib/types";
+import type { Media, OpMusic } from "@/lib/types";
 
 const GH_API = "https://api.github.com";
 const OWNER = "pc-Blog";
@@ -10,6 +10,7 @@ const BRANCH = "data";
 export interface SyncProgress {
   stage: "collecting" | "blobs" | "tree" | "done" | "error";
   message: string;
+  log?: string;
 }
 
 type ProgressCb = (p: SyncProgress) => void;
@@ -33,7 +34,7 @@ async function gh(url: string, token: string, method = "GET", body?: unknown) {
 }
 
 // Media sync helpers
-async function fetchImageAsBase64(url: string): Promise<{ base64: string; mime: string }> {
+async function fetchImageAsBase64(url: string): Promise<{ base64: string; mime: string; sizeMb: string }> {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status} fetching image: ${url}`);
   const blob = await res.blob();
@@ -41,7 +42,8 @@ async function fetchImageAsBase64(url: string): Promise<{ base64: string; mime: 
   const bytes = new Uint8Array(buffer);
   let binary = "";
   for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-  return { base64: btoa(binary), mime: blob.type };
+  const sizeMb = (bytes.length / 1024 / 1024).toFixed(1);
+  return { base64: btoa(binary), mime: blob.type, sizeMb };
 }
 
 function mimeToExt(mime?: string): string {
@@ -69,14 +71,11 @@ function replaceMediaUrls(
   let result = content;
   for (const [, { newPath, originalUrl }] of mediaMap) {
     if (!originalUrl) continue;
-    // Replace exact original URL (handles MinIO / full URLs)
     result = result.replaceAll(originalUrl, newPath);
-    // Also replace protocol-relative variant (//host/path)
     if (originalUrl.startsWith("http:") || originalUrl.startsWith("https:")) {
       const protoRel = originalUrl.replace(/^https?:/, "");
       result = result.replaceAll(protoRel, newPath);
     }
-    // Extract path-only and replace (/api/media/file/{id})
     const pathOnly = originalUrl.replace(/^https?:\/\/[^/]+/, "");
     if (pathOnly !== originalUrl && !pathOnly.startsWith("/api/media/file/")) {
       result = result.replaceAll(pathOnly, newPath);
@@ -108,7 +107,6 @@ async function collectMedia(
     const body = await res.json() as { code: number; data?: { rows?: Media[] } };
     mediaRows = body.data?.rows || [];
   } catch {
-    // media endpoint not available; skip image sync
     return { mediaItems, mediaMap };
   }
 
@@ -117,7 +115,6 @@ async function collectMedia(
   for (const media of mediaRows) {
     if (media.id == null) continue;
     try {
-      // fileUrl may be relative or absolute; build full URL for fetch
       const url = media.fileUrl.startsWith("http")
         ? media.fileUrl
         : `${apiBase}${media.fileUrl}`;
@@ -125,15 +122,77 @@ async function collectMedia(
       const ext = mimeToExt(mime) || extFromFilename(media.originalFilename) || ".bin";
       const filename = `${media.id}${ext}`;
       mediaItems.push({ id: media.id, filename, base64 });
-      // /next prefix: data branch is only consumed by GH Pages build (basePath: /next)
       mediaMap.set(media.id, { newPath: `/next/data/media/${filename}`, originalUrl: media.fileUrl });
     } catch {
-      // skip individual media if download fails
       console.warn("Failed to download media:", media.id, media.fileUrl);
     }
   }
 
   return { mediaItems, mediaMap };
+}
+
+// ── Music sync ──────────────────────────────────────────────
+
+interface MusicFile {
+  path: string;
+  content: string;
+  originalUrl: string;
+  newPath: string;
+}
+
+async function collectMusic(
+  apiBase: string,
+  onProgress?: ProgressCb
+): Promise<{ musicData: unknown; audioFiles: MusicFile[] }> {
+  const res = await fetch(`${apiBase}/op/music/page`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ pageNum: 1, pageSize: 999 }),
+  });
+  const body = await res.json() as { code: number; data?: { total: number; rows: OpMusic[] } };
+  const rows = body.data?.rows || [];
+  onProgress?.({ stage: "collecting", message: `Found ${rows.length} tracks. Downloading...` });
+
+  let dlCount = 0;
+  const audioFiles: MusicFile[] = [];
+
+  for (const track of rows) {
+    if (track.id == null) continue;
+
+    if (track.url) {
+      try {
+        const url = track.url.startsWith("http") ? track.url : `${apiBase}${track.url}`;
+        const { base64, sizeMb } = await fetchImageAsBase64(url);
+        dlCount++;
+        audioFiles.push({
+          path: `music/${track.id}.mp3`,
+          content: base64,
+          originalUrl: track.url,
+          newPath: `/next/data/music/${track.id}.mp3`,
+        });
+        onProgress?.({ stage: "collecting", message: `Downloading music...`, log: `[audio ${dlCount}] ${track.title} (${sizeMb} MB)` });
+      } catch { /* skip */ }
+    }
+
+    if (track.pictureUrl) {
+      try {
+        const url = track.pictureUrl.startsWith("http") ? track.pictureUrl : `${apiBase}${track.pictureUrl}`;
+        const { base64, mime } = await fetchImageAsBase64(url);
+        const ext = mimeToExt(mime) || ".png";
+        dlCount++;
+        const sizeKb = Math.round(base64.length * 3 / 4 / 1024);
+        audioFiles.push({
+          path: `music/${track.id}-cover${ext}`,
+          content: base64,
+          originalUrl: track.pictureUrl,
+          newPath: `/next/data/music/${track.id}-cover${ext}`,
+        });
+        onProgress?.({ stage: "collecting", message: `Downloading music...`, log: `[cover ${dlCount}] ${track.title} (${sizeKb} KB)` });
+      } catch { /* skip */ }
+    }
+  }
+
+  return { musicData: body.data, audioFiles };
 }
 
 // Collect all data from Java backend
@@ -166,31 +225,24 @@ async function collectAllData(): Promise<{ path: string; content: string }[]> {
   const PAGE = { pageNum: 1, pageSize: 100 };
   const files: { path: string; content: string }[] = [];
 
-  // Dashboard
   const dash = await apiGet<unknown>("/dashboard");
   files.push({ path: "dashboard.json", content: JSON.stringify(dash, null, 2) });
 
-  // About
   const about = await apiGet<unknown>("/about");
   files.push({ path: "about.json", content: JSON.stringify(about, null, 2) });
 
-  // Categories
   const cats = await apiPost<unknown, unknown>("/category/page", PAGE);
   files.push({ path: "categories.json", content: JSON.stringify(cats, null, 2) });
 
-  // Tags
   const tags = await apiPost<unknown, unknown>("/tag/page", PAGE);
   files.push({ path: "tags.json", content: JSON.stringify(tags, null, 2) });
 
-  // Timeline
   const tl = await apiPost<unknown, unknown>("/timeline/page", PAGE);
   files.push({ path: "timeline.json", content: JSON.stringify(tl, null, 2) });
 
-  // Skills
   const skills = await apiPost<unknown, unknown>("/skill/page", PAGE);
   files.push({ path: "skills.json", content: JSON.stringify(skills, null, 2) });
 
-  // Articles list + details
   const articleList = await apiPost<{ total: number; rows: { id: number }[] }, unknown>(
     "/article/public/page", PAGE
   );
@@ -199,12 +251,9 @@ async function collectAllData(): Promise<{ path: string; content: string }[]> {
     try {
       const detail = await apiGet<unknown>(`/article/public/${a.id}`);
       files.push({ path: `articles/${a.id}.json`, content: JSON.stringify(detail, null, 2) });
-    } catch {
-      // skip individual detail if it fails
-    }
+    } catch { /* skip */ }
   }
 
-  // Projects list + details
   const projectList = await apiPost<{ total: number; rows: { id: number }[] }, unknown>(
     "/project/public/page", PAGE
   );
@@ -213,26 +262,19 @@ async function collectAllData(): Promise<{ path: string; content: string }[]> {
     try {
       const detail = await apiGet<unknown>(`/project/public/${p.id}`);
       files.push({ path: `projects/${p.id}.json`, content: JSON.stringify(detail, null, 2) });
-    } catch {
-      // skip individual detail if it fails
-    }
+    } catch { /* skip */ }
   }
 
-  // Comments
   try {
     const comments = await apiPost<unknown, unknown>("/comment/page", PAGE);
     files.push({ path: "comments.json", content: JSON.stringify(comments, null, 2) });
-  } catch {
-    // skip if comment endpoint unavailable
-  }
+  } catch { /* skip */ }
 
-  // Index manifest
   files.push({
     path: "index.json",
     content: JSON.stringify(
-      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "comments"],
-      null,
-      2
+      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "comments", "music"],
+      null, 2
     ),
   });
 
@@ -246,151 +288,365 @@ export interface SyncResult {
   error?: string;
 }
 
-export async function syncToGithub(
+// ── Generic partial sync (merges with existing tree) ──
+
+interface SyncFile {
+  path: string;
+  content: string;
+  encoding?: "utf-8" | "base64";
+}
+
+async function syncFiles(
+  token: string,
+  files: SyncFile[],
+  message: string,
+  onProgress?: ProgressCb
+): Promise<SyncResult> {
+  onProgress?.({ stage: "blobs", message: "Connecting to GitHub..." });
+  const ref = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/ref/heads/${BRANCH}`, token);
+  const currentCommit = await gh(ref.object.url, token);
+  const baseTreeSha: string = currentCommit.tree.sha;
+
+  onProgress?.({ stage: "blobs", message: `Creating ${files.length} blobs...` });
+  const blobResults: { path: string; sha: string }[] = [];
+  let failCount = 0;
+
+  for (let i = 0; i < files.length; i++) {
+    const f = files[i];
+    try {
+      const blob = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/blobs`, token, "POST", {
+        content: f.content,
+        encoding: f.encoding || "utf-8",
+      });
+      blobResults.push({ path: f.path, sha: blob.sha as string });
+      onProgress?.({
+        stage: "blobs",
+        message: `Creating blobs (${i + 1}/${files.length})...`,
+        log: `[${i + 1}/${files.length}] ${f.path} OK`,
+      });
+    } catch (e) {
+      failCount++;
+      const errMsg = e instanceof Error ? e.message.slice(0, 60) : "Unknown error";
+      onProgress?.({
+        stage: "blobs",
+        message: `Creating blobs (${i + 1}/${files.length})...`,
+        log: `[${i + 1}/${files.length}] ${f.path} FAILED (${errMsg})`,
+      });
+    }
+  }
+
+  if (blobResults.length === 0) {
+    onProgress?.({ stage: "error", message: "All files failed to upload." });
+    return { success: false, filesCount: 0, error: "All files failed to upload" };
+  }
+
+  const rootFiles = blobResults.filter((b) => !b.path.includes("/"));
+  const dirFiles = new Map<string, { path: string; sha: string }[]>();
+  for (const b of blobResults) {
+    const idx = b.path.indexOf("/");
+    if (idx !== -1) {
+      const dir = b.path.slice(0, idx);
+      if (!dirFiles.has(dir)) dirFiles.set(dir, []);
+      dirFiles.get(dir)!.push({ path: b.path.slice(idx + 1), sha: b.sha });
+    }
+  }
+
+  onProgress?.({ stage: "tree", message: "Building tree..." });
+  const baseTree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees/${baseTreeSha}`, token);
+
+  const rootPaths = new Set(rootFiles.map((b) => b.path));
+  const dirPaths = new Set(dirFiles.keys());
+
+  const treeEntries: { path: string; mode: string; type: string; sha: string }[] = [];
+  for (const entry of baseTree.tree) {
+    const p = entry.path as string;
+    if (!rootPaths.has(p) && !dirPaths.has(p)) {
+      treeEntries.push({ path: p, mode: entry.mode, type: entry.type, sha: entry.sha });
+    }
+  }
+
+  for (const b of rootFiles) {
+    treeEntries.push({ path: b.path, mode: "100644", type: "blob", sha: b.sha });
+  }
+
+  for (const [dir, entries] of dirFiles) {
+    if (entries.length === 0) continue;
+    const subTree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees`, token, "POST", {
+      tree: entries.map((e) => ({ path: e.path, mode: "100644", type: "blob", sha: e.sha })),
+    });
+    treeEntries.push({ path: dir, mode: "040000", type: "tree", sha: subTree.sha as string });
+  }
+
+  const newTree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees`, token, "POST", { tree: treeEntries });
+
+  onProgress?.({ stage: "tree", message: "Creating commit..." });
+  const newCommit = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/commits`, token, "POST", {
+    message,
+    tree: newTree.sha,
+    parents: [ref.object.sha],
+  });
+
+  onProgress?.({ stage: "done", message: "Pushing to data branch..." });
+  await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/refs/heads/${BRANCH}`, token, "PATCH", {
+    sha: newCommit.sha as string,
+    force: true,
+  });
+
+  const okCount = blobResults.length;
+  const suffix = failCount > 0 ? ` (${failCount} failed)` : "";
+  onProgress?.({ stage: "done", message: `Sync complete! ${okCount} files synced${suffix}.` });
+  return { success: failCount === 0, commitSha: newCommit.sha as string, filesCount: okCount };
+}
+
+// ── Download existing JSON files from data branch (for media URL replacement) ──
+
+async function getExistingJsonFiles(
+  token: string,
+  onProgress?: ProgressCb
+): Promise<Map<string, string>> {
+  const ref = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/ref/heads/${BRANCH}`, token);
+  const commit = await gh(ref.object.url, token);
+
+  const tree = await gh(
+    `${GH_API}/repos/${OWNER}/${REPO}/git/trees/${commit.tree.sha}?recursive=1`,
+    token
+  );
+
+  const result = new Map<string, string>();
+  const entries: any[] = tree.tree || [];
+  const jsonEntries = entries.filter((e: any) => e.type === "blob" && e.path.endsWith(".json"));
+
+  onProgress?.({ stage: "collecting", message: `Downloading ${jsonEntries.length} JSON files from GitHub...` });
+
+  for (const entry of jsonEntries) {
+    try {
+      const blob = await gh(entry.url, token);
+      result.set(entry.path, atob(blob.content));
+    } catch { /* skip */ }
+  }
+
+  return result;
+}
+
+// ── Public sync functions ──
+
+export async function syncJson(
   token: string,
   onProgress?: ProgressCb
 ): Promise<SyncResult> {
   try {
-    // 1. Collect data
     onProgress?.({ stage: "collecting", message: "Fetching data from API..." });
     const files = await collectAllData();
     onProgress?.({ stage: "collecting", message: `Collected ${files.length} files.` });
 
-    // Compute API base (same logic as collectAllData)
-    const apiBase =
-      typeof window !== "undefined"
-        ? process.env.NEXT_PUBLIC_API_BASE || "http://localhost:18016/api"
-        : "http://localhost:18016/api";
-
-    // 2. Collect media and replace URLs in data files
-    onProgress?.({ stage: "collecting", message: "Fetching media files..." });
-    const { mediaItems, mediaMap } = await collectMedia(apiBase, onProgress);
-    const patchedFiles = mediaMap.size > 0
-      ? files.map((f) => ({ path: f.path, content: replaceMediaUrls(f.content, mediaMap) }))
-      : files;
-
-    // 3. Get current data branch ref
-    onProgress?.({ stage: "blobs", message: "Connecting to GitHub..." });
-    const ref = await gh(
-      `${GH_API}/repos/${OWNER}/${REPO}/git/ref/heads/${BRANCH}`,
-      token
-    );
-    const currentCommit = await gh(ref.object.url, token);
-    const baseTreeSha: string = currentCommit.tree.sha;
-
-    // 4. Create blobs for each patched data file
-    onProgress?.({ stage: "blobs", message: `Creating ${patchedFiles.length} blobs on GitHub...` });
-    const blobResults = await Promise.all(
-      patchedFiles.map(async (f) => {
-        const blob = await gh(
-          `${GH_API}/repos/${OWNER}/${REPO}/git/blobs`,
-          token,
-          "POST",
-          { content: f.content, encoding: "utf-8" }
-        );
-        return { path: f.path, sha: blob.sha as string };
-      })
-    );
-
-    // 5. Create blobs for media files (base64)
-    if (mediaItems.length > 0) {
-      onProgress?.({ stage: "blobs", message: `Uploading ${mediaItems.length} media files...` });
-      const mediaBlobResults = await Promise.all(
-        mediaItems.map(async (m) => {
-          const blob = await gh(
-            `${GH_API}/repos/${OWNER}/${REPO}/git/blobs`,
-            token,
-            "POST",
-            { content: m.base64, encoding: "base64" }
-          );
-          return { path: `media/${m.filename}`, sha: blob.sha as string };
-        })
-      );
-      blobResults.push(...mediaBlobResults);
-    }
-
-    // 6. Group blobs — root files vs subdirectory files
-    const rootFiles = blobResults.filter((b) => !b.path.includes("/"));
-    const dirFiles = new Map<string, { path: string; sha: string }[]>();
-
-    for (const b of blobResults) {
-      const idx = b.path.indexOf("/");
-      if (idx !== -1) {
-        const dir = b.path.slice(0, idx);
-        if (!dirFiles.has(dir)) dirFiles.set(dir, []);
-        dirFiles.get(dir)!.push({ path: b.path.slice(idx + 1), sha: b.sha });
-      }
-    }
-
-    // 7. Create subdirectory trees (articles/, projects/, media/)
-    onProgress?.({ stage: "tree", message: `Building tree (${blobResults.length} blobs)...` });
-
-    const treeEntries: { path: string; mode: string; type: string; sha: string }[] = [
-      ...rootFiles.map((b) => ({ path: b.path, mode: "100644", type: "blob" as const, sha: b.sha })),
-    ];
-
-    for (const [dir, entries] of dirFiles) {
-      if (entries.length === 0) continue;
-      const subTree = await gh(
-        `${GH_API}/repos/${OWNER}/${REPO}/git/trees`,
-        token,
-        "POST",
-        {
-          tree: entries.map((e) => ({
-            path: e.path,
-            mode: "100644",
-            type: "blob",
-            sha: e.sha,
-          })),
-        }
-      );
-      treeEntries.push({ path: dir, mode: "040000", type: "tree", sha: subTree.sha as string });
-    }
-
-    // 8. Get base tree to preserve .github/ (workflow file), discard everything else
-    onProgress?.({ stage: "tree", message: "Creating tree..." });
-    const baseTree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees/${baseTreeSha}`, token);
-    const ghEntry = baseTree.tree.find((t: any) => t.path === ".github");
-    if (ghEntry) {
-      treeEntries.push({ path: ".github", mode: ghEntry.mode, type: "tree", sha: ghEntry.sha });
-    }
-
-    // Create root tree WITHOUT base_tree — only what's in treeEntries survives
-    const newTree = await gh(
-      `${GH_API}/repos/${OWNER}/${REPO}/git/trees`,
+    const ts = new Date().toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" });
+    return await syncFiles(
       token,
-      "POST",
-      { tree: treeEntries }
+      files.map((f) => ({ ...f, encoding: "utf-8" as const })),
+      `${ts} sync json data`,
+      onProgress
     );
-
-    // 9. Create commit
-    onProgress?.({ stage: "tree", message: "Creating commit..." });
-    const total = patchedFiles.length + mediaItems.length;
-    const newCommit = await gh(
-      `${GH_API}/repos/${OWNER}/${REPO}/git/commits`,
-      token,
-      "POST",
-      {
-        message: `${new Date().toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" })} sync data from admin\n\nAuto-synced ${patchedFiles.length} files${mediaItems.length > 0 ? ` + ${mediaItems.length} media` : ""}.`,
-        tree: newTree.sha,
-        parents: [ref.object.sha],
-      }
-    );
-
-    // 10. Update ref
-    onProgress?.({ stage: "done", message: "Pushing to data branch..." });
-    await gh(
-      `${GH_API}/repos/${OWNER}/${REPO}/git/refs/heads/${BRANCH}`,
-      token,
-      "PATCH",
-      { sha: newCommit.sha, force: true }
-    );
-
-    onProgress?.({ stage: "done", message: `Sync complete! ${patchedFiles.length} files, ${mediaItems.length} media synced.` });
-    return { success: true, commitSha: newCommit.sha as string, filesCount: total };
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Unknown error";
     onProgress?.({ stage: "error", message: msg });
     return { success: false, filesCount: 0, error: msg };
   }
+}
+
+export async function syncMedia(
+  token: string,
+  onProgress?: ProgressCb
+): Promise<SyncResult> {
+  try {
+    const apiBase =
+      typeof window !== "undefined"
+        ? process.env.NEXT_PUBLIC_API_BASE || "http://localhost:18016/api"
+        : "http://localhost:18016/api";
+
+    onProgress?.({ stage: "collecting", message: "Fetching media from API..." });
+    const { mediaItems, mediaMap } = await collectMedia(apiBase, onProgress);
+
+    if (mediaItems.length === 0) {
+      onProgress?.({ stage: "done", message: "No media files to sync." });
+      return { success: true, filesCount: 0 };
+    }
+
+    onProgress?.({ stage: "collecting", message: "Fetching existing JSON files from GitHub..." });
+    const existingFiles = await getExistingJsonFiles(token, onProgress);
+
+    onProgress?.({ stage: "collecting", message: "Replacing media URLs in JSON files..." });
+    const files: SyncFile[] = [];
+
+    for (const [path, content] of existingFiles) {
+      const patched = replaceMediaUrls(content, mediaMap);
+      files.push({ path, content: patched, encoding: "utf-8" });
+    }
+
+    for (const m of mediaItems) {
+      files.push({ path: `media/${m.filename}`, content: m.base64, encoding: "base64" });
+    }
+
+    const ts = new Date().toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" });
+    return await syncFiles(token, files, `${ts} sync media (${mediaItems.length} images)`, onProgress);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : "Unknown error";
+    onProgress?.({ stage: "error", message: msg });
+    return { success: false, filesCount: 0, error: msg };
+  }
+}
+
+export async function syncMusic(
+  token: string,
+  onProgress?: ProgressCb
+): Promise<SyncResult> {
+  try {
+    const apiBase =
+      typeof window !== "undefined"
+        ? process.env.NEXT_PUBLIC_API_BASE || "http://localhost:18016/api"
+        : "http://localhost:18016/api";
+
+    onProgress?.({ stage: "collecting", message: "Fetching music from API..." });
+    const { musicData, audioFiles } = await collectMusic(apiBase, onProgress);
+
+    if (audioFiles.length === 0) {
+      onProgress?.({ stage: "done", message: "No music files to sync." });
+      return { success: true, filesCount: 0 };
+    }
+
+    let patched = JSON.stringify(musicData);
+    for (const af of audioFiles) {
+      patched = patched.replaceAll(af.originalUrl, af.newPath);
+      if (af.originalUrl.startsWith("http:") || af.originalUrl.startsWith("https:")) {
+        patched = patched.replaceAll(af.originalUrl.replace(/^https?:/, ""), af.newPath);
+      }
+    }
+
+    const files: SyncFile[] = [
+      { path: "music.json", content: JSON.stringify(JSON.parse(patched), null, 2), encoding: "utf-8" },
+    ];
+    for (const af of audioFiles) {
+      files.push({ path: af.path, content: af.content, encoding: "base64" });
+    }
+
+    const ts = new Date().toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" });
+    return await syncFiles(token, files, `${ts} sync music (${audioFiles.length} files)`, onProgress);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : "Unknown error";
+    onProgress?.({ stage: "error", message: msg });
+    return { success: false, filesCount: 0, error: msg };
+  }
+}
+
+// ── Manual sync — export data as a ZIP + standalone BAT ──
+
+export async function generateSyncZip(
+  onProgress?: ProgressCb
+): Promise<{ blob: Blob; name: string; batContent: string }> {
+  const apiBase =
+    typeof window !== "undefined"
+      ? process.env.NEXT_PUBLIC_API_BASE || "http://localhost:18016/api"
+      : "http://localhost:18016/api";
+
+  // 1. Collect JSON
+  onProgress?.({ stage: "collecting", message: "Fetching JSON data..." });
+  const jsonFiles = await collectAllData();
+  onProgress?.({ stage: "collecting", message: `Collected ${jsonFiles.length} JSON files.` });
+
+  // 2. Collect media
+  onProgress?.({ stage: "collecting", message: "Downloading media files..." });
+  const { mediaItems, mediaMap } = await collectMedia(apiBase, onProgress);
+
+  // 3. Collect music
+  onProgress?.({ stage: "collecting", message: "Downloading music files..." });
+  const { musicData, audioFiles } = await collectMusic(apiBase, onProgress);
+
+  // 4. Build ZIP
+  onProgress?.({ stage: "collecting", message: "Creating ZIP..." });
+
+  const JSZip = (await import("jszip")).default;
+  const zip = new JSZip();
+  const folder = "sync-data";
+
+  // JSON files with URL replacements
+  for (const f of jsonFiles) {
+    const content = mediaMap.size > 0 ? replaceMediaUrls(f.content, mediaMap) : f.content;
+    zip.file(`${folder}/${f.path}`, content);
+  }
+
+  // Media files
+  for (const m of mediaItems) {
+    zip.file(`${folder}/media/${m.filename}`, m.base64, { base64: true });
+  }
+
+  // Music
+  const musicJson = buildMusicJson(musicData, audioFiles);
+  if (musicJson) {
+    zip.file(`${folder}/music.json`, JSON.stringify(musicJson, null, 2));
+  }
+  for (const af of audioFiles) {
+    zip.file(`${folder}/${af.path}`, af.content, { base64: true });
+  }
+
+  // ── Generate ZIP ──
+  onProgress?.({ stage: "collecting", message: "Compressing..." });
+  const blob = await zip.generateAsync({ type: "blob" });
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+  const name = `sync-data-${timestamp}.zip`;
+
+  // ── Standalone sync.bat (double-click, auto-extracts ZIP) ──
+  // Strategy: split into 3 small commits+pushes to avoid 408 timeout
+  const batContent = [
+    '@echo off',
+    'chcp 65001 >nul',
+    'cd /d "%~dp0"',
+    '',
+    'echo [1/5] 解压数据文件...',
+    `powershell -Command "Expand-Archive -Path '${name}' -DestinationPath '.' -Force" >nul 2>nul`,
+    'cd sync-data',
+    '',
+    'echo [2/5] 初始化仓库...',
+    'git init',
+    'git remote add origin https://github.com/pc-Blog/next.git',
+    'git fetch origin data --depth=1 2>nul || echo 无已有 data 分支',
+    'git checkout origin/data -- .github/ 2>nul || echo 无工作流文件需保留',
+    'git checkout -b data',
+    '',
+    'echo [3/5] 提交 JSON 数据并推送...',
+    'git add .github/',
+    'for %%f in (*.json) do git add "%%f"',
+    'git add articles/ projects/ 2>nul',
+    'git commit -m "manual sync: json %date% %time%"',
+    'git push origin data --force',
+    'if %errorlevel% neq 0 (echo JSON 推送失败！ & pause & exit /b 1)',
+    '',
+    'echo [4/5] 提交媒体文件并推送...',
+    'if exist media\\ (git add media/ & git commit -m "manual sync: media %date% %time%" & git push origin data --force)',
+    'if %errorlevel% neq 0 (echo 媒体文件推送失败！ & pause & exit /b 1)',
+    '',
+    'echo [5/5] 提交音乐文件并推送...',
+    'if exist music\\ (git add music.json music/ 2>nul & git commit -m "manual sync: music %date% %time%" & git push origin data --force)',
+    'if %errorlevel% neq 0 (echo 音乐文件推送失败！ & pause & exit /b 1)',
+    '',
+    'echo.',
+    'echo 同步完成!',
+    'pause',
+  ].join('\r\n');
+
+  onProgress?.({ stage: "done", message: `ZIP ready: ${name}` });
+  return { blob, name, batContent };
+}
+
+function buildMusicJson(
+  musicData: unknown,
+  audioFiles: MusicFile[]
+): unknown | null {
+  if (!musicData || audioFiles.length === 0) return null;
+  let patched = JSON.stringify(musicData);
+  for (const af of audioFiles) {
+    patched = patched.replaceAll(af.originalUrl, af.newPath);
+    if (af.originalUrl.startsWith("http:") || af.originalUrl.startsWith("https:")) {
+      patched = patched.replaceAll(af.originalUrl.replace(/^https?:/, ""), af.newPath);
+    }
+  }
+  return JSON.parse(patched);
 }
