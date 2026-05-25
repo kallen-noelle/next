@@ -59,7 +59,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="flex flex-1 min-h-0 overflow-hidden">
       <aside className="w-56 glass-card !rounded-none border-r border-slate-200 dark:border-slate-700 p-6 flex-shrink-0 overflow-y-auto">
-        <Link href="/admin" className="text-lg font-black text-slate-900 dark:text-white font-[family-name:var(--font-geist-sans)] block mb-6">Admin</Link>
+        <Link href="/admin" className="text-lg font-black text-slate-900 dark:text-white font-[family-name:var(--font-geist-sans)] block">Admin</Link>
+        <Link href="/" className="text-xs text-slate-400 hover:text-indigo-500 transition-colors block mb-6 mt-1 border-b border-slate-200 dark:border-slate-700 pb-3">
+          ← Back to Site
+        </Link>
         <nav className="flex flex-col gap-0.5 text-sm">
           {NAV_ITEMS.map((item) => {
             const active = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href + "/"));

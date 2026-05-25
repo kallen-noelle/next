@@ -94,6 +94,7 @@ export default function AdminMediaPage() {
       </div>
 
       <Pagination total={total} pageNum={pageNum} pageSize={pageSize} onChange={(pn) => { setPageNum(pn); refresh(keyword || undefined, pn, pageSize); }} onPageSizeChange={(ps) => { setPageSize(ps); setPageNum(1); refresh(keyword || undefined, 1, ps); }} />
+      {ConfirmDialog}
     </div>
   );
 }
