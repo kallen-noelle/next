@@ -4,17 +4,60 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { DashboardVO } from "@/lib/types";
 import { get } from "@/lib/api/dashboard";
-import { syncToGithub, type SyncProgress } from "@/lib/github-sync";
+import { syncJson, syncMedia, syncMusic, generateSyncZip, type SyncProgress } from "@/lib/github-sync";
 
 const STORAGE_KEY = "github_token";
+
+interface SyncState {
+  syncing: boolean;
+  progress: SyncProgress | null;
+  logs: string[];
+  result: "success" | "error" | null;
+}
+
+function SyncPanel({ label, syncing, progress, logs, result, onSync }: {
+  label: string;
+  syncing: boolean;
+  progress: SyncProgress | null;
+  logs: string[];
+  result: "success" | "error" | null;
+  onSync: () => void;
+}) {
+  return (
+    <div className="border-t border-slate-200 dark:border-slate-700 pt-4 first:border-t-0 first:pt-0">
+      <div className="flex items-center gap-3">
+        <button onClick={onSync} disabled={syncing}
+          className="px-4 py-2 text-sm font-bold rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white disabled:opacity-50 transition-all"
+        >
+          {syncing ? "Syncing..." : `Sync ${label}`}
+        </button>
+        {progress && (
+          <span className="text-xs text-slate-500 dark:text-slate-400 animate-pulse">{progress.message}</span>
+        )}
+      </div>
+      {logs.length > 0 && (
+        <div className="mt-2 max-h-40 overflow-y-auto bg-slate-900/80 rounded-lg p-2 text-[10px] font-mono leading-relaxed">
+          {logs.map((line, i) => (
+            <div key={i} className={`${line.includes("OK") ? "text-emerald-400" : line.includes("FAIL") ? "text-red-400" : "text-slate-300"}`}>
+              {line}
+            </div>
+          ))}
+        </div>
+      )}
+      {result === "success" && <p className="text-xs text-emerald-500 font-medium mt-1">✓ Sync complete!</p>}
+      {result === "error" && progress && <p className="text-xs text-red-400 font-medium mt-1">✗ {progress.message}</p>}
+    </div>
+  );
+}
 
 export default function AdminDashboardPage() {
   const [dash, setDash] = useState<DashboardVO | null>(null);
   const [token, setToken] = useState("");
   const [savedToken, setSavedToken] = useState("");
-  const [syncing, setSyncing] = useState(false);
-  const [progress, setProgress] = useState<SyncProgress | null>(null);
-  const [result, setResult] = useState<"success" | "error" | null>(null);
+  const [jsonSync, setJsonSync] = useState<SyncState>({ syncing: false, progress: null, logs: [], result: null });
+  const [mediaSync, setMediaSync] = useState<SyncState>({ syncing: false, progress: null, logs: [], result: null });
+  const [musicSync, setMusicSync] = useState<SyncState>({ syncing: false, progress: null, logs: [], result: null });
+  const [manualState, setManualState] = useState({ generating: false, progress: null as SyncProgress | null, logs: [] as string[] });
   const [showTokenInput, setShowTokenInput] = useState(false);
 
   useEffect(() => {
@@ -35,15 +78,102 @@ export default function AdminDashboardPage() {
     setSavedToken("");
   };
 
-  const handleSync = async () => {
+  const handleJsonSync = async () => {
     if (!savedToken) return;
-    setSyncing(true);
-    setResult(null);
-    setProgress(null);
+    setJsonSync({ syncing: true, progress: null, logs: [], result: null });
+    const res = await syncJson(savedToken, (p) => {
+      setJsonSync((prev) => ({
+        ...prev,
+        progress: p,
+        logs: p.log ? [...prev.logs, p.log] : prev.logs,
+      }));
+    });
+    setJsonSync((prev) => ({
+      ...prev,
+      syncing: false,
+      result: res.success ? "success" : "error",
+      logs: [...prev.logs, res.success ? "✓ Sync complete!" : "✗ Sync failed!"],
+    }));
+  };
 
-    const res = await syncToGithub(savedToken, (p) => setProgress(p));
-    setResult(res.success ? "success" : "error");
-    setSyncing(false);
+  const handleMediaSync = async () => {
+    if (!savedToken) return;
+    setMediaSync({ syncing: true, progress: null, logs: [], result: null });
+    const res = await syncMedia(savedToken, (p) => {
+      setMediaSync((prev) => ({
+        ...prev,
+        progress: p,
+        logs: p.log ? [...prev.logs, p.log] : prev.logs,
+      }));
+    });
+    setMediaSync((prev) => ({
+      ...prev,
+      syncing: false,
+      result: res.success ? "success" : "error",
+      logs: [...prev.logs, res.success ? "✓ Sync complete!" : "✗ Sync failed!"],
+    }));
+  };
+
+  const handleMusicSync = async () => {
+    if (!savedToken) return;
+    setMusicSync({ syncing: true, progress: null, logs: [], result: null });
+    const res = await syncMusic(savedToken, (p) => {
+      setMusicSync((prev) => ({
+        ...prev,
+        progress: p,
+        logs: p.log ? [...prev.logs, p.log] : prev.logs,
+      }));
+    });
+    setMusicSync((prev) => ({
+      ...prev,
+      syncing: false,
+      result: res.success ? "success" : "error",
+      logs: [...prev.logs, res.success ? "✓ Sync complete!" : "✗ Sync failed!"],
+    }));
+  };
+
+  const handleManualSync = async () => {
+    setManualState({ generating: true, progress: null, logs: [] });
+    try {
+      const { blob, name, batContent } = await generateSyncZip((p) => {
+        setManualState((prev) => ({
+          ...prev,
+          progress: p,
+          logs: p.log ? [...prev.logs, p.log] : prev.logs,
+        }));
+      });
+
+      // Download ZIP
+      const zipUrl = URL.createObjectURL(blob);
+      const zipLink = document.createElement("a");
+      zipLink.href = zipUrl;
+      zipLink.download = name;
+      zipLink.click();
+      URL.revokeObjectURL(zipUrl);
+
+      // Download BAT
+      const batBlob = new Blob([batContent], { type: "text/plain;charset=utf-8" });
+      const batUrl = URL.createObjectURL(batBlob);
+      const batLink = document.createElement("a");
+      batLink.href = batUrl;
+      batLink.download = "sync.bat";
+      batLink.click();
+      URL.revokeObjectURL(batUrl);
+
+      setManualState((prev) => ({
+        ...prev,
+        generating: false,
+        logs: [...prev.logs, `✓ ${name} 已下载`],
+      }));
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      setManualState((prev) => ({
+        ...prev,
+        generating: false,
+        progress: { stage: "error", message: msg },
+        logs: [...prev.logs, `✗ ${msg}`],
+      }));
+    }
   };
 
   // Mask token for display
@@ -144,32 +274,31 @@ export default function AdminDashboardPage() {
               </button>
             </div>
 
-            <div className="flex items-center gap-3">
-              <button
-                onClick={handleSync}
-                disabled={syncing}
-                className="px-5 py-2.5 text-sm font-bold rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white disabled:opacity-50 transition-all duration-300 hover:scale-105 shadow-lg shadow-indigo-500/30"
-              >
-                {syncing ? "Syncing..." : "Sync to GitHub"}
-              </button>
-
-              {progress && (
-                <span className="text-xs text-slate-500 dark:text-slate-400 animate-pulse">
-                  {progress.message}
-                </span>
-              )}
+            <div className="flex flex-col gap-4 mt-2">
+              <SyncPanel label="JSON Data" onSync={handleJsonSync} syncing={jsonSync.syncing} progress={jsonSync.progress} logs={jsonSync.logs} result={jsonSync.result} />
+              <SyncPanel label="Media" onSync={handleMediaSync} syncing={mediaSync.syncing} progress={mediaSync.progress} logs={mediaSync.logs} result={mediaSync.result} />
+              <SyncPanel label="Music" onSync={handleMusicSync} syncing={musicSync.syncing} progress={musicSync.progress} logs={musicSync.logs} result={musicSync.result} />
             </div>
 
-            {result === "success" && (
-              <p className="text-xs text-emerald-500 font-medium">
-                ✓ Sync complete! CI/CD is building the site.
-              </p>
-            )}
-            {result === "error" && progress && (
-              <p className="text-xs text-red-400 font-medium">
-                ✗ {progress.message}
-              </p>
-            )}
+            <div className="border-t border-slate-200 dark:border-slate-700 pt-4 mt-4">
+              <div className="flex items-center gap-3">
+                <button onClick={handleManualSync} disabled={manualState.generating}
+                  className="px-4 py-2 text-sm font-bold rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white disabled:opacity-50 transition-all"
+                >
+                  {manualState.generating ? "Generating..." : "Manual Sync"}
+                </button>
+                {manualState.progress && (
+                  <span className="text-xs text-slate-500 dark:text-slate-400 animate-pulse">{manualState.progress.message}</span>
+                )}
+              </div>
+              {manualState.logs.length > 0 && (
+                <div className="mt-2 max-h-32 overflow-y-auto bg-slate-900/80 rounded-lg p-2 text-[10px] font-mono leading-relaxed">
+                  {manualState.logs.map((line, i) => (
+                    <div key={i} className={`${line.startsWith("✓") ? "text-emerald-400" : line.startsWith("✗") ? "text-red-400" : "text-slate-300"}`}>{line}</div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
