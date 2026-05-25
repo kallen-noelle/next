@@ -2,8 +2,8 @@
   "categoryId": 36,
   "categoryName": "Docker",
   "commentCount": 3,
-  "content": "11111111111111\n\n![vs.jpg](/data/media/29.jpg)",
-  "coverImage": "/data/media/28.jpg",
+  "content": "11111111111111\n\n![vs.jpg](/next/data/media/29.jpg)",
+  "coverImage": "/next/data/media/28.jpg",
   "createdAt": "2026-05-24T15:00:52.720097",
   "id": 31,
   "isPinned": 0,
@@ -18,5 +18,5 @@
     }
   ],
   "title": "111",
-  "viewCount": 137
+  "viewCount": 142
 }
