@@ -24,6 +24,11 @@ export default function Navbar() {
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
   const router = useRouter();
+  const [isStatic, setIsStatic] = useState(true);
+
+  useEffect(() => {
+    setIsStatic(window.location.pathname.startsWith("/next"));
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,6 +84,14 @@ export default function Navbar() {
           {/* Auth */}
           {isLoggedIn ? (
             <div className="flex items-center gap-2 ml-2">
+              {!isStatic && (
+                <Link
+                  href="/admin"
+                  className="text-xs text-indigo-500 hover:text-indigo-400 transition-colors border-r border-slate-300 dark:border-slate-600 pr-2 mr-1"
+                >
+                  Admin
+                </Link>
+              )}
               <span className="text-xs text-slate-500">
                 {user?.nickname || user?.username || "User"}
               </span>
