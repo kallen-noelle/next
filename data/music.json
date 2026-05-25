@@ -1,0 +1,189 @@
+{
+  "total": 23,
+  "rows": [
+    {
+      "duration": 286,
+      "favorite": false,
+      "id": 162,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "Grido",
+      "url": "http://localhost:8090/music/music/default/1751798559823.flac"
+    },
+    {
+      "duration": 253,
+      "favorite": false,
+      "id": 618,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
+      "title": "花开忘忧",
+      "url": "http://localhost:8090/music/music/周深/1751798597433.flac"
+    },
+    {
+      "duration": 266,
+      "favorite": false,
+      "id": 785,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "三月は夜の底",
+      "url": "http://localhost:8090/music/music/default/1751798611749.mp3"
+    },
+    {
+      "duration": 227,
+      "favorite": false,
+      "id": 944,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
+      "title": "夜曲",
+      "url": "http://localhost:8090/music/music/周杰伦/1751798623367.flac"
+    },
+    {
+      "duration": 174,
+      "favorite": false,
+      "id": 1040,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
+      "title": "土坡上的狗尾草",
+      "url": "http://localhost:8090/music/music/果宝Official/1753205598966.mp3"
+    },
+    {
+      "duration": 73,
+      "favorite": false,
+      "id": 1042,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
+      "title": "Rindu Semalam",
+      "url": "http://localhost:8090/music/music/果宝Official/1753205599067.mp3"
+    },
+    {
+      "duration": 312,
+      "favorite": false,
+      "id": 1053,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
+      "title": "秋风寄",
+      "url": "http://localhost:8090/music/music/凤凰传奇/1753208435435.flac"
+    },
+    {
+      "duration": 258,
+      "favorite": false,
+      "id": 1065,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "Rindu Semalam",
+      "url": "http://localhost:8090/music/music/default/1753208436457.flac"
+    },
+    {
+      "duration": 143,
+      "favorite": false,
+      "id": 1083,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "Cupid",
+      "url": "http://localhost:8090/music/music/default/1753208438260.flac"
+    },
+    {
+      "duration": 358,
+      "favorite": false,
+      "id": 1096,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "Nuvole Bianche",
+      "url": "http://localhost:8090/music/music/default/1753208440026.flac"
+    },
+    {
+      "duration": 231,
+      "favorite": false,
+      "id": 1112,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
+      "title": "未完成の歌",
+      "url": "http://localhost:8090/music/music/果宝Official/1754143418959.mp3"
+    },
+    {
+      "duration": 167,
+      "favorite": false,
+      "id": 1117,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default02.png",
+      "title": "Despacito",
+      "url": "http://localhost:8090/music/music/果宝Official/1754143419443.mp3"
+    },
+    {
+      "duration": 264,
+      "favorite": false,
+      "id": 1159,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "For フルーツバスケット",
+      "url": "http://localhost:8090/music/music/default/1759480223665.mp3"
+    },
+    {
+      "duration": 246,
+      "favorite": false,
+      "id": 1165,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "ありがとう",
+      "url": "http://localhost:8090/music/music/default/1759480225134.mp3"
+    },
+    {
+      "duration": 274,
+      "favorite": false,
+      "id": 1216,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "ForestDayMorning",
+      "url": "http://localhost:8090/music/music/default/1769452678276.ogg"
+    },
+    {
+      "duration": 147,
+      "favorite": false,
+      "id": 1219,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "GlowingMushroomFields",
+      "url": "http://localhost:8090/music/music/default/1769452678548.ogg"
+    },
+    {
+      "duration": 207,
+      "favorite": false,
+      "id": 1243,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "LanternFestival",
+      "url": "http://localhost:8090/music/music/default/1769453175624.ogg"
+    },
+    {
+      "duration": 95,
+      "favorite": false,
+      "id": 1244,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "OceanRain",
+      "url": "http://localhost:8090/music/music/default/1769453175683.ogg"
+    },
+    {
+      "duration": 200,
+      "favorite": false,
+      "id": 1245,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "PumpkinMoon",
+      "url": "http://localhost:8090/music/music/default/1769453175740.ogg"
+    },
+    {
+      "duration": 144,
+      "favorite": false,
+      "id": 1252,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "TownParty",
+      "url": "http://localhost:8090/music/music/default/1769453176249.ogg"
+    },
+    {
+      "duration": 204,
+      "favorite": false,
+      "id": 1317,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "DevourerofGodsEulogy",
+      "url": "http://localhost:8090/music/music/default/1769454570241.ogg"
+    },
+    {
+      "duration": 264,
+      "favorite": false,
+      "id": 1393,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "If You",
+      "url": "http://localhost:8090/music/music/default/1769459084354.mp3"
+    },
+    {
+      "duration": 216,
+      "favorite": false,
+      "id": 1394,
+      "pictureUrl": "http://localhost:8090/music/singer/default/default01.png",
+      "title": "Mr. _Broken Heart_",
+      "url": "http://localhost:8090/music/music/default/1769459084444.mp3"
+    }
+  ]
+}
