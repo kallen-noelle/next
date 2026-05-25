@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { get } from "@/lib/api/about";
 import ArticleProse from "@/app/_components/article/ArticleProse";
+import Giscus from "@/app/_components/comment/Giscus";
 import Loading from "@/app/_components/common/Loading";
 import { siteConfig } from "@/lib/siteConfig";
 import { assetUrl } from "@/lib/asset-url";
@@ -85,6 +86,10 @@ export default function AboutPage() {
                 </div>
               </div>
             )}
+
+            <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
+              <Giscus />
+            </div>
           </div>
         </article>
       </div>

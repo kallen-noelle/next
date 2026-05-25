@@ -7,6 +7,7 @@ import ArticleProse from "@/app/_components/article/ArticleProse";
 import ArticleSidebar from "@/app/_components/article/ArticleSidebar";
 import ArticleNav from "@/app/_components/article/ArticleNav";
 import BackButton from "@/app/_components/article/BackButton";
+import Giscus from "@/app/_components/comment/Giscus";
 import Loading from "@/app/_components/common/Loading";
 
 export default function ProjectDetailClient(props: { params: Promise<{ id: string }> }) {
@@ -87,6 +88,10 @@ export default function ProjectDetailClient(props: { params: Promise<{ id: strin
 
             {project.content && <ArticleProse content={project.content} />}
             <ArticleNav prev={project.prev} next={project.next} basePath="/project" />
+
+            <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
+              <Giscus />
+            </div>
           </div>
         </article>
 
