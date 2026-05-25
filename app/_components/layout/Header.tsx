@@ -102,7 +102,7 @@ export default function Navbar() {
                 Sign Out
               </button>
             </div>
-          ) : (
+          ) : !isStatic && (
             <button
               onClick={() => router.push("/auth/login")}
               className="glass-btn !text-xs !py-1 !px-3 ml-2"
