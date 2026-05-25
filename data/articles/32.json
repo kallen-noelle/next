@@ -2,8 +2,8 @@
   "categoryId": 36,
   "categoryName": "Docker",
   "commentCount": 0,
-  "content": "![3.小鸟游六花.jpg](http://localhost:19090/blog/202605/4e0a1fdefab44fcfa9c9da4574318a2b.jpg)",
-  "coverImage": "http://localhost:19090/blog/202605/de69bf213ae74cde8a33a26d67630593.jpg",
+  "content": "![3.小鸟游六花.jpg](/next/data/media/31.jpg)",
+  "coverImage": "/next/data/media/30.jpg",
   "createdAt": "2026-05-25T11:01:13.124026",
   "id": 32,
   "isPinned": 0,
@@ -18,5 +18,5 @@
     }
   ],
   "title": "222",
-  "viewCount": 13
+  "viewCount": 14
 }
