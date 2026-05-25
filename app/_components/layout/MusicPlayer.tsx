@@ -1,5 +1,8 @@
 "use client";
 
+// 模块级 Audio 实例 — 跨组件卸载/重挂保持唯一
+let _sharedAudio: HTMLAudioElement | null = null;
+
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useMusicStore } from "@/stores/musicStore";
 import { getMusic } from "@/lib/api/op";
@@ -16,7 +19,6 @@ export default function MusicPlayer() {
   const isPlaying = useMusicStore((s) => s.isPlaying);
   const toggle = useMusicStore((s) => s.toggle);
   const setTrack = useMusicStore((s) => s.setTrack);
-  const pause = useMusicStore((s) => s.pause);
 
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -29,12 +31,13 @@ export default function MusicPlayer() {
   const progressRef = useRef<HTMLInputElement>(null);
 
   const getAudio = useCallback(() => {
-    if (!audioRef.current) {
+    if (!_sharedAudio) {
       const a = new Audio();
       a.volume = volume;
-      audioRef.current = a;
+      _sharedAudio = a;
     }
-    return audioRef.current;
+    audioRef.current = _sharedAudio;
+    return _sharedAudio;
   }, []);
 
   // 控制封面旋转动画
@@ -56,9 +59,11 @@ export default function MusicPlayer() {
   useEffect(() => {
     if (!currentTrack) return;
     const a = getAudio();
+    // 复用已有 Audio 实例时不重置 src
+    if (a.getAttribute("data-track-id") === String(currentTrack.id)) return;
+    a.setAttribute("data-track-id", String(currentTrack.id));
     a.src = currentTrack.url;
     a.load();
-    if (isPlaying) a.play().catch(() => {});
     // 重置旋转状态
     setIsCoverSpinning(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,7 +88,6 @@ export default function MusicPlayer() {
       setProgress(a.duration ? (a.currentTime / a.duration) * 100 : 0);
     };
     const onEnd = () => {
-      pause();
       getMusic().then((t) => t && setTrack(t)).catch(() => {});
     };
     a.addEventListener("timeupdate", onTime);
@@ -94,7 +98,7 @@ export default function MusicPlayer() {
       a.removeEventListener("loadedmetadata", onTime);
       a.removeEventListener("ended", onEnd);
     };
-  }, [getAudio, pause, setTrack]);
+  }, [getAudio, setTrack]);
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = Number(e.target.value) / 100;
@@ -120,7 +124,6 @@ export default function MusicPlayer() {
   };
 
   const handleNext = () => {
-    pause();
     getMusic().then((t) => t && setTrack(t)).catch(() => {});
   };
 
