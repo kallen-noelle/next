@@ -3,7 +3,7 @@
   "rows": [
     {
       "categoryId": 35,
-      "categoryName": "è½¯ä»¶",
+      "categoryName": "软件",
       "coverImage": "",
       "createTime": "2026-05-23T20:04:40.90848",
       "demoUrl": "",
@@ -12,7 +12,7 @@
       "isPublished": 1,
       "name": "PlaneWar",
       "sortOrder": 0,
-      "summary": "é£æºå¤§æ PlaneWar âï¸",
+      "summary": "飞机大战 PlaneWar ✈️",
       "techs": [
         {
           "id": 9,
@@ -22,7 +22,7 @@
     },
     {
       "categoryId": 34,
-      "categoryName": "å¨æ ",
+      "categoryName": "全栈",
       "coverImage": "",
       "createTime": "2026-05-22T10:13:45.904614",
       "demoUrl": "",
@@ -31,7 +31,7 @@
       "isPublished": 1,
       "name": "Dream Blog",
       "sortOrder": 0,
-      "summary": "Dream Blog â å¨æ ä¸ªäººåå®¢",
+      "summary": "Dream Blog — 全栈个人博客",
       "techs": [
         {
           "id": 8,
@@ -49,16 +49,16 @@
     },
     {
       "categoryId": 32,
-      "categoryName": "åµå¥å¼",
+      "categoryName": "嵌入式",
       "coverImage": "",
       "createTime": "2026-05-21T22:16:49.247206",
       "demoUrl": "",
       "githubUrl": "https://github.com/Guardian-Elf",
       "id": 17,
       "isPublished": 1,
-      "name": "å®æ¤ç²¾çµ",
+      "name": "守护精灵",
       "sortOrder": 0,
-      "summary": "Guardian-Elfï¼å®æ¤ç²¾çµï¼ââ ä»é¶æ­å»ºçç©èç½å¤ä¼ æå¨çæµå¹³å°",
+      "summary": "Guardian-Elf（守护精灵）—— 从零搭建的物联网多传感器监测平台",
       "techs": [
         {
           "id": 11,
@@ -80,21 +80,17 @@
     },
     {
       "categoryId": 34,
-      "categoryName": "å¨æ ",
+      "categoryName": "全栈",
       "coverImage": "",
       "createTime": "2026-05-21T21:46:11.501405",
       "demoUrl": "http://localhost:8050",
       "githubUrl": "https://github.com/OmniPavilion",
       "id": 16,
       "isPublished": 1,
-      "name": "ä¸è±¡é",
+      "name": "万象阁",
       "sortOrder": 0,
-      "summary": "OmniPavilion ââ å¨æ ä¸ªäººç¥è¯ç®¡çä¸æçå·¥å·é",
+      "summary": "OmniPavilion —— 全栈个人知识管理与效率工具集",
       "techs": [
-        {
-          "id": 8,
-          "name": "Java"
-        },
         {
           "id": 11,
           "name": "SpringBoot"
@@ -102,21 +98,25 @@
         {
           "id": 13,
           "name": "Vue3"
+        },
+        {
+          "id": 19,
+          "name": "Kotlin"
         }
       ]
     },
     {
       "categoryId": 33,
-      "categoryName": "Aiæºè½ä½",
+      "categoryName": "Ai智能体",
       "coverImage": "",
       "createTime": "2026-05-21T21:45:11.097575",
       "demoUrl": "",
       "githubUrl": "https://github.com/medrec-sys",
       "id": 15,
       "isPublished": 1,
-      "name": "å»ç¥åº | æºçå©æ",
+      "name": "医知库 | 智疗助手",
       "sortOrder": 0,
-      "summary": "åºäº Spring AI + RAG çä¼ä¸çº§æºè½å®¢æé®ç­ç³»ç»",
+      "summary": "基于 Spring AI + RAG 的企业级智能客服问答系统",
       "techs": [
         {
           "id": 8,
@@ -138,7 +138,7 @@
     },
     {
       "categoryId": 28,
-      "categoryName": "å¾®æå¡",
+      "categoryName": "微服务",
       "coverImage": "",
       "createTime": "2026-05-21T20:38:05.708809",
       "demoUrl": "",
@@ -147,7 +147,7 @@
       "isPublished": 1,
       "name": "SmartMall",
       "sortOrder": 0,
-      "summary": "åºäº Spring Cloud Alibaba çåå¸å¼ B2C çµåå¨æ é¡¹ç®ã",
+      "summary": "基于 Spring Cloud Alibaba 的分布式 B2C 电商全栈项目。",
       "techs": [
         {
           "id": 8,

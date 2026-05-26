@@ -1,19 +1,19 @@
 {
   "categoryId": 37,
-  "categoryName": "Aiç¼ç¨",
+  "categoryName": "Ai编程",
   "commentCount": 0,
-  "content": "\n## ä¸ãæéè½¯ä»¶\n\nå¨å¼å§ä¹åï¼è¯·åäºè§£ä»¥ä¸ä¸æ¬¾å·¥å·ï¼\n\n| å·¥å· | è¯´æ | ä¸è½½å°å |\n|------|------|----------|\n| **Codex** | OpenAI æ¨åºç AI ç¼ç å©æï¼CLIï¼ | [Codex å®ç½](https://openai.com/zh-Hans-CN/codex/) |\n| **CCX** | API ä»£çå·¥å·ï¼ç¨äºä¸­è½¬è¯·æ± | [GitHub - BenedictKing/ccx](https://github.com/BenedictKing/ccx) |\n| **CCSwitch** | è·¨å¹³å°æ¡é¢å©æï¼ç»ä¸ç®¡çå¤ç§ AI CLI å·¥å· | [GitHub - farion1231/cc-switch](https://github.com/farion1231/cc-switch) |\n\n---\n\n## äºãä¸è½½ Codex\n\nåå¾ [Codex å®ç½](https://openai.com/zh-Hans-CN/codex/) ä¸è½½å¯¹åºä½ æä½ç³»ç»çå®è£åï¼å®æå®è£ã\n\n---\n\n## ä¸ãéç½® CCX\n\nCCX ä½ä¸º API ä»£çï¼è´è´£å° Codex çè¯·æ±è½¬åå° DeepSeek ç­æå¡ã\n\n### 3.1 å®è£ CCX\n\nå¨ [CCX å®æ¹ææ¡£](https://github.com/BenedictKing/ccx) ä»åºæ¾å°å¯¹åºçæ¬çåä¸è½½ã\n\næä¸è½½çæ¯**CCX-Desktop-2.8.4-windows-amd64-setup.exe**\n\n### 3.2 æ·»å æ¸ é\n\n1. æå¼ CCX ç®¡ççé¢ï¼åæ¢å° **Codex** é¡µé¢ã\n2. å¡«å¥ **URLï¼https://api.deepseek.comï¼** å **API Key**ï¼ç¶åç¹å»ãè¯¦ç»éç½®ãã\n3. å¨è¯¦ç»éç½®ä¸­ï¼\n   - å°**æå¡ç±»å**æ¹ä¸º **OpenAI Chat**\n   - å¼å¯**è§èå metadata.user_id** éé¡¹\n4. ç¹å»ãåå»ºæ¸ éãå®ææ·»å ã\n\n![6.png](/next/data/media/38.png)\n\n---\n\n## åãéç½® CCSwitch\n\nCCSwitch ç¨äºç»ä¸ç®¡çååæ¢ä¸åç AI CLI å·¥å·ã\n\n1. æå¼ CCSwitchï¼åæ¢å° **OpenAI** çé¢ã\n2. ç¹å»ãæ·»å ä¾åºåãï¼éæ© **èªå®ä¹**ã\n3. å¡«å¥ä»¥ä¸ä¿¡æ¯ï¼\n   - **å°å**ï¼CCX çå°å\n   - **API Key**ï¼ API Key\n4. ç¹å»ãè·åæ¨¡ååè¡¨ãã\n   - å¦æè½æ­£å¸¸å è½½æ¨¡ååè¡¨ï¼è¯´æéç½®æ­£ç¡®ã\n5. ç¹å»ãä¿å­ãå®æéç½®ã\n\n![5.png](/next/data/media/39.png)\n\n![2.png](/next/data/media/34.png)\n\n---\n\n## äºãè¿å¥ Codex\n\n1. å¯å¨ Codexã\n2. å¨ç»å½æ¹å¼ä¸­éæ© **ä½¿ç¨ API ç»å½**ã\n3. è¾å¥ccxç API ä¿¡æ¯ï¼å³å¯å¼å§ä½¿ç¨ã\n\n![3.png](/next/data/media/35.png)\n\n---\n\n## å­ãéªè¯éç½®\n\næåç»å½åï¼ä½ å¯ä»¥å¨ Codex ä¸­å°è¯åéä¸æ¡ç®åçæä»¤æ¥éªè¯éç½®æ¯å¦çæï¼ä¾å¦ï¼\n\n![4.png](/next/data/media/36.png)\n\nå¦ææ¶å°æ­£å¸¸åå¤ï¼è¯´ææ´ä¸ªé¾è·¯å·²éç½®æå ð\n\n---\n\n*å¦æé®é¢ï¼è¯·æ£æ¥åæ­¥éª¤ä¸­ç URL å API Key æ¯å¦æ­£ç¡®å¡«åã*\n",
-  "coverImage": "/next/data/media/40.webp",
+  "content": "\n## 一、所需软件\n\n在开始之前，请先了解以下三款工具：\n\n| 工具 | 说明 | 下载地址 |\n|------|------|----------|\n| **Codex** | OpenAI 推出的 AI 编码助手（CLI） | [Codex 官网](https://openai.com/zh-Hans-CN/codex/) |\n| **CCX** | API 代理工具，用于中转请求 | [GitHub - BenedictKing/ccx](https://github.com/BenedictKing/ccx) |\n| **CCSwitch** | 跨平台桌面助手，统一管理多种 AI CLI 工具 | [GitHub - farion1231/cc-switch](https://github.com/farion1231/cc-switch) |\n\n---\n\n## 二、下载 Codex\n\n前往 [Codex 官网](https://openai.com/zh-Hans-CN/codex/) 下载对应你操作系统的安装包，完成安装。\n\n---\n\n## 三、配置 CCX\n\nCCX 作为 API 代理，负责将 Codex 的请求转发到 DeepSeek 等服务。\n\n### 3.1 安装 CCX\n\n在 [CCX 官方文档](https://github.com/BenedictKing/ccx) 仓库找到对应版本的包下载。\n\n我下载的是**CCX-Desktop-2.8.4-windows-amd64-setup.exe**\n\n### 3.2 添加渠道\n\n1. 打开 CCX 管理界面，切换到 **Codex** 页面。\n2. 填入 **URL（https://api.deepseek.com）** 和 **API Key**，然后点击「详细配置」。\n3. 在详细配置中：\n   - 将**服务类型**改为 **OpenAI Chat**\n   - 开启**规范化 metadata.user_id** 选项\n4. 点击「创建渠道」完成添加。\n\n![6.png](http://localhost:19090/blog/202605/de30bafdf033484f941f1f3a1253ae03.png)\n\n---\n\n## 四、配置 CCSwitch\n\nCCSwitch 用于统一管理和切换不同的 AI CLI 工具。\n\n1. 打开 CCSwitch，切换到 **OpenAI** 界面。\n2. 点击「添加供应商」，选择 **自定义**。\n3. 填入以下信息：\n   - **地址**：CCX 的地址\n   - **API Key**： API Key\n4. 点击「获取模型列表」。\n   - 如果能正常加载模型列表，说明配置正确。\n5. 点击「保存」完成配置。\n\n![5.png](http://localhost:19090/blog/202605/d7af1af5c21f4fc380c0ccb972453d85.png)\n\n![2.png](http://localhost:19090/blog/202605/2d5842e778214860a8d6d298dd005a72.png)\n\n---\n\n## 五、进入 Codex\n\n1. 启动 Codex。\n2. 在登录方式中选择 **使用 API 登录**。\n3. 输入ccx的 API 信息，即可开始使用。\n\n![3.png](http://localhost:19090/blog/202605/6194263e9ab94895b9c6eb4d8d42bb62.png)\n\n---\n\n## 六、验证配置\n\n成功登录后，你可以在 Codex 中尝试发送一条简单的指令来验证配置是否生效，例如：\n\n![4.png](http://localhost:19090/blog/202605/c1658fe9c77b4b02a24b97bab6b3afce.png)\n\n如果收到正常回复，说明整个链路已配置成功 🎉\n\n---\n\n*如有问题，请检查各步骤中的 URL 和 API Key 是否正确填写。*\n",
+  "coverImage": "http://localhost:19090/blog/202605/a3286751fe854f9099298d77119eede8.webp",
   "createdAt": "2026-05-26T10:23:39.694181",
   "id": 33,
   "isPinned": 0,
   "isPublished": 1,
   "next": {
     "id": 35,
-    "title": "å°ä¸ªäººç½åå½å¥Bingæç´¢å¼æ"
+    "title": "将个人网址录入Bing搜索引擎"
   },
   "prev": null,
-  "summary": "æ¬æç¨å°æå¯¼ä½ å®æ Codex çå®è£ï¼å¹¶éè¿ **CCX + CCSwitch** å°å¶æ¥å¥ DeepSeek ç­èªå®ä¹ APIã",
+  "summary": "本教程将指导你完成 Codex 的安装，并通过 **CCX + CCSwitch** 将其接入 DeepSeek 等自定义 API。",
   "tags": [
     {
       "id": 23,
@@ -24,6 +24,6 @@
       "name": "deepseek"
     }
   ],
-  "title": "codexå®è£åæ¥å¥deepseekæç¨",
+  "title": "codex安装及接入deepseek教程",
   "viewCount": 154
 }

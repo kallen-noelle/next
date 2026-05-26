@@ -16,7 +16,7 @@
       "createTime": "2026-05-21T21:49:02.947149",
       "deleted": 0,
       "id": 20,
-      "name": "8051åçæº",
+      "name": "8051单片机",
       "proficiency": 60,
       "sortOrder": 0,
       "updateTime": null
@@ -26,7 +26,7 @@
       "createTime": "2026-05-21T21:48:51.039436",
       "deleted": 0,
       "id": 19,
-      "name": "Stm32åçæº",
+      "name": "Stm32单片机",
       "proficiency": 40,
       "sortOrder": 0,
       "updateTime": null
@@ -36,7 +36,7 @@
       "createTime": "2026-05-21T20:40:01.304235",
       "deleted": 0,
       "id": 18,
-      "name": "å¾®æå¡æ¡æ¶",
+      "name": "微服务框架",
       "proficiency": 50,
       "sortOrder": 0,
       "updateTime": null
@@ -46,7 +46,7 @@
       "createTime": "2026-05-21T20:39:50.691395",
       "deleted": 0,
       "id": 17,
-      "name": "Springå¨å®¶æ¡¶",
+      "name": "Spring全家桶",
       "proficiency": 60,
       "sortOrder": 0,
       "updateTime": null
