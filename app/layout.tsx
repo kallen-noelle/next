@@ -19,6 +19,7 @@ const notoSerif = Noto_Serif_SC({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://pc-blog.github.io/next"),
   title: siteConfig.title,
   description: siteConfig.bio,
 };
