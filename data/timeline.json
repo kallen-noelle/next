@@ -4,61 +4,61 @@
     {
       "createTime": "2026-05-22T11:02:58.963844",
       "deleted": 0,
-      "description": "逐步学习 SpringBoot、MyBatis 等技术，正式进入后端世界",
+      "description": "éæ­¥å­¦ä¹  SpringBootãMyBatis ç­ææ¯ï¼æ­£å¼è¿å¥åç«¯ä¸ç",
       "eventDate": "2025-03-01",
       "id": 21,
       "sortOrder": 0,
-      "title": "入坑Java",
+      "title": "å¥åJava",
       "updateTime": null
     },
     {
       "createTime": "2026-05-21T22:20:50.686709",
       "deleted": 0,
-      "description": "艰难但完整地完成了一个分布式微服务电商项目",
+      "description": "è°é¾ä½å®æ´å°å®æäºä¸ä¸ªåå¸å¼å¾®æå¡çµåé¡¹ç®",
       "eventDate": "2026-04-23",
       "id": 20,
       "sortOrder": 0,
-      "title": "谷粒商城竣工",
+      "title": "è°·ç²ååç«£å·¥",
       "updateTime": null
     },
     {
       "createTime": "2026-05-21T22:19:18.635379",
       "deleted": 0,
-      "description": "完成的第一个完整 Web 项目，前后端一体的实战里程碑",
+      "description": "å®æçç¬¬ä¸ä¸ªå®æ´ Web é¡¹ç®ï¼ååç«¯ä¸ä½çå®æéç¨ç¢",
       "eventDate": "2025-07-04",
       "id": 19,
       "sortOrder": 0,
-      "title": "苍穹外卖全栈开发",
+      "title": "èç©¹å¤åå¨æ å¼å",
       "updateTime": null
     },
     {
       "createTime": "2026-05-21T22:18:06.175841",
       "deleted": 0,
-      "description": "开始探索硬件与底层",
+      "description": "å¼å§æ¢ç´¢ç¡¬ä»¶ä¸åºå±",
       "eventDate": "2025-09-29",
       "id": 18,
       "sortOrder": 0,
-      "title": "嵌入式初步",
+      "title": "åµå¥å¼åæ­¥",
       "updateTime": null
     },
     {
       "createTime": "2026-05-21T21:24:11.81042",
       "deleted": 0,
-      "description": "梦开始的地方。用 Pygame 写出了第一个飞机大战游戏",
+      "description": "æ¢¦å¼å§çå°æ¹ãç¨ Pygame ååºäºç¬¬ä¸ä¸ªé£æºå¤§ææ¸¸æ",
       "eventDate": "2024-07-16",
       "id": 17,
       "sortOrder": 0,
-      "title": "学习python，步入编程之旅",
+      "title": "å­¦ä¹ pythonï¼æ­¥å¥ç¼ç¨ä¹æ",
       "updateTime": null
     },
     {
       "createTime": "2026-05-21T21:22:06.976287",
       "deleted": 0,
-      "description": "基于 Next.js 与 Spring Boot 的博客，成功部署到 GitHub",
+      "description": "åºäº Next.js ä¸ Spring Boot çåå®¢ï¼æåé¨ç½²å° GitHub",
       "eventDate": "2026-05-24",
       "id": 16,
       "sortOrder": 0,
-      "title": "部署个人博客",
+      "title": "é¨ç½²ä¸ªäººåå®¢",
       "updateTime": null
     }
   ]
