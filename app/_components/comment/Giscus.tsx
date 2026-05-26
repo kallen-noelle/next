@@ -33,9 +33,6 @@ export default function Giscus() {
     );
   }
 
-  // strip basePath (/next) for GH Pages, so discussions match Docker
-  const term = window.location.pathname.replace(/^\/next/, "") || "/";
-
   return (
     <div className="w-full mt-8 relative">
       <div className="giscus-wrapper relative z-10 pt-6 border-t border-slate-200 dark:border-slate-700">
@@ -43,14 +40,14 @@ export default function Giscus() {
           repo="pc-Blog/next"
           repoId="R_kgDOSk99gw"
           category="Announcements"
-          mapping="specific"
-          term={term}
+          categoryId="DIC_kwDOSk99g84C9uoJ"
+          mapping="pathname"
+          strict="0"
           reactionsEnabled="1"
           emitMetadata="0"
           inputPosition="top"
           theme={theme}
           lang="zh-CN"
-          loading="lazy"
         />
       </div>
     </div>

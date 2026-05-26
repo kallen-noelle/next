@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { DashboardVO } from "@/lib/types";
+import type { MediaWithRef } from "@/lib/api/media";
 import { get } from "@/lib/api/dashboard";
 import { syncJson, syncMedia, syncMusic, generateSyncZip, type SyncProgress } from "@/lib/github-sync";
+import { scanMediaWithRefs, remove as deleteMedia } from "@/lib/api/media";
 
 const STORAGE_KEY = "github_token";
 
@@ -58,6 +60,7 @@ export default function AdminDashboardPage() {
   const [mediaSync, setMediaSync] = useState<SyncState>({ syncing: false, progress: null, logs: [], result: null });
   const [musicSync, setMusicSync] = useState<SyncState>({ syncing: false, progress: null, logs: [], result: null });
   const [manualState, setManualState] = useState({ generating: false, progress: null as SyncProgress | null, logs: [] as string[] });
+  const [cleanupState, setCleanupState] = useState({ scanning: false, deleting: false, items: [] as MediaWithRef[], totalMedia: 0, orphanCount: 0, logs: [] as string[] });
   const [showTokenInput, setShowTokenInput] = useState(false);
 
   useEffect(() => {
@@ -174,6 +177,46 @@ export default function AdminDashboardPage() {
         logs: [...prev.logs, `✗ ${msg}`],
       }));
     }
+  };
+
+  const handleScanOrphans = async () => {
+    setCleanupState((prev) => ({ ...prev, scanning: true, logs: ["Scanning for orphan media..."], items: [], totalMedia: 0, orphanCount: 0 }));
+    try {
+      const { items, totalMedia, orphanCount } = await scanMediaWithRefs();
+      setCleanupState((prev) => ({
+        ...prev,
+        scanning: false,
+        items,
+        totalMedia,
+        orphanCount,
+        logs: [
+          ...prev.logs,
+          `Total media: ${totalMedia}`,
+          `Referenced: ${totalMedia - orphanCount}, Orphans: ${orphanCount}`,
+        ],
+      }));
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      setCleanupState((prev) => ({ ...prev, scanning: false, logs: [...prev.logs, `✗ ${msg}`] }));
+    }
+  };
+
+  const handleDeleteOrphans = async () => {
+    const orphans = cleanupState.items.filter((i) => i.refs.length === 0);
+    setCleanupState((prev) => ({ ...prev, deleting: true, logs: [...prev.logs, `Deleting ${orphans.length} orphans...`] }));
+    let ok = 0, fail = 0;
+    for (const item of orphans) {
+      const m = item.media;
+      try {
+        await deleteMedia(m.id!);
+        ok++;
+        setCleanupState((prev) => ({ ...prev, logs: [...prev.logs, `✓ Deleted #${m.id} ${m.originalFilename || m.fileUrl}`] }));
+      } catch {
+        fail++;
+        setCleanupState((prev) => ({ ...prev, logs: [...prev.logs, `✗ Failed #${m.id}`] }));
+      }
+    }
+    setCleanupState((prev) => ({ ...prev, deleting: false, items: [], totalMedia: 0, orphanCount: 0, logs: [...prev.logs, ok > 0 ? `✓ Done: ${ok} deleted, ${fail} failed` : "✗ Nothing deleted"] }));
   };
 
   // Mask token for display
@@ -296,6 +339,85 @@ export default function AdminDashboardPage() {
                   {manualState.logs.map((line, i) => (
                     <div key={i} className={`${line.startsWith("✓") ? "text-emerald-400" : line.startsWith("✗") ? "text-red-400" : "text-slate-300"}`}>{line}</div>
                   ))}
+                </div>
+              )}
+            </div>
+
+            {/* Orphan Media Cleanup */}
+            <div className="border-t border-slate-200 dark:border-slate-700 pt-4 mt-4">
+              <div className="flex items-center gap-3">
+                <button onClick={handleScanOrphans} disabled={cleanupState.scanning || cleanupState.deleting}
+                  className="px-4 py-2 text-sm font-bold rounded-lg bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white disabled:opacity-50 transition-all"
+                >
+                  {cleanupState.scanning ? "Scanning..." : "Scan Orphan Media"}
+                </button>
+                {cleanupState.orphanCount > 0 && (
+                  <button onClick={handleDeleteOrphans} disabled={cleanupState.deleting}
+                    className="px-4 py-2 text-sm font-bold rounded-lg bg-red-500 hover:bg-red-600 text-white disabled:opacity-50 transition-all"
+                  >
+                    {cleanupState.deleting ? "Deleting..." : `Delete ${cleanupState.orphanCount} Files`}
+                  </button>
+                )}
+                {cleanupState.scanning && (
+                  <span className="text-xs text-slate-500 dark:text-slate-400 animate-pulse">Scanning...</span>
+                )}
+              </div>
+              {cleanupState.logs.length > 0 && (
+                <div className="mt-3 space-y-3">
+                  {/* Summary bar */}
+                  <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
+                    <span>Total: <strong>{cleanupState.totalMedia}</strong></span>
+                    <span className="text-emerald-500">Referenced: <strong>{cleanupState.totalMedia - cleanupState.orphanCount}</strong></span>
+                    <span className="text-red-400">Orphans: <strong>{cleanupState.orphanCount}</strong></span>
+                  </div>
+
+                  {/* Media list */}
+                  {cleanupState.items.length > 0 && (
+                    <div className="max-h-80 overflow-y-auto space-y-1.5">
+                      {cleanupState.items.map((item) => {
+                        const m = item.media;
+                        const isOrphan = item.refs.length === 0;
+                        return (
+                          <div key={m.id} className="flex items-start gap-3 p-2 rounded-lg bg-slate-900/60 text-[11px]">
+                            {/* Thumbnail */}
+                            <div className="w-10 h-10 shrink-0 rounded overflow-hidden bg-slate-800">
+                              {m.fileUrl?.match(/\.(png|jpe?g|gif|webp|svg)$/i) ? (
+                                <img src={m.fileUrl} alt="" className="w-full h-full object-cover" />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center text-slate-600 text-[10px]">FILE</div>
+                              )}
+                            </div>
+                            {/* Info */}
+                            <div className="flex-1 min-w-0">
+                              <div className="truncate text-slate-300">{m.originalFilename || m.fileUrl?.split("/").pop()}</div>
+                              <div className="truncate text-slate-500">{m.fileUrl}</div>
+                              {m.fileSize && <div className="text-slate-500">{(m.fileSize / 1024).toFixed(1)} KB</div>}
+                              {/* Reference tags */}
+                              <div className="flex flex-wrap gap-1 mt-1">
+                                {isOrphan ? (
+                                  <span className="inline-block px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 font-medium">Unreferenced</span>
+                                ) : (
+                                  item.refs.map((ref, ri) => (
+                                    <span key={ri} className="inline-block px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-medium">
+                                      {ref.type === "article" ? "📄" : ref.type === "project" ? "🚀" : "ℹ️"} {ref.title}
+                                      {ref.field === "coverImage" ? " (cover)" : ""}
+                                    </span>
+                                  ))
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Log console */}
+                  <div className="max-h-32 overflow-y-auto bg-slate-900/80 rounded-lg p-2 text-[10px] font-mono leading-relaxed">
+                    {cleanupState.logs.map((line, i) => (
+                      <div key={i} className={`${line.startsWith("✓") ? "text-emerald-400" : line.startsWith("✗") ? "text-red-400" : "text-slate-300"}`}>{line}</div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
