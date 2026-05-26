@@ -1,5 +1,5 @@
 {
-  "articleCount": 2,
+  "articleCount": 1,
   "commentCount": 3,
   "latestComments": [
     {
@@ -27,14 +27,9 @@
   "topArticles": [
     {
       "id": 33,
-      "title": "codex安装及接入deepseek教程",
-      "viewCount": 154
-    },
-    {
-      "id": 35,
-      "title": "将个人网址录入Bing搜索引擎",
-      "viewCount": 3
+      "title": "codexå®è£åæ¥å¥deepseekæç¨",
+      "viewCount": 46
     }
   ],
-  "totalViews": 157
+  "totalViews": 46
 }
