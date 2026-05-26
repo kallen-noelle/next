@@ -8,7 +8,10 @@
   "id": 33,
   "isPinned": 0,
   "isPublished": 1,
-  "next": null,
+  "next": {
+    "id": 35,
+    "title": "将个人网址录入Bing搜索引擎"
+  },
   "prev": null,
   "summary": "本教程将指导你完成 Codex 的安装，并通过 **CCX + CCSwitch** 将其接入 DeepSeek 等自定义 API。",
   "tags": [
@@ -22,5 +25,5 @@
     }
   ],
   "title": "codex安装及接入deepseek教程",
-  "viewCount": 46
+  "viewCount": 154
 }

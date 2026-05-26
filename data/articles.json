@@ -1,6 +1,29 @@
 {
-  "total": 1,
+  "total": 2,
   "rows": [
+    {
+      "categoryId": 38,
+      "categoryName": "网站部署",
+      "commentCount": 0,
+      "coverImage": "http://localhost:19090/blog/202605/e075f82b469341ecbf20ad03db257cae.jpg",
+      "createdAt": "2026-05-26T20:16:47.720519",
+      "id": 35,
+      "isPinned": 0,
+      "isPublished": 1,
+      "summary": "本教程将指导你如何将个人网站/博客提交到 Bing 搜索引擎，让 Bing 用户能够搜索到你的内容",
+      "tags": [
+        {
+          "id": 25,
+          "name": "Bing"
+        },
+        {
+          "id": 26,
+          "name": "SEO"
+        }
+      ],
+      "title": "将个人网址录入Bing搜索引擎",
+      "viewCount": 3
+    },
     {
       "categoryId": 37,
       "categoryName": "Ai编程",
@@ -22,7 +45,7 @@
         }
       ],
       "title": "codex安装及接入deepseek教程",
-      "viewCount": 46
+      "viewCount": 154
     }
   ]
 }
