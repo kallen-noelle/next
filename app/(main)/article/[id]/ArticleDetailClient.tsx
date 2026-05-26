@@ -14,7 +14,6 @@ export default function ArticleDetailClient(props: { params: Promise<{ id: strin
   const { id } = use(props.params);
   const [article, setArticle] = useState<ArticleDetailVO | null>(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     (async () => {
       setLoading(true);
