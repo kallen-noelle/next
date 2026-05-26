@@ -7,6 +7,7 @@ import ArticleProse from "@/app/_components/article/ArticleProse";
 import ArticleSidebar from "@/app/_components/article/ArticleSidebar";
 import ArticleNav from "@/app/_components/article/ArticleNav";
 import BackButton from "@/app/_components/article/BackButton";
+import ViewCount from "@/app/_components/article/ViewCount";
 import Giscus from "@/app/_components/comment/Giscus";
 import Loading from "@/app/_components/common/Loading";
 
@@ -14,6 +15,19 @@ export default function ArticleDetailClient(props: { params: Promise<{ id: strin
   const { id } = use(props.params);
   const [article, setArticle] = useState<ArticleDetailVO | null>(null);
   const [loading, setLoading] = useState(true);
+  const [giscusCount, setGiscusCount] = useState<number | null>(null);
+
+  // listen for Giscus discussion metadata to get live comment count
+  useEffect(() => {
+    function handler(e: MessageEvent) {
+      if (e.data?.giscus?.discussion?.totalCommentCount != null) {
+        setGiscusCount(e.data.giscus.discussion.totalCommentCount);
+      }
+    }
+    window.addEventListener("message", handler);
+    return () => window.removeEventListener("message", handler);
+  }, []);
+
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -58,8 +72,8 @@ export default function ArticleDetailClient(props: { params: Promise<{ id: strin
                 {article.categoryName && (
                   <span className="px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-900/30 text-indigo-500 font-bold text-[10px]">{article.categoryName}</span>
                 )}
-                <span>{article.viewCount} views</span>
-                <span>{article.commentCount} comments</span>
+                <ViewCount count={article.viewCount} />
+                <span>{giscusCount ?? article.commentCount} comments</span>
               </div>
 
               <h1 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">

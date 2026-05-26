@@ -44,7 +44,7 @@ export default function Giscus() {
           mapping="pathname"
           strict="0"
           reactionsEnabled="1"
-          emitMetadata="0"
+          emitMetadata="1"
           inputPosition="top"
           theme={theme}
           lang="zh-CN"

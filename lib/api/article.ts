@@ -31,8 +31,13 @@ export async function getPublicDetail(id: number) {
   return api.get<ArticleDetailVO, ArticleDetailVO>(`/article/public/${id}`);
 }
 
+const viewedInSession = new Set<number>();
+
 export async function addView(id: number) {
   if ((await detectMode()) === "static") return;
+  // prevent duplicate calls within same page load (e.g. Strict Mode)
+  if (viewedInSession.has(id)) return;
+  viewedInSession.add(id);
   return api.put<void, void>(`/article/${id}/view`);
 }
 
