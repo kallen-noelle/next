@@ -4,7 +4,22 @@ import { detectMode, ensureData, getDetailData } from "@/lib/static-data";
 
 export async function getPublicList(params: PageDTO<ArticleQueryDTO>) {
   if ((await detectMode()) === "static") {
-    return (await ensureData<PageVO<ArticleVO>>("articles")) ?? { rows: [], total: 0 };
+    const all = await ensureData<PageVO<ArticleVO>>("articles");
+    if (!all) return { rows: [], total: 0 };
+
+    let filtered = all.rows;
+    const q = params.query;
+    if (q?.categoryId) filtered = filtered.filter((a) => a.categoryId === q.categoryId);
+    if (q?.tagId) filtered = filtered.filter((a) => a.tags?.some((t) => t.id === q.tagId));
+    if (q?.keyword) {
+      const kw = q.keyword.toLowerCase();
+      filtered = filtered.filter((a) => a.title.toLowerCase().includes(kw));
+    }
+
+    const pageNum = params.pageNum || 1;
+    const pageSize = params.pageSize || 9;
+    const start = (pageNum - 1) * pageSize;
+    return { rows: filtered.slice(start, start + pageSize), total: filtered.length };
   }
   return api.post<PageVO<ArticleVO>, PageVO<ArticleVO>>("/article/public/page", params);
 }
