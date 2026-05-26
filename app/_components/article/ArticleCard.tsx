@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ArticleVO } from "@/lib/types";
+import ViewCount from "./ViewCount";
 
 export default function ArticleCard({ article }: { article: ArticleVO }) {
   const date = article.createdAt
@@ -31,7 +32,7 @@ export default function ArticleCard({ article }: { article: ArticleVO }) {
             <span>·</span>
             <span>{date}</span>
             <span>·</span>
-            <span>{article.viewCount} views</span>
+            <ViewCount count={article.viewCount} />
           </div>
           <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2">
             {article.title}
