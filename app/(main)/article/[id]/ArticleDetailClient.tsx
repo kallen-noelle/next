@@ -29,7 +29,7 @@ export default function ArticleDetailClient(props: { params: Promise<{ id: strin
     })();
   }, [id]);
 
-  if (loading) return <div className="py-24"><Loading /></div>;
+  if (loading) return <div className="min-h-screen py-24"><Loading /></div>;
   if (!article) return <div className="text-center py-24 text-slate-400">Article not found.</div>;
 
   const date = article.createdAt
