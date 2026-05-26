@@ -270,10 +270,20 @@ async function collectAllData(): Promise<{ path: string; content: string }[]> {
     files.push({ path: "comments.json", content: JSON.stringify(comments, null, 2) });
   } catch { /* skip */ }
 
+  // Op / Literature data
+  try {
+    const opCats = await apiGet<unknown>("/op/category");
+    files.push({ path: "op-categories.json", content: JSON.stringify(opCats, null, 2) });
+  } catch { /* skip */ }
+  try {
+    const opArticles = await apiPost<unknown, unknown>("/op/article", { pageNum: 1, pageSize: 1000 });
+    files.push({ path: "op-articles.json", content: JSON.stringify(opArticles, null, 2) });
+  } catch { /* skip */ }
+
   files.push({
     path: "index.json",
     content: JSON.stringify(
-      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "comments", "music"],
+      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "comments", "music", "op-categories", "op-articles"],
       null, 2
     ),
   });
