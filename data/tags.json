@@ -1,25 +1,18 @@
 {
-  "total": 3,
+  "total": 2,
   "rows": [
     {
-      "createTime": "2026-05-21T20:32:43.775231",
+      "createTime": "2026-05-26T10:25:45.798824",
       "deleted": 0,
-      "id": 22,
-      "name": "éç¬",
+      "id": 24,
+      "name": "deepseek",
       "updateTime": null
     },
     {
-      "createTime": "2026-05-21T20:32:39.890075",
+      "createTime": "2026-05-26T10:25:39.395289",
       "deleted": 0,
-      "id": 21,
-      "name": "æè°",
-      "updateTime": null
-    },
-    {
-      "createTime": "2026-05-21T20:32:35.498871",
-      "deleted": 0,
-      "id": 20,
-      "name": "æç¨",
+      "id": 23,
+      "name": "codex",
       "updateTime": null
     }
   ]
