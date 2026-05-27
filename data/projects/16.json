@@ -21,16 +21,16 @@
   "summary": "OmniPavilion —— 全栈个人知识管理与效率工具集",
   "techs": [
     {
-      "id": 8,
-      "name": "Java"
-    },
-    {
       "id": 11,
       "name": "SpringBoot"
     },
     {
       "id": 13,
       "name": "Vue3"
+    },
+    {
+      "id": 19,
+      "name": "Kotlin"
     }
   ]
 }

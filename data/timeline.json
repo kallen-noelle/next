@@ -4,7 +4,7 @@
     {
       "createTime": "2026-05-22T11:02:58.963844",
       "deleted": 0,
-      "description": "梦开始的地方，逐步学习springBoot，mybatis等技术",
+      "description": "逐步学习 SpringBoot、MyBatis 等技术，正式进入后端世界",
       "eventDate": "2025-03-01",
       "id": 21,
       "sortOrder": 0,
@@ -14,7 +14,7 @@
     {
       "createTime": "2026-05-21T22:20:50.686709",
       "deleted": 0,
-      "description": "艰难的完成了一个分布式微服务电商项目",
+      "description": "艰难但完整地完成了一个分布式微服务电商项目",
       "eventDate": "2026-04-23",
       "id": 20,
       "sortOrder": 0,
@@ -24,7 +24,7 @@
     {
       "createTime": "2026-05-21T22:19:18.635379",
       "deleted": 0,
-      "description": "完成的第一个完整的Web项目",
+      "description": "完成的第一个完整 Web 项目，前后端一体的实战里程碑",
       "eventDate": "2025-07-04",
       "id": 19,
       "sortOrder": 0,
@@ -34,7 +34,7 @@
     {
       "createTime": "2026-05-21T22:18:06.175841",
       "deleted": 0,
-      "description": "应班导要求，加入嵌入式学习小组，进入嵌入式邻域",
+      "description": "开始探索硬件与底层",
       "eventDate": "2025-09-29",
       "id": 18,
       "sortOrder": 0,
@@ -44,7 +44,7 @@
     {
       "createTime": "2026-05-21T21:24:11.81042",
       "deleted": 0,
-      "description": "学习python，使用pygame写了一个飞机大战游戏",
+      "description": "梦开始的地方。用 Pygame 写出了第一个飞机大战游戏",
       "eventDate": "2024-07-16",
       "id": 17,
       "sortOrder": 0,
@@ -54,11 +54,11 @@
     {
       "createTime": "2026-05-21T21:22:06.976287",
       "deleted": 0,
-      "description": "基于Next.js与Spring的博客，暂时部署到本地",
-      "eventDate": "2026-05-21",
+      "description": "基于 Next.js 与 Spring Boot 的博客，成功部署到 GitHub",
+      "eventDate": "2026-05-24",
       "id": 16,
       "sortOrder": 0,
-      "title": "部署个人博客！！！",
+      "title": "部署个人博客",
       "updateTime": null
     }
   ]
