@@ -1,0 +1,124 @@
+"use client";
+
+/**
+ * Download article/project content as a ZIP (markdown + images)
+ */
+
+async function fetchImageAsBase64(url: string): Promise<string> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const blob = await res.blob();
+  const buffer = await blob.arrayBuffer();
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  return btoa(binary);
+}
+
+function extractImageUrls(markdown: string): string[] {
+  const urls: string[] = [];
+  const regex = /!\[.*?\]\((.*?)\)/g;
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(markdown)) !== null) {
+    urls.push(match[1]);
+  }
+  return urls;
+}
+
+export interface DownloadResult {
+  title: string;
+  imageTotal: number;
+  imageSuccess: number;
+  imageFailed: number;
+}
+
+function buildFooter(about?: Record<string, string>): string {
+  if (!about) return "";
+
+  const lines: string[] = ["\n\n---\n"];
+
+  const blog = about["blog"];
+  if (blog) {
+    lines.push(`📝 本文发布于 [Dream Blog](${blog})\n`);
+  }
+
+  const links: { key: string; label: string }[] = [
+    { key: "cnblogs", label: "博客园" },
+    { key: "juejin", label: "掘金" },
+    { key: "csdn", label: "CSDN" },
+    { key: "github", label: "GitHub" },
+    { key: "gitee", label: "Gitee" },
+  ];
+
+  const existing = links.filter((l) => about[l.key]);
+  if (existing.length > 0) {
+    lines.push("\n🌐 欢迎关注我的其他平台：\n");
+    for (const l of existing) {
+      lines.push(`- [${l.label}](${about[l.key]})`);
+    }
+  }
+
+  const email = about["email"];
+  if (email) {
+    lines.push(`\n📧 联系我：${email}`);
+  }
+
+  return lines.join("\n");
+}
+
+export async function downloadContentAsZip(params: {
+  title: string;
+  content: string;
+  coverImage?: string;
+  about?: Record<string, string>;
+}): Promise<DownloadResult> {
+  const { title, content, coverImage, about } = params;
+
+  // Collect all image URLs (deduplicated)
+  const imageUrls = new Set(extractImageUrls(content));
+  if (coverImage) imageUrls.add(coverImage);
+
+  // Download images in parallel, tolerant of failures
+  const results = await Promise.allSettled(
+    [...imageUrls].map(async (url) => {
+      const base64 = await fetchImageAsBase64(url);
+      return { url, base64 };
+    })
+  );
+
+  // Create ZIP
+  const JSZip = (await import("jszip")).default;
+  const zip = new JSZip();
+
+  // Add markdown file (content + footer)
+  const safeName = title.replace(/[<>:"/\\|?*]/g, "_");
+  zip.file(`${safeName}.md`, content + buildFooter(about));
+
+  // Add images
+  const seen = new Set<string>();
+  for (const result of results) {
+    if (result.status === "fulfilled") {
+      const filename = result.value.url.split("/").pop() || "image";
+      const deduped = seen.has(filename) ? `${seen.size}-${filename}` : filename;
+      seen.add(filename);
+      zip.file(`media/${deduped}`, result.value.base64, { base64: true });
+    }
+  }
+
+  // Trigger download
+  const blob = await zip.generateAsync({ type: "blob" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${safeName}.zip`;
+  link.click();
+  URL.revokeObjectURL(url);
+
+  const succeeded = results.filter((r) => r.status === "fulfilled").length;
+  return {
+    title,
+    imageTotal: imageUrls.size,
+    imageSuccess: succeeded,
+    imageFailed: imageUrls.size - succeeded,
+  };
+}

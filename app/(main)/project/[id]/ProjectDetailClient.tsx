@@ -3,17 +3,21 @@
 import { useState, useEffect, use } from "react";
 import type { ProjectDetailVO } from "@/lib/types";
 import { getPublicDetail } from "@/lib/api/project";
+import { get as getAbout } from "@/lib/api/about";
 import ArticleProse from "@/app/_components/article/ArticleProse";
 import ArticleSidebar from "@/app/_components/article/ArticleSidebar";
 import ArticleNav from "@/app/_components/article/ArticleNav";
 import BackButton from "@/app/_components/article/BackButton";
 import Giscus from "@/app/_components/comment/Giscus";
 import Loading from "@/app/_components/common/Loading";
+import { downloadContentAsZip } from "@/lib/download-content";
+import { showSuccessToast, showErrorToast } from "@/lib/toast";
 
 export default function ProjectDetailClient(props: { params: Promise<{ id: string }> }) {
   const { id } = use(props.params);
   const [project, setProject] = useState<ProjectDetailVO | null>(null);
   const [loading, setLoading] = useState(true);
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -83,6 +87,33 @@ export default function ProjectDetailClient(props: { params: Promise<{ id: strin
                     Demo
                   </a>
                 )}
+                <button
+                  onClick={async () => {
+                    setDownloading(true);
+                    try {
+                      const about = await getAbout().catch(() => ({}));
+                      const res = await downloadContentAsZip({
+                        title: project.name,
+                        content: project.content || "",
+                        coverImage: project.coverImage,
+                        about,
+                      });
+                      const img = res.imageSuccess > 0 ? ` (${res.imageSuccess} images)` : "";
+                      showSuccessToast(`"${res.title}" downloaded${img}`);
+                    } catch (e) {
+                      showErrorToast("Download failed", e instanceof Error ? e.message : undefined);
+                    }
+                    setDownloading(false);
+                  }}
+                  disabled={downloading}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-200 dark:bg-slate-600 text-slate-700 dark:text-slate-200 text-sm font-bold hover:bg-slate-300 dark:hover:bg-slate-500 disabled:opacity-50 transition-colors"
+                  title="Download as ZIP"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+                  </svg>
+                  {downloading ? "..." : "Download"}
+                </button>
               </div>
             </header>
 
