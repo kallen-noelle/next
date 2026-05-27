@@ -196,7 +196,7 @@ async function collectMusic(
 }
 
 // Collect all data from Java backend
-async function collectAllData(): Promise<{ path: string; content: string }[]> {
+async function collectAllData(ghToken?: string): Promise<{ path: string; content: string }[]> {
   const base =
     typeof window !== "undefined"
       ? process.env.NEXT_PUBLIC_API_BASE || "http://localhost:18016/api"
@@ -225,7 +225,24 @@ async function collectAllData(): Promise<{ path: string; content: string }[]> {
   const PAGE = { pageNum: 1, pageSize: 100 };
   const files: { path: string; content: string }[] = [];
 
-  const dash = await apiGet<unknown>("/dashboard");
+  const dash = await apiGet<Record<string, any>>("/dashboard");
+  // 如果有 GitHub token，获取 GitHub 评论数覆盖 commentCount
+  if (ghToken) {
+    try {
+      const res = await fetch("https://api.github.com/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${ghToken}` },
+        body: JSON.stringify({
+          query: `query{repository(owner:"pc-Blog",name:"next"){discussions(first:50,categoryId:"DIC_kwDOSk99g84C9uoJ"){nodes{comments{totalCount}}}}}`,
+        }),
+      });
+      const json: any = await res.json();
+      const nodes = json?.data?.repository?.discussions?.nodes;
+      if (nodes) {
+        dash.commentCount = nodes.reduce((s: number, n: any) => s + n.comments.totalCount, 0);
+      }
+    } catch { /* skip */ }
+  }
   files.push({ path: "dashboard.json", content: JSON.stringify(dash, null, 2) });
 
   const about = await apiGet<unknown>("/about");
@@ -266,6 +283,11 @@ async function collectAllData(): Promise<{ path: string; content: string }[]> {
   }
 
   try {
+    const media = await apiPost<unknown, unknown>("/media/page", { pageNum: 1, pageSize: 999 });
+    files.push({ path: "media.json", content: JSON.stringify(media, null, 2) });
+  } catch { /* skip */ }
+
+  try {
     const comments = await apiPost<unknown, unknown>("/comment/page", PAGE);
     files.push({ path: "comments.json", content: JSON.stringify(comments, null, 2) });
   } catch { /* skip */ }
@@ -283,7 +305,7 @@ async function collectAllData(): Promise<{ path: string; content: string }[]> {
   files.push({
     path: "index.json",
     content: JSON.stringify(
-      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "comments", "music", "op-categories", "op-articles"],
+      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "media", "comments", "music", "op-categories", "op-articles"],
       null, 2
     ),
   });
@@ -446,7 +468,7 @@ export async function syncJson(
 ): Promise<SyncResult> {
   try {
     onProgress?.({ stage: "collecting", message: "Fetching data from API..." });
-    const files = await collectAllData();
+    const files = await collectAllData(token);
     onProgress?.({ stage: "collecting", message: `Collected ${files.length} files.` });
 
     const ts = new Date().toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" });
@@ -550,7 +572,8 @@ export async function syncMusic(
 // ── Manual sync — export data as a ZIP + standalone BAT ──
 
 export async function generateSyncZip(
-  onProgress?: ProgressCb
+  onProgress?: ProgressCb,
+  token?: string
 ): Promise<{ blob: Blob; name: string; batContent: string }> {
   const apiBase =
     typeof window !== "undefined"
@@ -559,7 +582,7 @@ export async function generateSyncZip(
 
   // 1. Collect JSON
   onProgress?.({ stage: "collecting", message: "Fetching JSON data..." });
-  const jsonFiles = await collectAllData();
+  const jsonFiles = await collectAllData(token);
   onProgress?.({ stage: "collecting", message: `Collected ${jsonFiles.length} JSON files.` });
 
   // 2. Collect media
