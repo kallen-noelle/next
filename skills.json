@@ -1,0 +1,65 @@
+{
+  "total": 6,
+  "rows": [
+    {
+      "category": null,
+      "createTime": "2026-05-21T22:14:53.370545",
+      "deleted": 0,
+      "id": 21,
+      "name": "Esp32",
+      "proficiency": 15,
+      "sortOrder": 0,
+      "updateTime": null
+    },
+    {
+      "category": null,
+      "createTime": "2026-05-21T21:49:02.947149",
+      "deleted": 0,
+      "id": 20,
+      "name": "8051单片机",
+      "proficiency": 60,
+      "sortOrder": 0,
+      "updateTime": null
+    },
+    {
+      "category": null,
+      "createTime": "2026-05-21T21:48:51.039436",
+      "deleted": 0,
+      "id": 19,
+      "name": "Stm32单片机",
+      "proficiency": 40,
+      "sortOrder": 0,
+      "updateTime": null
+    },
+    {
+      "category": null,
+      "createTime": "2026-05-21T20:40:01.304235",
+      "deleted": 0,
+      "id": 18,
+      "name": "微服务框架",
+      "proficiency": 50,
+      "sortOrder": 0,
+      "updateTime": null
+    },
+    {
+      "category": null,
+      "createTime": "2026-05-21T20:39:50.691395",
+      "deleted": 0,
+      "id": 17,
+      "name": "Spring全家桶",
+      "proficiency": 60,
+      "sortOrder": 0,
+      "updateTime": null
+    },
+    {
+      "category": null,
+      "createTime": "2026-05-21T20:39:34.707322",
+      "deleted": 0,
+      "id": 16,
+      "name": "Java8-25",
+      "proficiency": 30,
+      "sortOrder": 0,
+      "updateTime": null
+    }
+  ]
+}
