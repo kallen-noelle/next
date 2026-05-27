@@ -7,6 +7,7 @@ import { siteConfig } from "@/lib/siteConfig";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "@/app/_components/common/ThemeToggle";
+import FullscreenToggle from "@/app/_components/common/FullscreenToggle";
 
 const NAV_ITEMS = [
   { name: "Home", href: "/" },
@@ -113,6 +114,7 @@ export default function Navbar() {
         </nav>
 
         <ThemeToggle />
+        <FullscreenToggle />
       </div>
     </header>
   );

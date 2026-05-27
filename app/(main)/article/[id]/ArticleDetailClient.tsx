@@ -3,6 +3,7 @@
 import { useState, useEffect, use } from "react";
 import type { ArticleDetailVO } from "@/lib/types";
 import { getPublicDetail, addView } from "@/lib/api/article";
+import { get as getAbout } from "@/lib/api/about";
 import ArticleProse from "@/app/_components/article/ArticleProse";
 import ArticleSidebar from "@/app/_components/article/ArticleSidebar";
 import ArticleNav from "@/app/_components/article/ArticleNav";
@@ -10,12 +11,15 @@ import BackButton from "@/app/_components/article/BackButton";
 import ViewCount from "@/app/_components/article/ViewCount";
 import Giscus from "@/app/_components/comment/Giscus";
 import Loading from "@/app/_components/common/Loading";
+import { downloadContentAsZip } from "@/lib/download-content";
+import { showSuccessToast, showErrorToast } from "@/lib/toast";
 
 export default function ArticleDetailClient(props: { params: Promise<{ id: string }> }) {
   const { id } = use(props.params);
   const [article, setArticle] = useState<ArticleDetailVO | null>(null);
   const [loading, setLoading] = useState(true);
   const [giscusCount, setGiscusCount] = useState<number | null>(null);
+  const [downloading, setDownloading] = useState(false);
 
   // listen for Giscus discussion metadata to get live comment count
   useEffect(() => {
@@ -74,6 +78,33 @@ export default function ArticleDetailClient(props: { params: Promise<{ id: strin
                 )}
                 <ViewCount count={article.viewCount} />
                 <span>{giscusCount ?? article.commentCount} comments</span>
+                <button
+                  onClick={async () => {
+                    setDownloading(true);
+                    try {
+                      const about = await getAbout().catch(() => ({}));
+                      const res = await downloadContentAsZip({
+                        title: article.title,
+                        content: article.content,
+                        coverImage: article.coverImage,
+                        about,
+                      });
+                      const img = res.imageSuccess > 0 ? ` (${res.imageSuccess} images)` : "";
+                      showSuccessToast(`"${res.title}" downloaded${img}`);
+                    } catch (e) {
+                      showErrorToast("Download failed", e instanceof Error ? e.message : undefined);
+                    }
+                    setDownloading(false);
+                  }}
+                  disabled={downloading}
+                  className="inline-flex items-center gap-1 text-indigo-500 hover:text-indigo-600 disabled:opacity-50 transition-colors"
+                  title="Download as ZIP"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+                  </svg>
+                  {downloading ? "..." : "Download"}
+                </button>
               </div>
 
               <h1 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">
