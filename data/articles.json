@@ -1,51 +1,16 @@
 {
-  "total": 2,
+  "total": 1,
   "rows": [
     {
-      "categoryId": 38,
-      "categoryName": "网站部署",
-      "commentCount": 0,
-      "coverImage": "http://localhost:19090/blog/202605/e075f82b469341ecbf20ad03db257cae.jpg",
-      "createdAt": "2026-05-26T20:16:47.720519",
-      "id": 35,
-      "isPinned": 0,
-      "isPublished": 1,
-      "summary": "本教程将指导你如何将个人网站/博客提交到 Bing 搜索引擎，让 Bing 用户能够搜索到你的内容",
-      "tags": [
-        {
-          "id": 25,
-          "name": "Bing"
-        },
-        {
-          "id": 26,
-          "name": "SEO"
-        }
-      ],
-      "title": "将个人网址录入Bing搜索引擎",
-      "viewCount": 3
-    },
-    {
-      "categoryId": 37,
-      "categoryName": "Ai编程",
-      "commentCount": 0,
-      "coverImage": "http://localhost:19090/blog/202605/a3286751fe854f9099298d77119eede8.webp",
-      "createdAt": "2026-05-26T10:23:39.694181",
-      "id": 33,
-      "isPinned": 0,
-      "isPublished": 1,
-      "summary": "本教程将指导你完成 Codex 的安装，并通过 **CCX + CCSwitch** 将其接入 DeepSeek 等自定义 API。",
-      "tags": [
-        {
-          "id": 23,
-          "name": "codex"
-        },
-        {
-          "id": 24,
-          "name": "deepseek"
-        }
-      ],
-      "title": "codex安装及接入deepseek教程",
-      "viewCount": 154
+      "id": 999,
+      "title": "Test Article - GitHub Pages Deploy",
+      "summery": "This is a test article to verify data branch trigger deployment.",
+      "categoryName": "测试",
+      "tags": ["test"],
+      "createdAt": "2026-05-24T00:00:00",
+      "updatedAt": "2026-05-24T00:00:00",
+      "status": "published",
+      "top": false
     }
   ]
 }
