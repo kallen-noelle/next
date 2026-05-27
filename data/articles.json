@@ -3,14 +3,14 @@
   "rows": [
     {
       "categoryId": 38,
-      "categoryName": "ç½ç«é¨ç½²",
+      "categoryName": "网站部署",
       "commentCount": 0,
       "coverImage": "/next/data/media/47.jpg",
       "createdAt": "2026-05-26T20:16:47.720519",
       "id": 35,
       "isPinned": 0,
       "isPublished": 1,
-      "summary": "æ¬æç¨å°æå¯¼ä½ å¦ä½å°ä¸ªäººç½ç«/åå®¢æäº¤å° Bing æç´¢å¼æï¼è®© Bing ç¨æ·è½å¤æç´¢å°ä½ çåå®¹",
+      "summary": "本教程将指导你如何将个人网站/博客提交到 Bing 搜索引擎，让 Bing 用户能够搜索到你的内容",
       "tags": [
         {
           "id": 25,
@@ -21,19 +21,19 @@
           "name": "SEO"
         }
       ],
-      "title": "å°ä¸ªäººç½åå½å¥Bingæç´¢å¼æ",
+      "title": "将个人网址录入Bing搜索引擎",
       "viewCount": 3
     },
     {
       "categoryId": 37,
-      "categoryName": "Aiç¼ç¨",
+      "categoryName": "Ai编程",
       "commentCount": 0,
       "coverImage": "/next/data/media/40.webp",
       "createdAt": "2026-05-26T10:23:39.694181",
       "id": 33,
       "isPinned": 0,
       "isPublished": 1,
-      "summary": "æ¬æç¨å°æå¯¼ä½ å®æ Codex çå®è£ï¼å¹¶éè¿ **CCX + CCSwitch** å°å¶æ¥å¥ DeepSeek ç­èªå®ä¹ APIã",
+      "summary": "本教程将指导你完成 Codex 的安装，并通过 **CCX + CCSwitch** 将其接入 DeepSeek 等自定义 API。",
       "tags": [
         {
           "id": 23,
@@ -44,7 +44,7 @@
           "name": "deepseek"
         }
       ],
-      "title": "codexå®è£åæ¥å¥deepseekæç¨",
+      "title": "codex安装及接入deepseek教程",
       "viewCount": 154
     }
   ]
