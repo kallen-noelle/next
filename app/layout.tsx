@@ -34,6 +34,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <meta charSet="utf-8" />
         <style
           dangerouslySetInnerHTML={{
             __html: `
