@@ -144,7 +144,7 @@ export default function AdminDashboardPage() {
           progress: p,
           logs: p.log ? [...prev.logs, p.log] : prev.logs,
         }));
-      });
+      }, savedToken);
 
       // Download ZIP
       const zipUrl = URL.createObjectURL(blob);

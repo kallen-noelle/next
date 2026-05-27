@@ -121,7 +121,6 @@ export default function Home() {
             <div className="rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-6 flex items-center gap-8 flex-wrap">
               {[
                 { v: dash.articleCount, l: "Articles" },
-                { v: dash.totalViews, l: "Total Views" },
                 { v: dash.commentCount, l: "Comments" },
                 { v: dash.timelineCount, l: "Milestones" },
               ].map((s) => (
