@@ -15,6 +15,14 @@ export interface SyncProgress {
 
 type ProgressCb = (p: SyncProgress) => void;
 
+/** Decode base64 to UTF-8 string (browser-safe) */
+function base64DecodeUtf8(base64: string): string {
+  const binaryStr = atob(base64);
+  const bytes = new Uint8Array(binaryStr.length);
+  for (let i = 0; i < binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i);
+  return new TextDecoder("utf-8").decode(bytes);
+}
+
 // GitHub API helper
 async function gh(url: string, token: string, method = "GET", body?: unknown) {
   const res = await fetch(url, {
@@ -453,7 +461,7 @@ async function getExistingJsonFiles(
   for (const entry of jsonEntries) {
     try {
       const blob = await gh(entry.url, token);
-      result.set(entry.path, atob(blob.content));
+      result.set(entry.path, base64DecodeUtf8(blob.content));
     } catch { /* skip */ }
   }
 
