@@ -234,6 +234,22 @@ export interface SocialLink {
 }
 
 
+// ========== Friend Link ==========
+
+export interface FriendLink {
+  id?: number;
+  name: string;
+  url: string;
+  description?: string;
+  avatar?: string;
+  themeColor?: string;
+  sortOrder?: number;
+  isPublished?: number;
+  deleted?: number;
+  createTime?: string;
+  updateTime?: string;
+}
+
 // ========== Media ==========
 
 export interface Media {
@@ -278,25 +294,18 @@ export interface DashboardVO {
 
 // ========== Op (Tomcat proxy) ==========
 
-export interface OpCategory {
-  id: number;
-  name: string;
-}
-
-export interface OpArticleQuery {
-  title?: string;
-  tagId?: number;
-  startTime?: string;
-  endTime?: string;
-}
-
 export interface OpArticle {
   id: number;
   title: string;
-  fileName?: string;
-  weather?: string;
+  content?: string;
   writtenAt?: string;
   tagIds: number[];
+}
+
+export interface OpTag {
+  id: number;
+  name: string;
+  articles: OpArticle[];
 }
 
 export interface OpMusic {

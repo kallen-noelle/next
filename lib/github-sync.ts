@@ -302,18 +302,14 @@ async function collectAllData(ghToken?: string): Promise<{ path: string; content
 
   // Op / Literature data
   try {
-    const opCats = await apiGet<unknown>("/op/category");
-    files.push({ path: "op-categories.json", content: JSON.stringify(opCats, null, 2) });
-  } catch { /* skip */ }
-  try {
-    const opArticles = await apiPost<unknown, unknown>("/op/article", { pageNum: 1, pageSize: 1000 });
+    const opArticles = await apiPost<unknown, unknown>("/op/article");
     files.push({ path: "op-articles.json", content: JSON.stringify(opArticles, null, 2) });
   } catch { /* skip */ }
 
   files.push({
     path: "index.json",
     content: JSON.stringify(
-      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "media", "comments", "music", "op-categories", "op-articles"],
+      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "media", "comments", "music", "op-articles"],
       null, 2
     ),
   });

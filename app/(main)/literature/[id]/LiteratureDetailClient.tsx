@@ -14,11 +14,17 @@ export default function LiteratureDetailPage(props: { params: Promise<{ id: stri
     (async () => {
       setLoading(true);
       try {
-        // Op API searches by title/tag — get single item via page query with id
-        const data = await getArticleList({ pageNum: 1, pageSize: 1, query: { title: id } });
-        setItem(data.rows[0] || null);
-      } catch { setItem(null); }
-      finally { setLoading(false); }
+        const data = await getArticleList();
+        const numId = Number(id);
+        const found = data.rows
+          .flatMap((t) => t.articles)
+          .find((a) => a.id === numId || a.title === id);
+        setItem(found || null);
+      } catch {
+        setItem(null);
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [id]);
 
@@ -28,12 +34,12 @@ export default function LiteratureDetailPage(props: { params: Promise<{ id: stri
   return (
     <>
       <h1 className="text-3xl sm:text-4xl font-black tracking-tighter text-slate-900 dark:text-white">{item.title}</h1>
-      {item.weather && <span className="inline-block mt-2 text-xs px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-500">{item.weather}</span>}
       {item.writtenAt && <p className="mt-4 text-sm text-slate-400">{item.writtenAt}</p>}
-      {/* Content is on Tomcat — basic info displayed */}
-      <div className="mt-8 glass-card p-8">
-        <p className="text-slate-500 dark:text-slate-400 italic">The full content is hosted on the Tomcat server. This page provides metadata and categorization.</p>
-      </div>
+      {item.content && (
+        <div className="mt-8 glass-card p-8 text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
+          {item.content}
+        </div>
+      )}
     </>
   );
 }
