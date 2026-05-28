@@ -302,7 +302,7 @@ async function collectAllData(ghToken?: string): Promise<{ path: string; content
 
   // Op / Literature data
   try {
-    const opArticles = await apiPost<unknown, unknown>("/op/article");
+    const opArticles = await apiPost<unknown, unknown>("/op/article", {});
     files.push({ path: "op-articles.json", content: JSON.stringify(opArticles, null, 2) });
   } catch { /* skip */ }
 

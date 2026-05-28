@@ -1,19 +1,26 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import type { OpTag, OpArticle } from "@/lib/types";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import type { OpTag } from "@/lib/types";
 import { getArticleList } from "@/lib/api/op";
+import { tagIconMap } from "./tag-icons";
 import LiteratureCard from "./LiteratureCard";
-import Pagination from "../common/Pagination";
 import Loading from "../common/Loading";
+
+const staggerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.05 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const } },
+};
 
 export default function LiteratureList() {
   const [tags, setTags] = useState<OpTag[]>([]);
-  const [selectedTagId, setSelectedTagId] = useState<number | undefined>();
-  const [keyword, setKeyword] = useState("");
   const [loading, setLoading] = useState(true);
-  const [pageNum, setPageNum] = useState(1);
-  const pageSize = 12;
 
   useEffect(() => {
     (async () => {
@@ -29,72 +36,41 @@ export default function LiteratureList() {
     })();
   }, []);
 
-  const allArticles = useMemo(() => {
-    const list: OpArticle[] = [];
-    for (const tag of tags) {
-      for (const article of tag.articles) {
-        list.push(article);
-      }
-    }
-    return list;
-  }, [tags]);
-
-  const filtered = useMemo(() => {
-    let list = selectedTagId
-      ? tags.find((t) => t.id === selectedTagId)?.articles ?? []
-      : allArticles;
-
-    if (keyword) {
-      const kw = keyword.toLowerCase();
-      list = list.filter((a) => a.title.toLowerCase().includes(kw));
-    }
-    return list;
-  }, [tags, selectedTagId, keyword, allArticles]);
-
-  const paged = useMemo(() => {
-    const start = (pageNum - 1) * pageSize;
-    return filtered.slice(start, start + pageSize);
-  }, [filtered, pageNum]);
-
-  useEffect(() => setPageNum(1), [selectedTagId, keyword]);
-
   if (loading) return <Loading />;
   if (tags.length === 0) return <p className="text-center py-10 text-slate-400">Tomcat data unavailable.</p>;
 
   return (
     <div>
-      {/* Filters */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        <button
-          onClick={() => { setSelectedTagId(undefined); setPageNum(1); }}
-          className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${!selectedTagId ? "bg-indigo-500 text-white" : "glass-btn"}`}
-        >
-          All
-        </button>
-        {tags.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => { setSelectedTagId(t.id); setPageNum(1); }}
-            className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${selectedTagId === t.id ? "bg-indigo-500 text-white" : "glass-btn"}`}
+      {tags.map((tag, idx) => (
+        <section key={tag.id} className={idx < tags.length - 1 ? "mb-12" : ""}>
+          <h2 className="text-lg font-bold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
+            {(() => {
+              const info = tagIconMap[tag.name];
+              if (info) {
+                const { Icon, color } = info;
+                return <Icon className={`w-6 h-6 ${color}`} strokeWidth={1.5} />;
+              }
+              return <span className="text-indigo-400">◇</span>;
+            })()} {tag.name}
+          </h2>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerVariants}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
           >
-            {t.name}
-          </button>
-        ))}
-        <input
-          type="text"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          placeholder="Search..."
-          className="ml-auto glass-card !rounded-xl px-3 py-1 text-xs w-40 outline-none"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {paged.map((item) => (
-          <LiteratureCard key={item.id} item={item} />
-        ))}
-      </div>
-      <Pagination pageNum={pageNum} pageSize={pageSize} total={filtered.length} onChange={setPageNum} />
+            {tag.articles.map((article) => (
+              <motion.div key={article.id} variants={cardVariants}>
+                <LiteratureCard item={article} />
+              </motion.div>
+            ))}
+          </motion.div>
+          {idx < tags.length - 1 && (
+            <div className="mt-8 h-px bg-gradient-to-r from-transparent via-indigo-300/50 dark:via-indigo-500/30 to-transparent" />
+          )}
+        </section>
+      ))}
     </div>
   );
 }
