@@ -3,6 +3,7 @@ import type { PageVO, Media, PageDTO } from "@/lib/types";
 import { getPublicList as getArticleList, getPublicDetail as getArticleDetail } from "./article";
 import { getPublicList as getProjectList, getPublicDetail as getProjectDetail } from "./project";
 import { get as getAbout } from "./about";
+import { getList as getAlbumListAll, getPhotosByAlbum } from "./album";
 
 export async function getList(params: PageDTO<Media>) {
   return api.post<PageVO<Media>, PageVO<Media>>("/media/page", params);
@@ -21,7 +22,7 @@ export async function remove(id: number) {
 }
 
 export interface MediaRef {
-  type: "article" | "project" | "about";
+  type: "article" | "project" | "about" | "album";
   title: string;
   id?: number;
   field: "coverImage" | "content";
@@ -71,6 +72,20 @@ export async function scanMediaWithRefs(): Promise<{
     const about = await getAbout();
     for (const val of Object.values(about)) {
       if (val) sources.push({ text: val, type: "about", title: "About", field: "content" });
+    }
+  } catch { /* skip */ }
+
+  // 2d. Albums
+  try {
+    const albumRes = await getAlbumListAll("", 1, 999);
+    const albums = albumRes.rows || [];
+    for (const a of albums) {
+      if (a.id) {
+        const photos = await getPhotosByAlbum(a.id);
+        for (const ph of (Array.isArray(photos) ? photos : [])) {
+          if (ph.url) sources.push({ text: ph.url, type: "album", title: a.title, id: a.id, field: "content" });
+        }
+      }
     }
   } catch { /* skip */ }
 

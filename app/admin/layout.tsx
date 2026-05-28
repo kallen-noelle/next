@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { label: "Projects", href: "/admin/project" },
   { label: "Timeline", href: "/admin/timeline" },
   { label: "Skills", href: "/admin/skill" },
+  { label: "Albums", href: "/admin/album" },
   { label: "Friend Links", href: "/admin/friend-link" },
   { label: "Categories", href: "/admin/category" },
   { label: "Tags", href: "/admin/tag" },

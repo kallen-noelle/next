@@ -308,6 +308,30 @@ export interface OpTag {
   articles: OpArticle[];
 }
 
+// ========== Album / Gallery ==========
+
+export interface Album {
+  id?: number;
+  title: string;
+  description: string;
+  sortOrder?: number;
+  isPublished?: number;
+  deleted?: number;
+  createTime?: string;
+  updateTime?: string;
+  photos?: Photo[];
+}
+
+export interface Photo {
+  id?: number;
+  albumId: number;
+  url: string;
+  sortOrder?: number;
+  deleted?: number;
+  createTime?: string;
+  updateTime?: string;
+}
+
 export interface OpMusic {
   id: number;
   title: string;
