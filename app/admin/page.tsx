@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { DashboardVO } from "@/lib/types";
 import type { MediaWithRef } from "@/lib/api/media";
 import { get } from "@/lib/api/dashboard";
+import { getArticleList } from "@/lib/api/op";
 import { syncJson, syncMedia, syncMusic, generateSyncZip, type SyncProgress } from "@/lib/github-sync";
 import { scanMediaWithRefs, remove as deleteMedia } from "@/lib/api/media";
 
@@ -54,6 +55,7 @@ function SyncPanel({ label, syncing, progress, logs, result, onSync }: {
 
 export default function AdminDashboardPage() {
   const [dash, setDash] = useState<DashboardVO | null>(null);
+  const [literatureCount, setLiteratureCount] = useState<number | null>(null);
   const [token, setToken] = useState("");
   const [savedToken, setSavedToken] = useState("");
   const [jsonSync, setJsonSync] = useState<SyncState>({ syncing: false, progress: null, logs: [], result: null });
@@ -65,6 +67,10 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     get().then(setDash).catch(() => {});
+    getArticleList().then(d => {
+      const total = d.rows.reduce((sum, t) => sum + t.articles.length, 0);
+      setLiteratureCount(total);
+    }).catch(() => {});
     const stored = localStorage.getItem(STORAGE_KEY) || "";
     setSavedToken(stored);
   }, []);
@@ -239,6 +245,7 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
         {[
           { label: "Articles", value: dash.articleCount, href: "/admin/article", color: "text-indigo-500" },
+          { label: "Literature", value: literatureCount ?? 0, href: "/literature", color: "text-emerald-500" },
           { label: "Projects", value: dash.projectCount, href: "/admin/project", color: "text-purple-500" },
           { label: "Skills", value: dash.skillCount, href: "/admin/skill", color: "text-pink-500" },
           { label: "Comments", value: dash.commentCount, href: "#", color: "text-emerald-500" },

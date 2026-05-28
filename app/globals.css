@@ -69,6 +69,12 @@
   scrollbar-color: rgba(99, 102, 241, 0.3) transparent;
 }
 
+/* 全屏模式：body 的 overflow-y-scroll 会导致滚动条样式丢失 */
+:fullscreen body,
+:-webkit-full-screen body {
+  overflow-y: auto !important;
+}
+
 /* 毛玻璃卡片工具类 */
 @layer components {
   .glass-card {

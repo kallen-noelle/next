@@ -7,6 +7,7 @@ import { assetUrl } from "@/lib/asset-url";
 import type { DashboardVO } from "@/lib/types";
 import { get } from "@/lib/api/dashboard";
 import { get as getAbout } from "@/lib/api/about";
+import { getArticleList } from "@/lib/api/op";
 import ThemeToggleBlock from "@/app/_components/common/ThemeToggle";
 import Tooltip from "@/app/_components/common/Tooltip";
 import SiteDashboard from "@/app/_components/layout/SiteDashboard";
@@ -15,10 +16,33 @@ import MusicPlayer from "@/app/_components/layout/MusicPlayer";
 export default function Home() {
   const [dash, setDash] = useState<DashboardVO | null>(null);
   const [about, setAbout] = useState<Record<string, string>>({});
+  const [literatureCount, setLiteratureCount] = useState<number | null>(null);
 
   useEffect(() => {
     get().then(setDash).catch(() => {});
     getAbout().then(setAbout).catch(() => {});
+    getArticleList().then(d => {
+      const total = d.rows.reduce((sum, t) => sum + t.articles.length, 0);
+      setLiteratureCount(total);
+    }).catch(() => {});
+
+    // 获取 Giscus 实时评论总数
+    const ghToken = localStorage.getItem("github_token");
+    if (ghToken) {
+      fetch("https://api.github.com/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${ghToken}` },
+        body: JSON.stringify({
+          query: `query{repository(owner:"pc-Blog",name:"next"){discussions(first:50,categoryId:"DIC_kwDOSk99g84C9uoJ"){nodes{comments{totalCount}}}}}`,
+        }),
+      }).then(r => r.json()).then(json => {
+        const nodes = json?.data?.repository?.discussions?.nodes;
+        if (nodes) {
+          const total = nodes.reduce((s: number, n: any) => s + n.comments.totalCount, 0);
+          setDash(prev => prev ? { ...prev, commentCount: total } : prev);
+        }
+      }).catch(() => {});
+    }
   }, []);
 
   const authorName = about["name"] || siteConfig.authorName;
@@ -141,8 +165,8 @@ export default function Home() {
           {dash && (
             <div className="rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-6 flex items-center gap-8 flex-wrap">
               {[
-                { v: dash.articleCount, l: "Articles" },
                 { v: dash.commentCount, l: "Comments" },
+                { v: literatureCount ?? "—", l: "Literature" },
                 { v: dash.timelineCount, l: "Milestones" },
               ].map((s) => (
                 <div key={s.l}>
