@@ -300,6 +300,18 @@ async function collectAllData(ghToken?: string): Promise<{ path: string; content
     files.push({ path: "comments.json", content: JSON.stringify(comments, null, 2) });
   } catch { /* skip */ }
 
+  // Album / Gallery data
+  try {
+    const albums = await apiGet<unknown>("/album/list");
+    files.push({ path: "albums.json", content: JSON.stringify(albums, null, 2) });
+  } catch { /* skip */ }
+
+  // Friend links
+  try {
+    const friendLinks = await apiGet<unknown>("/friend-link/list");
+    files.push({ path: "friendLinks.json", content: JSON.stringify(friendLinks, null, 2) });
+  } catch { /* skip */ }
+
   // Op / Literature data
   try {
     const opArticles = await apiPost<unknown, unknown>("/op/article", {});
@@ -309,7 +321,7 @@ async function collectAllData(ghToken?: string): Promise<{ path: string; content
   files.push({
     path: "index.json",
     content: JSON.stringify(
-      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "media", "comments", "music", "op-articles"],
+      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "media", "comments", "music", "op-articles", "albums", "friendLinks"],
       null, 2
     ),
   });
