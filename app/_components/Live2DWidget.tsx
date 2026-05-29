@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "./layout/ThemeProvider";
 import { get as getAbout } from "@/lib/api/about";
+import { assetUrl } from "@/lib/asset-url";
 
 declare global {
   interface Window {
@@ -128,16 +129,16 @@ export default function Live2DWidget() {
 
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "/pio/pio.css";
+    link.href = assetUrl("/pio/pio.css");
     document.head.appendChild(link);
 
     const scripts = [
-      "/pio/TweenLite.js",
-      "/pio/live2dcubismcore.min.js",
-      "/pio/pixi.min.js",
-      "/pio/cubism4.min.js",
-      "/pio/pio.js",
-      "/pio/pio_sdk4.js",
+      assetUrl("/pio/TweenLite.js"),
+      assetUrl("/pio/live2dcubismcore.min.js"),
+      assetUrl("/pio/pixi.min.js"),
+      assetUrl("/pio/cubism4.min.js"),
+      assetUrl("/pio/pio.js"),
+      assetUrl("/pio/pio_sdk4.js"),
     ];
 
     let idx = 0;
@@ -176,7 +177,7 @@ export default function Live2DWidget() {
         touch: ["你在干什么？", "再摸我就报警了！", "HENTAI!", "不可以这样欺负我啦！", "今天天气不错呢~", "要和我一起玩吗？", "盯——", "别戳了啦！", "好无聊啊，陪我聊聊天吧", "呜呜...你欺负我", "嘿！抓到你了！", "你是不是喜欢我呀？", "努力工作，加油！", "我可爱吗？", "喂喂，有人在吗？"],
         custom: [],
       },
-      model: [`/live2d-models/${modelFile}/${modelFile}.model3.json`],
+      model: [assetUrl(`/live2d-models/${modelFile}/${modelFile}.model3.json`)],
       tips: true,
       onModelLoad: (model: any) => {
         const name = model.internalModel?.settings?.name;
