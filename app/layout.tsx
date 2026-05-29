@@ -7,6 +7,7 @@ import BackgroundEffects from "./_components/common/ParticleBg";
 import DanmakuBackground from "./_components/layout/DanmakuBackground";
 import ClickEffect from "./_components/common/ClickEffect";
 import SplashScreen from "./_components/layout/SplashScreen";
+import Live2DWidget from "./_components/Live2DWidgetWrapper";
 import { siteConfig } from "@/lib/siteConfig";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -84,6 +85,7 @@ export default function RootLayout({
             </div>
             <div className="relative z-10 flex-1 flex flex-col min-h-0">{children}</div>
             <ClickEffect />
+            <Live2DWidget />
           </div>
 
           <style
