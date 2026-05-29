@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dream Blog</title>
+    <link>https://pc-blog.github.io/next</link>
+    <description>A personal space for code, science, and thoughts.</description>
+    <language>zh-CN</language>
+    <atom:link href="https://pc-blog.github.io/next/feed.xml" rel="self" type="application/rss+xml"/>
+    
+    <item>
+      <title><![CDATA[将个人网址录入Bing搜索引擎]]></title>
+      <link>https://pc-blog.github.io/next/article/35/</link>
+      <guid>https://pc-blog.github.io/next/article/35/</guid>
+      <pubDate>Tue, 26 May 2026 20:16:47 GMT</pubDate>
+      <description><![CDATA[本教程将指导你如何将个人网站/博客提交到 Bing 搜索引擎，让 Bing 用户能够搜索到你的内容]]></description>
+      <author>Blog Author</author>
+    </item>
+    <item>
+      <title><![CDATA[codex安装及接入deepseek教程]]></title>
+      <link>https://pc-blog.github.io/next/article/33/</link>
+      <guid>https://pc-blog.github.io/next/article/33/</guid>
+      <pubDate>Tue, 26 May 2026 10:23:39 GMT</pubDate>
+      <description><![CDATA[本教程将指导你完成 Codex 的安装，并通过 **CCX + CCSwitch** 将其接入 DeepSeek 等自定义 API。]]></description>
+      <author>Blog Author</author>
+    </item>
+  </channel>
+</rss>
