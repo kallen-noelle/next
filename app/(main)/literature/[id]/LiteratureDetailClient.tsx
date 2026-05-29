@@ -8,6 +8,7 @@ import { getArticleList } from "@/lib/api/op";
 import BackButton from "@/app/_components/article/BackButton";
 import Loading from "@/app/_components/common/Loading";
 import Giscus from "@/app/_components/comment/Giscus";
+import JsonLd from "@/app/_components/common/JsonLd";
 import { tagIconMap } from "@/app/_components/literature/tag-icons";
 
 export default function LiteratureDetailPage(props: { params: Promise<{ id: string }> }) {
@@ -73,7 +74,16 @@ export default function LiteratureDetailPage(props: { params: Promise<{ id: stri
   if (!item) return <div className="text-center py-24 text-slate-400">Work not found.</div>;
 
   return (
-    <motion.div
+    <>
+      {item && (
+        <JsonLd data={{
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          name: item.title,
+          dateCreated: item.writtenAt,
+        }} />
+      )}
+      <motion.div
       initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
       animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
       transition={{ ease: [0.25, 0.46, 0.45, 0.94], duration: 0.35 }}
@@ -172,5 +182,6 @@ export default function LiteratureDetailPage(props: { params: Promise<{ id: stri
         </div>
       </div>
     </motion.div>
+    </>
   );
 }

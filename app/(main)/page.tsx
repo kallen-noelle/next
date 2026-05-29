@@ -12,6 +12,7 @@ import ThemeToggleBlock from "@/app/_components/common/ThemeToggle";
 import Tooltip from "@/app/_components/common/Tooltip";
 import SiteDashboard from "@/app/_components/layout/SiteDashboard";
 import MusicPlayer from "@/app/_components/layout/MusicPlayer";
+import JsonLd from "@/app/_components/common/JsonLd";
 
 export default function Home() {
   const [dash, setDash] = useState<DashboardVO | null>(null);
@@ -50,7 +51,16 @@ export default function Home() {
   const hasContact = !!(about["email"] || about["github"] || about["gitee"] || about["juejin"] || about["csdn"] || about["cnblogs"]);
 
   return (
-    <div className="flex flex-col gap-6 w-full mt-6">
+    <>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: siteConfig.title,
+        alternateName: siteConfig.navTitle,
+        description: siteConfig.bio,
+        url: typeof window !== "undefined" ? window.location.origin : "https://pc-blog.github.io/next",
+      }} />
+      <div className="flex flex-col gap-6 w-full mt-6">
       {/* Row 1: Profile Card + Player */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
         {/* ProfileCard — 7 cols */}
@@ -186,5 +196,6 @@ export default function Home() {
       {/* Row 4: Site Dashboard */}
       <SiteDashboard />
     </div>
+    </>
   );
 }

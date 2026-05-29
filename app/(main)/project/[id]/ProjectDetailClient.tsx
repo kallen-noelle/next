@@ -12,6 +12,7 @@ import Giscus from "@/app/_components/comment/Giscus";
 import Loading from "@/app/_components/common/Loading";
 import { downloadContentAsZip } from "@/lib/download-content";
 import { showSuccessToast, showErrorToast } from "@/lib/toast";
+import JsonLd from "@/app/_components/common/JsonLd";
 
 export default function ProjectDetailClient(props: { params: Promise<{ id: string }> }) {
   const { id } = use(props.params);
@@ -37,7 +38,18 @@ export default function ProjectDetailClient(props: { params: Promise<{ id: strin
   if (!project) return <div className="text-center py-24 text-slate-400">Project not found.</div>;
 
   return (
-    <div className="min-h-screen relative pb-20">
+    <>
+      {project && (
+        <JsonLd data={{
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          name: project.name,
+          description: project.summary,
+          dateCreated: project.createdAt,
+          image: project.coverImage || undefined,
+        }} />
+      )}
+      <div className="min-h-screen relative pb-20">
       <div className="flex flex-col lg:flex-row gap-8">
         <article className="flex-1 min-w-0 bg-white/60 dark:bg-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-white/10 overflow-hidden">
           {project.coverImage && (
@@ -129,5 +141,6 @@ export default function ProjectDetailClient(props: { params: Promise<{ id: strin
         <ArticleSidebar content={project.content || ""} />
       </div>
     </div>
+    </>
   );
 }

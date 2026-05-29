@@ -13,6 +13,7 @@ import Giscus from "@/app/_components/comment/Giscus";
 import Loading from "@/app/_components/common/Loading";
 import { downloadContentAsZip } from "@/lib/download-content";
 import { showSuccessToast, showErrorToast } from "@/lib/toast";
+import JsonLd from "@/app/_components/common/JsonLd";
 
 export default function ArticleDetailClient(props: { params: Promise<{ id: string }> }) {
   const { id } = use(props.params);
@@ -55,7 +56,19 @@ export default function ArticleDetailClient(props: { params: Promise<{ id: strin
     : "";
 
   return (
-    <div className="min-h-screen relative pb-20">
+    <>
+      {article && (
+        <JsonLd data={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: article.title,
+          description: article.summary,
+          datePublished: article.createdAt,
+          author: { "@type": "Person", name: "作者" },
+          image: article.coverImage || undefined,
+        }} />
+      )}
+      <div className="min-h-screen relative pb-20">
       <div className="flex flex-col lg:flex-row gap-8">
         <article className="flex-1 min-w-0 bg-white/60 dark:bg-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-white/10 overflow-hidden">
           {article.coverImage && (
@@ -134,5 +147,6 @@ export default function ArticleDetailClient(props: { params: Promise<{ id: strin
         <ArticleSidebar content={article.content} />
       </div>
     </div>
+    </>
   );
 }
