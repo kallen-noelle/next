@@ -1,6 +1,6 @@
 import api from "@/lib/axios";
 import type { PageVO, Album, Photo, PageDTO } from "@/lib/types";
-import { detectMode, ensureData } from "@/lib/static-data";
+import { detectMode, ensureData, getDetailData } from "@/lib/static-data";
 
 // ========== Album ==========
 
@@ -37,6 +37,10 @@ export async function deleteAlbum(id: number) { return api.delete(`/album/${id}`
 // ========== Photo ==========
 
 export async function getPhotosByAlbum(albumId: number) {
+  if ((await detectMode()) === "static") {
+    const data = await getDetailData<Photo[]>("albums", albumId);
+    return data ?? [];
+  }
   return api.get<Photo[], Photo[]>(`/photo/by-album/${albumId}`);
 }
 

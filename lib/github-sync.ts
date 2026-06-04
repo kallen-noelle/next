@@ -302,8 +302,15 @@ async function collectAllData(ghToken?: string): Promise<{ path: string; content
 
   // Album / Gallery data
   try {
-    const albums = await apiGet<unknown>("/album/list");
+    const albums = await apiGet<any[]>("/album/list");
     files.push({ path: "albums.json", content: JSON.stringify(albums, null, 2) });
+    // Collect photos for each album
+    for (const a of albums || []) {
+      try {
+        const photos = await apiGet<unknown>(`/photo/by-album/${a.id}`);
+        files.push({ path: `albums/${a.id}.json`, content: JSON.stringify(photos, null, 2) });
+      } catch { /* skip */ }
+    }
   } catch { /* skip */ }
 
   // Friend links
