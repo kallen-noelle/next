@@ -3,7 +3,7 @@
   <channel>
     <title>Dream Blog</title>
     <link>https://pc-blog.github.io/next</link>
-    <description>A personal space for code, science, and thoughts.</description>
+    <description>个人博客，分享代码、科学思考与生活记录。涵盖 Web 开发、项目实践、文学作品与学习笔记。</description>
     <language>zh-CN</language>
     <atom:link href="https://pc-blog.github.io/next/feed.xml" rel="self" type="application/rss+xml"/>
     
