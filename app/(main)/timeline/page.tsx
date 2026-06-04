@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import Timeline from "@/app/_components/timeline/Timeline";
 import SkillBar from "@/app/_components/timeline/SkillBar";
+
+export const metadata: Metadata = {
+  title: "Timeline",
+  description: "学习历程与技能清单，记录技术成长路径和掌握的工具栈。",
+};
 
 export default function TimelinePage() {
   return (

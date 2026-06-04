@@ -21,8 +21,17 @@ const notoSerif = Noto_Serif_SC({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://pc-blog.github.io/next"),
-  title: siteConfig.title,
+  title: { default: siteConfig.title, template: `%s | ${siteConfig.title}` },
   description: siteConfig.bio,
+  keywords: ["blog", "web development", "programming", "前端", "全栈", "个人博客", "技术博客"],
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: siteConfig.title,
+    description: siteConfig.bio,
+    siteName: siteConfig.title,
+    type: "website",
+    locale: "zh_CN",
+  },
 };
 
 export default function RootLayout({

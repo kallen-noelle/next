@@ -50,6 +50,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.6,
     },
+    {
+      url: `${BASE_URL}/friends/`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
   ];
 
   const dataDir = path.join(process.cwd(), "public", "data");
@@ -80,6 +86,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: project.createTime ? new Date(project.createTime) : new Date(),
         changeFrequency: "monthly",
         priority: 0.7,
+      });
+    }
+  } catch {
+    // data files not available — static routes only
+  }
+
+  // Literature — /literature/{id}/
+  try {
+    const raw = fs.readFileSync(path.join(dataDir, "op-articles.json"), "utf-8");
+    const data = JSON.parse(raw) as { rows: { id?: number; title: string; writtenAt?: string }[] };
+    for (const item of data.rows || []) {
+      if (item.id == null) continue;
+      entries.push({
+        url: `${BASE_URL}/literature/${item.id}/`,
+        lastModified: item.writtenAt ? new Date(item.writtenAt) : new Date(),
+        changeFrequency: "monthly",
+        priority: 0.6,
       });
     }
   } catch {

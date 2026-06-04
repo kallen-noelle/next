@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import LiteratureList from "@/app/_components/literature/LiteratureList";
+
+export const metadata: Metadata = {
+  title: "Literature",
+  description: "诗歌、散文、随笔与文学创作，用文字记录思考与情感。",
+};
 
 export default function LiteraturePage() {
   return (

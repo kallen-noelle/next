@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import ProjectList from "@/app/_components/project/ProjectList";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description: "代码项目与实验记录，涵盖全栈开发、开源工具和有趣的技术尝试。",
+};
 
 export default function ProjectPage() {
   return (

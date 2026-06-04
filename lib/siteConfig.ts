@@ -1,7 +1,7 @@
 export const siteConfig = {
   title: "Dream Blog",
   authorName: "Blog Author",
-  bio: "A personal space for code, science, and thoughts.",
+  bio: "个人博客，分享代码、科学思考与生活记录。涵盖 Web 开发、项目实践、文学作品与学习笔记。",
   navTitle: "Dream",
   navSuffix: "·",
   navAfter: "Blog",
