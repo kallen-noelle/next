@@ -53,7 +53,7 @@ export default function EditChatterPage(props: { params: Promise<{ id: string }>
           setContent(item.content);
           setMood(item.mood || "");
           setIsPublished(item.isPublished ?? 1);
-          setImageUrls(item.images ?? []);
+          setImageUrls(Array.isArray(item.images) ? item.images : []);
         }
       } catch {} finally { setLoading(false); }
     })();

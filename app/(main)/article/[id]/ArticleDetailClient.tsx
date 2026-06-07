@@ -11,7 +11,7 @@ import BackButton from "@/app/_components/article/BackButton";
 import ViewCount from "@/app/_components/article/ViewCount";
 import Giscus from "@/app/_components/comment/Giscus";
 import Loading from "@/app/_components/common/Loading";
-import { downloadContentAsZip } from "@/lib/download-content";
+import { downloadContentAsZip, downloadMarkdown } from "@/lib/download-content";
 import { showSuccessToast, showErrorToast } from "@/lib/toast";
 import JsonLd from "@/app/_components/common/JsonLd";
 
@@ -21,6 +21,7 @@ export default function ArticleDetailClient(props: { params: Promise<{ id: strin
   const [loading, setLoading] = useState(true);
   const [giscusCount, setGiscusCount] = useState<number | null>(null);
   const [downloading, setDownloading] = useState(false);
+  const [downloadingMd, setDownloadingMd] = useState(false);
 
   // listen for Giscus discussion metadata to get live comment count
   useEffect(() => {
@@ -117,6 +118,27 @@ export default function ArticleDetailClient(props: { params: Promise<{ id: strin
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
                     </svg>
                     {downloading ? "..." : "Download"}
+                  </button>
+                  <button
+                    onClick={async () => {
+                      setDownloadingMd(true);
+                      try {
+                        const about = await getAbout().catch(() => ({}));
+                        downloadMarkdown({ title: article.title, content: article.content, about, origin: window.location.origin });
+                        showSuccessToast("Markdown downloaded");
+                      } catch {
+                        showErrorToast("Download failed");
+                      }
+                      setDownloadingMd(false);
+                    }}
+                    disabled={downloadingMd}
+                    className="inline-flex items-center gap-1 text-slate-400 hover:text-slate-600 disabled:opacity-50 transition-colors"
+                    title="Download as Markdown"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 3v4a1 1 0 001 1h4M5 12h14M5 16h14M5 20h14" />
+                    </svg>
+                    {downloadingMd ? "..." : "MD"}
                   </button>
                 </div>
 

@@ -313,7 +313,7 @@ export interface OpTag {
 export interface Chatter {
   id?: number;
   content: string;
-  images?: string;
+  images?: string[];
   mood?: string;
   isPublished?: number;
   deleted?: number;

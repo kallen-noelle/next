@@ -66,6 +66,33 @@ function buildFooter(about?: Record<string, string>): string {
   return lines.join("\n");
 }
 
+/** Download only the markdown content (images stay as remote references) */
+export function downloadMarkdown(params: {
+  title: string;
+  content: string;
+  about?: Record<string, string>;
+  origin?: string;
+}) {
+  const { title, about } = params;
+  let { content } = params;
+  const safeName = title.replace(/[<>:"/\\|?*]/g, "_");
+
+  // Convert relative image URLs to absolute so they work offline
+  if (params.origin) {
+    content = content.replace(/!\[([^\]]*)\]\((\/[^)]+)\)/g, (_, alt, url) => {
+      return `![${alt}](${params.origin!}${url})`;
+    });
+  }
+
+  const blob = new Blob([content + buildFooter(about)], { type: "text/markdown;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${safeName}.md`;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 export async function downloadContentAsZip(params: {
   title: string;
   content: string;
