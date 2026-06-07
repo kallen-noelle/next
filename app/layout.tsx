@@ -31,6 +31,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.title,
     type: "website",
     locale: "zh_CN",
+    images: [{ url: siteConfig.defaultPostCover, width: 1200, height: 630 }],
   },
 };
 

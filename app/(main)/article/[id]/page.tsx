@@ -8,8 +8,19 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   try {
     const p = path.join(process.cwd(), "public", "data", "articles", `${id}.json`);
     const raw = fs.readFileSync(p, "utf-8");
-    const data = JSON.parse(raw) as { title: string; summary?: string };
-    return { title: data.title, description: data.summary || "" };
+    const data = JSON.parse(raw) as { title: string; summary?: string; coverImage?: string };
+    const images = data.coverImage
+      ? [{ url: data.coverImage, width: 1200, height: 630 }]
+      : undefined;
+    return {
+      title: data.title,
+      description: data.summary || "",
+      openGraph: {
+        title: `${data.title} | Dream Blog - 个人技术博客与作品集`,
+        description: data.summary || "",
+        images,
+      },
+    };
   } catch { return { title: "Article" }; }
 }
 

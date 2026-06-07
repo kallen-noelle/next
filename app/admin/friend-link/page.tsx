@@ -12,24 +12,24 @@ import { useConfirm } from "@/app/_components/common/ConfirmDialog";
 function hexToRgb(hex: string) {
   const c = hex.replace("#", "");
   if (c.length !== 6 && c.length !== 3) return null;
-  const full = c.length === 3 ? c[0]+c[0]+c[1]+c[1]+c[2]+c[2] : c;
+  const full = c.length === 3 ? c[0] + c[0] + c[1] + c[1] + c[2] + c[2] : c;
   const n = parseInt(full, 16);
   if (isNaN(n)) return null;
-  return { r: (n>>16)&255, g: (n>>8)&255, b: n&255 };
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
 }
 
 function rgbToHex(r: number, g: number, b: number) {
-  return "#" + [r,g,b].map(v => v.toString(16).padStart(2,"0")).join("");
+  return "#" + [r, g, b].map(v => v.toString(16).padStart(2, "0")).join("");
 }
 
 function parseRgba(val: string) {
   const m = val.match(/rgba\((\d+),(\d+),(\d+),([\d.]+)\)/);
-  if (m) return { r:+m[1], g:+m[2], b:+m[3], a:+m[4] };
-  if (val.startsWith("#")) { const c = hexToRgb(val); if (c) return { ...c, a:1 }; }
+  if (m) return { r: +m[1], g: +m[2], b: +m[3], a: +m[4] };
+  if (val.startsWith("#")) { const c = hexToRgb(val); if (c) return { ...c, a: 1 }; }
   return null;
 }
 
-const PRESET_COLORS = ["#6366f1","#8b5cf6","#a18cd1","#fbc2eb","#f43f5e","#06b6d4"];
+const PRESET_COLORS = ["#6366f1", "#8b5cf6", "#a18cd1", "#fbc2eb", "#f43f5e", "#06b6d4"];
 
 export default function AdminFriendLinkPage() {
   const { confirm, ConfirmDialog } = useConfirm();
@@ -58,7 +58,7 @@ export default function AdminFriendLinkPage() {
       const d = await getList(kw || undefined, pn, ps);
       setItems(d.rows);
       setTotal(d.total);
-    } catch {}
+    } catch { }
     finally { setLoading(false); }
   }, []);
 
@@ -171,7 +171,7 @@ export default function AdminFriendLinkPage() {
           <div key={f.id} className="glass-card px-4 py-3 flex items-center gap-4 group">
             {/* Avatar */}
             <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 p-[2px] flex-shrink-0 overflow-hidden">
-              <img src={f.avatar || "/bg/1.jpg"} alt="" className="w-full h-full rounded-full object-cover bg-white dark:bg-slate-900"
+              <img src={f.avatar || "/bg/1.jpg"} alt={`${f.name} 头像`} className="w-full h-full rounded-full object-cover bg-white dark:bg-slate-900"
                 onError={(e) => { (e.target as HTMLImageElement).src = "/bg/1.jpg"; }}
               />
             </div>

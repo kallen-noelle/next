@@ -25,7 +25,15 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     const data = JSON.parse(raw) as { rows: { articles: { id: number; title: string; content?: string }[] }[] };
     for (const tag of data.rows || []) {
       const found = tag.articles?.find((a) => String(a.id) === id);
-      if (found) return { title: found.title, description: found.content?.slice(0, 200) || "" };
+      if (found) return {
+        title: found.title,
+        description: found.content?.slice(0, 200) || "",
+        openGraph: {
+          title: `${found.title} | Dream Blog - 个人技术博客与作品集`,
+          description: found.content?.slice(0, 200) || "",
+          images: [{ url: "/bg/10.jpg", width: 1200, height: 630 }],
+        },
+      };
     }
   } catch { /* skip */ }
   return { title: "Literature" };

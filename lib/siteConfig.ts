@@ -1,5 +1,5 @@
 export const siteConfig = {
-  title: "Dream Blog",
+  title: "Dream Blog - 个人技术博客与作品集",
   authorName: "Blog Author",
   bio: "个人博客，分享代码、科学思考与生活记录。涵盖 Web 开发、项目实践、文学作品与学习笔记。",
   navTitle: "Dream",

@@ -42,7 +42,7 @@ export default function EditAlbumPage(props: { params: Promise<{ id: string }> }
           setIsPublished(a.isPublished ?? 1);
         }
         setPhotos(Array.isArray(p) ? p : []);
-      } catch {} finally { setLoading(false); }
+      } catch { } finally { setLoading(false); }
     })();
   }, [id]);
 
@@ -52,7 +52,7 @@ export default function EditAlbumPage(props: { params: Promise<{ id: string }> }
     try {
       await updateAlbum({ id: Number(id), title: title.trim(), description: description.trim(), sortOrder, isPublished } satisfies Album);
       showSuccessToast("已保存");
-    } catch {} finally { setSaving(false); }
+    } catch { } finally { setSaving(false); }
   };
 
   const handleUploadPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +70,7 @@ export default function EditAlbumPage(props: { params: Promise<{ id: string }> }
       const p = await getPhotosByAlbum(Number(id));
       setPhotos(Array.isArray(p) ? p : []);
       showSuccessToast(`已添加 ${files.length} 张`);
-    } catch {} finally {
+    } catch { } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = "";
     }
@@ -82,7 +82,7 @@ export default function EditAlbumPage(props: { params: Promise<{ id: string }> }
       await deletePhoto(photoId);
       setPhotos((p) => p.filter((ph) => ph.id !== photoId));
       showSuccessToast("已删除");
-    } catch {}
+    } catch { }
   };
 
   if (loading) return <div className="w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mt-10" />;
@@ -138,7 +138,7 @@ export default function EditAlbumPage(props: { params: Promise<{ id: string }> }
       <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
         {photos.map((ph) => (
           <div key={ph.id} className="relative group rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 aspect-square">
-            <img src={ph.url} alt="" className="w-full h-full object-cover" />
+            <img src={ph.url} alt={`照片 ${ph.id}`} className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <Tooltip text="Delete">
                 <button onClick={() => handleDeletePhoto(ph.id!)} className="p-2 bg-red-500/80 hover:bg-red-600 rounded-full transition-colors">

@@ -66,11 +66,11 @@ export default function AdminDashboardPage() {
   const [showTokenInput, setShowTokenInput] = useState(false);
 
   useEffect(() => {
-    get().then(setDash).catch(() => {});
+    get().then(setDash).catch(() => { });
     getArticleList().then(d => {
       const total = d.rows.reduce((sum, t) => sum + t.articles.length, 0);
       setLiteratureCount(total);
-    }).catch(() => {});
+    }).catch(() => { });
     const stored = localStorage.getItem(STORAGE_KEY) || "";
     setSavedToken(stored);
   }, []);
@@ -389,7 +389,7 @@ export default function AdminDashboardPage() {
                             {/* Thumbnail */}
                             <div className="w-10 h-10 shrink-0 rounded overflow-hidden bg-slate-800">
                               {m.fileUrl?.match(/\.(png|jpe?g|gif|webp|svg)$/i) ? (
-                                <img src={m.fileUrl} alt="" className="w-full h-full object-cover" />
+                                <img src={m.fileUrl} alt={`${m.originalFilename || '媒体'} 缩略图`} className="w-full h-full object-cover" />
                               ) : (
                                 <div className="w-full h-full flex items-center justify-center text-slate-600 text-[10px]">FILE</div>
                               )}

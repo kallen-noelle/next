@@ -3,8 +3,13 @@ import Timeline from "@/app/_components/timeline/Timeline";
 import SkillBar from "@/app/_components/timeline/SkillBar";
 
 export const metadata: Metadata = {
-  title: "Timeline",
+  title: "学习历程与技术成长",
   description: "学习历程与技能清单，记录技术成长路径和掌握的工具栈。",
+  openGraph: {
+    title: "学习历程与技术成长 | Dream Blog - 个人技术博客与作品集",
+    description: "学习历程与技能清单，记录技术成长路径和掌握的工具栈。",
+    images: [{ url: "/bg/4.jpg", width: 1200, height: 630 }],
+  },
 };
 
 export default function TimelinePage() {

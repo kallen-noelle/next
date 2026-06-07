@@ -47,7 +47,7 @@ export default function CoverImageInput({ value, onChange }: Props) {
       </div>
       {value && (
         <div className="relative w-32 h-20 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800">
-          <img src={value} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+          <img src={value} alt="封面预览" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
         </div>
       )}
     </div>

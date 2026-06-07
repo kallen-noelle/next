@@ -31,7 +31,7 @@ function PhotoCard({ photo, index, onClick }: { photo: Photo; index: number; onC
         <div className="relative overflow-hidden rounded-[1px] aspect-[4/3]">
           <img
             src={photo.url}
-            alt=""
+            alt="相册照片"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${loaded ? "opacity-100" : "opacity-0"}`}
             onLoad={() => setLoaded(true)}
@@ -182,7 +182,7 @@ function Lightbox({
             className="relative z-10 max-w-[90vw] max-h-[85vh]"
             onClick={(e) => e.stopPropagation()}
           >
-            <img src={photo.url} alt="" className="max-h-[85vh] w-auto object-contain rounded-lg shadow-2xl" />
+            <img src={photo.url} alt="相片预览" className="max-h-[85vh] w-auto object-contain rounded-lg shadow-2xl" />
           </motion.div>
 
           {photos.length > 1 && (
