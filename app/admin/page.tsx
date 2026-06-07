@@ -189,10 +189,11 @@ export default function AdminDashboardPage() {
     setCleanupState((prev) => ({ ...prev, scanning: true, logs: ["Scanning for orphan media..."], items: [], totalMedia: 0, orphanCount: 0 }));
     try {
       const { items, totalMedia, orphanCount } = await scanMediaWithRefs();
+      const sorted = [...items].sort((a, b) => (a.refs.length === 0 ? -1 : 0) - (b.refs.length === 0 ? -1 : 0));
       setCleanupState((prev) => ({
         ...prev,
         scanning: false,
-        items,
+        items: sorted,
         totalMedia,
         orphanCount,
         logs: [

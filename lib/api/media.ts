@@ -4,6 +4,7 @@ import { getPublicList as getArticleList, getPublicDetail as getArticleDetail } 
 import { getPublicList as getProjectList, getPublicDetail as getProjectDetail } from "./project";
 import { get as getAbout } from "./about";
 import { getList as getAlbumListAll, getPhotosByAlbum } from "./album";
+import { getPublishedList } from "./chatter";
 
 export async function getList(params: PageDTO<Media>) {
   return api.post<PageVO<Media>, PageVO<Media>>("/media/page", params);
@@ -75,7 +76,15 @@ export async function scanMediaWithRefs(): Promise<{
     }
   } catch { /* skip */ }
 
-  // 2d. Albums
+  // 2d. Chatters
+  try {
+    const chatters = await getPublishedList();
+    for (const c of (Array.isArray(chatters) ? chatters : [])) {
+      if (c.content) sources.push({ text: c.content, type: "album", title: "说说", field: "content" });
+    }
+  } catch { /* skip */ }
+
+  // 2e. Albums
   try {
     const albumRes = await getAlbumListAll("", 1, 999);
     const albums = albumRes.rows || [];

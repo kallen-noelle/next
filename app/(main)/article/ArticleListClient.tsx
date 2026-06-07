@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { siteConfig } from "@/lib/siteConfig";
 import type { Category, Tag } from "@/lib/types";
 import { getList as getCategories } from "@/lib/api/category";
 import { getList as getTags } from "@/lib/api/tag";
@@ -11,7 +10,6 @@ import CategoryNav from "@/app/_components/common/CategoryNav";
 import TagCloud from "@/app/_components/common/TagCloud";
 
 export default function ArticlePage() {
-  useEffect(() => { document.title = `Articles | ${siteConfig.title}`; }, []);
   const [categories, setCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [categoryId, setCategoryId] = useState<number | undefined>();

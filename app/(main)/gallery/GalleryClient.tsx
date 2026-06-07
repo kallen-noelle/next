@@ -32,6 +32,7 @@ function PhotoCard({ photo, index, onClick }: { photo: Photo; index: number; onC
           <img
             src={photo.url}
             alt="相册照片"
+            loading="lazy"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${loaded ? "opacity-100" : "opacity-0"}`}
             onLoad={() => setLoaded(true)}
@@ -56,6 +57,17 @@ function AlbumCard({
   onPhotoClick: (photos: Photo[], index: number) => void;
 }) {
   const covers = photos.slice(0, 3).reverse();
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [contentHeight, setContentHeight] = useState(0);
+
+  useEffect(() => {
+    if (isExpanded && contentRef.current) {
+      const h = contentRef.current.scrollHeight;
+      if (h > 0) setContentHeight(h);
+    } else if (!isExpanded) {
+      setContentHeight(0);
+    }
+  }, [isExpanded]);
 
   return (
     <div className="rounded-3xl overflow-hidden cursor-pointer" onClick={onToggle}>
@@ -96,28 +108,23 @@ function AlbumCard({
         </div>
       </div>
 
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-            onClick={(e) => e.stopPropagation()}
-            className="overflow-hidden"
-          >
-            <div className="px-4 pb-6 md:px-6">
-              <div className="p-4 md:p-6 rounded-2xl">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-5">
-                  {photos.map((photo, i) => (
-                    <PhotoCard key={photo.id} photo={photo} index={i} onClick={() => onPhotoClick(photos, i)} />
-                  ))}
-                </div>
+      {/* 展开区域：CSS transition 驱动高度，避免 framer-motion height:auto 强制回流 */}
+      <div
+        className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+        style={{ height: contentHeight, opacity: isExpanded ? 1 : 0 }}
+      >
+        <div ref={contentRef}>
+          <div className="px-4 pb-6 md:px-6">
+            <div className="p-4 md:p-6 rounded-2xl">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-5">
+                {photos.map((photo, i) => (
+                  <PhotoCard key={photo.id} photo={photo} index={i} onClick={() => onPhotoClick(photos, i)} />
+                ))}
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -263,37 +270,56 @@ export default function GalleryClient() {
           <p className="text-sm md:text-base">暂无相册</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 select-none">
-          {albums.map((album, albumIndex) => {
-            const isExpanded = expandedId === album.id;
-            const isHidden = expandedId !== null && !isExpanded;
-            return (
-              <AnimatePresence key={album.id}>
-                {!isHidden && (
-                  <motion.div
-                    layout
-                    initial={expandedId === null ? { opacity: 0, y: 30 } : false}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: expandedId === null ? albumIndex * 0.1 : 0 }}
-                    className={isExpanded ? "sm:col-span-2 lg:col-span-3" : ""}
-                  >
-                    <div ref={isExpanded ? expandedRef : undefined}>
-                      <AlbumCard
-                        album={album}
-                        photos={album.photos}
-                        isExpanded={isExpanded}
-                        onToggle={() => { const id = album.id; if (id != null) setExpandedId((prev) => (prev === id ? null : id)); }}
-                        onPhotoClick={openLightbox}
-                      />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            );
-          })}
-        </div>
+        <AnimatePresence mode="wait">
+          {expandedId === null ? (
+            /* ── 网格视图 ── */
+            <motion.div
+              key="grid"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.25 }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 select-none"
+            >
+              {albums.map((album) => (
+                <div key={album.id}>
+                  <div>
+                    <AlbumCard
+                      album={album}
+                      photos={album.photos}
+                      isExpanded={false}
+                      onToggle={() => { if (album.id != null) setExpandedId(album.id); }}
+                      onPhotoClick={openLightbox}
+                    />
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          ) : (
+            /* ── 展开视图 ── */
+            <motion.div
+              key="expanded"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="max-w-4xl mx-auto"
+            >
+              {albums.filter((a) => a.id === expandedId).map((album) => (
+                <div key={album.id} ref={expandedRef}>
+                  <AlbumCard
+                    album={album}
+                    photos={album.photos}
+                    isExpanded={true}
+                    onToggle={() => setExpandedId(null)}
+                    onPhotoClick={openLightbox}
+                  />
+                </div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       )}
-
       {lightbox && (
         <Portal>
           <Lightbox

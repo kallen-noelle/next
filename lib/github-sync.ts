@@ -313,6 +313,12 @@ async function collectAllData(ghToken?: string): Promise<{ path: string; content
     }
   } catch { /* skip */ }
 
+  // Chatter / Moments data
+  try {
+    const chatters = await apiGet<unknown>("/chatter/list");
+    files.push({ path: "chatters.json", content: JSON.stringify(chatters, null, 2) });
+  } catch { /* skip */ }
+
   // Friend links
   try {
     const friendLinks = await apiGet<unknown>("/friend-link/list");
@@ -328,7 +334,7 @@ async function collectAllData(ghToken?: string): Promise<{ path: string; content
   files.push({
     path: "index.json",
     content: JSON.stringify(
-      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "media", "comments", "music", "op-articles", "albums", "friendLinks"],
+      ["dashboard", "about", "articles", "projects", "categories", "tags", "timeline", "skills", "media", "comments", "music", "op-articles", "albums", "friendLinks", "chatters"],
       null, 2
     ),
   });

@@ -308,6 +308,19 @@ export interface OpTag {
   articles: OpArticle[];
 }
 
+// ========== Chatter / Moments ==========
+
+export interface Chatter {
+  id?: number;
+  content: string;
+  images?: string;
+  mood?: string;
+  isPublished?: number;
+  deleted?: number;
+  createTime?: string;
+  updateTime?: string;
+}
+
 // ========== Album / Gallery ==========
 
 export interface Album {
