@@ -1,6 +1,6 @@
 {
   "articleCount": 2,
-  "commentCount": 16,
+  "commentCount": 20,
   "latestComments": [
     {
       "id": 30,
@@ -21,20 +21,20 @@
       "createTime": "2026-05-24T15:01:08.079868"
     }
   ],
-  "projectCount": 6,
+  "projectCount": 7,
   "skillCount": 8,
   "timelineCount": 6,
   "topArticles": [
     {
       "id": 33,
       "title": "codex安装及接入deepseek教程",
-      "viewCount": 156
+      "viewCount": 157
     },
     {
       "id": 35,
       "title": "将个人网址录入Bing搜索引擎",
-      "viewCount": 19
+      "viewCount": 23
     }
   ],
-  "totalViews": 175
+  "totalViews": 180
 }
