@@ -68,7 +68,7 @@ function moodEmoji(mood: string): string {
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  return `${months[d.getMonth()]} ${d.getDate()}`;
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 }
 
 function relativeTime(dateStr: string): string {

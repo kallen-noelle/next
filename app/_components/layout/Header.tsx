@@ -72,8 +72,8 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={`relative py-1 transition-colors ${isActive
-                    ? "text-indigo-600 dark:text-indigo-400"
-                    : "text-slate-700 dark:text-slate-200 hover:text-indigo-600"
+                  ? "text-indigo-600 dark:text-indigo-400"
+                  : "text-slate-700 dark:text-slate-200 hover:text-indigo-600"
                   }`}
               >
                 {link.name}

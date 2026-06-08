@@ -39,7 +39,7 @@ function buildFooter(about?: Record<string, string>): string {
 
   const blog = about["blog"];
   if (blog) {
-    lines.push(`📝 本文发布于 [Dream Blog](${blog})\n`);
+    lines.push(`📝 本文发布于 [栏轩阁](${blog})\n`);
   }
 
   const links: { key: string; label: string }[] = [

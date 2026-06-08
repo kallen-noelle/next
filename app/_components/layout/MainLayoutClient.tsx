@@ -13,11 +13,10 @@ export default function MainLayoutClient({
 
   return (
     <main
-      className={`flex-1 w-full mt-28 ${
-        isChatter
+      className={`flex-1 w-full mt-28 ${isChatter
           ? ""
           : "max-w-6xl mx-auto px-4 sm:px-6 lg:px-10"
-      }`}
+        }`}
     >
       <AnimatedLayout>{children}</AnimatedLayout>
     </main>

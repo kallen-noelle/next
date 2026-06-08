@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://pc-blog.github.io/next"),
   title: { default: siteConfig.title, template: `%s | ${siteConfig.title}` },
   description: siteConfig.bio,
-  keywords: ["blog", "web development", "programming", "前端", "全栈", "个人博客", "技术博客"],
+  keywords: ["栏轩阁", "个人博客", "技术博客", "前端开发", "全栈开发", "Web开发", "JavaScript", "TypeScript", "React", "Next.js", "编程", "项目实践", "学习笔记"],
   robots: { index: true, follow: true },
   openGraph: {
     title: siteConfig.title,

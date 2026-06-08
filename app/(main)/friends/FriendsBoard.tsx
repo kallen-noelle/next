@@ -25,7 +25,23 @@ export default function FriendsBoard() {
       await navigator.clipboard.writeText(siteConfig.friendLinkApplyFormat);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch {}
+    } catch {
+      // Fallback for non-HTTPS or older browsers
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = siteConfig.friendLinkApplyFormat;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch {
+        // Both methods failed
+      }
+    }
   };
 
   const scrollToComment = () => {
@@ -38,7 +54,7 @@ export default function FriendsBoard() {
         <h1 className="text-3xl md:text-4xl font-black tracking-tighter text-slate-900 dark:text-white mb-2">
           Friends
         </h1>
-        <p className="text-slate-500 dark:text-slate-400 mb-10">赛博空间里的有趣灵魂</p>
+        <p className="text-slate-500 dark:text-slate-400 mb-10">Interesting souls in the digital space.</p>
 
         {/* Friend Cards Grid */}
         {loading ? (

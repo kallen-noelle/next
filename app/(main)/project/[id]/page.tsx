@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import type { Metadata } from "next";
 import ProjectDetailClient from "./ProjectDetailClient";
+import { OG_TITLE_SUFFIX } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       title: data.name,
       description: data.summary || "",
       openGraph: {
-        title: `${data.name} | Dream Blog - 个人技术博客与作品集`,
+        title: `${data.name} ${OG_TITLE_SUFFIX}`,
         description: data.summary || "",
         images,
       },

@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import type { Metadata } from "next";
 import LiteratureDetailClient from "./LiteratureDetailClient";
+import { OG_TITLE_SUFFIX } from "@/lib/seo";
 
 export function generateStaticParams() {
   const p = path.join(process.cwd(), "public", "data", "op-articles.json");
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
         title: found.title,
         description: found.content?.slice(0, 200) || "",
         openGraph: {
-          title: `${found.title} | Dream Blog - 个人技术博客与作品集`,
+          title: `${found.title} ${OG_TITLE_SUFFIX}`,
           description: found.content?.slice(0, 200) || "",
           images: [{ url: "/bg/10.jpg", width: 1200, height: 630 }],
         },

@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import type { Metadata } from "next";
 import ArticleDetailClient from "./ArticleDetailClient";
+import { OG_TITLE_SUFFIX, defaultDetailOgImages } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
@@ -11,12 +12,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     const data = JSON.parse(raw) as { title: string; summary?: string; coverImage?: string };
     const images = data.coverImage
       ? [{ url: data.coverImage, width: 1200, height: 630 }]
-      : undefined;
+      : defaultDetailOgImages.article;
     return {
       title: data.title,
       description: data.summary || "",
       openGraph: {
-        title: `${data.title} | Dream Blog - 个人技术博客与作品集`,
+        title: `${data.title} ${OG_TITLE_SUFFIX}`,
         description: data.summary || "",
         images,
       },

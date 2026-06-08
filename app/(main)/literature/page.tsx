@@ -1,15 +1,7 @@
-import type { Metadata } from "next";
 import LiteratureList from "@/app/_components/literature/LiteratureList";
+import { literatureMetadata as metadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "文学创作与随笔",
-  description: "诗歌、散文、随笔与文学创作，用文字记录思考与情感。",
-  openGraph: {
-    title: "文学创作与随笔 | Dream Blog - 个人技术博客与作品集",
-    description: "诗歌、散文、随笔与文学创作，用文字记录思考与情感。",
-    images: [{ url: "/bg/9.jpg", width: 1200, height: 630 }],
-  },
-};
+export { metadata };
 
 export default function LiteraturePage() {
   return (

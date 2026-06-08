@@ -1,15 +1,7 @@
-import type { Metadata } from "next";
 import ProjectList from "@/app/_components/project/ProjectList";
+import { projectMetadata as metadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "项目实践与开源探索",
-  description: "代码项目与实验记录，涵盖全栈开发、开源工具和有趣的技术尝试。",
-  openGraph: {
-    title: "项目实践与开源探索 | Dream Blog - 个人技术博客与作品集",
-    description: "代码项目与实验记录，涵盖全栈开发、开源工具和有趣的技术尝试。",
-    images: [{ url: "/bg/3.jpg", width: 1200, height: 630 }],
-  },
-};
+export { metadata };
 
 export default function ProjectPage() {
   return (

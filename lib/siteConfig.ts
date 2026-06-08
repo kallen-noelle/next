@@ -1,10 +1,10 @@
 export const siteConfig = {
-  title: "Dream Blog - 个人技术博客与作品集",
+  title: "栏轩阁 - 个人技术博客与作品集",
   authorName: "Blog Author",
-  bio: "个人博客，分享代码、科学思考与生活记录。涵盖 Web 开发、项目实践、文学作品与学习笔记。",
-  navTitle: "Dream",
+  bio: "栏轩阁 - 个人技术博客与作品集，分享 Web 前端、全栈开发、编程实践与技术思考。涵盖 JavaScript/TypeScript、React、Next.js 等技术栈的项目经验与学习笔记。",
+  navTitle: "栏轩",
   navSuffix: "·",
-  navAfter: "Blog",
+  navAfter: "阁",
   avatarUrl: "/bg/1.jpg",
   useGradient: false,
   themeColors: ["#a18cd1", "#fbc2eb", "#a1c4fd", "#c2e9fb"],
@@ -20,8 +20,8 @@ export const siteConfig = {
     email: "",
   },
   counts: { photos: 0 },
-  chatterTitle: "杂谈",
-  chatterDescription: "代码、学术与生活的碎片记录",
+  chatterTitle: "Chatter",
+  chatterDescription: "Fragments of code, academia, and life.",
   danmakuList: ["Hello!", "Welcome to my blog~"],
   buildDate: "2026-05-21T00:00:00",
   footerBadges: [
@@ -31,5 +31,5 @@ export const siteConfig = {
   ],
   icpConfig: { name: "", link: "" },
   friendLinkApplyFormat:
-    "名称：Dream Blog\n简介：A personal space for code, science, and thoughts.\n链接：https://pc-blog.github.io/next\n头像：https://pc-blog.github.io/next/bg/1.jpg",
+    "名称：栏轩阁\n简介：A personal space for code, science, and thoughts.\n链接：https://pc-blog.github.io/next\n头像：https://pc-blog.github.io/next/bg/1.jpg",
 };
