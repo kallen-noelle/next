@@ -1,6 +1,33 @@
 {
-  "total": 6,
+  "total": 7,
   "rows": [
+    {
+      "categoryId": 34,
+      "categoryName": "全栈",
+      "coverImage": "",
+      "createTime": "2026-06-06T16:05:42.196862",
+      "demoUrl": "",
+      "githubUrl": "",
+      "id": 20,
+      "isPublished": 1,
+      "name": "EduMark",
+      "sortOrder": 0,
+      "summary": "基于大模型的中小学作业智能批改系统",
+      "techs": [
+        {
+          "id": 9,
+          "name": "Python"
+        },
+        {
+          "id": 13,
+          "name": "Vue3"
+        },
+        {
+          "id": 15,
+          "name": "Typrscript"
+        }
+      ]
+    },
     {
       "categoryId": 35,
       "categoryName": "软件",
@@ -83,7 +110,7 @@
       "categoryName": "全栈",
       "coverImage": "",
       "createTime": "2026-05-21T21:46:11.501405",
-      "demoUrl": "http://localhost:8050",
+      "demoUrl": "",
       "githubUrl": "https://github.com/OmniPavilion",
       "id": 16,
       "isPublished": 1,
