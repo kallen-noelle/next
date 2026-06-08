@@ -272,10 +272,10 @@ main {
   border-color: rgba(99,102,241,0.25) !important;
 }
 
-/* 回复框 */
+/* 回复框 - 不透明背景避免与父容器半透明叠加 */
 .gsc-reply-box {
   border-radius: 24px !important;
-  background: rgba(15,23,42,0.3) !important;
+  background: rgb(15,23,42) !important;
   backdrop-filter: blur(8px) !important;
   border: 1px solid rgba(255,255,255,0.06) !important;
   padding: 8px !important;
