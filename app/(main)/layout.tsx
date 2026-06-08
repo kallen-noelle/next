@@ -1,6 +1,6 @@
 import Header from "@/app/_components/layout/Header";
 import Footer from "@/app/_components/layout/Footer";
-import AnimatedLayout from "@/app/_components/layout/AnimatedLayout";
+import MainLayoutClient from "@/app/_components/layout/MainLayoutClient";
 
 export default function MainLayout({
   children,
@@ -10,9 +10,7 @@ export default function MainLayout({
   return (
     <>
       <Header />
-      <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 mt-28">
-        <AnimatedLayout>{children}</AnimatedLayout>
-      </main>
+      <MainLayoutClient>{children}</MainLayoutClient>
       <Footer />
     </>
   );
