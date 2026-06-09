@@ -42,10 +42,11 @@ jobs:
         run: npm run build:static
         env:
           NEXT_PUBLIC_API_BASE: ${{ secrets.API_BASE_URL || 'http://localhost:18016/api' }}
-          NEXT_PUBLIC_BASE_PATH: /next
+          NEXT_PUBLIC_IS_STATIC: "true"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./source/out
+          cname: www.lxpavilion.top
