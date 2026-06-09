@@ -94,6 +94,25 @@ export default function Home() {
 
             </Link>
 
+            {/* Star 引导 — outside Link to prevent navigation */}
+            <div className="mt-4 pt-3 border-t border-slate-200/50 dark:border-white/5 relative z-10">
+              <div className="flex items-center gap-2">
+                <span className="text-sm">⭐</span>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  如果这个项目对你有帮助，欢迎去 GitHub 点个{" "}
+                  <a
+                    href="https://github.com/pc-Blog/next"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-bold text-indigo-500 hover:text-indigo-400 transition-colors"
+                  >
+                    Star
+                  </a>{" "}
+                  ❤️
+                </p>
+              </div>
+            </div>
+
             {/* Contact links — outside Link to prevent navigation */}
             {hasContact && (
               <div className="flex items-center gap-1 mt-4 relative z-10">
