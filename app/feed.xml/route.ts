@@ -4,7 +4,12 @@ import { siteConfig } from "@/lib/siteConfig";
 
 export const dynamic = "force-static";
 
-const SITE_URL = "https://pc-blog.github.io/next";
+const SITE_URL = (() => {
+  try {
+    const raw = fs.readFileSync(path.join(process.cwd(), "public", "data", "about.json"), "utf-8");
+    return JSON.parse(raw).blog || "https://www.lxpavilion.top";
+  } catch { return "https://www.lxpavilion.top"; }
+})();
 const AUTHOR_NAME = siteConfig.authorName || "Author";
 
 interface ArticleItem {

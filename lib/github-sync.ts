@@ -130,7 +130,7 @@ async function collectMedia(
       const ext = mimeToExt(mime) || extFromFilename(media.originalFilename) || ".bin";
       const filename = `${media.id}${ext}`;
       mediaItems.push({ id: media.id, filename, base64 });
-      mediaMap.set(media.id, { newPath: `/next/data/media/${filename}`, originalUrl: media.fileUrl });
+      mediaMap.set(media.id, { newPath: `/data/media/${filename}`, originalUrl: media.fileUrl });
     } catch {
       console.warn("Failed to download media:", media.id, media.fileUrl);
     }
@@ -176,7 +176,7 @@ async function collectMusic(
           path: `music/${track.id}.mp3`,
           content: base64,
           originalUrl: track.url,
-          newPath: `/next/data/music/${track.id}.mp3`,
+          newPath: `/data/music/${track.id}.mp3`,
         });
         onProgress?.({ stage: "collecting", message: `Downloading music...`, log: `[audio ${dlCount}] ${track.title} (${sizeMb} MB)` });
       } catch { /* skip */ }
@@ -193,7 +193,7 @@ async function collectMusic(
           path: `music/${track.id}-cover${ext}`,
           content: base64,
           originalUrl: track.pictureUrl,
-          newPath: `/next/data/music/${track.id}-cover${ext}`,
+          newPath: `/data/music/${track.id}-cover${ext}`,
         });
         onProgress?.({ stage: "collecting", message: `Downloading music...`, log: `[cover ${dlCount}] ${track.title} (${sizeKb} KB)` });
       } catch { /* skip */ }
@@ -671,6 +671,7 @@ export async function generateSyncZip(
     'git remote add origin https://github.com/pc-Blog/next.git',
     'git fetch origin data --depth=1 2>nul || echo 无已有 data 分支',
     'git checkout origin/data -- .github/ 2>nul || echo 无工作流文件需保留',
+    'git checkout origin/data -- CNAME 2>nul || echo 无 CNAME 文件',
     'git checkout -b data',
     '',
     'echo [3/5] 提交 JSON 数据并推送...',

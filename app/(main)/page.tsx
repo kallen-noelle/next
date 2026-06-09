@@ -58,7 +58,7 @@ export default function Home() {
         name: siteConfig.title,
         alternateName: siteConfig.navTitle,
         description: siteConfig.bio,
-        url: typeof window !== "undefined" ? window.location.origin : "https://pc-blog.github.io/next",
+        url: about["blog"] || (typeof window !== "undefined" ? window.location.origin : "https://www.lxpavilion.top"),
       }} />
       <div className="flex flex-col gap-6 w-full mt-6">
         {/* Row 1: Profile Card + Player */}

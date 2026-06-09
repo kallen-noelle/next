@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Serif_SC } from "next/font/google";
+import fs from "fs";
+import path from "path";
 import "./globals.css";
 import { ThemeProvider } from "./_components/layout/ThemeProvider";
 import BackgroundSlider from "./_components/layout/BackgroundSwitcher";
@@ -19,8 +21,15 @@ const notoSerif = Noto_Serif_SC({
   display: "swap",
 });
 
+function getSiteUrl(): string {
+  try {
+    const raw = fs.readFileSync(path.join(process.cwd(), "public", "data", "about.json"), "utf-8");
+    return JSON.parse(raw).blog || "https://www.lxpavilion.top";
+  } catch { return "https://www.lxpavilion.top"; }
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://pc-blog.github.io/next"),
+  metadataBase: new URL(getSiteUrl()),
   title: { default: siteConfig.title, template: `%s | ${siteConfig.title}` },
   description: siteConfig.bio,
   keywords: ["栏轩阁", "个人博客", "技术博客", "前端开发", "全栈开发", "Web开发", "JavaScript", "TypeScript", "React", "Next.js", "编程", "项目实践", "学习笔记"],

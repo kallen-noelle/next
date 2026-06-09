@@ -10,10 +10,7 @@ let mode: "static" | "live" | "unknown" = "unknown";
 const cache = new Map<string, unknown>();
 
 function dataUrl(path: string): string {
-  // GitHub Pages project site serves under /next/, so try with prefix first
-  const base = typeof window !== "undefined" &&
-    window.location.pathname.startsWith("/next/") ? "/next" : "";
-  return `${base}/data/${path}`;
+  return `/data/${path}`;
 }
 
 /** Detect whether static data files are available */

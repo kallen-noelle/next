@@ -4,7 +4,12 @@ import path from "path";
 
 export const dynamic = "force-static";
 
-const BASE_URL = "https://pc-blog.github.io/next";
+const BASE_URL = (() => {
+  try {
+    const raw = fs.readFileSync(path.join(process.cwd(), "public", "data", "about.json"), "utf-8");
+    return JSON.parse(raw).blog || "https://www.lxpavilion.top";
+  } catch { return "https://www.lxpavilion.top"; }
+})();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:static": "cross-env STATIC_EXPORT=true NEXT_PUBLIC_BASE_PATH=/next npm run build",
+    "build:static": "cross-env STATIC_EXPORT=true npm run build",
     "backup-data": "tsx scripts/backup-data.ts",
     "start": "next start",
     "lint": "eslint"

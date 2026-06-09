@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { detectMode } from "@/lib/static-data";
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/admin" },
@@ -28,7 +27,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [isStatic, setIsStatic] = useState(false);
 
   useEffect(() => {
-    detectMode().then((m) => setIsStatic(m === "static"));
+    setIsStatic(process.env.NEXT_PUBLIC_IS_STATIC === "true");
   }, []);
 
   useEffect(() => {

@@ -31,5 +31,6 @@ export const siteConfig = {
   ],
   icpConfig: { name: "", link: "" },
   friendLinkApplyFormat:
-    "名称：栏轩阁\n简介：A personal space for code, science, and thoughts.\n链接：https://pc-blog.github.io/next\n头像：https://pc-blog.github.io/next/bg/1.jpg",
+    "名称：栏轩阁\n简介：A personal space for code, science, and thoughts.\n链接：https://www.lxpavilion.top\n头像：https://www.lxpavilion.top/bg/1.jpg",
+  /** 站点域名 — 通过后台「关于」页面的 blog 字段管理 */
 };

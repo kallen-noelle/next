@@ -32,7 +32,7 @@ export default function Navbar() {
   const [isStatic, setIsStatic] = useState(true);
 
   useEffect(() => {
-    setIsStatic(window.location.pathname.startsWith("/next"));
+    setIsStatic(process.env.NEXT_PUBLIC_IS_STATIC === "true");
   }, []);
 
   useEffect(() => {
