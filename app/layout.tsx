@@ -9,6 +9,7 @@ import BackgroundEffects from "./_components/common/ParticleBg";
 import DanmakuBackground from "./_components/layout/DanmakuBackground";
 import ClickEffect from "./_components/common/ClickEffect";
 import SplashScreen from "./_components/layout/SplashScreen";
+import MaskOverlay from "./_components/common/MaskOverlay";
 import Live2DWidget from "./_components/Live2DWidgetWrapper";
 import { siteConfig } from "@/lib/siteConfig";
 
@@ -82,7 +83,7 @@ export default function RootLayout({
             {/* Background layers */}
             <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
               {!siteConfig.useGradient && <BackgroundSlider />}
-              <div className="absolute inset-0 z-[-9] bg-white/30 dark:bg-slate-900/40 backdrop-blur-md transition-colors duration-1000" />
+              <MaskOverlay />
               <div
                 className="absolute inset-0 z-[-8] opacity-60 dark:opacity-20 mix-blend-color transition-opacity duration-1000 transform-gpu"
                 style={{

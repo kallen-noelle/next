@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useSettingsStore } from "@/stores/settingsStore";
 
 interface Firefly {
   id: number;
@@ -15,11 +16,15 @@ interface Firefly {
 }
 
 export default function Fireflies() {
+  const particleDensity = useSettingsStore((s) => s.particleDensity);
+  const count = useMemo(() => Math.max(0, Math.round(500 * particleDensity / 1000)), [particleDensity]);
+
   const [flies, setFlies] = useState<Firefly[]>([]);
 
   useEffect(() => {
+    if (count === 0) { setFlies([]); return; }
     setFlies(
-      Array.from({ length: 50 }, (_, i) => ({
+      Array.from({ length: count }, (_, i) => ({
         id: i,
         top: `${Math.random() * 100}%`,
         left: `${Math.random() * 100}%`,
@@ -31,7 +36,9 @@ export default function Fireflies() {
         floatPath: `float${Math.floor(Math.random() * 4) + 1}`,
       }))
     );
-  }, []);
+  }, [count]);
+
+  if (count === 0) return null;
 
   return (
     <div className="fixed inset-0 w-full h-full pointer-events-none z-10 overflow-hidden mix-blend-screen">

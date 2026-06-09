@@ -6,8 +6,9 @@ import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/siteConfig";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "next/navigation";
-import ThemeToggle from "@/app/_components/common/ThemeToggle";
+import { useTheme } from "@/app/_components/layout/ThemeProvider";
 import FullscreenToggle from "@/app/_components/common/FullscreenToggle";
+import SettingsPanel from "@/app/_components/common/SettingsPanel";
 
 const NAV_ITEMS = [
   { name: "Home", href: "/" },
@@ -28,8 +29,10 @@ export default function Navbar() {
   const isLoggedIn = useAuthStore((s) => s.isLoggedIn);
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
+  const { isDark, toggleTheme } = useTheme();
   const router = useRouter();
   const [isStatic, setIsStatic] = useState(true);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   useEffect(() => {
     setIsStatic(process.env.NEXT_PUBLIC_IS_STATIC === "true");
@@ -116,7 +119,25 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2 pl-4 pr-2 border-l border-slate-200 dark:border-slate-700 ml-4">
-          <ThemeToggle />
+          <button onClick={toggleTheme}
+            className="rounded-2xl backdrop-blur-md border shadow-lg p-2 flex items-center justify-center transition-all duration-500 hover:scale-[1.05] bg-white/40 dark:bg-slate-800/40 border-white/60 dark:border-slate-600/50 text-slate-500 dark:text-slate-300"
+            title={isDark ? "日间模式" : "夜间模式"}>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isDark ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              )}
+            </svg>
+          </button>
+          <div className="relative">
+            <button onClick={() => setSettingsOpen(!settingsOpen)}
+              className="rounded-2xl backdrop-blur-md border shadow-lg p-2 flex items-center justify-center transition-all duration-500 hover:scale-[1.05] bg-white/40 dark:bg-slate-800/40 border-white/60 dark:border-slate-600/50 text-slate-500 dark:text-slate-300"
+              title="设置">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            </button>
+            <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+          </div>
           <FullscreenToggle />
         </div>
       </div>

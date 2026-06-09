@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useSettingsStore } from "@/stores/settingsStore";
 
 interface Petal {
   id: number;
@@ -10,11 +11,15 @@ interface Petal {
 }
 
 export default function Sakura() {
+  const particleDensity = useSettingsStore((s) => s.particleDensity);
+  const count = useMemo(() => Math.max(0, Math.round(400 * particleDensity / 1000)), [particleDensity]);
+
   const [petals, setPetals] = useState<Petal[]>([]);
 
   useEffect(() => {
+    if (count === 0) { setPetals([]); return; }
     setPetals(
-      Array.from({ length: 40 }, (_, i) => ({
+      Array.from({ length: count }, (_, i) => ({
         id: i,
         left: `${Math.random() * 100}%`,
         size: 8 + Math.random() * 12,
@@ -22,7 +27,9 @@ export default function Sakura() {
         delay: Math.random() * -15,
       }))
     );
-  }, []);
+  }, [count]);
+
+  if (count === 0) return null;
 
   return (
     <div className="fixed inset-0 w-full h-full pointer-events-none z-10 overflow-hidden">

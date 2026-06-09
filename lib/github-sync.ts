@@ -95,15 +95,42 @@ function replaceMediaUrls(
 interface MediaItem {
   id: number;
   filename: string;
-  base64: string;
+  base64?: string;
+  updateTime?: string;
+}
+
+/** 从 data 分支读取 media-manifest.json */
+async function getExistingMediaManifest(
+  token: string
+): Promise<Map<number, MediaItem>> {
+  const result = new Map<number, MediaItem>();
+  try {
+    const ref = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/ref/heads/${BRANCH}`, token);
+    const commit = await gh(ref.object.url, token);
+    const tree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees/${commit.tree.sha}?recursive=1`, token);
+    const entry = (tree.tree || []).find((e: any) => e.path === "media-manifest.json");
+    if (!entry) return result;
+    const blob = await gh(entry.url, token);
+    const list = JSON.parse(base64DecodeUtf8(blob.content)) as MediaItem[];
+    for (const item of list) {
+      if (item.id != null) result.set(item.id, item);
+    }
+  } catch { /* no manifest yet */ }
+  return result;
 }
 
 async function collectMedia(
   apiBase: string,
-  onProgress?: ProgressCb
-): Promise<{ mediaItems: MediaItem[]; mediaMap: Map<number, { newPath: string; originalUrl: string }> }> {
+  onProgress?: ProgressCb,
+  existingManifest?: Map<number, MediaItem>
+): Promise<{
+  mediaItems: MediaItem[];
+  mediaMap: Map<number, { newPath: string; originalUrl: string }>;
+  deletedIds: number[];
+}> {
   const mediaItems: MediaItem[] = [];
   const mediaMap = new Map<number, { newPath: string; originalUrl: string }>();
+  const deletedIds: number[] = [];
 
   let mediaRows: Media[] = [];
   try {
@@ -115,28 +142,69 @@ async function collectMedia(
     const body = await res.json() as { code: number; data?: { rows?: Media[] } };
     mediaRows = body.data?.rows || [];
   } catch {
-    return { mediaItems, mediaMap };
+    return { mediaItems, mediaMap, deletedIds };
   }
 
-  onProgress?.({ stage: "collecting", message: `Found ${mediaRows.length} media files. Downloading...` });
-
-  for (const media of mediaRows) {
-    if (media.id == null) continue;
-    try {
-      const url = media.fileUrl.startsWith("http")
-        ? media.fileUrl
-        : `${apiBase}${media.fileUrl}`;
-      const { base64, mime } = await fetchImageAsBase64(url);
-      const ext = mimeToExt(mime) || extFromFilename(media.originalFilename) || ".bin";
-      const filename = `${media.id}${ext}`;
-      mediaItems.push({ id: media.id, filename, base64 });
-      mediaMap.set(media.id, { newPath: `/data/media/${filename}`, originalUrl: media.fileUrl });
-    } catch {
-      console.warn("Failed to download media:", media.id, media.fileUrl);
+  // 检测已删除的文件
+  if (existingManifest && existingManifest.size > 0) {
+    const apiIds = new Set<number>();
+    for (const m of mediaRows) { if (m.id != null) apiIds.add(m.id); }
+    for (const [id] of existingManifest) {
+      if (!apiIds.has(id)) deletedIds.push(id);
     }
   }
 
-  return { mediaItems, mediaMap };
+  // 只下载有变动的文件
+  const toDownload = mediaRows.filter((media) => {
+    if (media.id == null) return false;
+    if (!existingManifest) return true;
+    const prev = existingManifest.get(media.id);
+    if (!prev) return true;
+    return prev.updateTime !== (media.updateTime || "");
+  });
+
+  onProgress?.({
+    stage: "collecting",
+    message: `API: ${mediaRows.length} files, need download: ${toDownload.length}${deletedIds.length > 0 ? `, delete: ${deletedIds.length}` : ""}`,
+  });
+
+  // 并行下载（5 个并发）
+  const batchSize = 5;
+  for (let i = 0; i < toDownload.length; i += batchSize) {
+    const batch = toDownload.slice(i, i + batchSize);
+    await Promise.allSettled(
+      batch.map(async (media) => {
+        if (media.id == null) return;
+        try {
+          const url = media.fileUrl.startsWith("http")
+            ? media.fileUrl
+            : `${apiBase}${media.fileUrl}`;
+          const { base64, mime } = await fetchImageAsBase64(url);
+          const ext = mimeToExt(mime) || extFromFilename(media.originalFilename) || ".bin";
+          const filename = `${media.id}${ext}`;
+          mediaItems.push({ id: media.id, filename, base64, updateTime: media.updateTime });
+          mediaMap.set(media.id, { newPath: `/data/media/${filename}`, originalUrl: media.fileUrl });
+        } catch {
+          console.warn("Failed to download media:", media.id, media.fileUrl);
+        }
+      })
+    );
+    onProgress?.({ stage: "collecting", message: `Downloading... ${Math.min(i + batchSize, toDownload.length)}/${toDownload.length}` });
+  }
+
+  // 未变动的文件保留记录（不带 base64，不下载）
+  if (existingManifest) {
+    for (const media of mediaRows) {
+      if (media.id == null) continue;
+      if (mediaItems.some((m) => m.id === media.id)) continue;
+      const prev = existingManifest.get(media.id);
+      if (prev) {
+        mediaItems.push({ id: media.id, filename: prev.filename, updateTime: media.updateTime });
+      }
+    }
+  }
+
+  return { mediaItems, mediaMap, deletedIds };
 }
 
 // ── Music sync ──────────────────────────────────────────────
@@ -361,7 +429,8 @@ async function syncFiles(
   token: string,
   files: SyncFile[],
   message: string,
-  onProgress?: ProgressCb
+  onProgress?: ProgressCb,
+  deletePaths?: string[]
 ): Promise<SyncResult> {
   onProgress?.({ stage: "blobs", message: "Connecting to GitHub..." });
   const ref = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/ref/heads/${BRANCH}`, token);
@@ -417,11 +486,12 @@ async function syncFiles(
 
   const rootPaths = new Set(rootFiles.map((b) => b.path));
   const dirPaths = new Set(dirFiles.keys());
+  const delPaths = new Set(deletePaths || []);
 
   const treeEntries: { path: string; mode: string; type: string; sha: string }[] = [];
   for (const entry of baseTree.tree) {
     const p = entry.path as string;
-    if (!rootPaths.has(p) && !dirPaths.has(p)) {
+    if (!rootPaths.has(p) && !dirPaths.has(p) && !delPaths.has(p)) {
       treeEntries.push({ path: p, mode: entry.mode, type: entry.type, sha: entry.sha });
     }
   }
@@ -524,13 +594,29 @@ export async function syncMedia(
         ? process.env.NEXT_PUBLIC_API_BASE || "http://localhost:18016/api"
         : "http://localhost:18016/api";
 
-    onProgress?.({ stage: "collecting", message: "Fetching media from API..." });
-    const { mediaItems, mediaMap } = await collectMedia(apiBase, onProgress);
+    onProgress?.({ stage: "collecting", message: "Fetching existing manifest from GitHub..." });
+    const existingManifest = await getExistingMediaManifest(token);
 
-    if (mediaItems.length === 0) {
-      onProgress?.({ stage: "done", message: "No media files to sync." });
+    onProgress?.({ stage: "collecting", message: "Fetching media from API..." });
+    const { mediaItems, mediaMap, deletedIds } = await collectMedia(apiBase, onProgress, existingManifest);
+
+    if (mediaItems.length === 0 && deletedIds.length === 0) {
+      onProgress?.({ stage: "done", message: "No media changes to sync." });
       return { success: true, filesCount: 0 };
     }
+
+    // 需要删除的 media 文件路径
+    const staleMediaPaths = deletedIds.map((id) => {
+      const prev = existingManifest.get(id);
+      return prev ? `media/${prev.filename}` : "";
+    }).filter(Boolean);
+
+    // 构建最新的 manifest
+    const manifestContent = JSON.stringify(
+      mediaItems.map((m) => ({ id: m.id, filename: m.filename, updateTime: m.updateTime })),
+      null,
+      2
+    );
 
     onProgress?.({ stage: "collecting", message: "Fetching existing JSON files from GitHub..." });
     const existingFiles = await getExistingJsonFiles(token, onProgress);
@@ -538,17 +624,26 @@ export async function syncMedia(
     onProgress?.({ stage: "collecting", message: "Replacing media URLs in JSON files..." });
     const files: SyncFile[] = [];
 
+    // manifest 先加入（后面被 JSON 替换时覆盖）
+    files.push({ path: "media-manifest.json", content: manifestContent, encoding: "utf-8" });
+
     for (const [path, content] of existingFiles) {
+      // 跳过旧的 manifest
+      if (path === "media-manifest.json") continue;
       const patched = replaceMediaUrls(content, mediaMap);
       files.push({ path, content: patched, encoding: "utf-8" });
     }
 
     for (const m of mediaItems) {
-      files.push({ path: `media/${m.filename}`, content: m.base64, encoding: "base64" });
+      if (m.base64) {
+        files.push({ path: `media/${m.filename}`, content: m.base64, encoding: "base64" });
+      }
     }
 
+    const downloadCount = mediaItems.filter((m) => m.base64).length;
     const ts = new Date().toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" });
-    return await syncFiles(token, files, `${ts} sync media (${mediaItems.length} images)`, onProgress);
+    const commitMsg = `${ts} sync media (${downloadCount} downloaded, ${staleMediaPaths.length} deleted)`;
+    return await syncFiles(token, files, commitMsg, onProgress, staleMediaPaths);
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Unknown error";
     onProgress?.({ stage: "error", message: msg });
@@ -637,7 +732,7 @@ export async function generateSyncZip(
 
   // Media files
   for (const m of mediaItems) {
-    zip.file(`${folder}/media/${m.filename}`, m.base64, { base64: true });
+    if (m.base64) zip.file(`${folder}/media/${m.filename}`, m.base64, { base64: true });
   }
 
   // Music
