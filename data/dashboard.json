@@ -1,6 +1,6 @@
 {
-  "articleCount": 2,
-  "commentCount": 20,
+  "articleCount": 3,
+  "commentCount": 21,
   "latestComments": [
     {
       "id": 30,
@@ -28,13 +28,18 @@
     {
       "id": 33,
       "title": "codex安装及接入deepseek教程",
-      "viewCount": 157
+      "viewCount": 160
     },
     {
       "id": 35,
       "title": "将个人网址录入Bing搜索引擎",
-      "viewCount": 23
+      "viewCount": 29
+    },
+    {
+      "id": 36,
+      "title": "为 GitHub Pages 博客配置自定义域名与 Cloudflare 加速",
+      "viewCount": 6
     }
   ],
-  "totalViews": 180
+  "totalViews": 195
 }

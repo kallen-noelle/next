@@ -2,23 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>栏轩阁 - 个人技术博客与作品集</title>
-    <link>https://pc-blog.github.io/next</link>
+    <link>https://www.lxpavilion.top</link>
     <description>栏轩阁 - 个人技术博客与作品集，分享 Web 前端、全栈开发、编程实践与技术思考。涵盖 JavaScript/TypeScript、React、Next.js 等技术栈的项目经验与学习笔记。</description>
     <language>zh-CN</language>
-    <atom:link href="https://pc-blog.github.io/next/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://www.lxpavilion.top/feed.xml" rel="self" type="application/rss+xml"/>
     
     <item>
+      <title><![CDATA[为 GitHub Pages 博客配置自定义域名与 Cloudflare 加速]]></title>
+      <link>https://www.lxpavilion.top/article/36/</link>
+      <guid>https://www.lxpavilion.top/article/36/</guid>
+      <pubDate>Tue, 09 Jun 2026 12:41:52 GMT</pubDate>
+      <description><![CDATA[在阿里云购买域名，交给 Cloudflare 托管 DNS 并开启 CDN 加速，最后绑定到 GitHub Pages——手把手教你让你的博客拥有自定义域名，兼顾专业感与访问速度。全文涵盖域名购买、DNS 托管、解析配置、SSL 证书、性能优化及常见排错。]]></description>
+      <author>Blog Author</author>
+    </item>
+    <item>
       <title><![CDATA[将个人网址录入Bing搜索引擎]]></title>
-      <link>https://pc-blog.github.io/next/article/35/</link>
-      <guid>https://pc-blog.github.io/next/article/35/</guid>
+      <link>https://www.lxpavilion.top/article/35/</link>
+      <guid>https://www.lxpavilion.top/article/35/</guid>
       <pubDate>Tue, 26 May 2026 20:16:47 GMT</pubDate>
       <description><![CDATA[本教程将指导你如何将个人网站/博客提交到 Bing 搜索引擎，让 Bing 用户能够搜索到你的内容]]></description>
       <author>Blog Author</author>
     </item>
     <item>
       <title><![CDATA[codex安装及接入deepseek教程]]></title>
-      <link>https://pc-blog.github.io/next/article/33/</link>
-      <guid>https://pc-blog.github.io/next/article/33/</guid>
+      <link>https://www.lxpavilion.top/article/33/</link>
+      <guid>https://www.lxpavilion.top/article/33/</guid>
       <pubDate>Tue, 26 May 2026 10:23:39 GMT</pubDate>
       <description><![CDATA[本教程将指导你完成 Codex 的安装，并通过 **CCX + CCSwitch** 将其接入 DeepSeek 等自定义 API。]]></description>
       <author>Blog Author</author>
