@@ -146,8 +146,12 @@ export default function ArticleDetailClient(props: { params: Promise<{ id: strin
                   {article.title}
                 </h1>
 
+                {article.summary && (
+                  <p className="text-slate-500 dark:text-slate-400 text-base leading-relaxed mb-4">{article.summary}</p>
+                )}
+
                 {article.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-4">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {article.tags.map((tag) => (
                       <span key={tag.id} className="text-xs text-pink-500 dark:text-pink-400 font-medium">
                         #{tag.name}
