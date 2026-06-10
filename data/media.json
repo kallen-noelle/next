@@ -1,6 +1,19 @@
 {
-  "total": 257,
+  "total": 258,
   "rows": [
+    {
+      "createTime": "2026-06-11T07:39:13.044839",
+      "deleted": 0,
+      "filePath": "202606/940b8a633ddf48788b9170633d96aecb.jpeg",
+      "fileSize": 19939,
+      "fileUrl": "/data/media/324.jpeg",
+      "filename": "940b8a633ddf48788b9170633d96aecb.jpeg",
+      "id": 324,
+      "mimeType": "image/jpeg",
+      "originalFilename": "docker.jpeg",
+      "relationType": null,
+      "updateTime": "2026-06-11T07:39:13.047342"
+    },
     {
       "createTime": "2026-06-10T21:48:15.550544",
       "deleted": 0,
