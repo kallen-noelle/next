@@ -1,6 +1,19 @@
 {
-  "total": 256,
+  "total": 257,
   "rows": [
+    {
+      "createTime": "2026-06-10T21:48:15.550544",
+      "deleted": 0,
+      "filePath": "202606/33b3bf53c1cb444fb94b3d35bcffbce8.png",
+      "fileSize": 239196,
+      "fileUrl": "/data/media/323.png",
+      "filename": "33b3bf53c1cb444fb94b3d35bcffbce8.png",
+      "id": 323,
+      "mimeType": "image/png",
+      "originalFilename": "image.png",
+      "relationType": null,
+      "updateTime": "2026-06-10T14:42:38.102608"
+    },
     {
       "createTime": "2026-06-10T21:32:02.906378",
       "deleted": 0,
@@ -12,7 +25,7 @@
       "mimeType": "image/webp",
       "originalFilename": "OIP-C.webp",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T21:28:00.093713",
@@ -25,7 +38,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T21:27:13.762813",
@@ -38,7 +51,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T21:26:55.199843",
@@ -51,7 +64,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T21:26:36.425329",
@@ -64,7 +77,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T21:20:13.19823",
@@ -77,7 +90,7 @@
       "mimeType": "image/webp",
       "originalFilename": "que-es-cloudflare.webp",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T20:27:22.52863",
@@ -90,7 +103,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T20:14:12.761705",
@@ -103,7 +116,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T20:13:21.423524",
@@ -116,7 +129,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T20:03:25.820966",
@@ -129,7 +142,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T20:03:16.404687",
@@ -142,7 +155,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T20:02:57.911918",
@@ -155,7 +168,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:47:23.639995",
@@ -168,7 +181,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:45:27.98959",
@@ -181,7 +194,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:32:05.169279",
@@ -194,7 +207,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:28:51.439734",
@@ -207,7 +220,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:27:17.201975",
@@ -220,7 +233,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:26:05.655777",
@@ -233,7 +246,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:13:19.928621",
@@ -246,7 +259,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:11:31.638103",
@@ -259,7 +272,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:10:56.804266",
@@ -272,7 +285,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:10:03.033352",
@@ -285,7 +298,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:08:04.467551",
@@ -298,7 +311,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:04:41.587566",
@@ -311,7 +324,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:03:10.455922",
@@ -324,7 +337,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T19:00:46.371956",
@@ -337,7 +350,7 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-10T18:57:25.808977",
@@ -350,2984 +363,2984 @@
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T18:23:30.169223",
       "deleted": 0,
       "filePath": "202606/c6ab7a9588b3495282db87dc79e8c72d.png",
       "fileSize": 286751,
-      "fileUrl": "http://localhost:19090/blog/202606/c6ab7a9588b3495282db87dc79e8c72d.png",
+      "fileUrl": "/data/media/295.png",
       "filename": "c6ab7a9588b3495282db87dc79e8c72d.png",
       "id": 295,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T18:20:17.668106",
       "deleted": 0,
       "filePath": "202606/19a8daf32a83498da8e00476fc3f6f34.png",
       "fileSize": 1715015,
-      "fileUrl": "http://localhost:19090/blog/202606/19a8daf32a83498da8e00476fc3f6f34.png",
+      "fileUrl": "/data/media/294.png",
       "filename": "19a8daf32a83498da8e00476fc3f6f34.png",
       "id": 294,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T18:19:31.032924",
       "deleted": 0,
       "filePath": "202606/363bc1f50483447cbcdf3eb7ae84311e.png",
       "fileSize": 2450140,
-      "fileUrl": "http://localhost:19090/blog/202606/363bc1f50483447cbcdf3eb7ae84311e.png",
+      "fileUrl": "/data/media/293.png",
       "filename": "363bc1f50483447cbcdf3eb7ae84311e.png",
       "id": 293,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T18:11:48.904305",
       "deleted": 0,
       "filePath": "202606/9f4fc1621d6149bfbe254aa7422bfd56.png",
       "fileSize": 310808,
-      "fileUrl": "http://localhost:19090/blog/202606/9f4fc1621d6149bfbe254aa7422bfd56.png",
+      "fileUrl": "/data/media/292.png",
       "filename": "9f4fc1621d6149bfbe254aa7422bfd56.png",
       "id": 292,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T15:19:53.783695",
       "deleted": 0,
       "filePath": "202606/9324c2a7eb9745d89b6aa7e9c258d901.png",
       "fileSize": 338667,
-      "fileUrl": "http://localhost:19090/blog/202606/9324c2a7eb9745d89b6aa7e9c258d901.png",
+      "fileUrl": "/data/media/291.png",
       "filename": "9324c2a7eb9745d89b6aa7e9c258d901.png",
       "id": 291,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T13:13:46.65038",
       "deleted": 0,
       "filePath": "202606/c688c61326a54670ab73a9eae92a93bc.png",
       "fileSize": 300289,
-      "fileUrl": "http://localhost:19090/blog/202606/c688c61326a54670ab73a9eae92a93bc.png",
+      "fileUrl": "/data/media/290.png",
       "filename": "c688c61326a54670ab73a9eae92a93bc.png",
       "id": 290,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T13:11:45.425151",
       "deleted": 0,
       "filePath": "202606/e6dc42f673f24b5a84760abe4f81e1b1.png",
       "fileSize": 280558,
-      "fileUrl": "http://localhost:19090/blog/202606/e6dc42f673f24b5a84760abe4f81e1b1.png",
+      "fileUrl": "/data/media/289.png",
       "filename": "e6dc42f673f24b5a84760abe4f81e1b1.png",
       "id": 289,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T13:07:14.731596",
       "deleted": 0,
       "filePath": "202606/5bccc15e6423435bb3296d9558407f0d.png",
       "fileSize": 586289,
-      "fileUrl": "http://localhost:19090/blog/202606/5bccc15e6423435bb3296d9558407f0d.png",
+      "fileUrl": "/data/media/288.png",
       "filename": "5bccc15e6423435bb3296d9558407f0d.png",
       "id": 288,
       "mimeType": "image/png",
       "originalFilename": "55.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T13:07:09.070746",
       "deleted": 0,
       "filePath": "202606/20599164daae4e6cbf26c3fb39a4a471.png",
       "fileSize": 272416,
-      "fileUrl": "http://localhost:19090/blog/202606/20599164daae4e6cbf26c3fb39a4a471.png",
+      "fileUrl": "/data/media/287.png",
       "filename": "20599164daae4e6cbf26c3fb39a4a471.png",
       "id": 287,
       "mimeType": "image/png",
       "originalFilename": "12.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T13:02:25.468889",
       "deleted": 0,
       "filePath": "202606/be949f126eb74356b7cefc020b5739a2.png",
       "fileSize": 242293,
-      "fileUrl": "http://localhost:19090/blog/202606/be949f126eb74356b7cefc020b5739a2.png",
+      "fileUrl": "/data/media/286.png",
       "filename": "be949f126eb74356b7cefc020b5739a2.png",
       "id": 286,
       "mimeType": "image/png",
       "originalFilename": "13.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T13:02:10.512529",
       "deleted": 0,
       "filePath": "202606/02a56d6123224ac197a79ae2af55f4f4.png",
       "fileSize": 1029975,
-      "fileUrl": "http://localhost:19090/blog/202606/02a56d6123224ac197a79ae2af55f4f4.png",
+      "fileUrl": "/data/media/285.png",
       "filename": "02a56d6123224ac197a79ae2af55f4f4.png",
       "id": 285,
       "mimeType": "image/png",
       "originalFilename": "16.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T13:00:49.117362",
       "deleted": 0,
       "filePath": "202606/3f05dfe767a247f8b3a8821e71764e2a.png",
       "fileSize": 1403589,
-      "fileUrl": "http://localhost:19090/blog/202606/3f05dfe767a247f8b3a8821e71764e2a.png",
+      "fileUrl": "/data/media/284.png",
       "filename": "3f05dfe767a247f8b3a8821e71764e2a.png",
       "id": 284,
       "mimeType": "image/png",
       "originalFilename": "14.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-09T12:53:50.611069",
       "deleted": 0,
       "filePath": "202606/d1f23a0925154db8898111a819a3e42f.jpg",
       "fileSize": 59405,
-      "fileUrl": "http://localhost:19090/blog/202606/d1f23a0925154db8898111a819a3e42f.jpg",
+      "fileUrl": "/data/media/283.jpg",
       "filename": "d1f23a0925154db8898111a819a3e42f.jpg",
       "id": 283,
       "mimeType": "image/jpeg",
       "originalFilename": "featured-cloudflare-1.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-08T11:26:41.449966",
       "deleted": 0,
       "filePath": "202606/ac5589ec760c4d55a954d24c65db4185.jpg",
       "fileSize": 4470,
-      "fileUrl": "http://localhost:19090/blog/202606/ac5589ec760c4d55a954d24c65db4185.jpg",
+      "fileUrl": "/data/media/282.jpg",
       "filename": "ac5589ec760c4d55a954d24c65db4185.jpg",
       "id": 282,
       "mimeType": "image/jpeg",
       "originalFilename": "4oraGhgu_34398140_62c5139f662521b0d5ec473a931ba4ffb217326a_62c5139f9e60b0a2e34543ed8095e675bbf0e351.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-07T20:01:05.703266",
       "deleted": 0,
       "filePath": "202606/a1c4b5f1335c4e19bd1723eb3499a4d6.jpg",
       "fileSize": 5614,
-      "fileUrl": "http://localhost:19090/blog/202606/a1c4b5f1335c4e19bd1723eb3499a4d6.jpg",
+      "fileUrl": "/data/media/281.jpg",
       "filename": "a1c4b5f1335c4e19bd1723eb3499a4d6.jpg",
       "id": 281,
       "mimeType": "image/jpeg",
       "originalFilename": "YEkQBUYx_34398140_62c5139f117200b1cddb40b3a51619aba180f55b_62c5139f024360abc3f74f4fa0fa82b1c8460d5a.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-07T19:52:16.365942",
       "deleted": 0,
       "filePath": "202606/f375a306ab034740ade1951dc64c81cf.jpg",
       "fileSize": 5774,
-      "fileUrl": "http://localhost:19090/blog/202606/f375a306ab034740ade1951dc64c81cf.jpg",
+      "fileUrl": "/data/media/280.jpg",
       "filename": "f375a306ab034740ade1951dc64c81cf.jpg",
       "id": 280,
       "mimeType": "image/jpeg",
       "originalFilename": "vGUNBDSd_34398140_62c5139d9663d0b8d03a4ee9930128c7e47675bf_62c5139d617fc0b13d3c4d5b81f52d6fbf6bd360.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-07T19:52:05.133844",
       "deleted": 0,
       "filePath": "202606/a11952d2513545e69e1ad91d551b3d83.jpg",
       "fileSize": 13251,
-      "fileUrl": "http://localhost:19090/blog/202606/a11952d2513545e69e1ad91d551b3d83.jpg",
+      "fileUrl": "/data/media/279.jpg",
       "filename": "a11952d2513545e69e1ad91d551b3d83.jpg",
       "id": 279,
       "mimeType": "image/jpeg",
       "originalFilename": "5fbb6af8eb8a90fef7a14480a30dfede75196492_5fbb6af84eff25226141414899046f7f7343b371.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-07T19:51:59.904756",
       "deleted": 0,
       "filePath": "202606/3810261c9eed403d8147d4aae110c1ba.jpg",
       "fileSize": 10808,
-      "fileUrl": "http://localhost:19090/blog/202606/3810261c9eed403d8147d4aae110c1ba.jpg",
+      "fileUrl": "/data/media/278.jpg",
       "filename": "3810261c9eed403d8147d4aae110c1ba.jpg",
       "id": 278,
       "mimeType": "image/jpeg",
       "originalFilename": "5faf5dfba5005660218141778482bf6ed0cb10d7_5faf5dfbb6f91c33da954a74a331f226af25c289.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-07T19:50:36.721249",
       "deleted": 0,
       "filePath": "202606/6f2763045f554b89b4346851669e0f8c.jpg",
       "fileSize": 3393,
-      "fileUrl": "http://localhost:19090/blog/202606/6f2763045f554b89b4346851669e0f8c.jpg",
+      "fileUrl": "/data/media/277.jpg",
       "filename": "6f2763045f554b89b4346851669e0f8c.jpg",
       "id": 277,
       "mimeType": "image/jpeg",
       "originalFilename": "qLE5q9NS_34398140_62c5139b3bd9052837104acbacc76fe0a435eb39_62c5139b0d772760965e43269c3011a093153b86.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-07T19:50:14.904954",
       "deleted": 0,
       "filePath": "202606/0003019a826440ae9c817063bf098e48.jpg",
       "fileSize": 9172,
-      "fileUrl": "http://localhost:19090/blog/202606/0003019a826440ae9c817063bf098e48.jpg",
+      "fileUrl": "/data/media/276.jpg",
       "filename": "0003019a826440ae9c817063bf098e48.jpg",
       "id": 276,
       "mimeType": "image/jpeg",
       "originalFilename": "ZWHxte3O_34398140_62c513a3d15fbc41666a4bdf8ea8958a38355625_62c513a38528518817d14c1282b8109ca901a1b6.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-07T19:50:09.774021",
       "deleted": 0,
       "filePath": "202606/66a3e1e69b4e4bb8b952364a3d29dcaa.jpg",
       "fileSize": 2836,
-      "fileUrl": "http://localhost:19090/blog/202606/66a3e1e69b4e4bb8b952364a3d29dcaa.jpg",
+      "fileUrl": "/data/media/275.jpg",
       "filename": "66a3e1e69b4e4bb8b952364a3d29dcaa.jpg",
       "id": 275,
       "mimeType": "image/jpeg",
       "originalFilename": "4cp3SlGt_34398140_62c513a371b6d1d8e68b4decb8de8e4cd2aa6bbf_62c513a3154a18d738f94c44b4e1bb256072dd3b.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:17:30.821553",
       "deleted": 0,
       "filePath": "202606/51400498b6eb41b4aa6833eb0d0fc534.png",
       "fileSize": 332654,
-      "fileUrl": "http://localhost:19090/blog/202606/51400498b6eb41b4aa6833eb0d0fc534.png",
+      "fileUrl": "/data/media/268.png",
       "filename": "51400498b6eb41b4aa6833eb0d0fc534.png",
       "id": 268,
       "mimeType": "image/png",
       "originalFilename": "dataflow.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:13:14.523386",
       "deleted": 0,
       "filePath": "202606/6dea6b5460a2493dbe5d70db96946d5c.png",
       "fileSize": 2207906,
-      "fileUrl": "http://localhost:19090/blog/202606/6dea6b5460a2493dbe5d70db96946d5c.png",
+      "fileUrl": "/data/media/267.png",
       "filename": "6dea6b5460a2493dbe5d70db96946d5c.png",
       "id": 267,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:12:24.657254",
       "deleted": 0,
       "filePath": "202606/8adfea6ba85c46da94c0ba669631a1b9.png",
       "fileSize": 1555280,
-      "fileUrl": "http://localhost:19090/blog/202606/8adfea6ba85c46da94c0ba669631a1b9.png",
+      "fileUrl": "/data/media/266.png",
       "filename": "8adfea6ba85c46da94c0ba669631a1b9.png",
       "id": 266,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:11:59.541066",
       "deleted": 0,
       "filePath": "202606/9941e7f7168f4e50992b0ee958d96bc5.png",
       "fileSize": 1522608,
-      "fileUrl": "http://localhost:19090/blog/202606/9941e7f7168f4e50992b0ee958d96bc5.png",
+      "fileUrl": "/data/media/265.png",
       "filename": "9941e7f7168f4e50992b0ee958d96bc5.png",
       "id": 265,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:11:30.993223",
       "deleted": 0,
       "filePath": "202606/e2fd49615de04deeaa3c7cd5cdca2ab6.png",
       "fileSize": 411091,
-      "fileUrl": "http://localhost:19090/blog/202606/e2fd49615de04deeaa3c7cd5cdca2ab6.png",
+      "fileUrl": "/data/media/264.png",
       "filename": "e2fd49615de04deeaa3c7cd5cdca2ab6.png",
       "id": 264,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:11:16.256068",
       "deleted": 0,
       "filePath": "202606/61190c7a1462431285b0f546765c3f8a.png",
       "fileSize": 516416,
-      "fileUrl": "http://localhost:19090/blog/202606/61190c7a1462431285b0f546765c3f8a.png",
+      "fileUrl": "/data/media/263.png",
       "filename": "61190c7a1462431285b0f546765c3f8a.png",
       "id": 263,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:10:44.86469",
       "deleted": 0,
       "filePath": "202606/55147830ee874d8b9b38215ba3bc8e6c.png",
       "fileSize": 734419,
-      "fileUrl": "http://localhost:19090/blog/202606/55147830ee874d8b9b38215ba3bc8e6c.png",
+      "fileUrl": "/data/media/262.png",
       "filename": "55147830ee874d8b9b38215ba3bc8e6c.png",
       "id": 262,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:09:47.006644",
       "deleted": 0,
       "filePath": "202606/cfbe1846a509444a931a3e5131176801.png",
       "fileSize": 513149,
-      "fileUrl": "http://localhost:19090/blog/202606/cfbe1846a509444a931a3e5131176801.png",
+      "fileUrl": "/data/media/261.png",
       "filename": "cfbe1846a509444a931a3e5131176801.png",
       "id": 261,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:08:58.388879",
       "deleted": 0,
       "filePath": "202606/922f7c194947455ba6bb5c09d1c4cd05.png",
       "fileSize": 645581,
-      "fileUrl": "http://localhost:19090/blog/202606/922f7c194947455ba6bb5c09d1c4cd05.png",
+      "fileUrl": "/data/media/260.png",
       "filename": "922f7c194947455ba6bb5c09d1c4cd05.png",
       "id": 260,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:08:35.119265",
       "deleted": 0,
       "filePath": "202606/8fbbec176623479d9a4e40aecd21bff7.png",
       "fileSize": 1247767,
-      "fileUrl": "http://localhost:19090/blog/202606/8fbbec176623479d9a4e40aecd21bff7.png",
+      "fileUrl": "/data/media/259.png",
       "filename": "8fbbec176623479d9a4e40aecd21bff7.png",
       "id": 259,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:08:07.28994",
       "deleted": 0,
       "filePath": "202606/937c86fbdd644b3786b7b464115a7f8c.png",
       "fileSize": 853304,
-      "fileUrl": "http://localhost:19090/blog/202606/937c86fbdd644b3786b7b464115a7f8c.png",
+      "fileUrl": "/data/media/258.png",
       "filename": "937c86fbdd644b3786b7b464115a7f8c.png",
       "id": 258,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:07:36.476199",
       "deleted": 0,
       "filePath": "202606/a1394cac23cc45e4b80852cbbb1b4b12.png",
       "fileSize": 2065192,
-      "fileUrl": "http://localhost:19090/blog/202606/a1394cac23cc45e4b80852cbbb1b4b12.png",
+      "fileUrl": "/data/media/257.png",
       "filename": "a1394cac23cc45e4b80852cbbb1b4b12.png",
       "id": 257,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:06:52.526051",
       "deleted": 0,
       "filePath": "202606/1b7250b675a64f41a9ed348b11c02745.png",
       "fileSize": 555827,
-      "fileUrl": "http://localhost:19090/blog/202606/1b7250b675a64f41a9ed348b11c02745.png",
+      "fileUrl": "/data/media/256.png",
       "filename": "1b7250b675a64f41a9ed348b11c02745.png",
       "id": 256,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:06:23.947177",
       "deleted": 0,
       "filePath": "202606/fe0be2150ee84c23954e53478c99cc1a.png",
       "fileSize": 232767,
-      "fileUrl": "http://localhost:19090/blog/202606/fe0be2150ee84c23954e53478c99cc1a.png",
+      "fileUrl": "/data/media/255.png",
       "filename": "fe0be2150ee84c23954e53478c99cc1a.png",
       "id": 255,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:05:58.034828",
       "deleted": 0,
       "filePath": "202606/ea5a0b4bf88e454c8abc0bda48836324.png",
       "fileSize": 230270,
-      "fileUrl": "http://localhost:19090/blog/202606/ea5a0b4bf88e454c8abc0bda48836324.png",
+      "fileUrl": "/data/media/254.png",
       "filename": "ea5a0b4bf88e454c8abc0bda48836324.png",
       "id": 254,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:05:36.934878",
       "deleted": 0,
       "filePath": "202606/9a3f0e047dea41b5b404f0e6cfd86f5f.png",
       "fileSize": 171439,
-      "fileUrl": "http://localhost:19090/blog/202606/9a3f0e047dea41b5b404f0e6cfd86f5f.png",
+      "fileUrl": "/data/media/253.png",
       "filename": "9a3f0e047dea41b5b404f0e6cfd86f5f.png",
       "id": 253,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:05:01.874664",
       "deleted": 0,
       "filePath": "202606/12290e6bd02440f18c92f4fb1704b8c8.png",
       "fileSize": 283912,
-      "fileUrl": "http://localhost:19090/blog/202606/12290e6bd02440f18c92f4fb1704b8c8.png",
+      "fileUrl": "/data/media/252.png",
       "filename": "12290e6bd02440f18c92f4fb1704b8c8.png",
       "id": 252,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:04:45.781476",
       "deleted": 0,
       "filePath": "202606/c129c174f5e741118e77696044e09d9a.png",
       "fileSize": 242497,
-      "fileUrl": "http://localhost:19090/blog/202606/c129c174f5e741118e77696044e09d9a.png",
+      "fileUrl": "/data/media/251.png",
       "filename": "c129c174f5e741118e77696044e09d9a.png",
       "id": 251,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T20:03:59.005327",
       "deleted": 0,
       "filePath": "202606/9d0a1f2dc04a48fc900687b5b3c87ed1.png",
       "fileSize": 319637,
-      "fileUrl": "http://localhost:19090/blog/202606/9d0a1f2dc04a48fc900687b5b3c87ed1.png",
+      "fileUrl": "/data/media/250.png",
       "filename": "9d0a1f2dc04a48fc900687b5b3c87ed1.png",
       "id": 250,
       "mimeType": "image/png",
       "originalFilename": "architecture_overview.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T19:22:45.475492",
       "deleted": 0,
       "filePath": "202606/49492128fe5b496e96e33c0894721962.png",
       "fileSize": 108410,
-      "fileUrl": "http://localhost:19090/blog/202606/49492128fe5b496e96e33c0894721962.png",
+      "fileUrl": "/data/media/249.png",
       "filename": "49492128fe5b496e96e33c0894721962.png",
       "id": 249,
       "mimeType": "image/png",
       "originalFilename": "er_diagram.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T19:20:50.595145",
       "deleted": 0,
       "filePath": "202606/18fcdd8479144d59a458c1f345178e2c.png",
       "fileSize": 203676,
-      "fileUrl": "http://localhost:19090/blog/202606/18fcdd8479144d59a458c1f345178e2c.png",
+      "fileUrl": "/data/media/248.png",
       "filename": "18fcdd8479144d59a458c1f345178e2c.png",
       "id": 248,
       "mimeType": "image/png",
       "originalFilename": "frontend_routes.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T19:14:42.889578",
       "deleted": 0,
       "filePath": "202606/6ae7de43c0dc449783c2c1d8bfbecabb.png",
       "fileSize": 347233,
-      "fileUrl": "http://localhost:19090/blog/202606/6ae7de43c0dc449783c2c1d8bfbecabb.png",
+      "fileUrl": "/data/media/246.png",
       "filename": "6ae7de43c0dc449783c2c1d8bfbecabb.png",
       "id": 246,
       "mimeType": "image/png",
       "originalFilename": "backend_packages.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T19:09:52.777533",
       "deleted": 0,
       "filePath": "202606/482394ae65af45fcb65b79ca172a3aeb.png",
       "fileSize": 1322689,
-      "fileUrl": "http://localhost:19090/blog/202606/482394ae65af45fcb65b79ca172a3aeb.png",
+      "fileUrl": "/data/media/245.png",
       "filename": "482394ae65af45fcb65b79ca172a3aeb.png",
       "id": 245,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T19:08:02.828519",
       "deleted": 0,
       "filePath": "202606/7e6b73990da4439993cf99eb68455d8a.png",
       "fileSize": 1417846,
-      "fileUrl": "http://localhost:19090/blog/202606/7e6b73990da4439993cf99eb68455d8a.png",
+      "fileUrl": "/data/media/244.png",
       "filename": "7e6b73990da4439993cf99eb68455d8a.png",
       "id": 244,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T19:06:56.472129",
       "deleted": 0,
       "filePath": "202606/55c62e3599584cd4b03efa179db36803.png",
       "fileSize": 1164912,
-      "fileUrl": "http://localhost:19090/blog/202606/55c62e3599584cd4b03efa179db36803.png",
+      "fileUrl": "/data/media/243.png",
       "filename": "55c62e3599584cd4b03efa179db36803.png",
       "id": 243,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T19:06:04.461948",
       "deleted": 0,
       "filePath": "202606/4f1a9c40ef234fa78a05ac6aef734491.png",
       "fileSize": 1056629,
-      "fileUrl": "http://localhost:19090/blog/202606/4f1a9c40ef234fa78a05ac6aef734491.png",
+      "fileUrl": "/data/media/242.png",
       "filename": "4f1a9c40ef234fa78a05ac6aef734491.png",
       "id": 242,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T19:04:24.30715",
       "deleted": 0,
       "filePath": "202606/f6475236c24446b9ba629e99ee911968.png",
       "fileSize": 297980,
-      "fileUrl": "http://localhost:19090/blog/202606/f6475236c24446b9ba629e99ee911968.png",
+      "fileUrl": "/data/media/241.png",
       "filename": "f6475236c24446b9ba629e99ee911968.png",
       "id": 241,
       "mimeType": "image/png",
       "originalFilename": "rag_pipeline.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T19:03:14.666576",
       "deleted": 0,
       "filePath": "202606/2f7919cc508e4945b681a84cd9314cf4.png",
       "fileSize": 305588,
-      "fileUrl": "http://localhost:19090/blog/202606/2f7919cc508e4945b681a84cd9314cf4.png",
+      "fileUrl": "/data/media/240.png",
       "filename": "2f7919cc508e4945b681a84cd9314cf4.png",
       "id": 240,
       "mimeType": "image/png",
       "originalFilename": "vector_retrieval_flow.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T18:59:26.3228",
       "deleted": 0,
       "filePath": "202606/9a2b47ca00bf473fa7c4004e8067b3fe.png",
       "fileSize": 254456,
-      "fileUrl": "http://localhost:19090/blog/202606/9a2b47ca00bf473fa7c4004e8067b3fe.png",
+      "fileUrl": "/data/media/239.png",
       "filename": "9a2b47ca00bf473fa7c4004e8067b3fe.png",
       "id": 239,
       "mimeType": "image/png",
       "originalFilename": "knowledge_upload_flow.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T18:56:34.325666",
       "deleted": 0,
       "filePath": "202606/06308a40d90748dda9947b3daf675695.png",
       "fileSize": 1001040,
-      "fileUrl": "http://localhost:19090/blog/202606/06308a40d90748dda9947b3daf675695.png",
+      "fileUrl": "/data/media/238.png",
       "filename": "06308a40d90748dda9947b3daf675695.png",
       "id": 238,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T18:55:30.632402",
       "deleted": 0,
       "filePath": "202606/9cca23af54c24088b4a76811ff0fa4ca.png",
       "fileSize": 515138,
-      "fileUrl": "http://localhost:19090/blog/202606/9cca23af54c24088b4a76811ff0fa4ca.png",
+      "fileUrl": "/data/media/237.png",
       "filename": "9cca23af54c24088b4a76811ff0fa4ca.png",
       "id": 237,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T18:55:19.190922",
       "deleted": 0,
       "filePath": "202606/f6d58b65c12e4567899cdb9a35a84e37.png",
       "fileSize": 607256,
-      "fileUrl": "http://localhost:19090/blog/202606/f6d58b65c12e4567899cdb9a35a84e37.png",
+      "fileUrl": "/data/media/236.png",
       "filename": "f6d58b65c12e4567899cdb9a35a84e37.png",
       "id": 236,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T18:54:50.628424",
       "deleted": 0,
       "filePath": "202606/fb8291fe201041f1bc179da00ccd2f6f.png",
       "fileSize": 1712784,
-      "fileUrl": "http://localhost:19090/blog/202606/fb8291fe201041f1bc179da00ccd2f6f.png",
+      "fileUrl": "/data/media/235.png",
       "filename": "fb8291fe201041f1bc179da00ccd2f6f.png",
       "id": 235,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T18:54:26.683542",
       "deleted": 0,
       "filePath": "202606/de8fc2bfbcb34bacaec0b72ec7b381f5.png",
       "fileSize": 1742498,
-      "fileUrl": "http://localhost:19090/blog/202606/de8fc2bfbcb34bacaec0b72ec7b381f5.png",
+      "fileUrl": "/data/media/234.png",
       "filename": "de8fc2bfbcb34bacaec0b72ec7b381f5.png",
       "id": 234,
       "mimeType": "image/png",
       "originalFilename": "image.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T18:52:50.902943",
       "deleted": 0,
       "filePath": "202606/99aeb6970dcd4a3288a17863230f44e6.png",
       "fileSize": 226230,
-      "fileUrl": "http://localhost:19090/blog/202606/99aeb6970dcd4a3288a17863230f44e6.png",
+      "fileUrl": "/data/media/233.png",
       "filename": "99aeb6970dcd4a3288a17863230f44e6.png",
       "id": 233,
       "mimeType": "image/png",
       "originalFilename": "architecture_diagram_optimized.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:34:36.824275",
       "deleted": 0,
       "filePath": "202606/8636bfdaad2a47fcbe73d0a07b898022.png",
       "fileSize": 111755,
-      "fileUrl": "http://localhost:19090/blog/202606/8636bfdaad2a47fcbe73d0a07b898022.png",
+      "fileUrl": "/data/media/230.png",
       "filename": "8636bfdaad2a47fcbe73d0a07b898022.png",
       "id": 230,
       "mimeType": "image/png",
       "originalFilename": "Docker容器架构与部署拓扑图.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:33:45.977879",
       "deleted": 0,
       "filePath": "202606/ca362ee1caee4424986487e4a031da2f.png",
       "fileSize": 206140,
-      "fileUrl": "http://localhost:19090/blog/202606/ca362ee1caee4424986487e4a031da2f.png",
+      "fileUrl": "/data/media/229.png",
       "filename": "ca362ee1caee4424986487e4a031da2f.png",
       "id": 229,
       "mimeType": "image/png",
       "originalFilename": "数据库ER图.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:33:12.164928",
       "deleted": 0,
       "filePath": "202606/b87c5f04031a43b5b4ed84bf4ff8c17a.png",
       "fileSize": 123678,
-      "fileUrl": "http://localhost:19090/blog/202606/b87c5f04031a43b5b4ed84bf4ff8c17a.png",
+      "fileUrl": "/data/media/228.png",
       "filename": "b87c5f04031a43b5b4ed84bf4ff8c17a.png",
       "id": 228,
       "mimeType": "image/png",
       "originalFilename": "三角色仪表盘对比示意图.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:32:32.263188",
       "deleted": 0,
       "filePath": "202606/d10a002a149a489fae8db330c060b668.png",
       "fileSize": 159883,
-      "fileUrl": "http://localhost:19090/blog/202606/d10a002a149a489fae8db330c060b668.png",
+      "fileUrl": "/data/media/227.png",
       "filename": "d10a002a149a489fae8db330c060b668.png",
       "id": 227,
       "mimeType": "image/png",
       "originalFilename": "作业批改流程图.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:32:05.63294",
       "deleted": 0,
       "filePath": "202606/bdbbe5f7d06e41d0b225452b3fbdbf4f.png",
       "fileSize": 116436,
-      "fileUrl": "http://localhost:19090/blog/202606/bdbbe5f7d06e41d0b225452b3fbdbf4f.png",
+      "fileUrl": "/data/media/226.png",
       "filename": "bdbbe5f7d06e41d0b225452b3fbdbf4f.png",
       "id": 226,
       "mimeType": "image/png",
       "originalFilename": "知识文档解析流程图.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:31:07.9381",
       "deleted": 0,
       "filePath": "202606/1bf5c846a8b1402ba4ffeb2731adf16a.png",
       "fileSize": 124998,
-      "fileUrl": "http://localhost:19090/blog/202606/1bf5c846a8b1402ba4ffeb2731adf16a.png",
+      "fileUrl": "/data/media/225.png",
       "filename": "1bf5c846a8b1402ba4ffeb2731adf16a.png",
       "id": 225,
       "mimeType": "image/png",
       "originalFilename": "系统功能模块图.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:30:21.540233",
       "deleted": 0,
       "filePath": "202606/87765b4e925f455ea318b056afac68cd.png",
       "fileSize": 204750,
-      "fileUrl": "http://localhost:19090/blog/202606/87765b4e925f455ea318b056afac68cd.png",
+      "fileUrl": "/data/media/224.png",
       "filename": "87765b4e925f455ea318b056afac68cd.png",
       "id": 224,
       "mimeType": "image/png",
       "originalFilename": "image26.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:29:55.872511",
       "deleted": 0,
       "filePath": "202606/d97c12d5d4444d64b6f2a620e8287ce3.png",
       "fileSize": 259907,
-      "fileUrl": "http://localhost:19090/blog/202606/d97c12d5d4444d64b6f2a620e8287ce3.png",
+      "fileUrl": "/data/media/223.png",
       "filename": "d97c12d5d4444d64b6f2a620e8287ce3.png",
       "id": 223,
       "mimeType": "image/png",
       "originalFilename": "image27.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:29:44.294557",
       "deleted": 0,
       "filePath": "202606/b9ff75c99fe84de0975068a0504a108a.png",
       "fileSize": 235726,
-      "fileUrl": "http://localhost:19090/blog/202606/b9ff75c99fe84de0975068a0504a108a.png",
+      "fileUrl": "/data/media/222.png",
       "filename": "b9ff75c99fe84de0975068a0504a108a.png",
       "id": 222,
       "mimeType": "image/png",
       "originalFilename": "image32.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:29:35.725538",
       "deleted": 0,
       "filePath": "202606/7f7ca49c1c38448e917274157f01da9a.png",
       "fileSize": 228869,
-      "fileUrl": "http://localhost:19090/blog/202606/7f7ca49c1c38448e917274157f01da9a.png",
+      "fileUrl": "/data/media/221.png",
       "filename": "7f7ca49c1c38448e917274157f01da9a.png",
       "id": 221,
       "mimeType": "image/png",
       "originalFilename": "image31.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:28:47.722998",
       "deleted": 0,
       "filePath": "202606/b157290c98bc4a16be19b42a05965862.png",
       "fileSize": 242841,
-      "fileUrl": "http://localhost:19090/blog/202606/b157290c98bc4a16be19b42a05965862.png",
+      "fileUrl": "/data/media/220.png",
       "filename": "b157290c98bc4a16be19b42a05965862.png",
       "id": 220,
       "mimeType": "image/png",
       "originalFilename": "image23.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:28:11.504279",
       "deleted": 0,
       "filePath": "202606/71b2cb3b4f064318a4ff1cfb071b97c6.png",
       "fileSize": 601309,
-      "fileUrl": "http://localhost:19090/blog/202606/71b2cb3b4f064318a4ff1cfb071b97c6.png",
+      "fileUrl": "/data/media/219.png",
       "filename": "71b2cb3b4f064318a4ff1cfb071b97c6.png",
       "id": 219,
       "mimeType": "image/png",
       "originalFilename": "image22.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:28:03.459431",
       "deleted": 0,
       "filePath": "202606/8847a0f592a9482186ca58c3c7392139.png",
       "fileSize": 390756,
-      "fileUrl": "http://localhost:19090/blog/202606/8847a0f592a9482186ca58c3c7392139.png",
+      "fileUrl": "/data/media/218.png",
       "filename": "8847a0f592a9482186ca58c3c7392139.png",
       "id": 218,
       "mimeType": "image/png",
       "originalFilename": "image21.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:27:49.565551",
       "deleted": 0,
       "filePath": "202606/cc5a58523bc9437d86d81357319519ff.png",
       "fileSize": 2563325,
-      "fileUrl": "http://localhost:19090/blog/202606/cc5a58523bc9437d86d81357319519ff.png",
+      "fileUrl": "/data/media/217.png",
       "filename": "cc5a58523bc9437d86d81357319519ff.png",
       "id": 217,
       "mimeType": "image/png",
       "originalFilename": "image20.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T16:26:51.569658",
       "deleted": 0,
       "filePath": "202606/d37cefdca7884c1ba74482274e898744.png",
       "fileSize": 158841,
-      "fileUrl": "http://localhost:19090/blog/202606/d37cefdca7884c1ba74482274e898744.png",
+      "fileUrl": "/data/media/216.png",
       "filename": "d37cefdca7884c1ba74482274e898744.png",
       "id": 216,
       "mimeType": "image/png",
       "originalFilename": "作业批改完整数据流向图.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T15:58:06.969197",
       "deleted": 0,
       "filePath": "202606/d831a17f7df1403ebbc9053a85c98944.png",
       "fileSize": 524616,
-      "fileUrl": "http://localhost:19090/blog/202606/d831a17f7df1403ebbc9053a85c98944.png",
+      "fileUrl": "/data/media/215.png",
       "filename": "d831a17f7df1403ebbc9053a85c98944.png",
       "id": 215,
       "mimeType": "image/png",
       "originalFilename": "PixPin_2026-06-06_15-57-48.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-06T15:57:21.730295",
       "deleted": 0,
       "filePath": "202606/e009b8ce858146ebaf17d6c6043330ba.png",
       "fileSize": 253001,
-      "fileUrl": "http://localhost:19090/blog/202606/e009b8ce858146ebaf17d6c6043330ba.png",
+      "fileUrl": "/data/media/214.png",
       "filename": "e009b8ce858146ebaf17d6c6043330ba.png",
       "id": 214,
       "mimeType": "image/png",
       "originalFilename": "PixPin_2026-06-06_15-56-12.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:37.551048",
       "deleted": 0,
       "filePath": "202606/392d181d331041afbcfb63e19eda4c14.jpeg",
       "fileSize": 89480,
-      "fileUrl": "http://localhost:19090/blog/202606/392d181d331041afbcfb63e19eda4c14.jpeg",
+      "fileUrl": "/data/media/213.jpeg",
       "filename": "392d181d331041afbcfb63e19eda4c14.jpeg",
       "id": 213,
       "mimeType": "image/jpeg",
       "originalFilename": "d8e7f24b102f439b87b3301a4f6a2c6c.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:37.482105",
       "deleted": 0,
       "filePath": "202606/0c9361657f024fbdbab53e940bd400fa.jpeg",
       "fileSize": 1383679,
-      "fileUrl": "http://localhost:19090/blog/202606/0c9361657f024fbdbab53e940bd400fa.jpeg",
+      "fileUrl": "/data/media/212.jpeg",
       "filename": "0c9361657f024fbdbab53e940bd400fa.jpeg",
       "id": 212,
       "mimeType": "image/jpeg",
       "originalFilename": "c74301a8c7eef00122110872a9e5d85e.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:37.305578",
       "deleted": 0,
       "filePath": "202606/5997cb388e144ed39cc63b1e1af7438e.jpeg",
       "fileSize": 31100,
-      "fileUrl": "http://localhost:19090/blog/202606/5997cb388e144ed39cc63b1e1af7438e.jpeg",
+      "fileUrl": "/data/media/211.jpeg",
       "filename": "5997cb388e144ed39cc63b1e1af7438e.jpeg",
       "id": 211,
       "mimeType": "image/jpeg",
       "originalFilename": "b82d6f19e6bd4a3c4ffe7d62425a5056.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:37.247999",
       "deleted": 0,
       "filePath": "202606/0cd9d2c4be08418c8a88caa5be162441.jpeg",
       "fileSize": 44386,
-      "fileUrl": "http://localhost:19090/blog/202606/0cd9d2c4be08418c8a88caa5be162441.jpeg",
+      "fileUrl": "/data/media/210.jpeg",
       "filename": "0cd9d2c4be08418c8a88caa5be162441.jpeg",
       "id": 210,
       "mimeType": "image/jpeg",
       "originalFilename": "b5ecb1744e4599f45f9efa0f695c6e38.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:37.173416",
       "deleted": 0,
       "filePath": "202606/011ab334f2ac4970b01971a8ffe851aa.jpeg",
       "fileSize": 58631,
-      "fileUrl": "http://localhost:19090/blog/202606/011ab334f2ac4970b01971a8ffe851aa.jpeg",
+      "fileUrl": "/data/media/209.jpeg",
       "filename": "011ab334f2ac4970b01971a8ffe851aa.jpeg",
       "id": 209,
       "mimeType": "image/jpeg",
       "originalFilename": "959e927d1e219efff2a2a62fd132f176.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:37.056923",
       "deleted": 0,
       "filePath": "202606/1f269e5331734252a450188aeb45f285.jpeg",
       "fileSize": 37986,
-      "fileUrl": "http://localhost:19090/blog/202606/1f269e5331734252a450188aeb45f285.jpeg",
+      "fileUrl": "/data/media/208.jpeg",
       "filename": "1f269e5331734252a450188aeb45f285.jpeg",
       "id": 208,
       "mimeType": "image/jpeg",
       "originalFilename": "0850bc5ff6c08ad56c0bd50b48f696f7.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:36.22959",
       "deleted": 0,
       "filePath": "202606/f49c71e54a9f45e3bd695b8caf157966.jpeg",
       "fileSize": 98548,
-      "fileUrl": "http://localhost:19090/blog/202606/f49c71e54a9f45e3bd695b8caf157966.jpeg",
+      "fileUrl": "/data/media/207.jpeg",
       "filename": "f49c71e54a9f45e3bd695b8caf157966.jpeg",
       "id": 207,
       "mimeType": "image/jpeg",
       "originalFilename": "790db1b1bf682bd78afc7544ed7d99ae.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:36.165802",
       "deleted": 0,
       "filePath": "202606/1756676f3e8a4167893430a82c18949f.jpeg",
       "fileSize": 362697,
-      "fileUrl": "http://localhost:19090/blog/202606/1756676f3e8a4167893430a82c18949f.jpeg",
+      "fileUrl": "/data/media/206.jpeg",
       "filename": "1756676f3e8a4167893430a82c18949f.jpeg",
       "id": 206,
       "mimeType": "image/jpeg",
       "originalFilename": "407a9791c71eea42e9290283a50c4e0b.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:36.096212",
       "deleted": 0,
       "filePath": "202606/cd2d8b5e04aa4d6abb77806f6fc83396.jpeg",
       "fileSize": 23851,
-      "fileUrl": "http://localhost:19090/blog/202606/cd2d8b5e04aa4d6abb77806f6fc83396.jpeg",
+      "fileUrl": "/data/media/205.jpeg",
       "filename": "cd2d8b5e04aa4d6abb77806f6fc83396.jpeg",
       "id": 205,
       "mimeType": "image/jpeg",
       "originalFilename": "59e3e8596e8f36c20a6e023102be4246.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:35.279775",
       "deleted": 0,
       "filePath": "202606/2992f6d3c18341ca96f4075e35eeea4f.jpeg",
       "fileSize": 37655,
-      "fileUrl": "http://localhost:19090/blog/202606/2992f6d3c18341ca96f4075e35eeea4f.jpeg",
+      "fileUrl": "/data/media/204.jpeg",
       "filename": "2992f6d3c18341ca96f4075e35eeea4f.jpeg",
       "id": 204,
       "mimeType": "image/jpeg",
       "originalFilename": "0016eb45e81d8c4fb9ac80bb65358418.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:33.068769",
       "deleted": 0,
       "filePath": "202606/d6991b32587346e1b1b40621b6041077.jpeg",
       "fileSize": 57806,
-      "fileUrl": "http://localhost:19090/blog/202606/d6991b32587346e1b1b40621b6041077.jpeg",
+      "fileUrl": "/data/media/203.jpeg",
       "filename": "d6991b32587346e1b1b40621b6041077.jpeg",
       "id": 203,
       "mimeType": "image/jpeg",
       "originalFilename": "7c38c3083d9cef724e99eb05ef3aa5ef.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:17.180752",
       "deleted": 0,
       "filePath": "202606/ff3cf52368e4403982829c4de99a680c.jpg",
       "fileSize": 5491810,
-      "fileUrl": "http://localhost:19090/blog/202606/ff3cf52368e4403982829c4de99a680c.jpg",
+      "fileUrl": "/data/media/202.jpg",
       "filename": "ff3cf52368e4403982829c4de99a680c.jpg",
       "id": 202,
       "mimeType": "image/jpeg",
       "originalFilename": "webStorm.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:16.772633",
       "deleted": 0,
       "filePath": "202606/f88bf931ace44f51a736ee9fff7057d2.PNG",
       "fileSize": 1642964,
-      "fileUrl": "http://localhost:19090/blog/202606/f88bf931ace44f51a736ee9fff7057d2.PNG",
+      "fileUrl": "/data/media/201.PNG",
       "filename": "f88bf931ace44f51a736ee9fff7057d2.PNG",
       "id": 201,
       "mimeType": "image/png",
       "originalFilename": "vsCode.PNG",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:16.639243",
       "deleted": 0,
       "filePath": "202606/78f58d7f555a4df0b85a464855b34bb9.jpg",
       "fileSize": 7456408,
-      "fileUrl": "http://localhost:19090/blog/202606/78f58d7f555a4df0b85a464855b34bb9.jpg",
+      "fileUrl": "/data/media/200.jpg",
       "filename": "78f58d7f555a4df0b85a464855b34bb9.jpg",
       "id": 200,
       "mimeType": "image/jpeg",
       "originalFilename": "vs.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:16.227642",
       "deleted": 0,
       "filePath": "202606/e2f751e65a444572b2eb79c5e9f42f80.JPG",
       "fileSize": 2398812,
-      "fileUrl": "http://localhost:19090/blog/202606/e2f751e65a444572b2eb79c5e9f42f80.JPG",
+      "fileUrl": "/data/media/199.JPG",
       "filename": "e2f751e65a444572b2eb79c5e9f42f80.JPG",
       "id": 199,
       "mimeType": "image/jpeg",
       "originalFilename": "IMG_2456.JPG",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:16.033952",
       "deleted": 0,
       "filePath": "202606/b8236698b6e945ee9879aa94e20ba324.JPG",
       "fileSize": 3209916,
-      "fileUrl": "http://localhost:19090/blog/202606/b8236698b6e945ee9879aa94e20ba324.JPG",
+      "fileUrl": "/data/media/198.JPG",
       "filename": "b8236698b6e945ee9879aa94e20ba324.JPG",
       "id": 198,
       "mimeType": "image/jpeg",
       "originalFilename": "IMG_2451.JPG",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:15.795557",
       "deleted": 0,
       "filePath": "202606/3f5960182a48436da3de88a6c570cc4a.png",
       "fileSize": 12224420,
-      "fileUrl": "http://localhost:19090/blog/202606/3f5960182a48436da3de88a6c570cc4a.png",
+      "fileUrl": "/data/media/197.png",
       "filename": "3f5960182a48436da3de88a6c570cc4a.png",
       "id": 197,
       "mimeType": "image/png",
       "originalFilename": "274电脑.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:15.094018",
       "deleted": 0,
       "filePath": "202606/9cfa17da329842f098945e599e1a3209.PNG",
       "fileSize": 15309213,
-      "fileUrl": "http://localhost:19090/blog/202606/9cfa17da329842f098945e599e1a3209.PNG",
+      "fileUrl": "/data/media/196.PNG",
       "filename": "9cfa17da329842f098945e599e1a3209.PNG",
       "id": 196,
       "mimeType": "image/png",
       "originalFilename": "11.PNG",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:14.243559",
       "deleted": 0,
       "filePath": "202606/86d9b686e3774f4e8e465648dc33fa40.jpg",
       "fileSize": 6948571,
-      "fileUrl": "http://localhost:19090/blog/202606/86d9b686e3774f4e8e465648dc33fa40.jpg",
+      "fileUrl": "/data/media/195.jpg",
       "filename": "86d9b686e3774f4e8e465648dc33fa40.jpg",
       "id": 195,
       "mimeType": "image/jpeg",
       "originalFilename": "7.中二病的救赎.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:13.74889",
       "deleted": 0,
       "filePath": "202606/3d9486f1098d4247b302b657804ca953.jpg",
       "fileSize": 7934163,
-      "fileUrl": "http://localhost:19090/blog/202606/3d9486f1098d4247b302b657804ca953.jpg",
+      "fileUrl": "/data/media/194.jpg",
       "filename": "3d9486f1098d4247b302b657804ca953.jpg",
       "id": 194,
       "mimeType": "image/jpeg",
       "originalFilename": "6.小鸟游六花-中二病也要谈恋爱2.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:13.265985",
       "deleted": 0,
       "filePath": "202606/a4df575c197c45d1bea87e1950ec030f.jpg",
       "fileSize": 137831,
-      "fileUrl": "http://localhost:19090/blog/202606/a4df575c197c45d1bea87e1950ec030f.jpg",
+      "fileUrl": "/data/media/193.jpg",
       "filename": "a4df575c197c45d1bea87e1950ec030f.jpg",
       "id": 193,
       "mimeType": "image/jpeg",
       "originalFilename": "06.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:13.136045",
       "deleted": 0,
       "filePath": "202606/e31323b9b28d40b7a901f352105ab312.jpg",
       "fileSize": 7455180,
-      "fileUrl": "http://localhost:19090/blog/202606/e31323b9b28d40b7a901f352105ab312.jpg",
+      "fileUrl": "/data/media/192.jpg",
       "filename": "e31323b9b28d40b7a901f352105ab312.jpg",
       "id": 192,
       "mimeType": "image/jpeg",
       "originalFilename": "5.邪王真眼 小鸟游六花.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:12.643643",
       "deleted": 0,
       "filePath": "202606/8b4292f305cb4fdfaa336c1f2e9c3c83.png",
       "fileSize": 2746933,
-      "fileUrl": "http://localhost:19090/blog/202606/8b4292f305cb4fdfaa336c1f2e9c3c83.png",
+      "fileUrl": "/data/media/191.png",
       "filename": "8b4292f305cb4fdfaa336c1f2e9c3c83.png",
       "id": 191,
       "mimeType": "image/png",
       "originalFilename": "5.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:12.461026",
       "deleted": 0,
       "filePath": "202606/0f90a59be0e74eabb1d6368dba8197e9.jpg",
       "fileSize": 13042002,
-      "fileUrl": "http://localhost:19090/blog/202606/0f90a59be0e74eabb1d6368dba8197e9.jpg",
+      "fileUrl": "/data/media/190.jpg",
       "filename": "0f90a59be0e74eabb1d6368dba8197e9.jpg",
       "id": 190,
       "mimeType": "image/jpeg",
       "originalFilename": "4.Takanashi Rikka.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T21:00:11.604903",
       "deleted": 0,
       "filePath": "202606/d34013c7ef3d45acab8937134c394b8b.jpg",
       "fileSize": 8739646,
-      "fileUrl": "http://localhost:19090/blog/202606/d34013c7ef3d45acab8937134c394b8b.jpg",
+      "fileUrl": "/data/media/189.jpg",
       "filename": "d34013c7ef3d45acab8937134c394b8b.jpg",
       "id": 189,
       "mimeType": "image/jpeg",
       "originalFilename": "3.小鸟游六花.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:52.62636",
       "deleted": 0,
       "filePath": "202606/7143dcce8958439c8b7854b08905dfe8.jpeg",
       "fileSize": 348858,
-      "fileUrl": "http://localhost:19090/blog/202606/7143dcce8958439c8b7854b08905dfe8.jpeg",
+      "fileUrl": "/data/media/186.jpeg",
       "filename": "7143dcce8958439c8b7854b08905dfe8.jpeg",
       "id": 186,
       "mimeType": "image/jpeg",
       "originalFilename": "ec8dc6f006582a0369239135ee169335.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:52.510659",
       "deleted": 0,
       "filePath": "202606/316afb2517c646c78ab798b4c6fae48b.jpeg",
       "fileSize": 51717,
-      "fileUrl": "http://localhost:19090/blog/202606/316afb2517c646c78ab798b4c6fae48b.jpeg",
+      "fileUrl": "/data/media/185.jpeg",
       "filename": "316afb2517c646c78ab798b4c6fae48b.jpeg",
       "id": 185,
       "mimeType": "image/jpeg",
       "originalFilename": "63acb4adbec2e52643d1ec6735252c7d.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:45.525276",
       "deleted": 0,
       "filePath": "202606/60e59f7753c24d72b29950724b0169ae.jpeg",
       "fileSize": 333509,
-      "fileUrl": "http://localhost:19090/blog/202606/60e59f7753c24d72b29950724b0169ae.jpeg",
+      "fileUrl": "/data/media/184.jpeg",
       "filename": "60e59f7753c24d72b29950724b0169ae.jpeg",
       "id": 184,
       "mimeType": "image/jpeg",
       "originalFilename": "d59730966b079bc7b31c173db38241ee.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:45.42864",
       "deleted": 0,
       "filePath": "202606/7f854d5ee58d4bd3ac5c1d9729d1ba2d.jpeg",
       "fileSize": 38000,
-      "fileUrl": "http://localhost:19090/blog/202606/7f854d5ee58d4bd3ac5c1d9729d1ba2d.jpeg",
+      "fileUrl": "/data/media/183.jpeg",
       "filename": "7f854d5ee58d4bd3ac5c1d9729d1ba2d.jpeg",
       "id": 183,
       "mimeType": "image/jpeg",
       "originalFilename": "60146dcb5d1ee742abfeb1f9dcaf0d21.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:45.37863",
       "deleted": 0,
       "filePath": "202606/c7aabb1b9dd649ffa7e5e4c8d9db0c16.jpeg",
       "fileSize": 75753,
-      "fileUrl": "http://localhost:19090/blog/202606/c7aabb1b9dd649ffa7e5e4c8d9db0c16.jpeg",
+      "fileUrl": "/data/media/182.jpeg",
       "filename": "c7aabb1b9dd649ffa7e5e4c8d9db0c16.jpeg",
       "id": 182,
       "mimeType": "image/jpeg",
       "originalFilename": "8443bb2dcede00bc9375b50fc82e2d14.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:45.316215",
       "deleted": 0,
       "filePath": "202606/f21268db5d6a4d8e856c1374c082ed17.jpeg",
       "fileSize": 253129,
-      "fileUrl": "http://localhost:19090/blog/202606/f21268db5d6a4d8e856c1374c082ed17.jpeg",
+      "fileUrl": "/data/media/181.jpeg",
       "filename": "f21268db5d6a4d8e856c1374c082ed17.jpeg",
       "id": 181,
       "mimeType": "image/jpeg",
       "originalFilename": "661b7c55357a03a3813833440a6bf0e6.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:45.226489",
       "deleted": 0,
       "filePath": "202606/516a502a6d074fa794f4a73bc6d71d53.jpeg",
       "fileSize": 50477,
-      "fileUrl": "http://localhost:19090/blog/202606/516a502a6d074fa794f4a73bc6d71d53.jpeg",
+      "fileUrl": "/data/media/180.jpeg",
       "filename": "516a502a6d074fa794f4a73bc6d71d53.jpeg",
       "id": 180,
       "mimeType": "image/jpeg",
       "originalFilename": "546badcb5339e36ed709350dbca8f793.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:45.149797",
       "deleted": 0,
       "filePath": "202606/9f2ccb417a584a0693410842ed99044b.jpeg",
       "fileSize": 32004,
-      "fileUrl": "http://localhost:19090/blog/202606/9f2ccb417a584a0693410842ed99044b.jpeg",
+      "fileUrl": "/data/media/179.jpeg",
       "filename": "9f2ccb417a584a0693410842ed99044b.jpeg",
       "id": 179,
       "mimeType": "image/jpeg",
       "originalFilename": "331bd8edeff2a8e568c9f9c0f23cba71.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:45.081504",
       "deleted": 0,
       "filePath": "202606/62347cf68c17477b97ae4b743119d80d.jpeg",
       "fileSize": 36704,
-      "fileUrl": "http://localhost:19090/blog/202606/62347cf68c17477b97ae4b743119d80d.jpeg",
+      "fileUrl": "/data/media/178.jpeg",
       "filename": "62347cf68c17477b97ae4b743119d80d.jpeg",
       "id": 178,
       "mimeType": "image/jpeg",
       "originalFilename": "93c700244b8a325a8211c2bd95f3f7eb.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:45.007115",
       "deleted": 0,
       "filePath": "202606/5a51d6a76eee45e98eca2943b0347af3.jpeg",
       "fileSize": 41096,
-      "fileUrl": "http://localhost:19090/blog/202606/5a51d6a76eee45e98eca2943b0347af3.jpeg",
+      "fileUrl": "/data/media/177.jpeg",
       "filename": "5a51d6a76eee45e98eca2943b0347af3.jpeg",
       "id": 177,
       "mimeType": "image/jpeg",
       "originalFilename": "64f36130fc3e17c422f3e6b5a66797b3.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:44.916368",
       "deleted": 0,
       "filePath": "202606/0bf43759050c46f2b51bc76bb6f4b948.jpeg",
       "fileSize": 100219,
-      "fileUrl": "http://localhost:19090/blog/202606/0bf43759050c46f2b51bc76bb6f4b948.jpeg",
+      "fileUrl": "/data/media/176.jpeg",
       "filename": "0bf43759050c46f2b51bc76bb6f4b948.jpeg",
       "id": 176,
       "mimeType": "image/jpeg",
       "originalFilename": "057de66e9516650e2cebba625db6d55b.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:44.820534",
       "deleted": 0,
       "filePath": "202606/3e3857fe43b2435da6158115eae2b483.jpeg",
       "fileSize": 53228,
-      "fileUrl": "http://localhost:19090/blog/202606/3e3857fe43b2435da6158115eae2b483.jpeg",
+      "fileUrl": "/data/media/175.jpeg",
       "filename": "3e3857fe43b2435da6158115eae2b483.jpeg",
       "id": 175,
       "mimeType": "image/jpeg",
       "originalFilename": "029f6217c0cd42b40e465a30d498e6fe.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:44.747191",
       "deleted": 0,
       "filePath": "202606/061f364051094e748b9805df202a56d8.jpeg",
       "fileSize": 354581,
-      "fileUrl": "http://localhost:19090/blog/202606/061f364051094e748b9805df202a56d8.jpeg",
+      "fileUrl": "/data/media/174.jpeg",
       "filename": "061f364051094e748b9805df202a56d8.jpeg",
       "id": 174,
       "mimeType": "image/jpeg",
       "originalFilename": "6cddf8f445685419101b0d75e77caf61.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:44.655178",
       "deleted": 0,
       "filePath": "202606/3bbc6c47f4ea45ed9b03bb15f1809710.jpeg",
       "fileSize": 20699,
-      "fileUrl": "http://localhost:19090/blog/202606/3bbc6c47f4ea45ed9b03bb15f1809710.jpeg",
+      "fileUrl": "/data/media/173.jpeg",
       "filename": "3bbc6c47f4ea45ed9b03bb15f1809710.jpeg",
       "id": 173,
       "mimeType": "image/jpeg",
       "originalFilename": "3f9f06f3ed137b1d09aee46f9368c242.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:44.586106",
       "deleted": 0,
       "filePath": "202606/d64542538ad24f15a8d6cca3b6c79b8a.jpeg",
       "fileSize": 62261,
-      "fileUrl": "http://localhost:19090/blog/202606/d64542538ad24f15a8d6cca3b6c79b8a.jpeg",
+      "fileUrl": "/data/media/172.jpeg",
       "filename": "d64542538ad24f15a8d6cca3b6c79b8a.jpeg",
       "id": 172,
       "mimeType": "image/jpeg",
       "originalFilename": "3ecc3d49e507986b989413bb96173916.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:44.52795",
       "deleted": 0,
       "filePath": "202606/a27f0d81e3d949a88781b64fe8bac6c2.jpeg",
       "fileSize": 50709,
-      "fileUrl": "http://localhost:19090/blog/202606/a27f0d81e3d949a88781b64fe8bac6c2.jpeg",
+      "fileUrl": "/data/media/171.jpeg",
       "filename": "a27f0d81e3d949a88781b64fe8bac6c2.jpeg",
       "id": 171,
       "mimeType": "image/jpeg",
       "originalFilename": "3e3b4b6464ab5d1c7fe93722e8dc374a.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:44.449669",
       "deleted": 0,
       "filePath": "202606/bc9993b272474b43bc72cf0308af411d.jpeg",
       "fileSize": 304088,
-      "fileUrl": "http://localhost:19090/blog/202606/bc9993b272474b43bc72cf0308af411d.jpeg",
+      "fileUrl": "/data/media/170.jpeg",
       "filename": "bc9993b272474b43bc72cf0308af411d.jpeg",
       "id": 170,
       "mimeType": "image/jpeg",
       "originalFilename": "2d2f98f850ace4bc924860ab4a861508.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:44.351418",
       "deleted": 0,
       "filePath": "202606/e0bfc090fb7e47878dbf38512fa8aec4.jpeg",
       "fileSize": 194535,
-      "fileUrl": "http://localhost:19090/blog/202606/e0bfc090fb7e47878dbf38512fa8aec4.jpeg",
+      "fileUrl": "/data/media/169.jpeg",
       "filename": "e0bfc090fb7e47878dbf38512fa8aec4.jpeg",
       "id": 169,
       "mimeType": "image/jpeg",
       "originalFilename": "2bac59d91806d215e4842e03a80a158d.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:44.257268",
       "deleted": 0,
       "filePath": "202606/4d0966faaeaa4e538b1e7d0132aebd8c.jpeg",
       "fileSize": 37508,
-      "fileUrl": "http://localhost:19090/blog/202606/4d0966faaeaa4e538b1e7d0132aebd8c.jpeg",
+      "fileUrl": "/data/media/168.jpeg",
       "filename": "4d0966faaeaa4e538b1e7d0132aebd8c.jpeg",
       "id": 168,
       "mimeType": "image/jpeg",
       "originalFilename": "1f36bb517cc8a6e0244a7b99ed953c48.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:47:39.201802",
       "deleted": 0,
       "filePath": "202606/b1f6a962b77645dda8633968333b7d78.jpeg",
       "fileSize": 150661,
-      "fileUrl": "http://localhost:19090/blog/202606/b1f6a962b77645dda8633968333b7d78.jpeg",
+      "fileUrl": "/data/media/167.jpeg",
       "filename": "b1f6a962b77645dda8633968333b7d78.jpeg",
       "id": 167,
       "mimeType": "image/jpeg",
       "originalFilename": "d09988cb945f06eba6bffd9f841e7eda.jpeg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.904352",
       "deleted": 0,
       "filePath": "202606/851610df69d340eb8b32b69e0d4113a7.jpg",
       "fileSize": 9172,
-      "fileUrl": "http://localhost:19090/blog/202606/851610df69d340eb8b32b69e0d4113a7.jpg",
+      "fileUrl": "/data/media/166.jpg",
       "filename": "851610df69d340eb8b32b69e0d4113a7.jpg",
       "id": 166,
       "mimeType": "image/jpeg",
       "originalFilename": "ZWHxte3O_34398140_62c513a3d15fbc41666a4bdf8ea8958a38355625_62c513a38528518817d14c1282b8109ca901a1b6.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.87772",
       "deleted": 0,
       "filePath": "202606/ca960a349fbd4dbda9c188a4f1359fc5.jpg",
       "fileSize": 10375,
-      "fileUrl": "http://localhost:19090/blog/202606/ca960a349fbd4dbda9c188a4f1359fc5.jpg",
+      "fileUrl": "/data/media/165.jpg",
       "filename": "ca960a349fbd4dbda9c188a4f1359fc5.jpg",
       "id": 165,
       "mimeType": "image/jpeg",
       "originalFilename": "ZI1MFFdu_879838_60522b9e958750426b8948068f7f6d3ce66f3da1_60522b9e66b11e9020ae4f2cb667b6b0a5f43605.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.849744",
       "deleted": 0,
       "filePath": "202606/4befef45311a4c78b537e8d0f0d33b8b.jpg",
       "fileSize": 3203,
-      "fileUrl": "http://localhost:19090/blog/202606/4befef45311a4c78b537e8d0f0d33b8b.jpg",
+      "fileUrl": "/data/media/164.jpg",
       "filename": "4befef45311a4c78b537e8d0f0d33b8b.jpg",
       "id": 164,
       "mimeType": "image/jpeg",
       "originalFilename": "ZCc0tj8K_34398140_62c5139f5619a57227204bea8f5eb4164a24b535_62c5139fba7f1a6de7ce4fc09e52f3859c11c48d.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.822917",
       "deleted": 0,
       "filePath": "202606/f3e10bbfdb564086946c096a2c194164.jpg",
       "fileSize": 3480,
-      "fileUrl": "http://localhost:19090/blog/202606/f3e10bbfdb564086946c096a2c194164.jpg",
+      "fileUrl": "/data/media/163.jpg",
       "filename": "f3e10bbfdb564086946c096a2c194164.jpg",
       "id": 163,
       "mimeType": "image/jpeg",
       "originalFilename": "Z0xhWcKZ_34398140_62c5139fcb9adfd21e564628bb6a26636e1b4868_62c5139f08868c2a97c04de1894ecf456b8488c4.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.792598",
       "deleted": 0,
       "filePath": "202606/c93abe06a0964800b2a07e3bf28517fb.jpg",
       "fileSize": 5450,
-      "fileUrl": "http://localhost:19090/blog/202606/c93abe06a0964800b2a07e3bf28517fb.jpg",
+      "fileUrl": "/data/media/162.jpg",
       "filename": "c93abe06a0964800b2a07e3bf28517fb.jpg",
       "id": 162,
       "mimeType": "image/jpeg",
       "originalFilename": "yRaL6Ekh_34398140_62c5139c478e98687f914bfc88b15bff0013aad7_62c5139cdd6a3e6405c14ddd910d9351fc41245b.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.764401",
       "deleted": 0,
       "filePath": "202606/80d74322c5ba4b96a62434082dcfce9f.jpg",
       "fileSize": 5614,
-      "fileUrl": "http://localhost:19090/blog/202606/80d74322c5ba4b96a62434082dcfce9f.jpg",
+      "fileUrl": "/data/media/161.jpg",
       "filename": "80d74322c5ba4b96a62434082dcfce9f.jpg",
       "id": 161,
       "mimeType": "image/jpeg",
       "originalFilename": "YEkQBUYx_34398140_62c5139f117200b1cddb40b3a51619aba180f55b_62c5139f024360abc3f74f4fa0fa82b1c8460d5a.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.7336",
       "deleted": 0,
       "filePath": "202606/d9c7d778493c40868734afb49907b261.jpg",
       "fileSize": 3855,
-      "fileUrl": "http://localhost:19090/blog/202606/d9c7d778493c40868734afb49907b261.jpg",
+      "fileUrl": "/data/media/160.jpg",
       "filename": "d9c7d778493c40868734afb49907b261.jpg",
       "id": 160,
       "mimeType": "image/jpeg",
       "originalFilename": "yDBWnywR_34398140_62c513a2b8604fbf216c41a382a799bb0ae23fa1_62c513a2bad93802824a4e658256012b8a31253b.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.707751",
       "deleted": 0,
       "filePath": "202606/8e72ee5e44ce4260adb8449ccdc3f93d.jpg",
       "fileSize": 4776,
-      "fileUrl": "http://localhost:19090/blog/202606/8e72ee5e44ce4260adb8449ccdc3f93d.jpg",
+      "fileUrl": "/data/media/159.jpg",
       "filename": "8e72ee5e44ce4260adb8449ccdc3f93d.jpg",
       "id": 159,
       "mimeType": "image/jpeg",
       "originalFilename": "yCpQYNh8_34398140_62c513a1a7a353bd889347d6883d4d7655909876_62c513a17f47a8725b9546609e55f1cc3dc0dbdd.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.681968",
       "deleted": 0,
       "filePath": "202606/1a14c4a418754f88b66be7ffc9c15cc1.jpg",
       "fileSize": 9257,
-      "fileUrl": "http://localhost:19090/blog/202606/1a14c4a418754f88b66be7ffc9c15cc1.jpg",
+      "fileUrl": "/data/media/158.jpg",
       "filename": "1a14c4a418754f88b66be7ffc9c15cc1.jpg",
       "id": 158,
       "mimeType": "image/jpeg",
       "originalFilename": "Y6SixVsB_34398140_62c513a02f07c6c0a06f45368654507aad7c2e25_62c513a095ba6641e86a4402987ef6312c0671bd.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.653593",
       "deleted": 0,
       "filePath": "202606/e354077489824b378f39c91e88a5662b.jpg",
       "fileSize": 5184,
-      "fileUrl": "http://localhost:19090/blog/202606/e354077489824b378f39c91e88a5662b.jpg",
+      "fileUrl": "/data/media/157.jpg",
       "filename": "e354077489824b378f39c91e88a5662b.jpg",
       "id": 157,
       "mimeType": "image/jpeg",
       "originalFilename": "XWBZ0BrI_34398140_62c5139d6714d602ac544f579738d1d1708d524b_62c5139d562756d8d1044820a67676b0c57d0508.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.623923",
       "deleted": 0,
       "filePath": "202606/f84508c9720447b4bfd317a4b79cf34a.jpg",
       "fileSize": 5289,
-      "fileUrl": "http://localhost:19090/blog/202606/f84508c9720447b4bfd317a4b79cf34a.jpg",
+      "fileUrl": "/data/media/156.jpg",
       "filename": "f84508c9720447b4bfd317a4b79cf34a.jpg",
       "id": 156,
       "mimeType": "image/jpeg",
       "originalFilename": "xlgJ1dbG_34398140_62c5139c3f668f61bc7a40c8ab6f83707eeb3c80_62c5139c7909052abf0542469bfd947c355cb94f.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.594731",
       "deleted": 0,
       "filePath": "202606/39f08ef6e05e457185a21e288e459515.jpg",
       "fileSize": 4278,
-      "fileUrl": "http://localhost:19090/blog/202606/39f08ef6e05e457185a21e288e459515.jpg",
+      "fileUrl": "/data/media/155.jpg",
       "filename": "39f08ef6e05e457185a21e288e459515.jpg",
       "id": 155,
       "mimeType": "image/jpeg",
       "originalFilename": "XlbQbWw6_34398140_62c5139e0f19817ed02f4376a0cb5547e9a47805_62c5139ef2ab3c8553814acf912910f30593f1e5.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.566707",
       "deleted": 0,
       "filePath": "202606/786f1f7c69cc465bb2056abd27f8a0e1.jpg",
       "fileSize": 4775,
-      "fileUrl": "http://localhost:19090/blog/202606/786f1f7c69cc465bb2056abd27f8a0e1.jpg",
+      "fileUrl": "/data/media/154.jpg",
       "filename": "786f1f7c69cc465bb2056abd27f8a0e1.jpg",
       "id": 154,
       "mimeType": "image/jpeg",
       "originalFilename": "xJcYLEnS_34398140_62c5139c72d2e6e3d3734095868b25aaaaf08eb8_62c5139c20e2c522bd024557892f66dd6b320bcc.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.539022",
       "deleted": 0,
       "filePath": "202606/c85f50d844804162b7720cf8a0b4421a.jpg",
       "fileSize": 5071,
-      "fileUrl": "http://localhost:19090/blog/202606/c85f50d844804162b7720cf8a0b4421a.jpg",
+      "fileUrl": "/data/media/153.jpg",
       "filename": "c85f50d844804162b7720cf8a0b4421a.jpg",
       "id": 153,
       "mimeType": "image/jpeg",
       "originalFilename": "xDochpaL_34398140_62c5139c5d2b966d6fc247588c6967436148586c_62c5139cc98257b36928473582e2db1feb9210fa.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.502004",
       "deleted": 0,
       "filePath": "202606/b59f15ac7a31470daf6cf506a599e883.jpg",
       "fileSize": 4153,
-      "fileUrl": "http://localhost:19090/blog/202606/b59f15ac7a31470daf6cf506a599e883.jpg",
+      "fileUrl": "/data/media/152.jpg",
       "filename": "b59f15ac7a31470daf6cf506a599e883.jpg",
       "id": 152,
       "mimeType": "image/jpeg",
       "originalFilename": "xAq4D153_34398140_62c5139e17adf7af0289414d9e057c45662f2ce7_62c5139eea0ff3a2c6ac4633a6a0eeb54160688b.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.469656",
       "deleted": 0,
       "filePath": "202606/2067d324c686445bbd150a970efd08bc.jpg",
       "fileSize": 3857,
-      "fileUrl": "http://localhost:19090/blog/202606/2067d324c686445bbd150a970efd08bc.jpg",
+      "fileUrl": "/data/media/151.jpg",
       "filename": "2067d324c686445bbd150a970efd08bc.jpg",
       "id": 151,
       "mimeType": "image/jpeg",
       "originalFilename": "WMikSJ61_34398140_62c513a2858cefd159c94f00b109ca0cd8df7153_62c513a233604593c69b420881dbe4663a1dcd1e.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.442622",
       "deleted": 0,
       "filePath": "202606/991d3fa94b8b4038a1d4c300d8324bf2.jpg",
       "fileSize": 4327,
-      "fileUrl": "http://localhost:19090/blog/202606/991d3fa94b8b4038a1d4c300d8324bf2.jpg",
+      "fileUrl": "/data/media/150.jpg",
       "filename": "991d3fa94b8b4038a1d4c300d8324bf2.jpg",
       "id": 150,
       "mimeType": "image/jpeg",
       "originalFilename": "wa7ALKog_34398140_62c5139b005f4dbef36c43cd819ac3cd3a10f2f8_62c5139b229d4b6d372f4a6c8aa5ac28d9506871.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.410006",
       "deleted": 0,
       "filePath": "202606/3a59385e8c054d09ae14940ac1684742.jpg",
       "fileSize": 4024,
-      "fileUrl": "http://localhost:19090/blog/202606/3a59385e8c054d09ae14940ac1684742.jpg",
+      "fileUrl": "/data/media/149.jpg",
       "filename": "3a59385e8c054d09ae14940ac1684742.jpg",
       "id": 149,
       "mimeType": "image/jpeg",
       "originalFilename": "vzD837j5_34398140_62c5139d836d40a099494065b8dd331158c95a08_62c5139d7da3dec24fb847f6ba4b4a4e4390a561.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.381448",
       "deleted": 0,
       "filePath": "202606/6466adc0621e4dcba566c8f2fe3b9ae3.jpg",
       "fileSize": 3015,
-      "fileUrl": "http://localhost:19090/blog/202606/6466adc0621e4dcba566c8f2fe3b9ae3.jpg",
+      "fileUrl": "/data/media/148.jpg",
       "filename": "6466adc0621e4dcba566c8f2fe3b9ae3.jpg",
       "id": 148,
       "mimeType": "image/jpeg",
       "originalFilename": "VMSWTkRY_34398140_62c5139f520d529c0b5741bea38c103edfafd616_62c5139f85226e09d30c4061ad12b56aa65de965.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.353787",
       "deleted": 0,
       "filePath": "202606/b0efa3f1b3be4e0983ceba1cb5f58c7c.jpg",
       "fileSize": 5774,
-      "fileUrl": "http://localhost:19090/blog/202606/b0efa3f1b3be4e0983ceba1cb5f58c7c.jpg",
+      "fileUrl": "/data/media/147.jpg",
       "filename": "b0efa3f1b3be4e0983ceba1cb5f58c7c.jpg",
       "id": 147,
       "mimeType": "image/jpeg",
       "originalFilename": "vGUNBDSd_34398140_62c5139d9663d0b8d03a4ee9930128c7e47675bf_62c5139d617fc0b13d3c4d5b81f52d6fbf6bd360.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.324248",
       "deleted": 0,
       "filePath": "202606/660b883831c74167b7d527972a6dfcff.jpg",
       "fileSize": 2836,
-      "fileUrl": "http://localhost:19090/blog/202606/660b883831c74167b7d527972a6dfcff.jpg",
+      "fileUrl": "/data/media/146.jpg",
       "filename": "660b883831c74167b7d527972a6dfcff.jpg",
       "id": 146,
       "mimeType": "image/jpeg",
       "originalFilename": "ucCxEP5j_34398140_62c513a0a26661bc8fbb447a820aa2e8713eb2b3_62c513a02a79fb699d8044d78e7ac858cb0e1e57.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.294887",
       "deleted": 0,
       "filePath": "202606/e1c6e9742440410b8987572f5f4e2eb6.jpg",
       "fileSize": 2874,
-      "fileUrl": "http://localhost:19090/blog/202606/e1c6e9742440410b8987572f5f4e2eb6.jpg",
+      "fileUrl": "/data/media/145.jpg",
       "filename": "e1c6e9742440410b8987572f5f4e2eb6.jpg",
       "id": 145,
       "mimeType": "image/jpeg",
       "originalFilename": "Tyr2CPND_34398140_62c513a24876b3f2807e4eddb0b18408e5d31465_62c513a20e468b93259c48b4ba5399165e867022.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.264722",
       "deleted": 0,
       "filePath": "202606/1a72e90cadcf4be5b0926a7ce9b38351.jpg",
       "fileSize": 4167,
-      "fileUrl": "http://localhost:19090/blog/202606/1a72e90cadcf4be5b0926a7ce9b38351.jpg",
+      "fileUrl": "/data/media/144.jpg",
       "filename": "1a72e90cadcf4be5b0926a7ce9b38351.jpg",
       "id": 144,
       "mimeType": "image/jpeg",
       "originalFilename": "TyFRGx7Z_34398140_62c5139c34908d3759df4482bdc07cab853521c0_62c5139c122a71cf88c44aeb808e0c93b0fd12d2.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.237596",
       "deleted": 0,
       "filePath": "202606/ee5a7ab7787a40afb33522140bace223.jpg",
       "fileSize": 3611,
-      "fileUrl": "http://localhost:19090/blog/202606/ee5a7ab7787a40afb33522140bace223.jpg",
+      "fileUrl": "/data/media/143.jpg",
       "filename": "ee5a7ab7787a40afb33522140bace223.jpg",
       "id": 143,
       "mimeType": "image/jpeg",
       "originalFilename": "TvDcodDj_34398140_62c5139d454b71a41fe64994bb38f44b20dc7f43_62c5139dd2ebe03bac7c46848928ab077351c5ee.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.210117",
       "deleted": 0,
       "filePath": "202606/bea883f6cfef4000a7f8f11678519cfc.jpg",
       "fileSize": 3587,
-      "fileUrl": "http://localhost:19090/blog/202606/bea883f6cfef4000a7f8f11678519cfc.jpg",
+      "fileUrl": "/data/media/142.jpg",
       "filename": "bea883f6cfef4000a7f8f11678519cfc.jpg",
       "id": 142,
       "mimeType": "image/jpeg",
       "originalFilename": "tlw8cCQ3_34398140_62c5139b7e6a45aefec94df18c4c94872ec09ce7_62c5139bc0c7ff38b7a44210bba233ac34f2482e.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.183002",
       "deleted": 0,
       "filePath": "202606/baf26eae6e23400c9f2b4c5039b1b0d2.jpg",
       "fileSize": 5241,
-      "fileUrl": "http://localhost:19090/blog/202606/baf26eae6e23400c9f2b4c5039b1b0d2.jpg",
+      "fileUrl": "/data/media/141.jpg",
       "filename": "baf26eae6e23400c9f2b4c5039b1b0d2.jpg",
       "id": 141,
       "mimeType": "image/jpeg",
       "originalFilename": "thGHV67o_34398140_62c5139b9291978df02946a08afd3b850c6eff69_62c5139b8e57d000c7cc424c911c6e6663b65551.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.156493",
       "deleted": 0,
       "filePath": "202606/5b10d20c62b44f52991bc2fd3aabfd73.jpg",
       "fileSize": 8504,
-      "fileUrl": "http://localhost:19090/blog/202606/5b10d20c62b44f52991bc2fd3aabfd73.jpg",
+      "fileUrl": "/data/media/140.jpg",
       "filename": "5b10d20c62b44f52991bc2fd3aabfd73.jpg",
       "id": 140,
       "mimeType": "image/jpeg",
       "originalFilename": "sUKKPjbb_8158252_605301cac07ebcd1d5814fc7b9e46b3e8ac0fd1b_605301ca06413c13e0fc4780adcba497395559a5.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.129116",
       "deleted": 0,
       "filePath": "202606/511321dfb77e4261b0a3733497647c5a.jpg",
       "fileSize": 4944,
-      "fileUrl": "http://localhost:19090/blog/202606/511321dfb77e4261b0a3733497647c5a.jpg",
+      "fileUrl": "/data/media/139.jpg",
       "filename": "511321dfb77e4261b0a3733497647c5a.jpg",
       "id": 139,
       "mimeType": "image/jpeg",
       "originalFilename": "sBO3crFv_34398140_62c5139f856cbc663d904b31832f2d0823522be2_62c5139f4752ab273d97423ba41fa297e6bbeb24.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.101944",
       "deleted": 0,
       "filePath": "202606/9ce6a54fe57740309b057131e39f0f59.jpg",
       "fileSize": 3393,
-      "fileUrl": "http://localhost:19090/blog/202606/9ce6a54fe57740309b057131e39f0f59.jpg",
+      "fileUrl": "/data/media/138.jpg",
       "filename": "9ce6a54fe57740309b057131e39f0f59.jpg",
       "id": 138,
       "mimeType": "image/jpeg",
       "originalFilename": "qLE5q9NS_34398140_62c5139b3bd9052837104acbacc76fe0a435eb39_62c5139b0d772760965e43269c3011a093153b86.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.072664",
       "deleted": 0,
       "filePath": "202606/5f957a0cadb2490c80d1740f21a44ed0.jpg",
       "fileSize": 4586,
-      "fileUrl": "http://localhost:19090/blog/202606/5f957a0cadb2490c80d1740f21a44ed0.jpg",
+      "fileUrl": "/data/media/137.jpg",
       "filename": "5f957a0cadb2490c80d1740f21a44ed0.jpg",
       "id": 137,
       "mimeType": "image/jpeg",
       "originalFilename": "QaqDGxsA_34398140_62c513a23d76bf2b27e94406982ccc1d94d16599_62c513a28c8731b800674e1d9012dfed0e1a1e56.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.043096",
       "deleted": 0,
       "filePath": "202606/54296bcc43a1460ca26f36262ac68c29.jpg",
       "fileSize": 7392,
-      "fileUrl": "http://localhost:19090/blog/202606/54296bcc43a1460ca26f36262ac68c29.jpg",
+      "fileUrl": "/data/media/136.jpg",
       "filename": "54296bcc43a1460ca26f36262ac68c29.jpg",
       "id": 136,
       "mimeType": "image/jpeg",
       "originalFilename": "PoAcCe9n_471808190_62a919c48c4dc8d676e04ecf96d9804406e166b8_62a919c4b2d11636a7a7479082db3174734fcb27.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:26.015409",
       "deleted": 0,
       "filePath": "202606/b76866d5559249c982ef4a3c3df3aa00.jpg",
       "fileSize": 4656,
-      "fileUrl": "http://localhost:19090/blog/202606/b76866d5559249c982ef4a3c3df3aa00.jpg",
+      "fileUrl": "/data/media/135.jpg",
       "filename": "b76866d5559249c982ef4a3c3df3aa00.jpg",
       "id": 135,
       "mimeType": "image/jpeg",
       "originalFilename": "PjxGjQnO_34398140_62c5139fea3214460719472e9f9cca7286349ae0_62c5139f546182994e20443c81ca0599c15e4893.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.987656",
       "deleted": 0,
       "filePath": "202606/cd697a27e7f54324ac30b59b799cc106.jpg",
       "fileSize": 16273,
-      "fileUrl": "http://localhost:19090/blog/202606/cd697a27e7f54324ac30b59b799cc106.jpg",
+      "fileUrl": "/data/media/134.jpg",
       "filename": "cd697a27e7f54324ac30b59b799cc106.jpg",
       "id": 134,
       "mimeType": "image/jpeg",
       "originalFilename": "PJlipo4i_5823534_607fbc732b8e8cd3565b4141a14bc10939ddb1f1_607fbc739807064052c84e22868f9bc1f87acfda.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.958813",
       "deleted": 0,
       "filePath": "202606/5d32b6e740534ca3bba0d3afaacd88c6.jpg",
       "fileSize": 5457,
-      "fileUrl": "http://localhost:19090/blog/202606/5d32b6e740534ca3bba0d3afaacd88c6.jpg",
+      "fileUrl": "/data/media/133.jpg",
       "filename": "5d32b6e740534ca3bba0d3afaacd88c6.jpg",
       "id": 133,
       "mimeType": "image/jpeg",
       "originalFilename": "O7Ilc1me_34398140_62c5139efb5a94ef3fa14f40a593431bea2bc74b_62c5139e7231264876484a448476b55d95b8db42.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.928922",
       "deleted": 0,
       "filePath": "202606/9d5df88f262e44d782c574f48b64977d.jpg",
       "fileSize": 6747,
-      "fileUrl": "http://localhost:19090/blog/202606/9d5df88f262e44d782c574f48b64977d.jpg",
+      "fileUrl": "/data/media/132.jpg",
       "filename": "9d5df88f262e44d782c574f48b64977d.jpg",
       "id": 132,
       "mimeType": "image/jpeg",
       "originalFilename": "NUGbO98b_34398140_62c5139cd9dcb4ef44c44b2582255a11a42473dd_62c5139c1e0c9afc88b0433fb0283eac8ea5d483.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.900773",
       "deleted": 0,
       "filePath": "202606/de5e4e2bc8ad4ea5bf3f44d20f3c27dd.jpg",
       "fileSize": 4987,
-      "fileUrl": "http://localhost:19090/blog/202606/de5e4e2bc8ad4ea5bf3f44d20f3c27dd.jpg",
+      "fileUrl": "/data/media/131.jpg",
       "filename": "de5e4e2bc8ad4ea5bf3f44d20f3c27dd.jpg",
       "id": 131,
       "mimeType": "image/jpeg",
       "originalFilename": "NUbSWvlz_34398140_62c513a2a5d92ef303314de2a4bab37d9a572c11_62c513a255b9edc903f947dc86f53f6df4a892f8.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.871164",
       "deleted": 0,
       "filePath": "202606/6656e0543bc845fba0f1ce21b98b7f4a.jpg",
       "fileSize": 6732,
-      "fileUrl": "http://localhost:19090/blog/202606/6656e0543bc845fba0f1ce21b98b7f4a.jpg",
+      "fileUrl": "/data/media/130.jpg",
       "filename": "6656e0543bc845fba0f1ce21b98b7f4a.jpg",
       "id": 130,
       "mimeType": "image/jpeg",
       "originalFilename": "nr4riGzk_34398140_62c5139c84b29c2691cd4f589b3c3c62a04e92bb_62c5139cb5deb6d75df846758b994a8a968a4302.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.83736",
       "deleted": 0,
       "filePath": "202606/31f2d78ce32a43888b75aa3a24734af9.jpg",
       "fileSize": 4978,
-      "fileUrl": "http://localhost:19090/blog/202606/31f2d78ce32a43888b75aa3a24734af9.jpg",
+      "fileUrl": "/data/media/129.jpg",
       "filename": "31f2d78ce32a43888b75aa3a24734af9.jpg",
       "id": 129,
       "mimeType": "image/jpeg",
       "originalFilename": "nQgJisQo_34398140_62c513a30d7e5006909b4f378ac96b21610f7aa1_62c513a35def4f9ceab1479e94cfc00654fa8f90.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.800053",
       "deleted": 0,
       "filePath": "202606/e195b34eafe54c40b77b47705d3796c2.jpg",
       "fileSize": 3382,
-      "fileUrl": "http://localhost:19090/blog/202606/e195b34eafe54c40b77b47705d3796c2.jpg",
+      "fileUrl": "/data/media/128.jpg",
       "filename": "e195b34eafe54c40b77b47705d3796c2.jpg",
       "id": 128,
       "mimeType": "image/jpeg",
       "originalFilename": "nMuAlBgq_34398140_62c5139f083531b182004ede9ed79a290e03688e_62c5139f9ae2568160db4f939368194c40dd4da5.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.76838",
       "deleted": 0,
       "filePath": "202606/78df3d15a0de423d9c94241d3a0b5f3f.jpg",
       "fileSize": 6966,
-      "fileUrl": "http://localhost:19090/blog/202606/78df3d15a0de423d9c94241d3a0b5f3f.jpg",
+      "fileUrl": "/data/media/127.jpg",
       "filename": "78df3d15a0de423d9c94241d3a0b5f3f.jpg",
       "id": 127,
       "mimeType": "image/jpeg",
       "originalFilename": "NL4QVi0m_34398140_62c5139ce4600372226142eeaef2497b52544433_62c5139c8955e0cfae4d4119834188d6b714da62.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.741082",
       "deleted": 0,
       "filePath": "202606/2f1ee31799f74e6a93d9b59388bc6af6.jpg",
       "fileSize": 8039,
-      "fileUrl": "http://localhost:19090/blog/202606/2f1ee31799f74e6a93d9b59388bc6af6.jpg",
+      "fileUrl": "/data/media/126.jpg",
       "filename": "2f1ee31799f74e6a93d9b59388bc6af6.jpg",
       "id": 126,
       "mimeType": "image/jpeg",
       "originalFilename": "mP5ajHrq_34398140_62c5139df015e706c253405ca7a10d419e363cd9_62c5139db5857019ff5c4337ba34a95d343b91dd.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.710204",
       "deleted": 0,
       "filePath": "202606/30c243c81a7a42f59c2c65ef5fcc9e0d.jpg",
       "fileSize": 13454,
-      "fileUrl": "http://localhost:19090/blog/202606/30c243c81a7a42f59c2c65ef5fcc9e0d.jpg",
+      "fileUrl": "/data/media/125.jpg",
       "filename": "30c243c81a7a42f59c2c65ef5fcc9e0d.jpg",
       "id": 125,
       "mimeType": "image/jpeg",
       "originalFilename": "MnfbDi2f_5823534_607fbc737a2b008a259141fbaf188b4125dec202_607fbc739de5b030aa58441481219dd8501e343d.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.682364",
       "deleted": 0,
       "filePath": "202606/d3043cb0a26449a09c99d0aa4b71346f.jpg",
       "fileSize": 9964,
-      "fileUrl": "http://localhost:19090/blog/202606/d3043cb0a26449a09c99d0aa4b71346f.jpg",
+      "fileUrl": "/data/media/124.jpg",
       "filename": "d3043cb0a26449a09c99d0aa4b71346f.jpg",
       "id": 124,
       "mimeType": "image/jpeg",
       "originalFilename": "MMTVU7pY_10314940_6066a761f97bf258eb964f2cb10b16a525205ab6_6066a76124c2195339104d63bb595cce8aae5171.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.655054",
       "deleted": 0,
       "filePath": "202606/24f3b8a4b1af46e4a134548aa245987a.jpg",
       "fileSize": 2107,
-      "fileUrl": "http://localhost:19090/blog/202606/24f3b8a4b1af46e4a134548aa245987a.jpg",
+      "fileUrl": "/data/media/123.jpg",
       "filename": "24f3b8a4b1af46e4a134548aa245987a.jpg",
       "id": 123,
       "mimeType": "image/jpeg",
       "originalFilename": "mDqbU66C_90294171_61373c6bab22c307f34f4a1b889d2c4969ff586e_61373c6bc0842d3653fd4d48a45c219f0bd13495.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.626551",
       "deleted": 0,
       "filePath": "202606/d9852cbfa0f44cf6b59f2ed9cee8b136.jpg",
       "fileSize": 4978,
-      "fileUrl": "http://localhost:19090/blog/202606/d9852cbfa0f44cf6b59f2ed9cee8b136.jpg",
+      "fileUrl": "/data/media/122.jpg",
       "filename": "d9852cbfa0f44cf6b59f2ed9cee8b136.jpg",
       "id": 122,
       "mimeType": "image/jpeg",
       "originalFilename": "m7AkwPA2_34398140_62c5139e75711d2ba32f4552bb66a3a7b76f59f3_62c5139e5296bbb79f7f4a45a7cdb0b9826b831f.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.59909",
       "deleted": 0,
       "filePath": "202606/c334e5bd650a4f1c984d21aeace3aa31.jpg",
       "fileSize": 2547,
-      "fileUrl": "http://localhost:19090/blog/202606/c334e5bd650a4f1c984d21aeace3aa31.jpg",
+      "fileUrl": "/data/media/121.jpg",
       "filename": "c334e5bd650a4f1c984d21aeace3aa31.jpg",
       "id": 121,
       "mimeType": "image/jpeg",
       "originalFilename": "M4YRf5jN_34398140_62c5139d8eec15cce2a043e1b1165af417de9288_62c5139d563061b038e9470a8d4e96eef32cc87d.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.572159",
       "deleted": 0,
       "filePath": "202606/b507dea791474b9886f74e3e0ce4a962.jpg",
       "fileSize": 5256,
-      "fileUrl": "http://localhost:19090/blog/202606/b507dea791474b9886f74e3e0ce4a962.jpg",
+      "fileUrl": "/data/media/120.jpg",
       "filename": "b507dea791474b9886f74e3e0ce4a962.jpg",
       "id": 120,
       "mimeType": "image/jpeg",
       "originalFilename": "m2cS14Lr_34398140_62c5139ece22a1e8da4f491b87b39150c0568e76_62c5139e385e853be007457b91d4724a7db7fcdb.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.543578",
       "deleted": 0,
       "filePath": "202606/cc29f2fc7cd04ad0b9849fee5609925c.jpg",
       "fileSize": 5584,
-      "fileUrl": "http://localhost:19090/blog/202606/cc29f2fc7cd04ad0b9849fee5609925c.jpg",
+      "fileUrl": "/data/media/119.jpg",
       "filename": "cc29f2fc7cd04ad0b9849fee5609925c.jpg",
       "id": 119,
       "mimeType": "image/jpeg",
       "originalFilename": "LriLYxjU_34398140_62c5139ef7f640e8b4ec4decaf3a6e91ffb9344c_62c5139e4fe4415cadfd45b8989157945181a0fa.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.514806",
       "deleted": 0,
       "filePath": "202606/a1faba9fc09445c5b18c08ec5a154d74.jpg",
       "fileSize": 5233,
-      "fileUrl": "http://localhost:19090/blog/202606/a1faba9fc09445c5b18c08ec5a154d74.jpg",
+      "fileUrl": "/data/media/118.jpg",
       "filename": "a1faba9fc09445c5b18c08ec5a154d74.jpg",
       "id": 118,
       "mimeType": "image/jpeg",
       "originalFilename": "LMp6gapN_34398140_62c513a188e3548a75b848a7aa57820b19b3273a_62c513a172ffd65f5903433bb7d7525bd82a8a72.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.483891",
       "deleted": 0,
       "filePath": "202606/0863dc35cf414c73ba0098510902aad7.jpg",
       "fileSize": 940,
-      "fileUrl": "http://localhost:19090/blog/202606/0863dc35cf414c73ba0098510902aad7.jpg",
+      "fileUrl": "/data/media/117.jpg",
       "filename": "0863dc35cf414c73ba0098510902aad7.jpg",
       "id": 117,
       "mimeType": "image/jpeg",
       "originalFilename": "lhazLUUJ_34398140_62c5139cef2f16fe6e534bd0b73f200833a20514_62c5139c543f1424d2754c11adcc7b3e8df4e604.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.454264",
       "deleted": 0,
       "filePath": "202606/9744ab8f39a54dba90ec040a7e140c2b.jpg",
       "fileSize": 5227,
-      "fileUrl": "http://localhost:19090/blog/202606/9744ab8f39a54dba90ec040a7e140c2b.jpg",
+      "fileUrl": "/data/media/116.jpg",
       "filename": "9744ab8f39a54dba90ec040a7e140c2b.jpg",
       "id": 116,
       "mimeType": "image/jpeg",
       "originalFilename": "lcUG1Ony_34398140_62c5139c07b37d14d1264c35961c5eeb6ac9d8fb_62c5139cd9b51b7ed40b4a949a4f0aea16cfed07.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.42622",
       "deleted": 0,
       "filePath": "202606/b4c525a202574cfb95b7a6da5067a6e7.jpg",
       "fileSize": 11027,
-      "fileUrl": "http://localhost:19090/blog/202606/b4c525a202574cfb95b7a6da5067a6e7.jpg",
+      "fileUrl": "/data/media/115.jpg",
       "filename": "b4c525a202574cfb95b7a6da5067a6e7.jpg",
       "id": 115,
       "mimeType": "image/jpeg",
       "originalFilename": "KYCPs9y3_34398140_62c513a3a39ca3154e664a0bb00155d5528c0fc5_62c513a33be8b08db87541ebb16117fc417aff74.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.089293",
       "deleted": 0,
       "filePath": "202606/b38ee033f92b4861bb8ebadb1093d80b.jpg",
       "fileSize": 9888,
-      "fileUrl": "http://localhost:19090/blog/202606/b38ee033f92b4861bb8ebadb1093d80b.jpg",
+      "fileUrl": "/data/media/114.jpg",
       "filename": "b38ee033f92b4861bb8ebadb1093d80b.jpg",
       "id": 114,
       "mimeType": "image/jpeg",
       "originalFilename": "KUZo9Pv0_52508460_605a29a075f05a1d185f45c79d066f952dd3a3c1_605a29a0f4fc1bc05e2f433d95d2df1969c26384.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.057588",
       "deleted": 0,
       "filePath": "202606/23e08c0f3e39496fb6f05f3dd063663e.jpg",
       "fileSize": 3991,
-      "fileUrl": "http://localhost:19090/blog/202606/23e08c0f3e39496fb6f05f3dd063663e.jpg",
+      "fileUrl": "/data/media/113.jpg",
       "filename": "23e08c0f3e39496fb6f05f3dd063663e.jpg",
       "id": 113,
       "mimeType": "image/jpeg",
       "originalFilename": "ka4dlMWu_34398140_62c513a2750a8a651c6847caafda5fe5162941f7_62c513a2f453a932a1534a7ab8d19ea9ce8de03c.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:25.024088",
       "deleted": 0,
       "filePath": "202606/928a91d2433f483aa246efa091e96128.jpg",
       "fileSize": 2553,
-      "fileUrl": "http://localhost:19090/blog/202606/928a91d2433f483aa246efa091e96128.jpg",
+      "fileUrl": "/data/media/112.jpg",
       "filename": "928a91d2433f483aa246efa091e96128.jpg",
       "id": 112,
       "mimeType": "image/jpeg",
       "originalFilename": "jVlpo41Q_34398140_62c513a081e013ecaea94e2d86374117ff05b095_62c513a035f2058465d1434abb8cc21f5acea817.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.993218",
       "deleted": 0,
       "filePath": "202606/63727ae72a8f4aa181118af95df1fccc.jpg",
       "fileSize": 7932,
-      "fileUrl": "http://localhost:19090/blog/202606/63727ae72a8f4aa181118af95df1fccc.jpg",
+      "fileUrl": "/data/media/111.jpg",
       "filename": "63727ae72a8f4aa181118af95df1fccc.jpg",
       "id": 111,
       "mimeType": "image/jpeg",
       "originalFilename": "IOVMjLU7_49644621_61e95e55b9e6f839a21740128c9dee5f03096a2c_61e95e55d537c2d1fafb4bada32da6baa9948be1.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.960548",
       "deleted": 0,
       "filePath": "202606/587a29445b5e4c67805309e4fb9be797.jpg",
       "fileSize": 3403,
-      "fileUrl": "http://localhost:19090/blog/202606/587a29445b5e4c67805309e4fb9be797.jpg",
+      "fileUrl": "/data/media/110.jpg",
       "filename": "587a29445b5e4c67805309e4fb9be797.jpg",
       "id": 110,
       "mimeType": "image/jpeg",
       "originalFilename": "ID7lnrLF_34398140_62c513a1565f1b19810647ce8f05723b9b5e94ee_62c513a188e4c8e0fe824ab7a7b2c46047ecffb9.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.930323",
       "deleted": 0,
       "filePath": "202606/88066b0264604dfd9cb33ab2766ef258.jpg",
       "fileSize": 4495,
-      "fileUrl": "http://localhost:19090/blog/202606/88066b0264604dfd9cb33ab2766ef258.jpg",
+      "fileUrl": "/data/media/109.jpg",
       "filename": "88066b0264604dfd9cb33ab2766ef258.jpg",
       "id": 109,
       "mimeType": "image/jpeg",
       "originalFilename": "GIfXT7kj_34398140_62c513a3b486b534223a402dacdc1fb88edd1e3d_62c513a3e8d32103213e42378f6fce245b7e7cd0.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.894131",
       "deleted": 0,
       "filePath": "202606/d843130cbbe6475cb9de6437aaa5c2a2.jpg",
       "fileSize": 4983,
-      "fileUrl": "http://localhost:19090/blog/202606/d843130cbbe6475cb9de6437aaa5c2a2.jpg",
+      "fileUrl": "/data/media/108.jpg",
       "filename": "d843130cbbe6475cb9de6437aaa5c2a2.jpg",
       "id": 108,
       "mimeType": "image/jpeg",
       "originalFilename": "g1aqPGw8_228963350_622c549c8971bcfbd2834f4ba1f2459fe6c77e32_622c549cb50396a4692f4d379e936012b475efc1.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.85076",
       "deleted": 0,
       "filePath": "202606/8683e2d969104d0dba69dca2404b8278.jpg",
       "fileSize": 5922,
-      "fileUrl": "http://localhost:19090/blog/202606/8683e2d969104d0dba69dca2404b8278.jpg",
+      "fileUrl": "/data/media/107.jpg",
       "filename": "8683e2d969104d0dba69dca2404b8278.jpg",
       "id": 107,
       "mimeType": "image/jpeg",
       "originalFilename": "fGVc6KnX_34398140_62c513a1e6343aab860e4bbf8fcf384f3edb5eff_62c513a1c20952f9e37e43ddbdac622e410c8d44.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.819808",
       "deleted": 0,
       "filePath": "202606/3a1b20ff45e848e7b74c8fbacc9de23f.jpg",
       "fileSize": 4126,
-      "fileUrl": "http://localhost:19090/blog/202606/3a1b20ff45e848e7b74c8fbacc9de23f.jpg",
+      "fileUrl": "/data/media/106.jpg",
       "filename": "3a1b20ff45e848e7b74c8fbacc9de23f.jpg",
       "id": 106,
       "mimeType": "image/jpeg",
       "originalFilename": "eyHaKkXV_34398140_62c5139e0c896dbec44049568cd0def2fe8ec95f_62c5139eeaeb8efb69e641ae9227044bef7c71c6.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.78762",
       "deleted": 0,
       "filePath": "202606/9dcadf0c35884e9dbfb1fdd9a4a5d637.jpg",
       "fileSize": 9736,
-      "fileUrl": "http://localhost:19090/blog/202606/9dcadf0c35884e9dbfb1fdd9a4a5d637.jpg",
+      "fileUrl": "/data/media/105.jpg",
       "filename": "9dcadf0c35884e9dbfb1fdd9a4a5d637.jpg",
       "id": 105,
       "mimeType": "image/jpeg",
       "originalFilename": "DDuAifTY_34398140_62c5139d2916156cd5aa4cb0969d20a86a5e3e4c_62c5139d2d29d799b83d4881a0314d51340f0f8a.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.758526",
       "deleted": 0,
       "filePath": "202606/dc362e6a6aa44886acfc93dab7df55ec.jpg",
       "fileSize": 6242,
-      "fileUrl": "http://localhost:19090/blog/202606/dc362e6a6aa44886acfc93dab7df55ec.jpg",
+      "fileUrl": "/data/media/104.jpg",
       "filename": "dc362e6a6aa44886acfc93dab7df55ec.jpg",
       "id": 104,
       "mimeType": "image/jpeg",
       "originalFilename": "CZDcgQLI_34398140_62c5139bad828f44cccf49269cf78f5b3296ad7e_62c5139b4539c81f8a13451e830237b86c486ef1.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.729077",
       "deleted": 0,
       "filePath": "202606/efa23eea97e4463c8f0e6f5685254434.jpg",
       "fileSize": 6276,
-      "fileUrl": "http://localhost:19090/blog/202606/efa23eea97e4463c8f0e6f5685254434.jpg",
+      "fileUrl": "/data/media/103.jpg",
       "filename": "efa23eea97e4463c8f0e6f5685254434.jpg",
       "id": 103,
       "mimeType": "image/jpeg",
       "originalFilename": "CR3dAx7h_34398140_62c513a0309a0c1937f54762a3c7921f34b28c3a_62c513a0c054c4ac642b479d848ff11bb353612b.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.693739",
       "deleted": 0,
       "filePath": "202606/230126f29b064510a55554966d7a96a3.jpg",
       "fileSize": 12935,
-      "fileUrl": "http://localhost:19090/blog/202606/230126f29b064510a55554966d7a96a3.jpg",
+      "fileUrl": "/data/media/102.jpg",
       "filename": "230126f29b064510a55554966d7a96a3.jpg",
       "id": 102,
       "mimeType": "image/jpeg",
       "originalFilename": "cKmttSzp_196556420_614d87a48cda1b2c05ef45389ff4f0157d8de763_614d87a4bc1fa1f92b674dd8bf08058632b4307e.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.656572",
       "deleted": 0,
       "filePath": "202606/b2955125471f4f3a9e258ad9c3af3d2c.jpg",
       "fileSize": 5523,
-      "fileUrl": "http://localhost:19090/blog/202606/b2955125471f4f3a9e258ad9c3af3d2c.jpg",
+      "fileUrl": "/data/media/101.jpg",
       "filename": "b2955125471f4f3a9e258ad9c3af3d2c.jpg",
       "id": 101,
       "mimeType": "image/jpeg",
       "originalFilename": "CfwZrXio_34398140_62c5139cb58bed7129264448b883c0fe82e7bcc3_62c5139cdea7de31199b49a8833a2a89bf23c041.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.615393",
       "deleted": 0,
       "filePath": "202606/2f9507a9ed1a470688b31ac20f56e941.jpg",
       "fileSize": 3433,
-      "fileUrl": "http://localhost:19090/blog/202606/2f9507a9ed1a470688b31ac20f56e941.jpg",
+      "fileUrl": "/data/media/100.jpg",
       "filename": "2f9507a9ed1a470688b31ac20f56e941.jpg",
       "id": 100,
       "mimeType": "image/jpeg",
       "originalFilename": "c8oC34lu_34398140_62c513a1544b8d111d0342f68869dc5cb71ad776_62c513a1f3683cf6362745ff9f28ad8a0c08b1e4.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.582852",
       "deleted": 0,
       "filePath": "202606/09cbd790153549adad911e932dd50111.jpg",
       "fileSize": 10376,
-      "fileUrl": "http://localhost:19090/blog/202606/09cbd790153549adad911e932dd50111.jpg",
+      "fileUrl": "/data/media/99.jpg",
       "filename": "09cbd790153549adad911e932dd50111.jpg",
       "id": 99,
       "mimeType": "image/jpeg",
       "originalFilename": "buhLGWFK_333415_60af4dafcaf1718f6ed34ffeb1a43f49f714f795_60af4daf9d28b73e7c214fe69e0f69c6439873fe.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.549726",
       "deleted": 0,
       "filePath": "202606/89ca521f33874a6ebffc96a78a43cd3c.jpg",
       "fileSize": 7595,
-      "fileUrl": "http://localhost:19090/blog/202606/89ca521f33874a6ebffc96a78a43cd3c.jpg",
+      "fileUrl": "/data/media/98.jpg",
       "filename": "89ca521f33874a6ebffc96a78a43cd3c.jpg",
       "id": 98,
       "mimeType": "image/jpeg",
       "originalFilename": "BeupNHMW_34398140_62c5139b6516dc3a01524e1c84e36b3f0dd403b1_62c5139bbe70d30f89124bec9f55a5d70c705f20.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.519289",
       "deleted": 0,
       "filePath": "202606/e8b5339635924f7286e0ec864a8c8515.jpg",
       "fileSize": 6353,
-      "fileUrl": "http://localhost:19090/blog/202606/e8b5339635924f7286e0ec864a8c8515.jpg",
+      "fileUrl": "/data/media/97.jpg",
       "filename": "e8b5339635924f7286e0ec864a8c8515.jpg",
       "id": 97,
       "mimeType": "image/jpeg",
       "originalFilename": "amlbEWr4_34398140_62c5139c1ae0c66fda0d4858bf885c947d8fc9b8_62c5139c5979aa9032a54f92899174fc34a475a4.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.413011",
       "deleted": 0,
       "filePath": "202606/bef220a3c70045f785a8f4a9a50081d8.jpg",
       "fileSize": 12105,
-      "fileUrl": "http://localhost:19090/blog/202606/bef220a3c70045f785a8f4a9a50081d8.jpg",
+      "fileUrl": "/data/media/96.jpg",
       "filename": "bef220a3c70045f785a8f4a9a50081d8.jpg",
       "id": 96,
       "mimeType": "image/jpeg",
       "originalFilename": "6002da9282b8a86be93b4b2c986795bef1436afe_6002da92ba1aaedb483340e596c20a1097e20572.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.349768",
       "deleted": 0,
       "filePath": "202606/14ef19f468dc40a8852c6f73e38ff0d7.jpg",
       "fileSize": 8529,
-      "fileUrl": "http://localhost:19090/blog/202606/14ef19f468dc40a8852c6f73e38ff0d7.jpg",
+      "fileUrl": "/data/media/95.jpg",
       "filename": "14ef19f468dc40a8852c6f73e38ff0d7.jpg",
       "id": 95,
       "mimeType": "image/jpeg",
       "originalFilename": "604a1153b326c72103a14c69a66645dfb6cdd9fd_604a1153a66166b1b80d46a89d4f6ed56bf767eb.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.27689",
       "deleted": 0,
       "filePath": "202606/327769eada424f27ba1fc87e7c5dec5e.jpg",
       "fileSize": 4849,
-      "fileUrl": "http://localhost:19090/blog/202606/327769eada424f27ba1fc87e7c5dec5e.jpg",
+      "fileUrl": "/data/media/94.jpg",
       "filename": "327769eada424f27ba1fc87e7c5dec5e.jpg",
       "id": 94,
       "mimeType": "image/jpeg",
       "originalFilename": "51xstguP_34398140_62c5139d06478c27ec5e454487bdb578f11ebf94_62c5139d3625db4e109b44fdbdb679ba7c2e4376.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.207505",
       "deleted": 0,
       "filePath": "202606/1dae8dc1c9ee4b238f55e17b7213ab6b.jpg",
       "fileSize": 6018,
-      "fileUrl": "http://localhost:19090/blog/202606/1dae8dc1c9ee4b238f55e17b7213ab6b.jpg",
+      "fileUrl": "/data/media/93.jpg",
       "filename": "1dae8dc1c9ee4b238f55e17b7213ab6b.jpg",
       "id": 93,
       "mimeType": "image/jpeg",
       "originalFilename": "22vM6eri_34398140_62c5139ed9478fb5b23d47d294d15934a3f04ac9_62c5139eaa9557e7667b4c29b8dc746dd7835a4b.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.153463",
       "deleted": 0,
       "filePath": "202606/2336129fdd2e436189f8ae7c8ba8573a.jpg",
       "fileSize": 8974,
-      "fileUrl": "http://localhost:19090/blog/202606/2336129fdd2e436189f8ae7c8ba8573a.jpg",
+      "fileUrl": "/data/media/92.jpg",
       "filename": "2336129fdd2e436189f8ae7c8ba8573a.jpg",
       "id": 92,
       "mimeType": "image/jpeg",
       "originalFilename": "9QKCXWA1_31228480_605d7c3546225a60b45148b2a89bba49fb33499d_605d7c355d73653942114fbda5031f0fb36c7113.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.087747",
       "deleted": 0,
       "filePath": "202606/a4212747de314fbd95c4db5f4848de7c.jpg",
       "fileSize": 3134,
-      "fileUrl": "http://localhost:19090/blog/202606/a4212747de314fbd95c4db5f4848de7c.jpg",
+      "fileUrl": "/data/media/91.jpg",
       "filename": "a4212747de314fbd95c4db5f4848de7c.jpg",
       "id": 91,
       "mimeType": "image/jpeg",
       "originalFilename": "9n3W1mfv_34398140_62c513a2c011d8e875104036862afc79255d1821_62c513a28ffb79a8f24e4bc3b39baf9abaf78856.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:24.009455",
       "deleted": 0,
       "filePath": "202606/d3dbdd8238724303a756f0fdab185771.jpg",
       "fileSize": 10210,
-      "fileUrl": "http://localhost:19090/blog/202606/d3dbdd8238724303a756f0fdab185771.jpg",
+      "fileUrl": "/data/media/90.jpg",
       "filename": "d3dbdd8238724303a756f0fdab185771.jpg",
       "id": 90,
       "mimeType": "image/jpeg",
       "originalFilename": "9KUpI5jZ_34398140_62c5139d5015d4d9667444329a5745d508b5674e_62c5139df448c5ccc67344bebe6190e35e62c2b0.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:23.937028",
       "deleted": 0,
       "filePath": "202606/97679ea6cc2746faa7f5c5aa4045969d.jpg",
       "fileSize": 6078,
-      "fileUrl": "http://localhost:19090/blog/202606/97679ea6cc2746faa7f5c5aa4045969d.jpg",
+      "fileUrl": "/data/media/89.jpg",
       "filename": "97679ea6cc2746faa7f5c5aa4045969d.jpg",
       "id": 89,
       "mimeType": "image/jpeg",
       "originalFilename": "9kgGCVYV_34398140_62c5139d2db531e9785b462dab7f21a276699d2b_62c5139d20fe399712724a5b94264324ff64c171.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:23.791543",
       "deleted": 0,
       "filePath": "202606/4ef86e25c7bb47bd887dd4f0c109739e.jpg",
       "fileSize": 9564,
-      "fileUrl": "http://localhost:19090/blog/202606/4ef86e25c7bb47bd887dd4f0c109739e.jpg",
+      "fileUrl": "/data/media/88.jpg",
       "filename": "4ef86e25c7bb47bd887dd4f0c109739e.jpg",
       "id": 88,
       "mimeType": "image/jpeg",
       "originalFilename": "8lSv4BgD_34398140_62c5139ef619371a7496463aa4a5697d670a44cd_62c5139e5afe3a7e80704212aa516e332ff3dfc4.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:23.697472",
       "deleted": 0,
       "filePath": "202606/4b0088f4e5de4b09a2325c14fb06cc12.jpg",
       "fileSize": 4681,
-      "fileUrl": "http://localhost:19090/blog/202606/4b0088f4e5de4b09a2325c14fb06cc12.jpg",
+      "fileUrl": "/data/media/87.jpg",
       "filename": "4b0088f4e5de4b09a2325c14fb06cc12.jpg",
       "id": 87,
       "mimeType": "image/jpeg",
       "originalFilename": "7sj6qLen_34398140_62c5139f73898f0852d24abfb961539572aaf76b_62c5139fec85ba5e85f44b98bfd439638350ba2a.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:23.612099",
       "deleted": 0,
       "filePath": "202606/94f531bd2e5d4160a7a53e532f7132c6.jpg",
       "fileSize": 9067,
-      "fileUrl": "http://localhost:19090/blog/202606/94f531bd2e5d4160a7a53e532f7132c6.jpg",
+      "fileUrl": "/data/media/86.jpg",
       "filename": "94f531bd2e5d4160a7a53e532f7132c6.jpg",
       "id": 86,
       "mimeType": "image/jpeg",
       "originalFilename": "6NzBHD77_460981_606c0d35e81f95bbccd043d0a19b4cf3c6a29de4_606c0d353ab41455215c4223b88512cfb82de92e.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:23.530457",
       "deleted": 0,
       "filePath": "202606/67a02306f51f469abb9433a1145baa09.jpg",
       "fileSize": 4620,
-      "fileUrl": "http://localhost:19090/blog/202606/67a02306f51f469abb9433a1145baa09.jpg",
+      "fileUrl": "/data/media/85.jpg",
       "filename": "67a02306f51f469abb9433a1145baa09.jpg",
       "id": 85,
       "mimeType": "image/jpeg",
       "originalFilename": "5xzElq6t_34398140_62c513a0ddacc47d21b746249e8d608abf1dbc32_62c513a062a4500b52064624b20d6122241db168.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:23.445546",
       "deleted": 0,
       "filePath": "202606/51c91c7c79a9411ea98713c5f64083a3.jpg",
       "fileSize": 7874,
-      "fileUrl": "http://localhost:19090/blog/202606/51c91c7c79a9411ea98713c5f64083a3.jpg",
+      "fileUrl": "/data/media/84.jpg",
       "filename": "51c91c7c79a9411ea98713c5f64083a3.jpg",
       "id": 84,
       "mimeType": "image/jpeg",
       "originalFilename": "5feca89fcd124955d7be4e99a0a8fa1cb73ea057_5feca89f7647f03e97a64f8b9023a434d7ba55cb.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:23.330269",
       "deleted": 0,
       "filePath": "202606/3b625e9e57ed4e049effe3badfcd6813.jpg",
       "fileSize": 14396,
-      "fileUrl": "http://localhost:19090/blog/202606/3b625e9e57ed4e049effe3badfcd6813.jpg",
+      "fileUrl": "/data/media/83.jpg",
       "filename": "3b625e9e57ed4e049effe3badfcd6813.jpg",
       "id": 83,
       "mimeType": "image/jpeg",
       "originalFilename": "5fc1233c28a7cfae70ce482086d188bdfb5233e2_5fc1233c5180912299414be3ae03593105c1866e.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:23.247699",
       "deleted": 0,
       "filePath": "202606/26e702bc67d442c08fa3a5e941707bdf.jpg",
       "fileSize": 13251,
-      "fileUrl": "http://localhost:19090/blog/202606/26e702bc67d442c08fa3a5e941707bdf.jpg",
+      "fileUrl": "/data/media/82.jpg",
       "filename": "26e702bc67d442c08fa3a5e941707bdf.jpg",
       "id": 82,
       "mimeType": "image/jpeg",
       "originalFilename": "5fbb6af8eb8a90fef7a14480a30dfede75196492_5fbb6af84eff25226141414899046f7f7343b371.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:23.163108",
       "deleted": 0,
       "filePath": "202606/d6a52bc17d04401e9c9d6960fd7f3c3e.jpg",
       "fileSize": 11391,
-      "fileUrl": "http://localhost:19090/blog/202606/d6a52bc17d04401e9c9d6960fd7f3c3e.jpg",
+      "fileUrl": "/data/media/81.jpg",
       "filename": "d6a52bc17d04401e9c9d6960fd7f3c3e.jpg",
       "id": 81,
       "mimeType": "image/jpeg",
       "originalFilename": "5fb2714427658282637940cab1611eff7e249b9b_5fb2714425b0a74d52fa4645b47c3d1d05e62692.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:23.08396",
       "deleted": 0,
       "filePath": "202606/6a8ddc7eb0674832921f99c5d8032b2e.jpg",
       "fileSize": 8302,
-      "fileUrl": "http://localhost:19090/blog/202606/6a8ddc7eb0674832921f99c5d8032b2e.jpg",
+      "fileUrl": "/data/media/80.jpg",
       "filename": "6a8ddc7eb0674832921f99c5d8032b2e.jpg",
       "id": 80,
       "mimeType": "image/jpeg",
       "originalFilename": "5fb2064060b8d52705394d278a9fad7d5c29af7d_5fb206404c5af2e60dce4d0dafac924ce301083e.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:22.911672",
       "deleted": 0,
       "filePath": "202606/a2e907a51f884640ae5d27dd0a15d926.jpg",
       "fileSize": 7434,
-      "fileUrl": "http://localhost:19090/blog/202606/a2e907a51f884640ae5d27dd0a15d926.jpg",
+      "fileUrl": "/data/media/79.jpg",
       "filename": "a2e907a51f884640ae5d27dd0a15d926.jpg",
       "id": 79,
       "mimeType": "image/jpeg",
       "originalFilename": "5fb557057a19a712753c4e3898d62bcc2a610bbd_5fb5570551eac3dba2f74846926b67de2e382cca.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:22.806551",
       "deleted": 0,
       "filePath": "202606/e2e4f9bb47f242458a2e27b2c8ddc7a8.jpg",
       "fileSize": 8687,
-      "fileUrl": "http://localhost:19090/blog/202606/e2e4f9bb47f242458a2e27b2c8ddc7a8.jpg",
+      "fileUrl": "/data/media/78.jpg",
       "filename": "e2e4f9bb47f242458a2e27b2c8ddc7a8.jpg",
       "id": 78,
       "mimeType": "image/jpeg",
       "originalFilename": "5fb40e57427485d631b14386897a8ede42c009c2_5fb40e57ab48555fe78141348b3ea4e7b8e81fd7.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:22.681111",
       "deleted": 0,
       "filePath": "202606/68948d3e7d664564bf52757b313d8b33.jpg",
       "fileSize": 10880,
-      "fileUrl": "http://localhost:19090/blog/202606/68948d3e7d664564bf52757b313d8b33.jpg",
+      "fileUrl": "/data/media/77.jpg",
       "filename": "68948d3e7d664564bf52757b313d8b33.jpg",
       "id": 77,
       "mimeType": "image/jpeg",
       "originalFilename": "5fb5df9c81b7981940f0408a952767c1d3e7284a_5fb5df9c72c937e42a184bfe8c408b92189dc0de.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:22.588162",
       "deleted": 0,
       "filePath": "202606/5d1d01b7269e466fa702c3d476b581bb.jpg",
       "fileSize": 9245,
-      "fileUrl": "http://localhost:19090/blog/202606/5d1d01b7269e466fa702c3d476b581bb.jpg",
+      "fileUrl": "/data/media/76.jpg",
       "filename": "5d1d01b7269e466fa702c3d476b581bb.jpg",
       "id": 76,
       "mimeType": "image/jpeg",
       "originalFilename": "5fb5ccd55aa810ad745645688e5675f542ccb8e4_5fb5ccd5b1fd9a00b70f4707b8beaf40852e7a20.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:22.463322",
       "deleted": 0,
       "filePath": "202606/320d5a65e2de4438b45cc8e4b56e5465.jpg",
       "fileSize": 9476,
-      "fileUrl": "http://localhost:19090/blog/202606/320d5a65e2de4438b45cc8e4b56e5465.jpg",
+      "fileUrl": "/data/media/75.jpg",
       "filename": "320d5a65e2de4438b45cc8e4b56e5465.jpg",
       "id": 75,
       "mimeType": "image/jpeg",
       "originalFilename": "5fb3ee415a1d7bbe5387471ea6baae4faa3a17c3_5fb3ee41b919ec63f75444a2812e46342ec4c0a1.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:22.353975",
       "deleted": 0,
       "filePath": "202606/a288274ab27f44398b43550fbb59035c.jpg",
       "fileSize": 10808,
-      "fileUrl": "http://localhost:19090/blog/202606/a288274ab27f44398b43550fbb59035c.jpg",
+      "fileUrl": "/data/media/74.jpg",
       "filename": "a288274ab27f44398b43550fbb59035c.jpg",
       "id": 74,
       "mimeType": "image/jpeg",
       "originalFilename": "5faf5dfba5005660218141778482bf6ed0cb10d7_5faf5dfbb6f91c33da954a74a331f226af25c289.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:22.264865",
       "deleted": 0,
       "filePath": "202606/dd3b3f1e91b54df484a640afe85110fe.jpg",
       "fileSize": 4470,
-      "fileUrl": "http://localhost:19090/blog/202606/dd3b3f1e91b54df484a640afe85110fe.jpg",
+      "fileUrl": "/data/media/73.jpg",
       "filename": "dd3b3f1e91b54df484a640afe85110fe.jpg",
       "id": 73,
       "mimeType": "image/jpeg",
       "originalFilename": "4oraGhgu_34398140_62c5139f662521b0d5ec473a931ba4ffb217326a_62c5139f9e60b0a2e34543ed8095e675bbf0e351.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:22.205887",
       "deleted": 0,
       "filePath": "202606/86ac87adcf8e497da39262dda6da5d1f.jpg",
       "fileSize": 2836,
-      "fileUrl": "http://localhost:19090/blog/202606/86ac87adcf8e497da39262dda6da5d1f.jpg",
+      "fileUrl": "/data/media/72.jpg",
       "filename": "86ac87adcf8e497da39262dda6da5d1f.jpg",
       "id": 72,
       "mimeType": "image/jpeg",
       "originalFilename": "4cp3SlGt_34398140_62c513a371b6d1d8e68b4decb8de8e4cd2aa6bbf_62c513a3154a18d738f94c44b4e1bb256072dd3b.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:22.143251",
       "deleted": 0,
       "filePath": "202606/e9839a2cdb0c4192be33910272cbacd6.jpg",
       "fileSize": 7603,
-      "fileUrl": "http://localhost:19090/blog/202606/e9839a2cdb0c4192be33910272cbacd6.jpg",
+      "fileUrl": "/data/media/71.jpg",
       "filename": "e9839a2cdb0c4192be33910272cbacd6.jpg",
       "id": 71,
       "mimeType": "image/jpeg",
       "originalFilename": "3n6SQ9nj_2407457_6050c44736f13b393235487586833b3a052e39ff_6050c4470a55cd084c2b4951b13312ef9c51a596.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:22.087426",
       "deleted": 0,
       "filePath": "202606/d520e35d2631417fb6d0691731ffa9c3.jpg",
       "fileSize": 3899,
-      "fileUrl": "http://localhost:19090/blog/202606/d520e35d2631417fb6d0691731ffa9c3.jpg",
+      "fileUrl": "/data/media/70.jpg",
       "filename": "d520e35d2631417fb6d0691731ffa9c3.jpg",
       "id": 70,
       "mimeType": "image/jpeg",
       "originalFilename": "2ZFDD3oD_34398140_62c513a096dfda60d4f04f02b45fb4f11b341def_62c513a0d73ed88ac5084c5da64ec76bb095bbbf.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:22.028133",
       "deleted": 0,
       "filePath": "202606/c688e02bd7554b309d95541e13f6b746.jpg",
       "fileSize": 4430,
-      "fileUrl": "http://localhost:19090/blog/202606/c688e02bd7554b309d95541e13f6b746.jpg",
+      "fileUrl": "/data/media/69.jpg",
       "filename": "c688e02bd7554b309d95541e13f6b746.jpg",
       "id": 69,
       "mimeType": "image/jpeg",
       "originalFilename": "2XcJVF78_34398140_62c5139cb7646190d5b54066bc2ad1c23e894048_62c5139cb33d5ba0883c4317887f2565fc640d3f.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:21.968676",
       "deleted": 0,
       "filePath": "202606/9b0fc764d89d4ba4af008eb8e3178c30.jpg",
       "fileSize": 8601,
-      "fileUrl": "http://localhost:19090/blog/202606/9b0fc764d89d4ba4af008eb8e3178c30.jpg",
+      "fileUrl": "/data/media/68.jpg",
       "filename": "9b0fc764d89d4ba4af008eb8e3178c30.jpg",
       "id": 68,
       "mimeType": "image/jpeg",
       "originalFilename": "1esHeMgY_423870640_61bc657dc610cce108f24c93a3a42d5956362d34_61bc657d84e9509b09154ac7b311723fd95b95c5.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-06-04T20:46:21.782852",
       "deleted": 0,
       "filePath": "202606/47e1eb755abe49abb4b127bee8150c7a.jpg",
       "fileSize": 4381,
-      "fileUrl": "http://localhost:19090/blog/202606/47e1eb755abe49abb4b127bee8150c7a.jpg",
+      "fileUrl": "/data/media/67.jpg",
       "filename": "47e1eb755abe49abb4b127bee8150c7a.jpg",
       "id": 67,
       "mimeType": "image/jpeg",
       "originalFilename": "0jZ51pyz_34398140_62c513a1b265705717884dc6a8eadf16f9789988_62c513a1043a149fad58469da0b0447b9c2ed548.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-05-26T20:54:17.986334",
       "deleted": 0,
       "filePath": "202605/eb0a1e6d9a3143738435d3c9c0f297d2.png",
       "fileSize": 280767,
-      "fileUrl": "http://localhost:19090/blog/202605/eb0a1e6d9a3143738435d3c9c0f297d2.png",
+      "fileUrl": "/data/media/48.png",
       "filename": "eb0a1e6d9a3143738435d3c9c0f297d2.png",
       "id": 48,
       "mimeType": "image/png",
       "originalFilename": "2.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-05-26T20:52:23.064704",
       "deleted": 0,
       "filePath": "202605/e075f82b469341ecbf20ad03db257cae.jpg",
       "fileSize": 65258,
-      "fileUrl": "http://localhost:19090/blog/202605/e075f82b469341ecbf20ad03db257cae.jpg",
+      "fileUrl": "/data/media/47.jpg",
       "filename": "e075f82b469341ecbf20ad03db257cae.jpg",
       "id": 47,
       "mimeType": "image/jpeg",
       "originalFilename": "R-C.jpg",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-05-26T20:47:09.716411",
       "deleted": 0,
       "filePath": "202605/d9cd6e9b3041494f862f85b80a57523f.png",
       "fileSize": 263003,
-      "fileUrl": "http://localhost:19090/blog/202605/d9cd6e9b3041494f862f85b80a57523f.png",
+      "fileUrl": "/data/media/44.png",
       "filename": "d9cd6e9b3041494f862f85b80a57523f.png",
       "id": 44,
       "mimeType": "image/png",
       "originalFilename": "4.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-05-26T20:46:27.301108",
       "deleted": 0,
       "filePath": "202605/b1022bd2db71485bbd44d6db4001d839.png",
       "fileSize": 257234,
-      "fileUrl": "http://localhost:19090/blog/202605/b1022bd2db71485bbd44d6db4001d839.png",
+      "fileUrl": "/data/media/43.png",
       "filename": "b1022bd2db71485bbd44d6db4001d839.png",
       "id": 43,
       "mimeType": "image/png",
       "originalFilename": "3.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-05-26T20:45:08.7765",
       "deleted": 0,
       "filePath": "202605/79f2c316ca124eefb40aec787bc0aaa4.png",
       "fileSize": 2365541,
-      "fileUrl": "http://localhost:19090/blog/202605/79f2c316ca124eefb40aec787bc0aaa4.png",
+      "fileUrl": "/data/media/42.png",
       "filename": "79f2c316ca124eefb40aec787bc0aaa4.png",
       "id": 42,
       "mimeType": "image/png",
       "originalFilename": "1.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-05-26T12:33:55.266367",
       "deleted": 0,
       "filePath": "202605/a3286751fe854f9099298d77119eede8.webp",
       "fileSize": 4986,
-      "fileUrl": "http://localhost:19090/blog/202605/a3286751fe854f9099298d77119eede8.webp",
+      "fileUrl": "/data/media/40.webp",
       "filename": "a3286751fe854f9099298d77119eede8.webp",
       "id": 40,
       "mimeType": "image/webp",
       "originalFilename": "OIP-C.webp",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-05-26T10:45:54.823155",
       "deleted": 0,
       "filePath": "202605/d7af1af5c21f4fc380c0ccb972453d85.png",
       "fileSize": 297538,
-      "fileUrl": "http://localhost:19090/blog/202605/d7af1af5c21f4fc380c0ccb972453d85.png",
+      "fileUrl": "/data/media/39.png",
       "filename": "d7af1af5c21f4fc380c0ccb972453d85.png",
       "id": 39,
       "mimeType": "image/png",
       "originalFilename": "5.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-05-26T10:45:16.560346",
       "deleted": 0,
       "filePath": "202605/de30bafdf033484f941f1f3a1253ae03.png",
       "fileSize": 258741,
-      "fileUrl": "http://localhost:19090/blog/202605/de30bafdf033484f941f1f3a1253ae03.png",
+      "fileUrl": "/data/media/38.png",
       "filename": "de30bafdf033484f941f1f3a1253ae03.png",
       "id": 38,
       "mimeType": "image/png",
       "originalFilename": "6.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-05-26T10:41:29.041974",
       "deleted": 0,
       "filePath": "202605/c1658fe9c77b4b02a24b97bab6b3afce.png",
       "fileSize": 80918,
-      "fileUrl": "http://localhost:19090/blog/202605/c1658fe9c77b4b02a24b97bab6b3afce.png",
+      "fileUrl": "/data/media/36.png",
       "filename": "c1658fe9c77b4b02a24b97bab6b3afce.png",
       "id": 36,
       "mimeType": "image/png",
       "originalFilename": "4.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-05-26T10:40:44.269021",
       "deleted": 0,
       "filePath": "202605/6194263e9ab94895b9c6eb4d8d42bb62.png",
       "fileSize": 118631,
-      "fileUrl": "http://localhost:19090/blog/202605/6194263e9ab94895b9c6eb4d8d42bb62.png",
+      "fileUrl": "/data/media/35.png",
       "filename": "6194263e9ab94895b9c6eb4d8d42bb62.png",
       "id": 35,
       "mimeType": "image/png",
       "originalFilename": "3.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     },
     {
       "createTime": "2026-05-26T10:39:10.680333",
       "deleted": 0,
       "filePath": "202605/2d5842e778214860a8d6d298dd005a72.png",
       "fileSize": 126601,
-      "fileUrl": "http://localhost:19090/blog/202605/2d5842e778214860a8d6d298dd005a72.png",
+      "fileUrl": "/data/media/34.png",
       "filename": "2d5842e778214860a8d6d298dd005a72.png",
       "id": 34,
       "mimeType": "image/png",
       "originalFilename": "2.png",
       "relationType": null,
-      "updateTime": null
+      "updateTime": "2026-06-10T14:42:38.102608"
     }
   ]
 }
