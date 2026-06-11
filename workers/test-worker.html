@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>CF Analytics Worker 测试</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; }
+  pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow: auto; max-height: 400px; }
+  input, button { padding: 8px 16px; font-size: 14px; }
+  input { width: 100%; box-sizing: border-box; margin-bottom: 12px; }
+  .ok { color: green; }
+  .err { color: red; }
+</style>
+</head>
+<body>
+  <h2>测试 Cloudflare Worker 代理</h2>
+  <p>用于验证 CORS 是否正常</p>
+
+  <input id="workerUrl" value="https://你的worker域名.workers.dev" placeholder="Worker URL" />
+  <br/>
+  <button onclick="testPing()">1. 测试 Ping</button>
+  <button onclick="testAnalytics(7)">2. 拉取 7 天数据</button>
+  <button onclick="testAnalytics(30)">3. 拉取 30 天数据</button>
+
+  <h3>结果：</h3>
+  <pre id="output">等待测试...</pre>
+
+  <script>
+    const output = document.getElementById("output");
+
+    function getBase() {
+      let url = document.getElementById("workerUrl").value.trim();
+      if (url.endsWith("/")) url = url.slice(0, -1);
+      return url;
+    }
+
+    async function testPing() {
+      output.textContent = "请求中...";
+      try {
+        const resp = await fetch(getBase() + "/ping");
+        const data = await resp.json();
+        output.className = "ok";
+        output.textContent = JSON.stringify(data, null, 2);
+      } catch (e) {
+        output.className = "err";
+        output.textContent = "CORS 错误或 Worker 不可达:\n" + e.message;
+      }
+    }
+
+    async function testAnalytics(days) {
+      output.textContent = `请求 ${days} 天数据...`;
+      try {
+        const resp = await fetch(getBase(), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ days }),
+        });
+        const data = await resp.json();
+        if (data.errors) {
+          output.className = "err";
+          output.textContent = "API 错误:\n" + JSON.stringify(data.errors, null, 2);
+        } else {
+          const zones = data?.data?.viewer?.zones?.[0];
+          output.className = "ok";
+          output.textContent = "✅ 成功！\n\n"
+            + `每日数据条数: ${zones?.daily?.length || 0}\n`
+            + `小时数据条数: ${zones?.hourly?.length || 0}\n\n`
+            + "完整响应:\n" + JSON.stringify(data, null, 2).slice(0, 3000);
+        }
+      } catch (e) {
+        output.className = "err";
+        output.textContent = "CORS 错误:\n" + e.message;
+      }
+    }
+  </script>
+</body>
+</html>

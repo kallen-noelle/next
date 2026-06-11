@@ -5,10 +5,22 @@
 /* 暗黑模式变体 */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* 禁用 SVG 点击焦点框 */
+svg, svg *, path, rect, .recharts-wrapper * {
+  outline: none !important;
+  outline-offset: 0 !important;
+  &:focus, &:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
 /* 基础环境与性能优化 */
 @layer base {
   :root {
     --font-serif: var(--font-serif), "Source Han Serif SC", "Noto Serif SC", "Songti SC", "SimSun", serif;
+    --font-geist-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    --font-geist-mono: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
   }
 
   body {

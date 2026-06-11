@@ -19,6 +19,7 @@ const NAV_ITEMS = [
   { name: "Timeline", href: "/timeline" },
   { name: "Chatter", href: "/chatter" },
   { name: "Friends", href: "/friends" },
+  { name: "Analytics", href: "/analytics" },
   { name: "About", href: "/about" },
 ];
 

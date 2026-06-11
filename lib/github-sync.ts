@@ -154,13 +154,11 @@ async function collectMedia(
     }
   }
 
-  // 只下载有变动的文件
+  // 只下载新增的文件（已有文件不变，因为没有更新功能）
   const toDownload = mediaRows.filter((media) => {
     if (media.id == null) return false;
     if (!existingManifest) return true;
-    const prev = existingManifest.get(media.id);
-    if (!prev) return true;
-    return prev.updateTime !== (media.updateTime || "");
+    return !existingManifest.has(media.id);
   });
 
   onProgress?.({
@@ -271,8 +269,8 @@ async function collectMusic(
   return { musicData: body.data, audioFiles };
 }
 
-// Collect all data from Java backend
-async function collectAllData(ghToken?: string): Promise<{ path: string; content: string }[]> {
+// Collect data from Java backend (incremental — skips unchanged details)
+async function collectAllData(ghToken?: string, existing?: Map<string, string>, onProgress?: ProgressCb): Promise<{ path: string; content: string }[]> {
   const base =
     typeof window !== "undefined"
       ? process.env.NEXT_PUBLIC_API_BASE || "http://localhost:18016/api"
@@ -340,7 +338,20 @@ async function collectAllData(ghToken?: string): Promise<{ path: string; content
     "/article/public/page", PAGE
   );
   files.push({ path: "articles.json", content: JSON.stringify(articleList, null, 2) });
-  for (const a of articleList.rows) {
+  for (const a of articleList.rows as { id: number; updateTime?: string }[]) {
+    if (a.updateTime && existing) {
+      const existingContent = existing.get(`articles/${a.id}.json`);
+      if (existingContent) {
+        try {
+          const existingTime = JSON.parse(existingContent)?.updateTime;
+          if (existingTime === a.updateTime) {
+            files.push({ path: `articles/${a.id}.json`, content: existingContent });
+            // 跳过，不输出日志
+            continue;
+          }
+        } catch { /* fall through to re-fetch */ }
+      }
+    }
     try {
       const detail = await apiGet<unknown>(`/article/public/${a.id}`);
       files.push({ path: `articles/${a.id}.json`, content: JSON.stringify(detail, null, 2) });
@@ -351,7 +362,20 @@ async function collectAllData(ghToken?: string): Promise<{ path: string; content
     "/project/public/page", PAGE
   );
   files.push({ path: "projects.json", content: JSON.stringify(projectList, null, 2) });
-  for (const p of projectList.rows) {
+  for (const p of projectList.rows as { id: number; updateTime?: string }[]) {
+    if (p.updateTime && existing) {
+      const existingContent = existing.get(`projects/${p.id}.json`);
+      if (existingContent) {
+        try {
+          const existingTime = JSON.parse(existingContent)?.updateTime;
+          if (existingTime === p.updateTime) {
+            files.push({ path: `projects/${p.id}.json`, content: existingContent });
+            // 跳过，不输出日志
+            continue;
+          }
+        } catch { /* fall through */ }
+      }
+    }
     try {
       const detail = await apiGet<unknown>(`/project/public/${p.id}`);
       files.push({ path: `projects/${p.id}.json`, content: JSON.stringify(detail, null, 2) });
@@ -406,6 +430,28 @@ async function collectAllData(ghToken?: string): Promise<{ path: string; content
       null, 2
     ),
   });
+
+  // ── 替换所有 JSON 中的媒体 URL 为本地路径 ──
+  try {
+    const mediaRes = await apiPost<{ rows: { id: number; fileUrl: string; originalFilename?: string }[] }, unknown>(
+      "/media/page", { pageNum: 1, pageSize: 999 }
+    );
+    const mediaMap = new Map<number, { newPath: string; originalUrl: string }>();
+    for (const m of mediaRes.rows || []) {
+      const ext = m.originalFilename?.includes(".") ? m.originalFilename.slice(m.originalFilename.lastIndexOf(".")) : ".bin";
+      mediaMap.set(m.id, {
+        newPath: `/data/media/${m.id}${ext}`,
+        originalUrl: m.fileUrl,
+      });
+    }
+    if (mediaMap.size > 0) {
+      for (const f of files) {
+        if (f.path.endsWith(".json")) {
+          f.content = replaceMediaUrls(f.content, mediaMap);
+        }
+      }
+    }
+  } catch { /* skip */ }
 
   return files;
 }
@@ -502,10 +548,29 @@ async function syncFiles(
 
   for (const [dir, entries] of dirFiles) {
     if (entries.length === 0) continue;
-    const subTree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees`, token, "POST", {
-      tree: entries.map((e) => ({ path: e.path, mode: "100644", type: "blob", sha: e.sha })),
+    const newPaths = new Set(entries.map((e) => e.path));
+    const delPathsSet = new Set(deletePaths || []);
+    const baseDir = baseTree.tree.find((e: any) => e.path === dir);
+    let mergedEntries: { path: string; mode: "100644"; type: "blob"; sha: string }[] = [];
+    // 先加入现有子树中未在上传列表且未在删除列表的条目
+    if (baseDir) {
+      try {
+        const subTree = await gh(baseDir.url, token);
+        for (const se of (subTree.tree || []) as any[]) {
+          if (!newPaths.has(se.path) && !delPathsSet.has(`${dir}/${se.path}`)) {
+            mergedEntries.push({ path: se.path, mode: "100644", type: "blob", sha: se.sha });
+          }
+        }
+      } catch { /* skip */ }
+    }
+    // 再加入本次上传的条目
+    for (const e of entries) {
+      mergedEntries.push({ path: e.path, mode: "100644" as const, type: "blob" as const, sha: e.sha });
+    }
+    const mergedTree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees`, token, "POST", {
+      tree: mergedEntries,
     });
-    treeEntries.push({ path: dir, mode: "040000", type: "tree", sha: subTree.sha as string });
+    treeEntries.push({ path: dir, mode: "040000", type: "tree", sha: mergedTree.sha as string });
   }
 
   const newTree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees`, token, "POST", { tree: treeEntries });
@@ -566,16 +631,65 @@ export async function syncJson(
   onProgress?: ProgressCb
 ): Promise<SyncResult> {
   try {
-    onProgress?.({ stage: "collecting", message: "Fetching data from API..." });
-    const files = await collectAllData(token);
+    onProgress?.({ stage: "collecting", message: "Fetching existing data from GitHub..." });
+    let existing = new Map<string, string>();
+    try {
+      const ref = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/ref/heads/${BRANCH}`, token);
+      const commit = await gh(ref.object.url, token);
+      const tree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees/${commit.tree.sha}?recursive=1`, token);
+      for (const e of (tree.tree || []).filter((x: any) => x.type === "blob" && x.path.endsWith(".json"))) {
+        try {
+          const blob = await gh(e.url, token);
+          existing.set(e.path, base64DecodeUtf8(blob.content));
+        } catch { /* skip */ }
+      }
+    } catch { /* no existing data branch yet */ }
+    onProgress?.({ stage: "collecting", message: `Downloaded ${existing.size} existing files. Fetching new data...` });
+
+    const files = await collectAllData(token, existing, onProgress);
     onProgress?.({ stage: "collecting", message: `Collected ${files.length} files.` });
+
+    // 只上传变更的文件（内容没变的跳过）
+    const changed = files.filter((f) => {
+      const prev = existing.get(f.path);
+      return prev === undefined || prev !== f.content;
+    });
+    onProgress?.({ stage: "collecting", message: `Changed: ${changed.length}, unchanged: ${files.length - changed.length}.` });
+
+    // 检测已删除的详情文件（列表里不再有该 ID）
+    const deletePaths: string[] = [];
+    const newIds = new Map<string, Set<string>>();
+    for (const f of files) {
+      if (f.path.endsWith(".json") && f.path.includes("/")) {
+        const parts = f.path.split("/");
+        if (!newIds.has(parts[0])) newIds.set(parts[0], new Set());
+        newIds.get(parts[0])!.add(parts[1].replace(/\.json$/, ""));
+      }
+    }
+    for (const [dir, ids] of newIds) {
+      for (const [path] of existing) {
+        const m = path.match(new RegExp(`^${dir}/(\\d+)\\.json$`));
+        if (m && !ids.has(m[1])) {
+          deletePaths.push(path);
+        }
+      }
+    }
+    if (deletePaths.length > 0) {
+      onProgress?.({ stage: "collecting", message: `Removed: ${deletePaths.length} files.` });
+    }
+
+    if (changed.length === 0 && deletePaths.length === 0) {
+      onProgress?.({ stage: "done", message: "No changes to sync." });
+      return { success: true, filesCount: 0 };
+    }
 
     const ts = new Date().toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" });
     return await syncFiles(
       token,
-      files.map((f) => ({ ...f, encoding: "utf-8" as const })),
+      changed.map((f) => ({ ...f, encoding: "utf-8" as const })),
       `${ts} sync json data`,
-      onProgress
+      onProgress,
+      deletePaths
     );
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Unknown error";
@@ -613,26 +727,15 @@ export async function syncMedia(
 
     // 构建最新的 manifest
     const manifestContent = JSON.stringify(
-      mediaItems.map((m) => ({ id: m.id, filename: m.filename, updateTime: m.updateTime })),
+      mediaItems.map((m) => ({ id: m.id, filename: m.filename })),
       null,
       2
     );
 
-    onProgress?.({ stage: "collecting", message: "Fetching existing JSON files from GitHub..." });
-    const existingFiles = await getExistingJsonFiles(token, onProgress);
-
-    onProgress?.({ stage: "collecting", message: "Replacing media URLs in JSON files..." });
     const files: SyncFile[] = [];
 
-    // manifest 先加入（后面被 JSON 替换时覆盖）
+    // manifest
     files.push({ path: "media-manifest.json", content: manifestContent, encoding: "utf-8" });
-
-    for (const [path, content] of existingFiles) {
-      // 跳过旧的 manifest
-      if (path === "media-manifest.json") continue;
-      const patched = replaceMediaUrls(content, mediaMap);
-      files.push({ path, content: patched, encoding: "utf-8" });
-    }
 
     for (const m of mediaItems) {
       if (m.base64) {

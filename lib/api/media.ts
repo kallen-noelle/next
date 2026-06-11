@@ -23,7 +23,7 @@ export async function remove(id: number) {
 }
 
 export interface MediaRef {
-  type: "article" | "project" | "about" | "album";
+  type: "article" | "project" | "about" | "album" | "chatter";
   title: string;
   id?: number;
   field: "coverImage" | "content";
@@ -80,7 +80,12 @@ export async function scanMediaWithRefs(): Promise<{
   try {
     const chatters = await getPublishedList();
     for (const c of (Array.isArray(chatters) ? chatters : [])) {
-      if (c.content) sources.push({ text: c.content, type: "album", title: "说说", field: "content" });
+      if (c.content) sources.push({ text: c.content, type: "chatter", title: "说说", field: "content" });
+      if (c.images) {
+        for (const url of c.images) {
+          sources.push({ text: url, type: "chatter", title: "说说", field: "content" });
+        }
+      }
     }
   } catch { /* skip */ }
 

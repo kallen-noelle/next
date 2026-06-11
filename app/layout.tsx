@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Noto_Serif_SC } from "next/font/google";
+import localFont from "next/font/local";
 import fs from "fs";
 import path from "path";
 import "./globals.css";
@@ -13,13 +13,20 @@ import MaskOverlay from "./_components/common/MaskOverlay";
 import Live2DWidget from "./_components/Live2DWidgetWrapper";
 import { siteConfig } from "@/lib/siteConfig";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const notoSerif = Noto_Serif_SC({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
+const geistSans = localFont({
+  src: "../public/fonts/geist-latin.woff2",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+});
+const geistMono = localFont({
+  src: "../public/fonts/geist-mono-latin.woff2",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+});
+const notoSerif = localFont({
+  src: "../public/fonts/noto-serif-sc-latin.woff2",
   variable: "--font-serif",
-  display: "swap",
+  weight: "400 900",
 });
 
 function getSiteUrl(): string {
