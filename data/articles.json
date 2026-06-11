@@ -5,7 +5,7 @@
       "categoryId": 38,
       "categoryName": "网站部署",
       "commentCount": 0,
-      "coverImage": "/data/media/322.webp",
+      "coverImage": "http://localhost:19090/blog/202606/2adb58c5783f4d2891d52006d6e01818.webp",
       "createdAt": "2026-06-10T21:32:19.236002",
       "id": 38,
       "isPinned": 0,
@@ -26,14 +26,13 @@
         }
       ],
       "title": "用 Cloudflare Worker 构建博客流量分析 API——从入门到生产级脚本",
-      "updateTime": "2026-06-11T08:22:31.298244",
-      "viewCount": 5
+      "viewCount": 2
     },
     {
       "categoryId": 38,
       "categoryName": "网站部署",
       "commentCount": 0,
-      "coverImage": "/data/media/317.webp",
+      "coverImage": "http://localhost:19090/blog/202606/070e518b82994b4cb37401e9473ad369.webp",
       "createdAt": "2026-06-10T21:20:34.516448",
       "id": 37,
       "isPinned": 0,
@@ -54,14 +53,13 @@
         }
       ],
       "title": "给我的博客添加监控板块：使用 Cloudflare API 获取网站流量信息",
-      "updateTime": "2026-06-11T08:26:47.002639",
-      "viewCount": 4
+      "viewCount": 1
     },
     {
       "categoryId": 38,
       "categoryName": "网站部署",
       "commentCount": 0,
-      "coverImage": "/data/media/283.jpg",
+      "coverImage": "http://localhost:19090/blog/202606/d1f23a0925154db8898111a819a3e42f.jpg",
       "createdAt": "2026-06-09T12:41:52.583618",
       "id": 36,
       "isPinned": 0,
@@ -86,14 +84,13 @@
         }
       ],
       "title": "为 GitHub Pages 博客配置自定义域名与 Cloudflare 加速",
-      "updateTime": "2026-06-10T14:42:38.102608",
       "viewCount": 6
     },
     {
       "categoryId": 38,
       "categoryName": "网站部署",
       "commentCount": 0,
-      "coverImage": "/data/media/47.jpg",
+      "coverImage": "http://localhost:19090/blog/202605/e075f82b469341ecbf20ad03db257cae.jpg",
       "createdAt": "2026-05-26T20:16:47.720519",
       "id": 35,
       "isPinned": 0,
@@ -110,14 +107,13 @@
         }
       ],
       "title": "将个人网址录入Bing搜索引擎",
-      "updateTime": "2026-06-10T14:42:38.102608",
       "viewCount": 29
     },
     {
       "categoryId": 37,
       "categoryName": "Ai编程",
       "commentCount": 0,
-      "coverImage": "/data/media/40.webp",
+      "coverImage": "http://localhost:19090/blog/202605/a3286751fe854f9099298d77119eede8.webp",
       "createdAt": "2026-05-26T10:23:39.694181",
       "id": 33,
       "isPinned": 0,
@@ -134,7 +130,6 @@
         }
       ],
       "title": "codex安装及接入deepseek教程",
-      "updateTime": "2026-06-10T14:42:38.102608",
       "viewCount": 160
     }
   ]
