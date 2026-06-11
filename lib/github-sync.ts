@@ -46,24 +46,24 @@ async function fetchImageAsBase64(url: string): Promise<{ base64: string; mime: 
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status} fetching image: ${url}`);
   const blob = await res.blob();
-  const buffer = await blob.arrayBuffer();
-  const bytes = new Uint8Array(buffer);
-  let binary = "";
-  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-  const sizeMb = (bytes.length / 1024 / 1024).toFixed(1);
-  return { base64: btoa(binary), mime: blob.type, sizeMb };
+  const base64 = await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      resolve(result.split(",", 2)[1] || "");
+    };
+    reader.onerror = () => reject(new Error("FileReader failed"));
+    reader.readAsDataURL(blob);
+  });
+  const sizeMb = (blob.size / 1024 / 1024).toFixed(1);
+  return { base64, mime: blob.type, sizeMb };
 }
 
 function mimeToExt(mime?: string): string {
   if (!mime) return ".bin";
-  const map: Record<string, string> = {
-    "image/jpeg": ".jpg",
-    "image/png": ".png",
-    "image/gif": ".gif",
-    "image/webp": ".webp",
-    "image/svg+xml": ".svg",
-  };
-  return map[mime] || ".bin";
+  // image/jpeg → .jpeg, image/svg+xml → .svg
+  const subtype = mime.split("/")[1] || "";
+  return "." + subtype.split("+")[0];
 }
 
 function extFromFilename(name?: string): string {
@@ -159,7 +159,7 @@ async function collectMedia(
     if (media.id == null) return false;
     if (!existingManifest) return true;
     return !existingManifest.has(media.id);
-  });
+  }).slice(0, 100);  // 每次最多同步 100 张
 
   onProgress?.({
     stage: "collecting",
@@ -177,8 +177,8 @@ async function collectMedia(
           const url = media.fileUrl.startsWith("http")
             ? media.fileUrl
             : `${apiBase}${media.fileUrl}`;
-          const { base64, mime } = await fetchImageAsBase64(url);
-          const ext = mimeToExt(mime) || extFromFilename(media.originalFilename) || ".bin";
+          const { base64 } = await fetchImageAsBase64(url);
+          const ext = extFromFilename(media.fileUrl) || ".bin";
           const filename = `${media.id}${ext}`;
           mediaItems.push({ id: media.id, filename, base64, updateTime: media.updateTime });
           mediaMap.set(media.id, { newPath: `/data/media/${filename}`, originalUrl: media.fileUrl });
@@ -214,10 +214,28 @@ interface MusicFile {
   newPath: string;
 }
 
+async function getExistingMusicManifest(token: string): Promise<Map<number, { id: number }>> {
+  const result = new Map<number, { id: number }>();
+  try {
+    const ref = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/ref/heads/${BRANCH}`, token);
+    const commit = await gh(ref.object.url, token);
+    const tree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees/${commit.tree.sha}?recursive=1`, token);
+    const entry = (tree.tree || []).find((e: any) => e.path === "music-manifest.json");
+    if (!entry) return result;
+    const blob = await gh(entry.url, token);
+    const list = JSON.parse(base64DecodeUtf8(blob.content)) as { id: number }[];
+    for (const item of list) {
+      if (item.id != null) result.set(item.id, item);
+    }
+  } catch { /* no manifest yet */ }
+  return result;
+}
+
 async function collectMusic(
   apiBase: string,
-  onProgress?: ProgressCb
-): Promise<{ musicData: unknown; audioFiles: MusicFile[] }> {
+  onProgress?: ProgressCb,
+  existingManifest?: Map<number, { id: number }>
+): Promise<{ musicData: unknown; audioFiles: MusicFile[]; deletedIds: number[] }> {
   const res = await fetch(`${apiBase}/op/music/page`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -225,26 +243,64 @@ async function collectMusic(
   });
   const body = await res.json() as { code: number; data?: { total: number; rows: OpMusic[] } };
   const rows = body.data?.rows || [];
-  onProgress?.({ stage: "collecting", message: `Found ${rows.length} tracks. Downloading...` });
+
+  // 检测已删除的曲目
+  const deletedIds: number[] = [];
+  if (existingManifest && existingManifest.size > 0) {
+    const apiIds = new Set<number>();
+    for (const t of rows) { if (t.id != null) apiIds.add(t.id); }
+    for (const [id] of existingManifest) {
+      if (!apiIds.has(id)) deletedIds.push(id);
+    }
+  }
+
+  // 只下载新增的曲目，按文件大小从小到大排
+  let toDownload = rows.filter((t) => {
+    if (t.id == null) return false;
+    if (!existingManifest) return true;
+    return !existingManifest.has(t.id);
+  });
+
+  // 用 HEAD 请求获取文件大小
+  if (toDownload.length > 0) {
+    const sizes = await Promise.all(toDownload.map(async (t) => {
+      try {
+        const url = t.url?.startsWith("http") ? t.url : `${apiBase}${t.url}`;
+        const resp = await fetch(url, { method: "HEAD" });
+        return { id: t.id, size: Number(resp.headers.get("Content-Length") || 0) };
+      } catch { return { id: t.id, size: 0 }; }
+    }));
+    const sizeMap = new Map(sizes.map((s) => [s.id, s.size]));
+    toDownload.sort((a, b) => (sizeMap.get(a.id) || 0) - (sizeMap.get(b.id) || 0));
+    toDownload = toDownload.slice(0, 10); // 取最小的 10 首
+  }
+
+  if (toDownload.length === 0) {
+    return { musicData: body.data, audioFiles: [], deletedIds };
+  }
+
+  onProgress?.({ stage: "collecting", message: `Found ${rows.length} tracks, new: ${toDownload.length}. Downloading...` });
 
   let dlCount = 0;
   const audioFiles: MusicFile[] = [];
 
-  for (const track of rows) {
+  for (const track of toDownload) {
     if (track.id == null) continue;
+    dlCount++;
+    const trackNum = dlCount;
 
     if (track.url) {
       try {
         const url = track.url.startsWith("http") ? track.url : `${apiBase}${track.url}`;
         const { base64, sizeMb } = await fetchImageAsBase64(url);
-        dlCount++;
+        const audioExt = extFromFilename(track.url) || ".mp3";
         audioFiles.push({
-          path: `music/${track.id}.mp3`,
+          path: `music/${track.id}${audioExt}`,
           content: base64,
           originalUrl: track.url,
-          newPath: `/data/music/${track.id}.mp3`,
+          newPath: `/data/music/${track.id}${audioExt}`,
         });
-        onProgress?.({ stage: "collecting", message: `Downloading music...`, log: `[audio ${dlCount}] ${track.title} (${sizeMb} MB)` });
+        onProgress?.({ stage: "collecting", message: "Downloading music...", log: `[audio #${trackNum}] ${track.title} (${sizeMb} MB)` });
       } catch { /* skip */ }
     }
 
@@ -253,7 +309,6 @@ async function collectMusic(
         const url = track.pictureUrl.startsWith("http") ? track.pictureUrl : `${apiBase}${track.pictureUrl}`;
         const { base64, mime } = await fetchImageAsBase64(url);
         const ext = mimeToExt(mime) || ".png";
-        dlCount++;
         const sizeKb = Math.round(base64.length * 3 / 4 / 1024);
         audioFiles.push({
           path: `music/${track.id}-cover${ext}`,
@@ -261,12 +316,12 @@ async function collectMusic(
           originalUrl: track.pictureUrl,
           newPath: `/data/music/${track.id}-cover${ext}`,
         });
-        onProgress?.({ stage: "collecting", message: `Downloading music...`, log: `[cover ${dlCount}] ${track.title} (${sizeKb} KB)` });
+        onProgress?.({ stage: "collecting", message: "Downloading music...", log: `[cover #${trackNum}] ${track.title} (${sizeKb} KB)` });
       } catch { /* skip */ }
     }
   }
 
-  return { musicData: body.data, audioFiles };
+  return { musicData: body.data, audioFiles, deletedIds };
 }
 
 // Collect data from Java backend (incremental — skips unchanged details)
@@ -764,13 +819,27 @@ export async function syncMusic(
         ? process.env.NEXT_PUBLIC_API_BASE || "http://localhost:18016/api"
         : "http://localhost:18016/api";
 
-    onProgress?.({ stage: "collecting", message: "Fetching music from API..." });
-    const { musicData, audioFiles } = await collectMusic(apiBase, onProgress);
+    onProgress?.({ stage: "collecting", message: "Fetching existing manifest from GitHub..." });
+    const existingManifest = await getExistingMusicManifest(token);
 
-    if (audioFiles.length === 0) {
-      onProgress?.({ stage: "done", message: "No music files to sync." });
+    onProgress?.({ stage: "collecting", message: "Fetching music from API..." });
+    const { musicData, audioFiles, deletedIds } = await collectMusic(apiBase, onProgress, existingManifest);
+
+    if (audioFiles.length === 0 && deletedIds.length === 0) {
+      onProgress?.({ stage: "done", message: "No music changes to sync." });
       return { success: true, filesCount: 0 };
     }
+
+    // 删除的曲目路径
+    const stalePaths = deletedIds.map((id) => `music/${id}.mp3`);
+
+    // 构建最新 manifest（已有 ID + 新下载的 ID）
+    const manifestIds = new Set((existingManifest?.keys() || []));
+    for (const f of audioFiles) {
+      const id = Number(f.path.split("/")[1].split(".")[0]);
+      if (id) manifestIds.add(id);
+    }
+    const manifestContent = JSON.stringify([...manifestIds].map((id) => ({ id })), null, 2);
 
     let patched = JSON.stringify(musicData);
     for (const af of audioFiles) {
@@ -782,13 +851,14 @@ export async function syncMusic(
 
     const files: SyncFile[] = [
       { path: "music.json", content: JSON.stringify(JSON.parse(patched), null, 2), encoding: "utf-8" },
+      { path: "music-manifest.json", content: manifestContent, encoding: "utf-8" },
     ];
     for (const af of audioFiles) {
       files.push({ path: af.path, content: af.content, encoding: "base64" });
     }
 
     const ts = new Date().toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" });
-    return await syncFiles(token, files, `${ts} sync music (${audioFiles.length} files)`, onProgress);
+    return await syncFiles(token, files, `${ts} sync music (${audioFiles.length} files)`, onProgress, stalePaths);
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Unknown error";
     onProgress?.({ stage: "error", message: msg });
