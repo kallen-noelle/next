@@ -43,13 +43,13 @@
     {
       "id": 38,
       "title": "用 Cloudflare Worker 构建博客流量分析 API——从入门到生产级脚本",
-      "viewCount": 2
+      "viewCount": 5
     },
     {
       "id": 37,
       "title": "给我的博客添加监控板块：使用 Cloudflare API 获取网站流量信息",
-      "viewCount": 1
+      "viewCount": 4
     }
   ],
-  "totalViews": 198
+  "totalViews": 204
 }
