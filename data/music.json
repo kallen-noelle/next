@@ -1,0 +1,85 @@
+{
+  "total": 414,
+  "rows": [
+    {
+      "duration": 245,
+      "favorite": false,
+      "id": 2,
+      "pictureUrl": "/data/music/6-cover.png",
+      "title": "~愛よ消えないで~",
+      "url": "http://localhost:8090/music/music/default/1751798545423.flac"
+    },
+    {
+      "duration": 290,
+      "favorite": false,
+      "id": 6,
+      "pictureUrl": "/data/music/6-cover.png",
+      "title": "2011～祝福乐章～",
+      "url": "/data/music/6.mp3"
+    },
+    {
+      "duration": 239,
+      "favorite": false,
+      "id": 9,
+      "pictureUrl": "/data/music/6-cover.png",
+      "title": "2014~唱于你听~",
+      "url": "http://localhost:8090/music/music/default/1751798546011.flac"
+    },
+    {
+      "duration": 264,
+      "favorite": false,
+      "id": 10,
+      "pictureUrl": "/data/music/6-cover.png",
+      "title": "2015~不屑言败~",
+      "url": "http://localhost:8090/music/music/default/1751798546327.flac"
+    },
+    {
+      "duration": 258,
+      "favorite": false,
+      "id": 11,
+      "pictureUrl": "/data/music/6-cover.png",
+      "title": "2016～谢谢陌生的你～",
+      "url": "http://localhost:8090/music/music/default/1751798546477.flac"
+    },
+    {
+      "duration": 350,
+      "favorite": false,
+      "id": 12,
+      "pictureUrl": "/data/music/6-cover.png",
+      "title": "2017～陪你到世界尽头～",
+      "url": "http://localhost:8090/music/music/default/1751798546570.flac"
+    },
+    {
+      "duration": 279,
+      "favorite": false,
+      "id": 13,
+      "pictureUrl": "/data/music/6-cover.png",
+      "title": "2018～朝你靠近～",
+      "url": "http://localhost:8090/music/music/default/1751798547023.flac"
+    },
+    {
+      "duration": 281,
+      "favorite": false,
+      "id": 14,
+      "pictureUrl": "/data/music/6-cover.png",
+      "title": "2019~予你成歌~",
+      "url": "http://localhost:8090/music/music/default/1751798547189.flac"
+    },
+    {
+      "duration": 183,
+      "favorite": false,
+      "id": 15,
+      "pictureUrl": "/data/music/6-cover.png",
+      "title": "2020~此间未来~",
+      "url": "http://localhost:8090/music/music/default/1751798547258.flac"
+    },
+    {
+      "duration": 233,
+      "favorite": false,
+      "id": 16,
+      "pictureUrl": "/data/music/6-cover.png",
+      "title": "2021~听风捕梦~",
+      "url": "http://localhost:8090/music/music/default/1751798547333.flac"
+    }
+  ]
+}
