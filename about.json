@@ -1,13 +1,13 @@
 {
   "content": "# 👋 关于我\n\n南昌大学软件工程在读本科生，专注 **Java 后端、全栈开发、微服务架构与 AI 应用开发**。\n\n## 🧠 技术方向\n\n- **后端开发**：Java 8–21、Kotlin、Spring Boot 3、MyBatis-Plus、Maven / Gradle 多模块构建\n- **微服务架构**：Spring Cloud Alibaba（Nacos / Gateway / Sentinel / OpenFeign）、RabbitMQ 可靠消息、分布式事务最终一致性\n- **数据库与缓存**：MySQL（分库分表、索引优化）、Redis（多级缓存、分布式锁、集群）、Redis Stack 向量检索、Elasticsearch 全文检索\n- **容器与云原生**：Docker、Nginx、K8s、CI/CD、自动化部署运维、Zipkin 全链路追踪\n- **嵌入式与物联网**：STM32（HAL 库 + C 裸机开发）、ESP32（Arduino + PlatformIO）、I2C / SPI / UART 总线协议、多传感器融合（MPU6050 / BMP280 / AHT20 / BH1750 / GPS / OLED）、自定义串口通信协议\n- **全栈能力**：Vue 3 + Vite + Element Plus + TypeScript、Pinia 状态管理、SSE 流式通信、独立前后端开发\n- **AI 应用开发**：Spring AI、RAG 检索增强生成（查询扩展 / 多向量库并发检索 / 父子句检索策略）、向量检索、Tool Calling、Prompt 工程\n\n## 🛠 项目经历\n\n- **AI 智能客服问答系统**：全栈独立开发，Spring Boot3 + Vue3 + Spring AI + RAG，支持私有知识库、多轮对话、SSE 流式输出\n- **万象阁**：Kotlin + Spring Boot3 + Vue3，集成日记、笔记、AI 阅读器、对象存储、缓存优化，多模块 Gradle 构建\n- **SmartMall 分布式电商平台**：微服务拆分（12 个独立服务）、秒杀高并发（Redisson 信号量 + Redis 预热）、订单支付、ES 检索、K8s 集群部署、自动扩缩容、链路追踪\n- **Guardian-Elf 物联网监测平台**：STM32 + ESP32 双 MCU 架构，6 种传感器数据采集，自定义串口协议，WiFi 数据上报，Spring Boot + Vue3 管理后台可视化\n\n## ✨ 个人标签\n\n后端 / 全栈 / 微服务 / 云原生 / 嵌入式 / AI 应用开发 / RAG / 效率工具爱好者\n\n欢迎一起交流技术、一起成长～\n",
+  "juejin": "https://juejin.cn/user/3154917256866522",
+  "csdn": "https://blog.csdn.net/2604_96186443",
+  "blog": "https://www.lxpavilion.top",
   "name": "ppc",
   "summery": "简短介绍",
   "gitee": "https://gitee.com/peng-chao2005",
   "github": "https://github.com/PC2005-cloud",
   "qq": "2194844980",
   "email": "2194844980@qq.com",
-  "cnblogs": "https://home.cnblogs.com/u/pc2005",
-  "juejin": "https://juejin.cn/user/3154917256866522",
-  "csdn": "https://blog.csdn.net/2604_96186443",
-  "blog": "https://www.lxpavilion.top"
+  "cnblogs": "https://home.cnblogs.com/u/pc2005"
 }
