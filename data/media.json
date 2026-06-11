@@ -1,6 +1,19 @@
 {
-  "total": 258,
+  "total": 259,
   "rows": [
+    {
+      "createTime": "2026-06-11T07:52:09.641745",
+      "deleted": 0,
+      "filePath": "202606/c9d7cca8d69544e2825292194c086bbe.jpg",
+      "fileSize": 4430,
+      "fileUrl": "/data/media/325.jpg",
+      "filename": "c9d7cca8d69544e2825292194c086bbe.jpg",
+      "id": 325,
+      "mimeType": "image/jpeg",
+      "originalFilename": "2XcJVF78_34398140_62c5139cb7646190d5b54066bc2ad1c23e894048_62c5139cb33d5ba0883c4317887f2565fc640d3f.jpg",
+      "relationType": null,
+      "updateTime": "2026-06-11T07:52:09.641962"
+    },
     {
       "createTime": "2026-06-11T07:39:13.044839",
       "deleted": 0,
