@@ -6,13 +6,14 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* 禁用 SVG 点击焦点框 */
-svg, svg *, path, rect, .recharts-wrapper * {
+svg, svg *, path, rect, .recharts-wrapper, .recharts-wrapper * {
   outline: none !important;
   outline-offset: 0 !important;
-  &:focus, &:focus-visible {
-    outline: none !important;
-    box-shadow: none !important;
-  }
+}
+svg:focus, svg *:focus, path:focus, rect:focus,
+svg:focus-visible, svg *:focus-visible, path:focus-visible, rect:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* 基础环境与性能优化 */

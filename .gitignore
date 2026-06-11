@@ -33,6 +33,9 @@ yarn-error.log*
 # generated data backup (managed via data branch)
 /data/
 
+# wrangler cache
+.wrangler
+
 # env files (can opt-in for committing if needed)
 .env*
 

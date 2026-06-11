@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, Sector,
+  LineChart, Line,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   Legend,
 } from "recharts";
@@ -18,6 +19,23 @@ const COLORS = {
   bandwidth: "#ef4444",
 };
 const PIE_COLORS = ["#818cf8", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899", "#14b8a6", "#f97316", "#6366f1", "#84cc16"];
+
+// ── 多平台统计配色 ──
+const PLATFORM_COLORS: Record<string, string> = { csdn: "#e74c3c", juejin: "#007fff", cnblogs: "#10b981" };
+const PLATFORM_NAMES: Record<string, string> = { csdn: "CSDN", juejin: "掘金", cnblogs: "博客园" };
+
+interface PlatformArticle {
+  platform: string; title: string; url: string; date: string; views: number; likes: number; comments?: number;
+}
+interface PlatformData {
+  articleCount: number; totalViews: number; totalLikes: number; totalComments?: number; totalCollects?: number; followers?: number;
+  articles: PlatformArticle[];
+}
+interface PlatformResult {
+  csdn: PlatformData | null; juejin: PlatformData | null; cnblogs: PlatformData | null;
+  mergedArticles?: { title: string; date: string; csdn: { views: number; likes: number; url: string } | null; juejin: any; cnblogs: any }[];
+  generatedAt: string;
+}
 
 const DEVICE_COLORS: Record<string, string> = { desktop: "#818cf8", mobile: "#10b981", tablet: "#f59e0b" };
 const CACHE_COLORS: Record<string, string> = { hit: "#10b981", dynamic: "#94a3b8", miss: "#ef4444", expired: "#f59e0b", revalidated: "#8b5cf6" };
@@ -239,6 +257,7 @@ export default function AnalyticsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [days, setDays] = useState(7);
+  const [platformData, setPlatformData] = useState<PlatformResult | null>(null);
   const isDark = useDarkMode();
   const tooltip = isDark ? DARK_TOOLTIP : LIGHT_TOOLTIP;
 
@@ -256,6 +275,15 @@ export default function AnalyticsPage() {
   }, []);
 
   useEffect(() => { load(days); }, [days, load]);
+
+  // 多平台统计
+  const WORKER_URL = "https://analytics.lxpavilion.top";
+  useEffect(() => {
+    fetch(`${WORKER_URL}/platform`)
+      .then((r) => r.json())
+      .then((d) => setPlatformData(d))
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="pb-16">
@@ -349,6 +377,105 @@ export default function AnalyticsPage() {
               </div>
             </div>
           </LazyMount>
+
+          {/* 📊 平台统计 */}
+          {platformData && (
+            <LazyMount>
+              <div>
+                <h2 className="text-lg font-black text-slate-700 dark:text-slate-300 mb-3">📊 多平台统计</h2>
+
+                {/* 摘要卡片 */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  {["csdn", "juejin", "cnblogs"].map((key) => {
+                    const p = platformData[key as keyof PlatformResult] as PlatformData | null;
+                    if (!p) return null;
+                    const extras: [string, string | number][] = [];
+                    if (key === "csdn") { extras.push(["评论", p.totalComments ?? 0], ["收藏", p.totalCollects ?? 0]); }
+                    if (key === "juejin") { extras.push(["收藏", p.totalCollects ?? 0], ["粉丝", p.followers ?? 0]); }
+                    if (key === "cnblogs") { extras.push(["评论", p.totalComments ?? 0]); }
+                    return (
+                      <div key={key} className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-3">
+                        <div className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: PLATFORM_COLORS[key] }}>{PLATFORM_NAMES[key]}</div>
+                        <div className="grid grid-cols-3 gap-x-2 text-xs">
+                          <div><span className="text-slate-400">文章</span><br/><span className="text-lg font-black text-slate-800 dark:text-white">{p.articleCount}</span></div>
+                          <div><span className="text-slate-400">阅读</span><br/><span className="text-lg font-black" style={{ color: PLATFORM_COLORS[key] }}>{p.totalViews.toLocaleString()}</span></div>
+                          {p.totalLikes > 0 ? (
+                            <div><span className="text-slate-400">点赞</span><br/><span className="text-lg font-black text-slate-800 dark:text-white">{p.totalLikes.toLocaleString()}</span></div>
+                          ) : null}
+                          {extras.filter(([, v]) => Number(v) > 0).map(([label, val]) => (
+                            <div key={label}><span className="text-slate-400">{label}</span><br/><span className="text-lg font-black text-slate-800 dark:text-white">{typeof val === "number" ? val.toLocaleString() : val}</span></div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* 文章阅读量时间线 — 合并后每篇一个节点 */}
+                {(platformData as any)?.mergedArticles?.length > 0 && (
+                  <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-4 md:p-5 group">
+                    <h3 className="text-xs md:text-sm font-bold text-slate-600 dark:text-slate-300 mb-3">📈 文章阅读量时间线</h3>
+                    <ResponsiveContainer width="100%" height={260}>
+                      <AreaChart data={(platformData as any).mergedArticles.map((a: any, i: number) => ({
+                        idx: i + 1, date: a.date, _title: a.title,
+                        csdn: a.csdn?.views ?? null,
+                        juejin: a.juejin?.views ?? null,
+                        cnblogs: a.cnblogs?.views ?? null,
+                      }))}>
+                        <defs>
+                          {["csdn", "juejin", "cnblogs"].map((k) => (
+                            <linearGradient key={k} id={`platGrad-${k}`} x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor={PLATFORM_COLORS[k]} stopOpacity={0.3} />
+                              <stop offset="95%" stopColor={PLATFORM_COLORS[k]} stopOpacity={0.02} />
+                            </linearGradient>
+                          ))}
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.15)" />
+                        <XAxis dataKey="idx" tick={{ fontSize: 10, fill: "#94a3b8" }} interval={0} />
+                        <YAxis tick={{ fontSize: 10, fill: "#94a3b8" }} />
+                        <Tooltip contentStyle={tooltip.contentStyle} itemStyle={tooltip.itemStyle} labelStyle={tooltip.labelStyle}
+                          labelFormatter={(l, p) => p?.[0]?.payload?._title || String(l)}
+                          formatter={(v, n) => [`${v} 阅读`, PLATFORM_NAMES[n as string] || n]} />
+                        <Legend />
+                        {["csdn", "juejin", "cnblogs"].map((k) => (
+                          <Area key={k} dataKey={k} name={PLATFORM_NAMES[k]} type="monotone"
+                            stroke={PLATFORM_COLORS[k]} strokeWidth={2.5} fill={`url(#platGrad-${k})`}
+                            dot={{ r: 3, fill: PLATFORM_COLORS[k], stroke: "none" }}
+                            activeDot={{ r: 6, fill: PLATFORM_COLORS[k], stroke: "white", strokeWidth: 2 }}
+                            animationDuration={800} animationEasing="ease-out"
+                            connectNulls />
+                        ))}
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                )}
+
+                {/* 阅读分布环形图 */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <DonutChart
+                    data={(() => {
+                      const raw = ["csdn", "juejin", "cnblogs"].map((k) => { const p = platformData[k as keyof PlatformResult] as PlatformData | null; return { name: PLATFORM_NAMES[k], value: p?.totalViews || 0 }; }).filter((d) => d.value > 0);
+                      const total = raw.reduce((s, d) => s + d.value, 0);
+                      return raw.map((d) => ({ ...d, pct: total ? Math.round((d.value / total) * 100) : 0 }));
+                    })()}
+                    title="👁 阅读量分布"
+                    colorMap={PLATFORM_COLORS}
+                    tooltip={tooltip}
+                  />
+                  <DonutChart
+                    data={(() => {
+                      const raw = ["csdn", "juejin", "cnblogs"].map((k) => { const p = platformData[k as keyof PlatformResult] as PlatformData | null; return { name: PLATFORM_NAMES[k], value: p?.totalLikes || 0 }; }).filter((d) => d.value > 0);
+                      const total = raw.reduce((s, d) => s + d.value, 0);
+                      return raw.map((d) => ({ ...d, pct: total ? Math.round((d.value / total) * 100) : 0 }));
+                    })()}
+                    title="👍 点赞量分布"
+                    colorMap={PLATFORM_COLORS}
+                    tooltip={tooltip}
+                  />
+                </div>
+              </div>
+            </LazyMount>
+          )}
         </div>
       ) : null}
     </div>

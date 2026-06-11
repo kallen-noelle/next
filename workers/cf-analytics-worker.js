@@ -196,6 +196,127 @@ function parseDailyHourly(json) {
   };
 }
 
+// ── 多平台博客统计 ──
+const PLATFORM_CONFIG = {
+  csdn: { user: "2604_96186443" },
+  juejin: { userId: "3154917256866522" },
+  cnblogs: { blogApp: "pc2005" },
+};
+
+function formatDate(ts) {
+  const d = new Date(ts * 1000);
+  return d.toISOString().slice(0, 10);
+}
+
+async function fetchCSDN() {
+  const url = "https://blog.csdn.net/community/home-api/v1/get-business-list";
+  const params = { page: 1, size: 100, businessType: "blog", username: PLATFORM_CONFIG.csdn.user };
+  const resp = await fetch(`${url}?${new URLSearchParams(params)}`, {
+    headers: { "User-Agent": "Mozilla/5.0", Referer: `https://blog.csdn.net/${PLATFORM_CONFIG.csdn.user}` },
+  });
+  if (!resp.ok) throw new Error(`CSDN HTTP ${resp.status}`);
+  const data = await resp.json();
+  const list = data?.data?.list || [];
+  return {
+    articleCount: list.length,
+    totalViews: list.reduce((s, a) => s + (a.viewCount || 0), 0),
+    totalLikes: list.reduce((s, a) => s + (a.diggCount || 0), 0),
+    totalComments: list.reduce((s, a) => s + (a.commentCount || 0), 0),
+    totalCollects: list.reduce((s, a) => s + (a.collectCount || 0), 0),
+    articles: list.map((a) => ({
+      platform: "csdn", title: a.title || "", url: a.url || "",
+      date: a.createTime ? a.createTime.slice(0, 10) : "",
+      views: a.viewCount || 0, likes: a.diggCount || 0,
+    })),
+  };
+}
+
+async function fetchJuejin() {
+  const userResp = await fetch(`https://api.juejin.cn/user_api/v1/user/get?user_id=${PLATFORM_CONFIG.juejin.userId}`, {
+    headers: { "User-Agent": "Mozilla/5.0" },
+  });
+  const userJson = await userResp.json();
+  const user = userJson?.data || {};
+
+  let allArticles = [];
+  let cursor = "0";
+  while (true) {
+    const artResp = await fetch("https://api.juejin.cn/content_api/v1/article/query_list", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "User-Agent": "Mozilla/5.0" },
+      body: JSON.stringify({ user_id: PLATFORM_CONFIG.juejin.userId, sort_type: 2, cursor }),
+    });
+    const artJson = await artResp.json();
+    const items = artJson?.data || [];
+    if (items.length === 0) break;
+    allArticles.push(...items);
+    if (!artJson.has_more) break;
+    cursor = String(Number(cursor) + 10);
+  }
+
+  return {
+    articleCount: allArticles.length,
+    totalViews: user.got_view_count || 0,
+    totalLikes: user.got_digg_count || 0,
+    totalCollects: allArticles.reduce((s, item) => s + ((item.article_info?.collect_count) || 0), 0),
+    followers: user.follower_count || 0,
+    articles: allArticles.map((item) => {
+      const info = item.article_info || {};
+      return {
+        platform: "juejin", title: info.title || "", url: `https://juejin.cn/post/${info.article_id}`,
+        date: info.ctime ? formatDate(info.ctime) : "",
+        views: info.view_count || 0, likes: info.digg_count || 0,
+      };
+    }),
+  };
+}
+
+async function fetchCnblogs() {
+  const baseUrl = `https://www.cnblogs.com/${PLATFORM_CONFIG.cnblogs.blogApp}`;
+  let allArticles = [];
+  for (let page = 1; page <= 100; page++) {
+    const resp = await fetch(`${baseUrl}/default.html?page=${page}`, {
+      headers: { "User-Agent": "Mozilla/5.0" },
+    });
+    if (!resp.ok) break;
+    const html = await resp.text();
+    // 解析文章列表
+    const articleRegex = /<a class="postTitle2[^"]*"[^>]*href="([^"]+)"[^>]*>\s*<span>([^<]+)<\/span>/g;
+    const viewRegex = /阅读\((\d+)\)/g;
+    const diggRegex = /推荐\((\d+)\)/g;
+    const commentRegex = /评论\((\d+)\)/g;
+    const dateRegex = /posted @ (\d{4}-\d{2}-\d{2})/g;
+
+    const titles = [...html.matchAll(articleRegex)];
+    if (titles.length === 0) break;
+
+    const views = [...html.matchAll(viewRegex)].map((m) => Number(m[1]));
+    const diggs = [...html.matchAll(diggRegex)].map((m) => Number(m[1]));
+    const comments = [...html.matchAll(commentRegex)].map((m) => Number(m[1]));
+    const dates = [...html.matchAll(dateRegex)].map((m) => m[1].trim());
+
+    for (let i = 0; i < titles.length; i++) {
+      const dateStr = dates[i] || "";
+      // cnblogs 日期格式如 "2026-06-01 12:34"，转成 YYYY-MM-DD
+      const date = dateStr.slice(0, 10);
+      allArticles.push({
+        platform: "cnblogs", title: titles[i][2], url: titles[i][1].startsWith("http") ? titles[i][1] : `${baseUrl}${titles[i][1]}`,
+        date, views: views[i] || 0, likes: diggs[i] || 0, comments: comments[i] || 0,
+      });
+    }
+
+    if (!html.includes(">下一页<") && !html.includes(">Next<")) break;
+  }
+
+  return {
+    articleCount: allArticles.length,
+    totalViews: allArticles.reduce((s, a) => s + a.views, 0),
+    totalLikes: allArticles.reduce((s, a) => s + a.likes, 0),
+    totalComments: allArticles.reduce((s, a) => s + a.comments, 0),
+    articles: allArticles,
+  };
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -211,6 +332,71 @@ export default {
       return new Response(JSON.stringify({ status: "ok", message: "Worker is alive" }), {
         headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
       });
+    }
+
+    // GET /platform — 多平台统计
+    if (request.method === "GET" && url.pathname === "/platform") {
+      try {
+        const cacheKey = new Request(`${url.origin}/platform-cache-v3`, { method: "GET" });
+        const cached = await caches.default.match(cacheKey);
+        if (cached) {
+          const data = await cached.json();
+          data._cache = "hit";
+          return new Response(JSON.stringify(data), {
+            headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
+          });
+        }
+
+        const [csdn, juejin, cnblogs] = await Promise.allSettled([
+          fetchCSDN(), fetchJuejin(), fetchCnblogs(),
+        ]);
+
+        const csdnData = csdn.status === "fulfilled" ? csdn.value : null;
+        const juejinData = juejin.status === "fulfilled" ? juejin.value : null;
+        const cnblogsData = cnblogs.status === "fulfilled" ? cnblogs.value : null;
+
+        // ── 按标题合并文章 ──
+        const allArticles = {};
+        const platData = { csdn: csdnData, juejin: juejinData, cnblogs: cnblogsData };
+        for (const plat of ["csdn", "juejin", "cnblogs"]) {
+          const data = platData[plat];
+          if (!data) continue;
+          for (const a of data.articles || []) {
+            const key = a.title.trim();
+            if (!allArticles[key]) allArticles[key] = { date: "" };
+            allArticles[key][plat] = { views: a.views, likes: a.likes, url: a.url };
+            if (!allArticles[key].date) allArticles[key].date = a.date || "";
+          }
+        }
+
+        const mergedArticles = Object.entries(allArticles)
+          .map(([title, val]) => ({ title, date: val.date, csdn: val.csdn || null, juejin: val.juejin || null, cnblogs: val.cnblogs || null }))
+          .sort((a, b) => {
+            if (!a.date && !b.date) return 0;
+            if (!a.date) return 1;
+            if (!b.date) return -1;
+            return a.date.localeCompare(b.date);
+          });
+
+        const result = {
+          csdn: csdnData ? { totalViews: csdnData.totalViews, totalLikes: csdnData.totalLikes, articleCount: csdnData.articleCount, totalComments: csdnData.totalComments, totalCollects: csdnData.totalCollects } : null,
+          juejin: juejinData ? { totalViews: juejinData.totalViews, totalLikes: juejinData.totalLikes, articleCount: juejinData.articleCount, totalCollects: juejinData.totalCollects, followers: juejinData.followers } : null,
+          cnblogs: cnblogsData ? { totalViews: cnblogsData.totalViews, totalLikes: cnblogsData.totalLikes, articleCount: cnblogsData.articleCount, totalComments: cnblogsData.totalComments } : null,
+          mergedArticles,
+          generatedAt: new Date().toISOString(),
+        };
+
+        const response = new Response(JSON.stringify(result), {
+          headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
+        });
+        ctx.waitUntil(caches.default.put(cacheKey, response.clone()));
+
+        return response;
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), {
+          status: 500, headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
+        });
+      }
     }
 
     // POST — 获取完整分析数据
