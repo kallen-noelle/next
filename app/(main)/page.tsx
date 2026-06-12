@@ -12,6 +12,7 @@ import ThemeToggleBlock from "@/app/_components/common/ThemeToggle";
 import Tooltip from "@/app/_components/common/Tooltip";
 import SiteDashboard from "@/app/_components/layout/SiteDashboard";
 import MusicPlayer from "@/app/_components/layout/MusicPlayer";
+import FloatingNav from "@/app/_components/layout/FloatingNav";
 import JsonLd from "@/app/_components/common/JsonLd";
 
 export default function Home() {
@@ -52,6 +53,7 @@ export default function Home() {
 
   return (
     <>
+      <FloatingNav />
       <JsonLd data={{
         "@context": "https://schema.org",
         "@type": "WebSite",

@@ -282,7 +282,7 @@ export default function AnalyticsPage() {
     fetch(`${WORKER_URL}/platform`)
       .then((r) => r.json())
       .then((d) => setPlatformData(d))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   return (
@@ -397,13 +397,13 @@ export default function AnalyticsPage() {
                       <div key={key} className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-3">
                         <div className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: PLATFORM_COLORS[key] }}>{PLATFORM_NAMES[key]}</div>
                         <div className="grid grid-cols-3 gap-x-2 text-xs">
-                          <div><span className="text-slate-400">文章</span><br/><span className="text-lg font-black text-slate-800 dark:text-white">{p.articleCount}</span></div>
-                          <div><span className="text-slate-400">阅读</span><br/><span className="text-lg font-black" style={{ color: PLATFORM_COLORS[key] }}>{p.totalViews.toLocaleString()}</span></div>
+                          <div><span className="text-slate-400">文章</span><br /><span className="text-lg font-black text-slate-800 dark:text-white">{p.articleCount}</span></div>
+                          <div><span className="text-slate-400">阅读</span><br /><span className="text-lg font-black" style={{ color: PLATFORM_COLORS[key] }}>{p.totalViews.toLocaleString()}</span></div>
                           {p.totalLikes > 0 ? (
-                            <div><span className="text-slate-400">点赞</span><br/><span className="text-lg font-black text-slate-800 dark:text-white">{p.totalLikes.toLocaleString()}</span></div>
+                            <div><span className="text-slate-400">点赞</span><br /><span className="text-lg font-black text-slate-800 dark:text-white">{p.totalLikes.toLocaleString()}</span></div>
                           ) : null}
                           {extras.filter(([, v]) => Number(v) > 0).map(([label, val]) => (
-                            <div key={label}><span className="text-slate-400">{label}</span><br/><span className="text-lg font-black text-slate-800 dark:text-white">{typeof val === "number" ? val.toLocaleString() : val}</span></div>
+                            <div key={label}><span className="text-slate-400">{label}</span><br /><span className="text-lg font-black text-slate-800 dark:text-white">{typeof val === "number" ? val.toLocaleString() : val}</span></div>
                           ))}
                         </div>
                       </div>
