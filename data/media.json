@@ -1,6 +1,19 @@
 {
-  "total": 251,
+  "total": 252,
   "rows": [
+    {
+      "createTime": "2026-06-12T14:32:15.826387",
+      "deleted": 0,
+      "filePath": "202606/b90ca418d10e47c5a11100eb137ee240.png",
+      "fileSize": 2610767,
+      "fileUrl": "/data/media/326.png",
+      "filename": "b90ca418d10e47c5a11100eb137ee240.png",
+      "id": 326,
+      "mimeType": "image/png",
+      "originalFilename": "PixPin_2026-06-12_14-24-13.png",
+      "relationType": null,
+      "updateTime": "2026-06-12T14:32:15.832048"
+    },
     {
       "createTime": "2026-06-11T07:52:09.641745",
       "deleted": 0,
