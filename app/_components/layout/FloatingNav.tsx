@@ -45,6 +45,7 @@ const CATEGORIES: Category[] = [
       { icon: "🐍", label: "贪吃蛇", desc: "经典贪吃蛇小游戏", href: "/tools/snake" },
       { icon: "🔢", label: "2048", desc: "数字合并益智游戏，挑战最高分", href: "/tools/2048" },
       { icon: "💣", label: "扫雷", desc: "经典扫雷推理游戏", href: "/tools/minesweeper" },
+      { icon: "⚫", label: "五子棋", desc: "人机对战五子棋，AI 自动评估", href: "/tools/gomoku" },
     ],
   },
   {
