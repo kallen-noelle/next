@@ -1,0 +1,85 @@
+{
+  "total": 10,
+  "rows": [
+    {
+      "duration": 129,
+      "favorite": false,
+      "id": 800,
+      "pictureUrl": "/data/music/800-cover.png",
+      "title": "圣诞节的雪",
+      "url": "/data/music/800.mp3"
+    },
+    {
+      "duration": 100,
+      "favorite": false,
+      "id": 826,
+      "pictureUrl": "/data/music/826-cover.png",
+      "title": "所念皆星河",
+      "url": "/data/music/826.mp3"
+    },
+    {
+      "duration": 139,
+      "favorite": false,
+      "id": 1249,
+      "pictureUrl": "/data/music/1249-cover.png",
+      "title": "SlimeRain",
+      "url": "/data/music/1249.ogg"
+    },
+    {
+      "duration": 144,
+      "favorite": false,
+      "id": 1252,
+      "pictureUrl": "/data/music/1252-cover.png",
+      "title": "TownParty",
+      "url": "/data/music/1252.ogg"
+    },
+    {
+      "duration": 127,
+      "favorite": false,
+      "id": 1300,
+      "pictureUrl": "/data/music/1300-cover.png",
+      "title": "KingSlime",
+      "url": "/data/music/1300.ogg"
+    },
+    {
+      "duration": 145,
+      "favorite": false,
+      "id": 1342,
+      "pictureUrl": "/data/music/1342-cover.png",
+      "title": "SunkenSea",
+      "url": "/data/music/1342.ogg"
+    },
+    {
+      "duration": 156,
+      "favorite": false,
+      "id": 1407,
+      "pictureUrl": "/data/music/1407-cover.png",
+      "title": "红昭愿",
+      "url": "/data/music/1407.mp3"
+    },
+    {
+      "duration": 146,
+      "favorite": false,
+      "id": 1411,
+      "pictureUrl": "/data/music/1411-cover.png",
+      "title": "森の小さなレストラン",
+      "url": "/data/music/1411.mp3"
+    },
+    {
+      "duration": 173,
+      "favorite": false,
+      "id": 1413,
+      "pictureUrl": "/data/music/1413-cover.png",
+      "title": "Cupid",
+      "url": "/data/music/1413.mp3"
+    },
+    {
+      "duration": 124,
+      "favorite": false,
+      "id": 1416,
+      "pictureUrl": "/data/music/1416-cover.png",
+      "title": "昨夜风今宵月",
+      "url": "/data/music/1416.mp3"
+    }
+  ]
+}
