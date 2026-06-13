@@ -1,8 +1,9 @@
 import axios from "axios";
 import { showErrorToast } from "./toast";
+import { siteConfig } from "./siteConfig";
 
 const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE || "/api",
+  baseURL: `http://${siteConfig.backUrl}/api`,
   timeout: 15000,
   headers: { "Content-Type": "application/json" },
 });

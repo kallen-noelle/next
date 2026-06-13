@@ -8,7 +8,7 @@ import Lightbox, { type LightboxPhoto } from "@/app/_components/common/Lightbox"
 import Giscus from "@/app/_components/comment/Giscus";
 import { getPublishedList } from "@/lib/api/chatter";
 import { get as getAbout } from "@/lib/api/about";
-import { siteConfig } from "@/lib/siteConfig";
+import { siteConfig, loadConfig } from "@/lib/config";
 import { assetUrl } from "@/lib/asset-url";
 
 interface Moment {
@@ -92,11 +92,11 @@ function ChatterFallback() {
       <div className="flex items-center gap-2 md:gap-3 mb-1 md:mb-2">
         <MessageSquare className="w-5 h-5 md:w-7 md:h-7 text-sky-500" />
         <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-slate-100">
-          {siteConfig.chatterTitle || "Chatter"}
+          Chatter
         </h1>
       </div>
       <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 ml-7 md:ml-10">
-        {siteConfig.chatterDescription || "Fragments of life"}
+        Fragments of code, academia, and life.
       </p>
       <div className="space-y-3 md:space-y-6 mt-6">
         {[1, 2, 3].map((i) => (
@@ -109,7 +109,7 @@ function ChatterFallback() {
 
 function ChatterContent() {
   const [moments, setMoments] = useState<Moment[]>([]);
-  const [about, setAbout] = useState<Record<string, string>>({});
+  const [, forceUpdate] = useState(0);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const searchParams = useSearchParams();
@@ -124,7 +124,7 @@ function ChatterContent() {
     async function load() {
       try {
         const data = await getPublishedList();
-        getAbout().then(setAbout).catch(() => {});
+        getAbout().then(about => { loadConfig(about); forceUpdate(n => n + 1); }).catch(() => {});
         if (!active) return;
         setMoments(data.map((item) => ({
           id: String(item.id),
@@ -164,11 +164,11 @@ function ChatterContent() {
           <div className="flex items-center gap-2 md:gap-3 mb-1 md:mb-2">
             <MessageSquare className="w-5 h-5 md:w-7 md:h-7 text-sky-500" />
             <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-slate-100">
-              {siteConfig.chatterTitle || "Chatter"}
+              Chatter
             </h1>
           </div>
           <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 ml-7 md:ml-10">
-            {siteConfig.chatterDescription || "Fragments of life"}
+            Fragments of code, academia, and life.
           </p>
         </motion.div>
         <div className="space-y-3 md:space-y-6">
@@ -185,11 +185,11 @@ function ChatterContent() {
         <div className="flex items-center gap-2 md:gap-3 mb-1 md:mb-2">
           <MessageSquare className="w-5 h-5 md:w-7 md:h-7 text-sky-500" />
           <h1 className="text-xl md:text-3xl font-bold text-slate-800 dark:text-slate-100">
-            {siteConfig.chatterTitle || "Chatter"}
+            Chatter
           </h1>
         </div>
         <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 ml-7 md:ml-10">
-          {siteConfig.chatterDescription || "Fragments of life"}
+          Fragments of code, academia, and life.
         </p>
       </motion.div>
 
@@ -257,12 +257,12 @@ function ChatterContent() {
                                 <div className="absolute -inset-0.5 rounded-full bg-gradient-to-br from-sky-400 via-indigo-400 to-purple-400 opacity-60 blur-[2px]" />
                                 <img
                                   src={assetUrl(siteConfig.avatarUrl)}
-                                  alt={about["name"] || siteConfig.authorName}
+                                  alt={siteConfig.authorName}
                                   className="relative w-7 h-7 md:w-8 md:h-8 rounded-full object-cover border-2 border-white dark:border-slate-800"
                                 />
                               </div>
                               <div className="flex flex-col">
-                                <span className="text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-200 leading-tight">{about["name"] || siteConfig.authorName}</span>
+                                <span className="text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-200 leading-tight">{siteConfig.authorName}</span>
                                 <span className="text-[10px] md:text-xs text-slate-400 leading-tight">{relativeTime(moment.createTime)}</span>
                               </div>
                             </div>

@@ -6,6 +6,7 @@ import type { DashboardVO } from "@/lib/types";
 import type { MediaWithRef } from "@/lib/api/media";
 import { get } from "@/lib/api/dashboard";
 import { getArticleList } from "@/lib/api/op";
+import { siteConfig } from "@/lib/siteConfig";
 import { syncJson, syncMedia, syncMusic, generateSyncZip, type SyncProgress } from "@/lib/github-sync";
 import { scanMediaWithRefs, remove as deleteMedia } from "@/lib/api/media";
 
@@ -282,7 +283,7 @@ export default function AdminDashboardPage() {
         {!savedToken || showTokenInput ? (
           <div className="flex flex-col gap-3">
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Enter a GitHub Personal Access Token with <code className="text-indigo-500">Contents: write</code> scope for <code className="text-indigo-500">pc-Blog/next</code>.
+              Enter a GitHub Personal Access Token with <code className="text-indigo-500">Contents: write</code> scope for <code className="text-indigo-500">{siteConfig.repo}</code>.
             </p>
             <div className="flex gap-2">
               <input

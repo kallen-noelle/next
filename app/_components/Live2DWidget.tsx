@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "./layout/ThemeProvider";
 import { get as getAbout } from "@/lib/api/about";
+import { siteConfig, loadConfig } from "@/lib/config";
 import { assetUrl } from "@/lib/asset-url";
 
 declare global {
@@ -52,7 +53,7 @@ const IDLE_MESSAGES = [
 export default function Live2DWidget() {
   const { isDark } = useTheme();
   const pathname = usePathname();
-  const githubRef = useRef("https://github.com/pc-Blog/next");
+  const githubRef = useRef(`https://github.com/${siteConfig.repo}`);
   const loaded = useRef(false);
   const currentModel = useRef<string | null>(null);
   const pioRef = useRef<any>(null);
@@ -117,13 +118,13 @@ export default function Live2DWidget() {
 
     (window as any).pio_alignment = "left";
 
-    // 获取关于页信息中的 GitHub 链接
+    // 获取已合并的 GitHub 链接
     getAbout().then((about) => {
-      if (about?.["github"]) {
-        githubRef.current = about["github"];
-        // 更新已创建的 Paul_Pio 实例的 link
+      loadConfig(about);
+      if (siteConfig.github) {
+        githubRef.current = siteConfig.github;
         const pio = window.pio_reference as any;
-        if (pio?.config?.content) pio.config.content.link = about["github"];
+        if (pio?.config?.content) pio.config.content.link = siteConfig.github;
       }
     }).catch(() => {});
 

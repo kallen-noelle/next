@@ -1,5 +1,7 @@
 // GitHub Commit 数据获取层
-const GITHUB_API = "https://api.github.com/repos/pc-Blog/next";
+import { siteConfig } from "./siteConfig";
+
+const GITHUB_API = `https://api.github.com/repos/${siteConfig.repo}`;
 
 export interface CommitAuthor {
   name: string;

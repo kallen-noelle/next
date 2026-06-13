@@ -1,7 +1,30 @@
 // Cloudflare Worker — 博客流量分析 API 代理
-// 返回 lib/analytics.ts 中 AnalyticsData 格式的完整数据
+// 所有响应统一为 { code, data, msg } 格式
+//
+// 需在 Cloudflare 面板或 wrangler secret 中配置以下环境变量：
+//   必填:
+//     CF_API_TOKEN    —— Cloudflare API Token（Analytics:Read 权限）
+//     CF_ZONE_ID      —— Cloudflare 区域 ID
+//   选填（多平台统计 /platform 接口需要）:
+//     CSDN_USER       —— CSDN 用户名
+//     JUEJIN_USER_ID  —— 掘金用户 ID
+//     CNBLOGS_BLOGAPP —— 博客园 blogApp
 
-// ── 并发控制：将数组分片并行执行 ──
+function respond(data, msg = "ok", code = 1, origin) {
+  return new Response(JSON.stringify({ code, data, msg }), {
+    status: code === 1 ? 200 : 500,
+    headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
+  });
+}
+
+function corsHeaders(origin) {
+  return {
+    "Access-Control-Allow-Origin": origin || "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+}
+
 async function pMapSerial(items, concurrency, fn) {
   const results = [];
   for (let i = 0; i < items.length; i += concurrency) {
@@ -14,7 +37,6 @@ async function pMapSerial(items, concurrency, fn) {
   return results;
 }
 
-// ── SHA-256 hash（用于缓存 key） ──
 async function sha256(message) {
   const msgBuffer = new TextEncoder().encode(message);
   const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
@@ -23,7 +45,6 @@ async function sha256(message) {
     .join("");
 }
 
-// ── 查询：每日 + 小时 ──
 function buildDailyHourlyQuery(zoneId, days) {
   const endDate = new Date();
   const startDate = new Date(Date.now() - days * 86400000);
@@ -51,7 +72,6 @@ function buildDailyHourlyQuery(zoneId, days) {
   }`;
 }
 
-// ── 查询：某一天的细分数据（修正版，用毫秒时间戳确保精确 24 小时范围） ──
 function buildBreakdownQuery(zoneId, dateStr) {
   const startMs = new Date(dateStr).getTime();
   const endMs = startMs + 86400000;
@@ -81,7 +101,6 @@ function buildBreakdownQuery(zoneId, dateStr) {
   }`;
 }
 
-// ── 累计细分数据到 Map ──
 function accumulateGroups(z, map) {
   for (const key of ["byCountry", "byDevice", "byBrowser", "byOS", "byCache", "byHTTP"]) {
     const groups = z[key] || [];
@@ -105,14 +124,6 @@ function toBreakdown(map) {
     .map(([name, value]) => ({ name, value, pct: total ? Math.round((value / total) * 1000) / 10 : 0 }));
 }
 
-function corsHeaders(origin) {
-  return {
-    "Access-Control-Allow-Origin": origin || "*",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-  };
-}
-
 async function callCF(query, env) {
   const resp = await fetch("https://api.cloudflare.com/client/v4/graphql", {
     method: "POST",
@@ -128,7 +139,6 @@ async function callCF(query, env) {
   return json;
 }
 
-// ── 解析每日 + 小时数据 ──
 function parseDailyHourly(json) {
   const zones = json?.data?.viewer?.zones || [];
   const zone = zones[0] || {};
@@ -196,23 +206,18 @@ function parseDailyHourly(json) {
   };
 }
 
-// ── 多平台博客统计 ──
-const PLATFORM_CONFIG = {
-  csdn: { user: "2604_96186443" },
-  juejin: { userId: "3154917256866522" },
-  cnblogs: { blogApp: "pc2005" },
-};
-
+// ── 多平台统计 ──
 function formatDate(ts) {
   const d = new Date(ts * 1000);
   return d.toISOString().slice(0, 10);
 }
 
-async function fetchCSDN() {
+async function fetchCSDN(env) {
+  if (!env.CSDN_USER) return null;
   const url = "https://blog.csdn.net/community/home-api/v1/get-business-list";
-  const params = { page: 1, size: 100, businessType: "blog", username: PLATFORM_CONFIG.csdn.user };
+  const params = { page: 1, size: 100, businessType: "blog", username: env.CSDN_USER };
   const resp = await fetch(`${url}?${new URLSearchParams(params)}`, {
-    headers: { "User-Agent": "Mozilla/5.0", Referer: `https://blog.csdn.net/${PLATFORM_CONFIG.csdn.user}` },
+    headers: { "User-Agent": "Mozilla/5.0", Referer: `https://blog.csdn.net/${env.CSDN_USER}` },
   });
   if (!resp.ok) throw new Error(`CSDN HTTP ${resp.status}`);
   const data = await resp.json();
@@ -231,8 +236,9 @@ async function fetchCSDN() {
   };
 }
 
-async function fetchJuejin() {
-  const userResp = await fetch(`https://api.juejin.cn/user_api/v1/user/get?user_id=${PLATFORM_CONFIG.juejin.userId}`, {
+async function fetchJuejin(env) {
+  if (!env.JUEJIN_USER_ID) return null;
+  const userResp = await fetch(`https://api.juejin.cn/user_api/v1/user/get?user_id=${env.JUEJIN_USER_ID}`, {
     headers: { "User-Agent": "Mozilla/5.0" },
   });
   const userJson = await userResp.json();
@@ -244,7 +250,7 @@ async function fetchJuejin() {
     const artResp = await fetch("https://api.juejin.cn/content_api/v1/article/query_list", {
       method: "POST",
       headers: { "Content-Type": "application/json", "User-Agent": "Mozilla/5.0" },
-      body: JSON.stringify({ user_id: PLATFORM_CONFIG.juejin.userId, sort_type: 2, cursor }),
+      body: JSON.stringify({ user_id: env.JUEJIN_USER_ID, sort_type: 2, cursor }),
     });
     const artJson = await artResp.json();
     const items = artJson?.data || [];
@@ -271,8 +277,9 @@ async function fetchJuejin() {
   };
 }
 
-async function fetchCnblogs() {
-  const baseUrl = `https://www.cnblogs.com/${PLATFORM_CONFIG.cnblogs.blogApp}`;
+async function fetchCnblogs(env) {
+  if (!env.CNBLOGS_BLOGAPP) return null;
+  const baseUrl = `https://www.cnblogs.com/${env.CNBLOGS_BLOGAPP}`;
   let allArticles = [];
   for (let page = 1; page <= 100; page++) {
     const resp = await fetch(`${baseUrl}/default.html?page=${page}`, {
@@ -280,7 +287,6 @@ async function fetchCnblogs() {
     });
     if (!resp.ok) break;
     const html = await resp.text();
-    // 解析文章列表
     const articleRegex = /<a class="postTitle2[^"]*"[^>]*href="([^"]+)"[^>]*>\s*<span>([^<]+)<\/span>/g;
     const viewRegex = /阅读\((\d+)\)/g;
     const diggRegex = /推荐\((\d+)\)/g;
@@ -297,7 +303,6 @@ async function fetchCnblogs() {
 
     for (let i = 0; i < titles.length; i++) {
       const dateStr = dates[i] || "";
-      // cnblogs 日期格式如 "2026-06-01 12:34"，转成 YYYY-MM-DD
       const date = dateStr.slice(0, 10);
       allArticles.push({
         platform: "cnblogs", title: titles[i][2], url: titles[i][1].startsWith("http") ? titles[i][1] : `${baseUrl}${titles[i][1]}`,
@@ -322,40 +327,48 @@ export default {
     const url = new URL(request.url);
     const origin = request.headers.get("Origin") || "*";
 
-    // OPTIONS 预检
+    // OPTIONS 预检不检查环境变量，否则浏览器 CORS 失败
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
 
-    // Ping 测试
+    // 检查必填环境变量
+    const missing = [];
+    if (!env.CF_API_TOKEN) missing.push("CF_API_TOKEN");
+    if (!env.CF_ZONE_ID) missing.push("CF_ZONE_ID");
+    if (missing.length > 0) {
+      return respond(null, `Worker 配置不完整：${missing.join(", ")}`, 0, origin);
+    }
+
     if (request.method === "GET" && url.pathname === "/ping") {
-      return new Response(JSON.stringify({ status: "ok", message: "Worker is alive" }), {
-        headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
-      });
+      return respond({ status: "ok", message: "Worker is alive" }, "ok", 1, origin);
     }
 
     // GET /platform — 多平台统计
     if (request.method === "GET" && url.pathname === "/platform") {
       try {
-        const cacheKey = new Request(`${url.origin}/platform-cache-v3`, { method: "GET" });
+        const cacheKey = new Request(`${url.origin}/platform-cache-v4`, { method: "GET" });
         const cached = await caches.default.match(cacheKey);
         if (cached) {
           const data = await cached.json();
           data._cache = "hit";
           return new Response(JSON.stringify(data), {
-            headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
+            status: 200,
+            headers: {
+              "Content-Type": "application/json",
+              ...corsHeaders(origin),
+            },
           });
         }
 
         const [csdn, juejin, cnblogs] = await Promise.allSettled([
-          fetchCSDN(), fetchJuejin(), fetchCnblogs(),
+          fetchCSDN(env), fetchJuejin(env), fetchCnblogs(env),
         ]);
 
         const csdnData = csdn.status === "fulfilled" ? csdn.value : null;
         const juejinData = juejin.status === "fulfilled" ? juejin.value : null;
         const cnblogsData = cnblogs.status === "fulfilled" ? cnblogs.value : null;
 
-        // ── 按标题合并文章 ──
         const allArticles = {};
         const platData = { csdn: csdnData, juejin: juejinData, cnblogs: cnblogsData };
         for (const plat of ["csdn", "juejin", "cnblogs"]) {
@@ -386,16 +399,19 @@ export default {
           generatedAt: new Date().toISOString(),
         };
 
-        const response = new Response(JSON.stringify(result), {
-          headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
+        const response = respond(result, "ok", 1, origin);
+        const cacheResponse = new Response(response.clone().body, {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "public, max-age=3600",
+            ...corsHeaders(origin),
+          },
         });
-        ctx.waitUntil(caches.default.put(cacheKey, response.clone()));
-
+        ctx.waitUntil(caches.default.put(cacheKey, cacheResponse));
         return response;
       } catch (e) {
-        return new Response(JSON.stringify({ error: e.message }), {
-          status: 500, headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
-        });
+        return respond(null, e.message, 0, origin);
       }
     }
 
@@ -405,7 +421,6 @@ export default {
         const body = await request.json();
         const days = Math.min(body?.days || 7, 364);
 
-        // ── 缓存检查：POST body 的 SHA-256 作为缓存 key ──
         const cache = caches.default;
         const bodyText = JSON.stringify(body);
         const hash = await sha256(bodyText);
@@ -419,15 +434,17 @@ export default {
           data._cache = "hit";
           data._cachedAt = new Date().toISOString();
           return new Response(JSON.stringify(data), {
-            headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
+            status: 200,
+            headers: {
+              "Content-Type": "application/json",
+              ...corsHeaders(origin),
+            },
           });
         }
 
-        // 1. 拉取每日 + 小时数据
         const dhJson = await callCF(buildDailyHourlyQuery(env.CF_ZONE_ID, days), env);
         const { daily, hourly, totals } = parseDailyHourly(dhJson);
 
-        // 2. 并行拉取细分数据（最多 30 天，并发 5 路）
         const breakdownDays = Math.min(days, 30);
         const maps = { byCountry: new Map(), byDevice: new Map(), byBrowser: new Map(), byOS: new Map(), byCache: new Map(), byHTTP: new Map() };
         const startDate = new Date(Date.now() - breakdownDays * 86400000);
@@ -444,7 +461,6 @@ export default {
           if (z) accumulateGroups(z, maps);
         }
 
-        // 3. 组装完整响应
         const result = {
           daily,
           hourly,
@@ -459,12 +475,8 @@ export default {
           _cache: "miss",
         };
 
-        const response = new Response(JSON.stringify(result), {
-          status: 200,
-          headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
-        });
+        const response = respond(result, "ok", 1, origin);
 
-        // 异步写入缓存，1 小时过期（不阻塞响应）
         const cacheResponse = new Response(response.clone().body, {
           status: 200,
           headers: {
@@ -477,13 +489,10 @@ export default {
 
         return response;
       } catch (e) {
-        return new Response(JSON.stringify({ error: e.message }), {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
-        });
+        return respond(null, e.message, 0, origin);
       }
     }
 
-    return new Response("Not Found", { status: 404, headers: corsHeaders(origin) });
+    return respond(null, "Not Found", 0, origin);
   },
 };

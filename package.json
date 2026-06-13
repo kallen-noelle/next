@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "build:static": "cross-env STATIC_EXPORT=true npm run build",
-    "backup-data": "tsx scripts/backup-data.ts",
     "start": "next start",
     "lint": "eslint"
   },
@@ -15,8 +14,6 @@
     "axios": "^1.16.1",
     "framer-motion": "^12.39.0",
     "jszip": "^3.10.1",
-    "live2d-widget": "^3.1.4",
-    "live2d-widget-model-shizuku": "^1.0.5",
     "lucide-react": "^1.16.0",
     "next": "16.2.6",
     "react": "19.2.4",

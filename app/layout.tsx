@@ -4,7 +4,6 @@ import fs from "fs";
 import path from "path";
 import "./globals.css";
 import { ThemeProvider } from "./_components/layout/ThemeProvider";
-import BackgroundSlider from "./_components/layout/BackgroundSwitcher";
 import BackgroundEffects from "./_components/common/ParticleBg";
 import DanmakuBackground from "./_components/layout/DanmakuBackground";
 import ClickEffect from "./_components/common/ClickEffect";
@@ -12,6 +11,8 @@ import SplashScreen from "./_components/layout/SplashScreen";
 import MaskOverlay from "./_components/common/MaskOverlay";
 import Live2DWidget from "./_components/Live2DWidgetWrapper";
 import { siteConfig } from "@/lib/siteConfig";
+import { defaultOgImage } from "@/lib/seo";
+import BackgroundSlider from "@/app/_components/layout/BackgroundSwitcher";
 
 const geistSans = localFont({
   src: "../public/fonts/geist-latin.woff2",
@@ -32,8 +33,11 @@ const notoSerif = localFont({
 function getSiteUrl(): string {
   try {
     const raw = fs.readFileSync(path.join(process.cwd(), "public", "data", "about.json"), "utf-8");
-    return JSON.parse(raw).blog || "https://www.lxpavilion.top";
-  } catch { return "https://www.lxpavilion.top"; }
+    const blog = JSON.parse(raw).blog || siteConfig.blog;
+    return blog.startsWith("http") ? blog : `https://${blog}`;
+  } catch {
+    return `https://${siteConfig.blog}`;
+  }
 }
 
 export const metadata: Metadata = {
@@ -48,7 +52,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.title,
     type: "website",
     locale: "zh_CN",
-    images: [{ url: siteConfig.defaultPostCover, width: 1200, height: 630 }],
+    images: [{ url: defaultOgImage, width: 1200, height: 630 }],
   },
 };
 
@@ -89,12 +93,12 @@ export default function RootLayout({
           <div id="app-mount-root" className="flex-1 flex flex-col min-h-0 transition-opacity duration-1000">
             {/* Background layers */}
             <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
-              {!siteConfig.useGradient && <BackgroundSlider />}
+              <BackgroundSlider />
               <MaskOverlay />
               <div
                 className="absolute inset-0 z-[-8] opacity-60 dark:opacity-20 mix-blend-color transition-opacity duration-1000 transform-gpu"
                 style={{
-                  background: `linear-gradient(-45deg, ${siteConfig.themeColors.join(", ")})`,
+                  background: "linear-gradient(-45deg, #a18cd1, #fbc2eb, #a1c4fd, #c2e9fb)",
                   backgroundSize: "400% 400%",
                   animation: "gradientMove 15s ease infinite",
                 }}

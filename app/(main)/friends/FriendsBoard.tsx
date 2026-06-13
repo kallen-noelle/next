@@ -20,16 +20,18 @@ export default function FriendsBoard() {
       .finally(() => setLoading(false));
   }, []);
 
+  const friendLinkFormat = `名称：${siteConfig.title}\n简介：${siteConfig.bio}\n链接：https://${siteConfig.blog}\n头像：https://${siteConfig.blog}${siteConfig.avatarUrl}`;
+
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(siteConfig.friendLinkApplyFormat);
+      await navigator.clipboard.writeText(friendLinkFormat);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
       // Fallback for non-HTTPS or older browsers
       try {
         const textarea = document.createElement("textarea");
-        textarea.value = siteConfig.friendLinkApplyFormat;
+        textarea.value = friendLinkFormat;
         textarea.style.position = "fixed";
         textarea.style.opacity = "0";
         document.body.appendChild(textarea);
@@ -132,7 +134,7 @@ export default function FriendsBoard() {
           {/* Apply format */}
           <div className="relative mb-6">
             <pre className="text-xs md:text-sm font-mono bg-slate-900/80 dark:bg-black/60 text-slate-200 rounded-xl p-4 md:p-6 overflow-x-auto whitespace-pre-wrap leading-relaxed">
-              {siteConfig.friendLinkApplyFormat}
+              {friendLinkFormat}
             </pre>
             <button
               onClick={handleCopy}

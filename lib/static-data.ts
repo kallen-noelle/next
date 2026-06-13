@@ -16,6 +16,10 @@ function dataUrl(path: string): string {
 /** Detect whether static data files are available */
 export async function detectMode(): Promise<"static" | "live"> {
   if (mode !== "unknown") return mode;
+  if (process.env.NEXT_PUBLIC_IS_STATIC === "true") {
+    mode = "static";
+    return mode;
+  }
   try {
     const res = await fetch(dataUrl("index.json"), { method: "HEAD" });
     mode = res.ok ? "static" : "live";

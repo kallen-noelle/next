@@ -1,14 +1,18 @@
 import type { MetadataRoute } from "next";
 import fs from "fs";
 import path from "path";
+import { siteConfig } from "@/lib/siteConfig";
 
 export const dynamic = "force-static";
 
 const BASE_URL = (() => {
   try {
     const raw = fs.readFileSync(path.join(process.cwd(), "public", "data", "about.json"), "utf-8");
-    return JSON.parse(raw).blog || "https://www.lxpavilion.top";
-  } catch { return "https://www.lxpavilion.top"; }
+    const blog = JSON.parse(raw).blog || siteConfig.blog;
+    return blog.startsWith("http") ? blog : `https://${blog}`;
+  } catch {
+    return `https://${siteConfig.blog}`;
+  }
 })();
 
 export default function sitemap(): MetadataRoute.Sitemap {

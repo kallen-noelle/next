@@ -8,6 +8,7 @@ import {
   Legend,
 } from "recharts";
 import { fetchAnalytics, type AnalyticsData } from "@/lib/analytics";
+import { siteConfig } from "@/lib/siteConfig";
 import Loading from "@/app/_components/common/Loading";
 
 // ── Color palette ──
@@ -277,11 +278,11 @@ export default function AnalyticsPage() {
   useEffect(() => { load(days); }, [days, load]);
 
   // 多平台统计
-  const WORKER_URL = "https://analytics.lxpavilion.top";
+  const WORKER_URL = `https://${siteConfig.analytics}`;
   useEffect(() => {
     fetch(`${WORKER_URL}/platform`)
       .then((r) => r.json())
-      .then((d) => setPlatformData(d))
+      .then((d) => { if (d.code === 1) setPlatformData(d.data); })
       .catch(() => { });
   }, []);
 
@@ -452,26 +453,18 @@ export default function AnalyticsPage() {
 
                 {/* 阅读分布环形图 */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <DonutChart
-                    data={(() => {
-                      const raw = ["csdn", "juejin", "cnblogs"].map((k) => { const p = platformData[k as keyof PlatformResult] as PlatformData | null; return { name: PLATFORM_NAMES[k], value: p?.totalViews || 0 }; }).filter((d) => d.value > 0);
-                      const total = raw.reduce((s, d) => s + d.value, 0);
-                      return raw.map((d) => ({ ...d, pct: total ? Math.round((d.value / total) * 100) : 0 }));
-                    })()}
-                    title="👁 阅读量分布"
-                    colorMap={PLATFORM_COLORS}
-                    tooltip={tooltip}
-                  />
-                  <DonutChart
-                    data={(() => {
-                      const raw = ["csdn", "juejin", "cnblogs"].map((k) => { const p = platformData[k as keyof PlatformResult] as PlatformData | null; return { name: PLATFORM_NAMES[k], value: p?.totalLikes || 0 }; }).filter((d) => d.value > 0);
-                      const total = raw.reduce((s, d) => s + d.value, 0);
-                      return raw.map((d) => ({ ...d, pct: total ? Math.round((d.value / total) * 100) : 0 }));
-                    })()}
-                    title="👍 点赞量分布"
-                    colorMap={PLATFORM_COLORS}
-                    tooltip={tooltip}
-                  />
+                  {(() => {
+                    const raw = ["csdn", "juejin", "cnblogs"].map((k) => { const p = platformData[k as keyof PlatformResult] as PlatformData | null; return { name: PLATFORM_NAMES[k], value: p?.totalViews || 0 }; }).filter((d) => d.value > 0);
+                    if (!raw.length) return null;
+                    const total = raw.reduce((s, d) => s + d.value, 0);
+                    return <DonutChart data={raw.map((d) => ({ ...d, pct: total ? Math.round((d.value / total) * 100) : 0 }))} title="👁 阅读量分布" colorMap={PLATFORM_COLORS} tooltip={tooltip} />;
+                  })()}
+                  {(() => {
+                    const raw = ["csdn", "juejin", "cnblogs"].map((k) => { const p = platformData[k as keyof PlatformResult] as PlatformData | null; return { name: PLATFORM_NAMES[k], value: p?.totalLikes || 0 }; }).filter((d) => d.value > 0);
+                    if (!raw.length) return null;
+                    const total = raw.reduce((s, d) => s + d.value, 0);
+                    return <DonutChart data={raw.map((d) => ({ ...d, pct: total ? Math.round((d.value / total) * 100) : 0 }))} title="👍 点赞量分布" colorMap={PLATFORM_COLORS} tooltip={tooltip} />;
+                  })()}
                 </div>
               </div>
             </LazyMount>

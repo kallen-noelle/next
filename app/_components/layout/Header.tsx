@@ -65,9 +65,12 @@ export default function Navbar() {
           href="/"
           className="text-xl font-black text-slate-800 dark:text-white tracking-tighter hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-300 shrink-0"
         >
-          {siteConfig.navTitle}
-          <span className="text-indigo-500 mx-1">{siteConfig.navSuffix}</span>
-          {siteConfig.navAfter}
+          {(() => {
+            const parts = siteConfig.navTitle.split("·");
+            return parts.length > 1 ? <>
+              {parts[0]}<span className="text-indigo-500 mx-1">·</span>{parts.slice(1).join("·")}
+            </> : siteConfig.navTitle;
+          })()}
         </Link>
 
         <nav className="flex gap-6 text-sm font-bold items-center ml-8 xl:ml-16 mr-auto">

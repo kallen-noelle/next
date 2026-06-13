@@ -1,10 +1,10 @@
 "use client";
 
 import type { Media, OpMusic } from "@/lib/types";
+import { siteConfig } from "./siteConfig";
 
 const GH_API = "https://api.github.com";
-const OWNER = "pc-Blog";
-const REPO = "next";
+const [OWNER, REPO] = siteConfig.repo.split("/");
 const BRANCH = "data";
 
 export interface SyncProgress {
@@ -326,10 +326,7 @@ async function collectMusic(
 
 // Collect data from Java backend (incremental — skips unchanged details)
 async function collectAllData(ghToken?: string, existing?: Map<string, string>, onProgress?: ProgressCb): Promise<{ path: string; content: string }[]> {
-  const base =
-    typeof window !== "undefined"
-      ? process.env.NEXT_PUBLIC_API_BASE || "http://localhost:18016/api"
-      : "http://localhost:18016/api";
+  const base = `http://${siteConfig.backUrl}/api`;
 
   async function apiGet<T>(ep: string): Promise<T> {
     const res = await fetch(`${base}${ep}`);
@@ -362,7 +359,7 @@ async function collectAllData(ghToken?: string, existing?: Map<string, string>, 
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${ghToken}` },
         body: JSON.stringify({
-          query: `query{repository(owner:"pc-Blog",name:"next"){discussions(first:50,categoryId:"DIC_kwDOSk99g84C9uoJ"){nodes{comments{totalCount}}}}}`,
+          query: `query{repository(owner:"${OWNER}",name:"${REPO}"){discussions(first:50,categoryId:"${siteConfig.giscusCategoryId}"){nodes{comments{totalCount}}}}}`,
         }),
       });
       const json: any = await res.json();
@@ -758,10 +755,7 @@ export async function syncMedia(
   onProgress?: ProgressCb
 ): Promise<SyncResult> {
   try {
-    const apiBase =
-      typeof window !== "undefined"
-        ? process.env.NEXT_PUBLIC_API_BASE || "http://localhost:18016/api"
-        : "http://localhost:18016/api";
+    const apiBase = `http://${siteConfig.backUrl}/api`;
 
     onProgress?.({ stage: "collecting", message: "Fetching existing manifest from GitHub..." });
     const existingManifest = await getExistingMediaManifest(token);
@@ -814,10 +808,7 @@ export async function syncMusic(
   onProgress?: ProgressCb
 ): Promise<SyncResult> {
   try {
-    const apiBase =
-      typeof window !== "undefined"
-        ? process.env.NEXT_PUBLIC_API_BASE || "http://localhost:18016/api"
-        : "http://localhost:18016/api";
+    const apiBase = `http://${siteConfig.backUrl}/api`;
 
     onProgress?.({ stage: "collecting", message: "Fetching existing manifest from GitHub..." });
     const existingManifest = await getExistingMusicManifest(token);
@@ -841,16 +832,26 @@ export async function syncMusic(
     }
     const manifestContent = JSON.stringify([...manifestIds].map((id) => ({ id })), null, 2);
 
-    let patched = JSON.stringify(musicData);
-    for (const af of audioFiles) {
-      patched = patched.replaceAll(af.originalUrl, af.newPath);
-      if (af.originalUrl.startsWith("http:") || af.originalUrl.startsWith("https:")) {
-        patched = patched.replaceAll(af.originalUrl.replace(/^https?:/, ""), af.newPath);
+    // 先解析对象，再逐条修改属性（避免 replaceAll 字符串替换污染其他曲目）
+    const parsed = JSON.parse(JSON.stringify(musicData)) as { total: number; rows: OpMusic[] };
+    for (const track of parsed.rows) {
+      if (track.id == null) continue;
+      if (track.url) {
+        const audioExt = extFromFilename(track.url) || ".mp3";
+        track.url = `/data/music/${track.id}${audioExt}`;
+      }
+      if (track.pictureUrl) {
+        const ext = extFromFilename(track.pictureUrl) || ".png";
+        track.pictureUrl = `/data/music/${track.id}-cover${ext}`;
       }
     }
 
+    // 仅保留已同步的曲目（有音频文件的），其余剔除
+    parsed.rows = parsed.rows.filter(t => t.id != null && manifestIds.has(t.id));
+    parsed.total = parsed.rows.length;
+
     const files: SyncFile[] = [
-      { path: "music.json", content: JSON.stringify(JSON.parse(patched), null, 2), encoding: "utf-8" },
+      { path: "music.json", content: JSON.stringify(parsed, null, 2), encoding: "utf-8" },
       { path: "music-manifest.json", content: manifestContent, encoding: "utf-8" },
     ];
     for (const af of audioFiles) {
@@ -872,10 +873,7 @@ export async function generateSyncZip(
   onProgress?: ProgressCb,
   token?: string
 ): Promise<{ blob: Blob; name: string; batContent: string }> {
-  const apiBase =
-    typeof window !== "undefined"
-      ? process.env.NEXT_PUBLIC_API_BASE || "http://localhost:18016/api"
-      : "http://localhost:18016/api";
+  const apiBase = `http://${siteConfig.backUrl}/api`;
 
   // 1. Collect JSON
   onProgress?.({ stage: "collecting", message: "Fetching JSON data..." });
@@ -909,7 +907,7 @@ export async function generateSyncZip(
   }
 
   // Music
-  const musicJson = buildMusicJson(musicData, audioFiles);
+  const musicJson = buildMusicJson(musicData, audioFiles, apiBase);
   if (musicJson) {
     zip.file(`${folder}/music.json`, JSON.stringify(musicJson, null, 2));
   }
@@ -936,7 +934,7 @@ export async function generateSyncZip(
     '',
     'echo [2/5] 初始化仓库...',
     'git init',
-    'git remote add origin https://github.com/pc-Blog/next.git',
+    `git remote add origin https://github.com/${siteConfig.repo}.git`,
     'git fetch origin data --depth=1 2>nul || echo 无已有 data 分支',
     'git checkout origin/data -- .github/ 2>nul || echo 无工作流文件需保留',
     'git checkout origin/data -- CNAME 2>nul || echo 无 CNAME 文件',
@@ -969,15 +967,21 @@ export async function generateSyncZip(
 
 function buildMusicJson(
   musicData: unknown,
-  audioFiles: MusicFile[]
+  audioFiles: MusicFile[],
+  apiBase: string
 ): unknown | null {
-  if (!musicData || audioFiles.length === 0) return null;
-  let patched = JSON.stringify(musicData);
-  for (const af of audioFiles) {
-    patched = patched.replaceAll(af.originalUrl, af.newPath);
-    if (af.originalUrl.startsWith("http:") || af.originalUrl.startsWith("https:")) {
-      patched = patched.replaceAll(af.originalUrl.replace(/^https?:/, ""), af.newPath);
+  if (!musicData || !(musicData as any)?.rows?.length) return null;
+  const parsed = JSON.parse(JSON.stringify(musicData)) as { rows: any[] };
+  for (const track of parsed.rows) {
+    if (track.id == null) continue;
+    if (track.url) {
+      const audioExt = extFromFilename(track.url) || ".mp3";
+      track.url = `/data/music/${track.id}${audioExt}`;
+    }
+    if (track.pictureUrl) {
+      const ext = extFromFilename(track.pictureUrl) || ".png";
+      track.pictureUrl = `/data/music/${track.id}-cover${ext}`;
     }
   }
-  return JSON.parse(patched);
+  return parsed;
 }

@@ -41,12 +41,20 @@ jobs:
         working-directory: ./source
         run: npm run build:static
         env:
-          NEXT_PUBLIC_API_BASE: ${{ secrets.API_BASE_URL || 'http://localhost:18016/api' }}
           NEXT_PUBLIC_IS_STATIC: "true"
+
+      - name: Create CNAME file from siteConfig.blog
+        run: |
+          node -e "
+            const fs = require('fs');
+            const src = fs.readFileSync('source/lib/siteConfig.ts', 'utf-8');
+            const blog = (src.match(/blog:\s*\"([^\"]+)\"/)||[])[1] || '';
+            const hasDomain = /hasDomain:\s*true/.test(src);
+            if (blog && hasDomain) fs.writeFileSync('source/out/CNAME', blog);
+          "
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./source/out
-          cname: www.lxpavilion.top

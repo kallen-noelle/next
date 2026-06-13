@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { siteConfig } from "@/lib/siteConfig";
 
+const [GH_OWNER, GH_REPO] = siteConfig.repo.split("/");
 const GITHUB_GRAPHQL = "https://api.github.com/graphql";
 const QUERY = `query {
-  repository(owner: "pc-Blog", name: "next") {
-    discussions(first: 50, categoryId: "DIC_kwDOSk99g84C9uoJ") {
+  repository(owner: "${GH_OWNER}", name: "${GH_REPO}") {
+    discussions(first: 50, categoryId: siteConfig.giscusCategoryId) {
       totalCount
       nodes { number title comments { totalCount } }
     }

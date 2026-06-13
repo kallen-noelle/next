@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import GiscusLib from "@giscus/react";
+import { siteConfig } from "@/lib/siteConfig";
 
-const LIGHT_THEME = "https://cdn.jsdelivr.net/gh/pc-Blog/next@master/public/giscus-light.css?v=2";
-const DARK_THEME = "https://cdn.jsdelivr.net/gh/pc-Blog/next@master/public/giscus-dark.css?v=2";
+const GH_CDN = `https://cdn.jsdelivr.net/gh/${siteConfig.repo}@master/public`;
 
 export default function Giscus({ term }: { term?: string }) {
   const [theme, setTheme] = useState<string | null>(null);
@@ -14,7 +14,7 @@ export default function Giscus({ term }: { term?: string }) {
     function resolveTheme(): string {
       const stored = window.localStorage.getItem("blog-theme");
       const isDark = stored === null || stored === "dark";
-      return isDark ? DARK_THEME : LIGHT_THEME;
+      return isDark ? `${GH_CDN}/giscus-dark.css?v=2` : `${GH_CDN}/giscus-light.css?v=2`;
     }
     setTheme(resolveTheme());
     const handler = () => setTheme(resolveTheme());
@@ -41,10 +41,10 @@ export default function Giscus({ term }: { term?: string }) {
     <div className="w-full mt-3 relative">
       <div className="giscus-wrapper relative z-10">
         <GiscusLib
-          repo="pc-Blog/next"
-          repoId="R_kgDOSk99gw"
-          category="Announcements"
-          categoryId="DIC_kwDOSk99g84C9uoJ"
+          repo={siteConfig.repo as `${string}/${string}`}
+          repoId={siteConfig.repoId}
+          category={siteConfig.giscusCategory}
+          categoryId={siteConfig.giscusCategoryId}
           mapping={term ? "specific" : "pathname"}
           term={term}
           strict="0"

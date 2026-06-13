@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { siteConfig } from "./siteConfig";
 
 // ── Helper ──────────────────────────────────────────
 function ogImg(url: string) {
@@ -6,15 +7,12 @@ function ogImg(url: string) {
 }
 
 // ── Shared constants ────────────────────────────────
-/** OG title suffix appended to page titles */
-export const OG_TITLE_SUFFIX = "| 栏轩阁 - 个人技术博客与作品集";
+/** 站点默认 OG 图片 — 首页及未单独配置的页面使用，跟随头像配置 */
+export const defaultOgImage = siteConfig.avatarUrl;
 
-/** Default OG images used by detail pages fallback */
-export const defaultDetailOgImages = {
-  article: ogImg("/bg/2.jpg"),
-  literature: ogImg("/bg/10.jpg"),
-  project: undefined as { url: string; width: number; height: number }[] | undefined,
-};
+/** OG title suffix appended to page titles */
+export const OG_TITLE_SUFFIX = `| ${siteConfig.title}`;
+
 
 // ── Helper to build Metadata ────────────────────────
 function meta(title: string, description: string, image: string): Metadata {

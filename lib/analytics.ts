@@ -50,7 +50,9 @@ export interface AnalyticsData {
   generatedAt: string;
 }
 
-const WORKER_URL = "https://analytics.lxpavilion.top";
+import { siteConfig } from "./siteConfig";
+
+const WORKER_URL = `https://${siteConfig.analytics}`;
 
 // ── Fetch all analytics data from Worker ──
 export async function fetchAnalytics(days: number = 7): Promise<AnalyticsData> {
@@ -60,10 +62,11 @@ export async function fetchAnalytics(days: number = 7): Promise<AnalyticsData> {
     body: JSON.stringify({ days: Math.min(days, 364) }),
   });
 
-  if (!resp.ok) {
-    const err = await resp.json().catch(() => ({}));
-    throw new Error((err as any).error || `API error: ${resp.status}`);
+  const json = await resp.json();
+
+  if (json.code === 0) {
+    throw new Error(json.msg || "API error");
   }
 
-  return resp.json();
+  return json.data;
 }
