@@ -23,8 +23,8 @@ const CATEGORIES: Category[] = [
     icon: "📁",
     label: "文件处理",
     items: [
-      { icon: "📝", label: "MD转Word", desc: "将Markdown文件转换为Word文档格式", href: "/tools/markdown-to-word" },
       { icon: "🎨", label: "图片处理", desc: "图片转换/压缩/裁剪/旋转一体化工具", href: "/tools/image" },
+      { icon: "🔒", label: "文件加密", desc: "文件加密解密工具，保护隐私安全", href: "/tools/file-encrypt" },
     ],
   },
   {
@@ -57,6 +57,8 @@ const CATEGORIES: Category[] = [
       { icon: "⬇️", label: "Kdown", desc: "百度网盘高速下载解析服务，加速下载网盘文件", href: "https://kdown.moiu.cn/" },
       { icon: "🧰", label: "遐客", desc: "GitHub文件、Releases、归档代理加速下载", href: "https://xiake.pro/" },
       { icon: "📄", label: "CDKM", desc: "免费在线将Word、Excel等文档批量转换为PDF", href: "https://cdkm.com/cn/doc-to-pdf" },
+      { icon: "📝", label: "MD转Word", desc: "免费在线Markdown转Word文档转换器", href: "https://markdowntoword.io/zh" },
+      { icon: "📄", label: "老鱼简历", desc: "免费在线简历制作工具", href: "https://www.laoyujianli.com/" },
     ],
   },
   {
