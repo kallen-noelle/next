@@ -19,6 +19,7 @@ export default function Home() {
   const [dash, setDash] = useState<DashboardVO | null>(null);
   const [about, setAbout] = useState<Record<string, string>>({});
   const [literatureCount, setLiteratureCount] = useState<number | null>(null);
+  const [repoStats, setRepoStats] = useState<{ stars: number; forks: number; watchers: number } | null>(null);
 
   useEffect(() => {
     get().then(setDash).catch(() => { });
@@ -45,6 +46,15 @@ export default function Home() {
         }
       }).catch(() => { });
     }
+
+    // 获取 GitHub 仓库统计
+    fetch("https://api.github.com/repos/pc-Blog/next")
+      .then(r => r.json())
+      .then(d => {
+        if (d.stargazers_count != null) {
+          setRepoStats({ stars: d.stargazers_count, forks: d.forks_count, watchers: d.watchers_count });
+        }
+      }).catch(() => { });
   }, []);
 
   const authorName = about["name"] || siteConfig.authorName;
@@ -96,12 +106,11 @@ export default function Home() {
 
             </Link>
 
-            {/* Star 引导 — outside Link to prevent navigation */}
+            {/* Star 引导 + GitHub Repo Stats — outside Link to prevent navigation */}
             <div className="mt-4 pt-3 border-t border-slate-200/50 dark:border-white/5 relative z-10">
-              <div className="flex items-center gap-2">
-                <span className="text-sm">⭐</span>
+              <div className="flex items-center gap-3 flex-wrap">
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
-                  如果这个项目对你有帮助，欢迎去 GitHub 点个{" "}
+                  ⭐ 如果这个项目对你有帮助，欢迎去 GitHub 点个{" "}
                   <a
                     href="https://github.com/pc-Blog/next"
                     target="_blank"
@@ -112,6 +121,42 @@ export default function Home() {
                   </a>{" "}
                   ❤️
                 </p>
+                <span className="text-slate-300 dark:text-slate-600 text-xs">|</span>
+                <div className="flex items-center gap-3">
+                  <Tooltip text="Stars">
+                    <a
+                      href="https://github.com/pc-Blog/next"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-1 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-indigo-500 transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      <span>{repoStats ? repoStats.stars.toLocaleString() : "—"}</span>
+                    </a>
+                  </Tooltip>
+                  <Tooltip text="Watch">
+                    <a
+                      href="https://github.com/pc-Blog/next/watchers"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-1 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-indigo-500 transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                      <span>{repoStats ? repoStats.watchers.toLocaleString() : "—"}</span>
+                    </a>
+                  </Tooltip>
+                  <Tooltip text="Forks">
+                    <a
+                      href="https://github.com/pc-Blog/next/forks"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-1 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-indigo-500 transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 3a3 3 0 00-3 3v2.25a3 3 0 003 3h2.25a3 3 0 003-3V6a3 3 0 00-3-3H6zm9.75 0a3 3 0 00-3 3v2.25a3 3 0 003 3H21a3 3 0 003-3V6a3 3 0 00-3-3h-5.25zM6 12.75a3 3 0 00-3 3V18a3 3 0 003 3h2.25a3 3 0 003-3v-2.25a3 3 0 00-3-3H6zm9.75 0a3 3 0 00-3 3V18a3 3 0 003 3H21a3 3 0 003-3v-2.25a3 3 0 00-3-3h-5.25z"/></svg>
+                      <span>{repoStats ? repoStats.forks.toLocaleString() : "—"}</span>
+                    </a>
+                  </Tooltip>
+                </div>
               </div>
             </div>
 

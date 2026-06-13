@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback, memo } from "react";
 import BackButton from "@/app/_components/article/BackButton";
+import SelectDropdown from "@/app/_components/admin/SelectDropdown";
 
 // ============ 常量 ============
 const ORIGINAL_PREVIEW_MAX = 480;
@@ -537,17 +538,16 @@ export default function ImageToolsPage() {
     <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-5 transition-colors">
       <h2 className="text-lg font-black text-slate-700 dark:text-slate-300 mb-4">📦 格式转换 & 压缩</h2>
       <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1">输出格式</label>
-      <select
-        value={format}
-        onChange={(e) => setFormat(e.target.value)}
-        className="w-full bg-white/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl px-4 py-2.5 text-sm outline-none text-slate-800 dark:text-slate-200 appearance-none cursor-pointer transition-all focus:border-indigo-500"
-        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', paddingRight: '36px' }}
-      >
-        <option value="image/png">PNG（无损）</option>
-        <option value="image/jpeg">JPEG（有损压缩）</option>
-        <option value="image/webp">WebP（高效压缩）</option>
-        <option value="image/bmp">BMP（位图）</option>
-      </select>
+      <div className="w-full">
+              <SelectDropdown
+                options={["image/png", "image/jpeg", "image/webp", "image/bmp"]}
+                value={format}
+                onChange={(v) => setFormat(String(v))}
+                placeholder="输出格式"
+                renderOption={(v) => ({ "image/png": "PNG（无损）", "image/jpeg": "JPEG（有损压缩）", "image/webp": "WebP（高效压缩）", "image/bmp": "BMP（位图）" }[v] || v)}
+                getValue={(v) => v}
+              />
+            </div>
       {(format === 'image/jpeg' || format === 'image/webp') && (
         <div className="mt-4">
           <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1">压缩质量</label>
@@ -578,19 +578,16 @@ export default function ImageToolsPage() {
     <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-5">
       <h2 className="text-lg font-black text-slate-700 dark:text-slate-300 mb-4">✂️ 裁剪</h2>
       <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1">裁剪比例</label>
-      <select
-        value={aspectMode}
-        onChange={(e) => setAspectMode(e.target.value)}
-        className="w-full bg-white/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl px-4 py-2.5 text-sm outline-none text-slate-800 dark:text-slate-200 appearance-none cursor-pointer transition-all focus:border-indigo-500"
-        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', paddingRight: '36px' }}
-      >
-        <option value="free">自由比例</option>
-        <option value="1:1">1:1 正方形</option>
-        <option value="4:3">4:3 标准</option>
-        <option value="16:9">16:9 宽屏</option>
-        <option value="3:2">3:2 经典</option>
-        <option value="2:3">2:3 竖版</option>
-      </select>
+      <div className="w-full">
+              <SelectDropdown
+                options={["free", "1:1", "4:3", "16:9", "3:4", "9:16"]}
+                value={aspectMode}
+                onChange={(v) => setAspectMode(String(v))}
+                placeholder="裁剪比例"
+                renderOption={(v) => ({ free: "自由", "1:1": "1:1 方形", "4:3": "4:3 标准", "16:9": "16:9 宽屏", "3:4": "3:4 竖版", "9:16": "9:16 手机" }[v] || v)}
+                getValue={(v) => v}
+              />
+            </div>
       <div className="text-xs text-slate-500 dark:text-slate-400 mt-2">
         裁剪区域: {Math.round(cropRectDisplay.cx)},{Math.round(cropRectDisplay.cy)} → {Math.round(cropRectDisplay.cw)}×{Math.round(cropRectDisplay.ch)} px
       </div>

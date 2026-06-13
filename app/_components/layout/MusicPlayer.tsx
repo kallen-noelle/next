@@ -1,6 +1,7 @@
 "use client";
 
 import { useAudioPlayer } from "@/lib/useAudioPlayer";
+import Tooltip from "@/app/_components/common/Tooltip";
 
 function fmt(sec: number) {
   if (!sec || isNaN(sec)) return "00:00";
@@ -81,15 +82,18 @@ export default function MusicPlayer() {
               <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
             )}
           </button>
-          <button onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleNext(); }}
-            className="w-10 h-10 rounded-full text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 hover:scale-110 transition-all duration-300 flex items-center justify-center" title="Random next">
+          <Tooltip text="Random next">
+            <button onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleNext(); }}
+              className="w-10 h-10 rounded-full text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 hover:scale-110 transition-all duration-300 flex items-center justify-center">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" /></svg>
           </button>
+          </Tooltip>
         </div>
 
         <div className="flex items-center gap-1.5 group/vol">
-          <button onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleMuteToggle(); }}
-            className="w-8 h-8 rounded-full text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-all duration-200 flex items-center justify-center" title={volume === 0 ? "Unmute" : "Mute"}>
+          <Tooltip text={volume === 0 ? "Unmute" : "Mute"}>
+            <button onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleMuteToggle(); }}
+              className="w-8 h-8 rounded-full text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-all duration-200 flex items-center justify-center">
             {volume === 0 ? (
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.47 4.47 0 002.5-3.5zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" /><line x1="3" y1="4" x2="21" y2="20" stroke="currentColor" strokeWidth="2" /></svg>
             ) : volume < 0.4 ? (
@@ -100,6 +104,7 @@ export default function MusicPlayer() {
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.47 4.47 0 002.5-3.5z" /><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" /></svg>
             )}
           </button>
+          </Tooltip>
           <input type="range" min={0} max={100} value={volume * 100} onChange={handleVolumeChange}
             className="w-20 h-1 appearance-none bg-slate-200 dark:bg-slate-700 rounded-full cursor-pointer hover:h-1.5 transition-all duration-200"
             style={{ background: `linear-gradient(to right, #818cf8 ${volume * 100}%, rgba(148,163,184,0.4) ${volume * 100}%)` }} />

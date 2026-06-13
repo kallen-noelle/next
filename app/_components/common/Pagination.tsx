@@ -1,5 +1,7 @@
 "use client";
 
+import SelectDropdown from "@/app/_components/admin/SelectDropdown";
+
 interface PaginationProps {
   total: number;
   pageNum: number;
@@ -63,15 +65,16 @@ export default function Pagination({ total, pageNum, pageSize, onChange, onPageS
       </div>
 
       {onPageSizeChange ? (
-        <select
-          value={pageSize}
-          onChange={(e) => onPageSizeChange(Number(e.target.value))}
-          className="glass-card !rounded-xl px-3 py-1.5 text-xs outline-none bg-white/50 dark:bg-slate-800/50 text-slate-500"
-        >
-          <option value={10}>10 / page</option>
-          <option value={20}>20 / page</option>
-          <option value={50}>50 / page</option>
-        </select>
+        <div className="w-28">
+          <SelectDropdown
+            options={[10, 20, 50]}
+            value={pageSize}
+            onChange={(v) => onPageSizeChange(Number(v))}
+            placeholder="Per page"
+            renderOption={(v) => `${v} / page`}
+            getValue={(v) => v}
+          />
+        </div>
       ) : (
         <div />
       )}

@@ -1,6 +1,8 @@
 "use client";
 
 import BackButton from "@/app/_components/article/BackButton";
+import SelectDropdown from "@/app/_components/admin/SelectDropdown";
+import Tooltip from "@/app/_components/common/Tooltip";
 import { useState, useMemo } from "react";
 
 const bases = [
@@ -82,15 +84,16 @@ export default function BaseConvertPage() {
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">输入数值</label>
             <div className="flex gap-2">
-              <select
-                value={fromBase}
-                onChange={(e) => setFromBase(Number(e.target.value))}
-                className="px-3 py-2 bg-white/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl text-sm outline-none"
-              >
-                {bases.map((b) => (
-                  <option key={b.value} value={b.value}>{b.label}</option>
-                ))}
-              </select>
+              <div className="w-36">
+                <SelectDropdown
+                  options={bases}
+                  value={fromBase}
+                  onChange={(v) => setFromBase(Number(v))}
+                  placeholder="选择进制"
+                  renderOption={(b) => b.label}
+                  getValue={(b) => b.value}
+                />
+              </div>
               <input
                 type="text"
                 value={input}
@@ -104,39 +107,42 @@ export default function BaseConvertPage() {
 
           {/* 交换按钮 */}
           <div className="flex justify-center">
-            <button
-              onClick={handleSwap}
-              className="px-4 py-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 rounded-xl text-sm font-medium transition-colors"
-              title="交换进制"
-            >
-              ⇅ 交换
+            <Tooltip text="交换进制">
+              <button
+                onClick={handleSwap}
+                className="px-4 py-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 rounded-xl text-sm font-medium transition-colors"
+              >
+                ⇅ 交换
             </button>
+            </Tooltip>
           </div>
 
           {/* 输出区域 */}
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">转换结果</label>
             <div className="flex gap-2">
-              <select
-                value={toBase}
-                onChange={(e) => setToBase(Number(e.target.value))}
-                className="px-3 py-2 bg-white/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl text-sm outline-none"
-              >
-                {bases.map((b) => (
-                  <option key={b.value} value={b.value}>{b.label}</option>
-                ))}
-              </select>
+              <div className="w-36">
+                <SelectDropdown
+                  options={bases}
+                  value={toBase}
+                  onChange={(v) => setToBase(Number(v))}
+                  placeholder="选择进制"
+                  renderOption={(b) => b.label}
+                  getValue={(b) => b.value}
+                />
+              </div>
               <div className="flex-1 bg-white/50 dark:bg-slate-700/50 border border-emerald-200 dark:border-emerald-800 rounded-xl px-4 py-2 font-mono text-sm text-slate-800 dark:text-slate-200 break-all min-h-[42px]">
                 {output || (input.trim() === "" ? "等待输入" : "无效输入")}
               </div>
               {output && !error && (
-                <button
-                  onClick={() => navigator.clipboard.writeText(output)}
-                  className="px-3 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-bold rounded-xl transition-colors"
-                  title="复制结果"
-                >
-                  📋
-                </button>
+                <Tooltip text="复制结果">
+                  <button
+                    onClick={() => navigator.clipboard.writeText(output)}
+                    className="px-3 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-bold rounded-xl transition-colors"
+                  >
+                    📋
+                  </button>
+                </Tooltip>
               )}
             </div>
           </div>

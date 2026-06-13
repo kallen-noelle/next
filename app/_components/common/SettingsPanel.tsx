@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSettingsStore } from "@/stores/settingsStore";
 import { siteConfig } from "@/lib/siteConfig";
 import { assetUrl } from "@/lib/asset-url";
+import Tooltip from "@/app/_components/common/Tooltip";
 
 interface Props {
   open: boolean;
@@ -63,8 +64,9 @@ export default function SettingsPanel({ open, onClose }: Props) {
               <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                 背景图片
               </label>
-              <button type="button" title="查看全部背景"
-                onClick={() => setShowGrid(!showGrid)}
+              <Tooltip text="查看全部背景">
+                <button type="button"
+                  onClick={() => setShowGrid(!showGrid)}
                 className="w-5 h-5 rounded flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-sky-500 dark:hover:text-sky-400 transition-colors"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -75,13 +77,15 @@ export default function SettingsPanel({ open, onClose }: Props) {
                   )}
                 </svg>
               </button>
+              </Tooltip>
             </div>
 
             {showGrid && (
               <div className="grid grid-cols-3 gap-1.5 mb-2">
                 {images.map((img, i) => (
-                  <button key={img} type="button" title="选择此背景"
-                    onClick={() => { setBgImage(i); setShowGrid(false); }}
+                  <Tooltip text="选择此背景">
+                    <button key={img} type="button"
+                      onClick={() => { setBgImage(i); setShowGrid(false); }}
                     className={`relative rounded-lg overflow-hidden border-2 transition-all aspect-video ${
                       i === currentIndex
                         ? "border-sky-500 ring-1 ring-sky-500/30"
@@ -90,20 +94,25 @@ export default function SettingsPanel({ open, onClose }: Props) {
                   >
                     <img src={assetUrl(img)} alt="背景" className="w-full h-full object-cover" />
                   </button>
+                  </Tooltip>
                 ))}
               </div>
             )}
 
             <div className="relative rounded-xl overflow-hidden border-2 border-white/30 dark:border-white/10 aspect-video">
               <img src={assetUrl(images[currentIndex])} alt="当前背景" className="w-full h-full object-cover" />
-              <button type="button" title="上一张" onClick={prev}
+              <Tooltip text="上一张">
+                <button type="button" onClick={prev}
                 className="absolute left-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/60 transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
               </button>
-              <button type="button" title="下一张" onClick={next}
+              </Tooltip>
+              <Tooltip text="下一张">
+                <button type="button" onClick={next}
                 className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/60 transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
               </button>
+              </Tooltip>
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
                 {images.map((img, i) => (
                   <button key={img} type="button" title={`切换到背景 ${i + 1}`} onClick={() => setBgImage(i)}
