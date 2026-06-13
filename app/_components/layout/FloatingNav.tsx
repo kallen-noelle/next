@@ -46,6 +46,7 @@ const CATEGORIES: Category[] = [
       { icon: "🔢", label: "2048", desc: "数字合并益智游戏，挑战最高分", href: "/tools/2048" },
       { icon: "💣", label: "扫雷", desc: "经典扫雷推理游戏", href: "/tools/minesweeper" },
       { icon: "⚫", label: "五子棋", desc: "人机对战五子棋，AI 自动评估", href: "/tools/gomoku" },
+      { icon: "🧩", label: "图片拼图", desc: "上传图片分割成拼图碎片，挑战复原", href: "/tools/image-puzzle" },
     ],
   },
   {

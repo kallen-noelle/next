@@ -107,13 +107,21 @@ export default function TetrisPage() {
   const gameLoopId = useRef<number | null>(null);
   const isMounted = useRef(true);
 
+  const handleInputRef = useRef<((action: string) => void) | null>(null);
+  const exportSaveRef = useRef<(() => void) | null>(null);
+  const importSaveRef = useRef<((file: File) => void) | null>(null);
+  const ghostToggleRef = useRef<HTMLInputElement>(null);
+  const importFileInputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
-    // 游戏核心逻辑（原立即执行函数）
+    isMounted.current = true;
+
+    // --- 调整后的游戏尺寸 ---
     const COLS = 10;
     const ROWS = 20;
-    const CELL_SIZE = 30;
-    const CANVAS_W = COLS * CELL_SIZE;
-    const CANVAS_H = ROWS * CELL_SIZE;
+    const CELL_SIZE = 35; // 原为 30，现增大以提高游戏主体高度
+    const CANVAS_W = COLS * CELL_SIZE; // 350
+    const CANVAS_H = ROWS * CELL_SIZE; // 700
 
     const PIECE_TYPES = ['I', 'O', 'T', 'L', 'J', 'S', 'Z'];
     const PIECE_SHAPES: Record<string, number[][]> = {
@@ -149,7 +157,7 @@ export default function TetrisPage() {
     let totalLines = 0;
     let highScore = 0;
     let isInputEnabled = true;
-    let dropInterval = 500;
+    let dropInterval = 600;
     let dropAccumulator = 0;
     let lastFrameTime = 0;
     let ghostEnabled = true;
@@ -165,7 +173,6 @@ export default function TetrisPage() {
     let rowSlideOffsets = new Array(ROWS).fill(0);
     let flashAlpha = 0;
 
-    // DOM elements
     const canvas = document.getElementById('gameCanvas') as HTMLCanvasElement;
     const ctx = canvas?.getContext('2d')!;
     const previewCanvas = document.getElementById('previewCanvas') as HTMLCanvasElement;
@@ -177,8 +184,6 @@ export default function TetrisPage() {
     const flashOverlay = document.getElementById('flashOverlay')!;
     const pauseIndicator = document.getElementById('pauseIndicator')!;
     const overlayText = document.getElementById('overlayText')!;
-    const ghostToggle = document.getElementById('ghostToggle') as HTMLInputElement;
-    const importFileInput = document.getElementById('importFileInput') as HTMLInputElement;
 
     const getCanvasBg = () => getComputedStyle(document.documentElement).getPropertyValue('--canvas-bg').trim() || 'rgba(255,255,255,0.45)';
     const getCanvasGrid = () => getComputedStyle(document.documentElement).getPropertyValue('--canvas-grid').trim() || 'rgba(0,0,0,0.04)';
@@ -187,13 +192,7 @@ export default function TetrisPage() {
     function getRandomPieceType() { return PIECE_TYPES[Math.floor(Math.random() * PIECE_TYPES.length)]; }
     function createPiece(type: string) {
       const shape = PIECE_SHAPES[type].map(row => [...row]);
-      return {
-        type, shape,
-        color: PIECE_COLORS[type],
-        glow: PIECE_GLOW[type],
-        x: Math.floor((COLS - shape[0].length) / 2),
-        y: 0
-      };
+      return { type, shape, color: PIECE_COLORS[type], glow: PIECE_GLOW[type], x: Math.floor((COLS - shape[0].length) / 2), y: 0 };
     }
     function spawnPiece() {
       const type = nextPieceType || getRandomPieceType();
@@ -222,15 +221,13 @@ export default function TetrisPage() {
       return result;
     }
     function isValidPosition(shape: number[][], px: number, py: number) {
-      for (let r = 0; r < shape.length; r++) {
-        for (let c = 0; c < shape[r].length; c++) {
+      for (let r = 0; r < shape.length; r++)
+        for (let c = 0; c < shape[r].length; c++)
           if (shape[r][c]) {
             const bx = px + c, by = py + r;
             if (bx < 0 || bx >= COLS || by >= ROWS) return false;
             if (by >= 0 && board[by][bx] !== null) return false;
           }
-        }
-      }
       return true;
     }
     function getGhostY() {
@@ -240,14 +237,12 @@ export default function TetrisPage() {
       return gy;
     }
     function lockPiece() {
-      for (let r = 0; r < currentPiece.shape.length; r++) {
-        for (let c = 0; c < currentPiece.shape[r].length; c++) {
+      for (let r = 0; r < currentPiece.shape.length; r++)
+        for (let c = 0; c < currentPiece.shape[r].length; c++)
           if (currentPiece.shape[r][c]) {
             const by = currentPiece.y + r, bx = currentPiece.x + c;
             if (by >= 0 && by < ROWS && bx >= 0 && bx < COLS) board[by][bx] = currentPiece.color;
           }
-        }
-      }
     }
     function checkCompletedLines() {
       const cleared: number[] = [];
@@ -267,9 +262,8 @@ export default function TetrisPage() {
         }
       }
       const newOffsets = new Array(ROWS).fill(0);
-      for (let nr = 0; nr < ROWS; nr++) {
+      for (let nr = 0; nr < ROWS; nr++)
         if (oldRowMapping[nr] !== undefined) newOffsets[nr] = (oldRowMapping[nr] - nr) * CELL_SIZE;
-      }
       board = newBoard;
       return newOffsets;
     }
@@ -277,10 +271,10 @@ export default function TetrisPage() {
       const map: Record<number, number> = { 1: 100, 2: 300, 3: 500, 4: 800 };
       const points = map[linesCleared] || 0;
       score += points;
-      const newLevel = Math.floor(score / 1000) + 1;
+      const newLevel = Math.floor(score / 3000) + 1;
       if (newLevel > level) {
         level = newLevel;
-        dropInterval = Math.max(80, 500 / (level + 1));
+        dropInterval = Math.max(150, 600 - level * 20);
         triggerLevelUp();
       }
       if (score > highScore) { highScore = score; localStorage.setItem('tetris_highscore', String(highScore)); }
@@ -349,10 +343,9 @@ export default function TetrisPage() {
         const elapsed = now - animState.phaseStartTime;
         const progress = Math.min(1, elapsed / phaseDuration);
         const easedProgress = easeOutCubic(progress);
-        for (let r = 0; r < ROWS; r++) {
+        for (let r = 0; r < ROWS; r++)
           if (animState.collapseTargetOffsets?.[r] !== undefined)
             rowSlideOffsets[r] = animState.collapseTargetOffsets[r] * (1 - easedProgress);
-        }
         if (progress >= 1) { rowSlideOffsets = new Array(ROWS).fill(0); finishLineClearAnimation(); }
       }
       if (animState?.type === 'harddrop') {
@@ -516,9 +509,8 @@ export default function TetrisPage() {
       for (let c = 0; c <= COLS; c++) { ctx.beginPath(); ctx.moveTo(c * CELL_SIZE, 0); ctx.lineTo(c * CELL_SIZE, CANVAS_H); ctx.stroke(); }
       for (let r = 0; r < ROWS; r++) {
         const drawY = r * CELL_SIZE + (rowSlideOffsets[r] || 0);
-        for (let c = 0; c < COLS; c++) {
+        for (let c = 0; c < COLS; c++)
           if (board[r][c]) drawCell(ctx, c * CELL_SIZE, drawY, board[r][c]!, getGlowFromColor(board[r][c]!), 1);
-        }
       }
       if (animState?.type === 'lineclear' && (animState.phase === 'flash' || animState.phase === 'shake')) {
         const flashColor = animState.phase === 'flash' ? '#ffffff' : '#ffff88';
@@ -610,13 +602,14 @@ export default function TetrisPage() {
         ctx.fillText(ft.text, ft.x, ft.y); ctx.shadowBlur = 0;
         ctx.globalAlpha = 1; ctx.restore();
       }
-      if (flashAlpha > 0) {
-        ctx.fillStyle = `rgba(255,255,255,${flashAlpha * 0.35})`; ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-      }
+      if (flashAlpha > 0) ctx.fillStyle = `rgba(255,255,255,${flashAlpha * 0.35})`, ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
       ctx.restore();
     }
     function getGlowFromColor(color: string) {
-      const map: Record<string, string> = { '#818cf8': '#a5b4fc', '#34d399': '#6ee7b7', '#8b5cf6': '#a78bfa', '#f59e0b': '#fbbf24', '#38bdf8': '#7dd3fc', '#10b981': '#34d399', '#f87171': '#fca5a5' };
+      const map: Record<string, string> = {
+        '#818cf8': '#a5b4fc', '#34d399': '#6ee7b7', '#8b5cf6': '#a78bfa',
+        '#f59e0b': '#fbbf24', '#38bdf8': '#7dd3fc', '#10b981': '#34d399', '#f87171': '#fca5a5'
+      };
       return map[color] || '#cbd5e1';
     }
     function drawPreview() {
@@ -675,7 +668,7 @@ export default function TetrisPage() {
       animState = null; particles = []; floatingTexts = []; screenShake = { intensity: 0, duration: 0, elapsed: 0 };
       rowSlideOffsets = new Array(ROWS).fill(0); flashAlpha = 0;
       pieceVisualOffsetY = 0; pieceVisualTargetY = 0; pieceVisualAnimDuration = 0; pieceVisualAnimElapsed = 0;
-      dropAccumulator = 0; lastFrameTime = 0; score = 0; level = 1; totalLines = 0; dropInterval = 500;
+      dropAccumulator = 0; lastFrameTime = 0; score = 0; level = 1; totalLines = 0; dropInterval = 600;
       createBoard(); nextPieceType = getRandomPieceType();
       gameState = STATE_NORMAL; isInputEnabled = true;
       overlayText.classList.remove('visible');
@@ -710,7 +703,8 @@ export default function TetrisPage() {
           dropAccumulator = 0; lastFrameTime = performance.now();
           board = saveData.board.map((row: any) => [...row]);
           score = saveData.score || 0; level = saveData.level || 1; totalLines = saveData.totalLines || 0;
-          highScore = saveData.highScore || 0; dropInterval = saveData.dropInterval || Math.max(80, 500 / (level + 1));
+          highScore = saveData.highScore || 0;
+          dropInterval = saveData.dropInterval || Math.max(150, 600 - level * 20);
           nextPieceType = saveData.nextPieceType || getRandomPieceType();
           if (saveData.currentPiece?.type && PIECE_TYPES.includes(saveData.currentPiece.type)) {
             currentPiece = createPiece(saveData.currentPiece.type);
@@ -758,7 +752,10 @@ export default function TetrisPage() {
       gameLoopId.current = requestAnimationFrame(gameLoop);
     }
 
-    // 键盘事件
+    handleInputRef.current = handleInput;
+    exportSaveRef.current = exportSave;
+    importSaveRef.current = importSave;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       const key = e.key;
       if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' ', 'r', 'R', 'p', 'P'].includes(key) || key === ' ') e.preventDefault();
@@ -774,23 +771,14 @@ export default function TetrisPage() {
     };
     document.addEventListener('keydown', handleKeyDown);
 
-    // 按钮事件
-    document.getElementById('btnNewGame')?.addEventListener('click', () => handleInput('restart'));
-    document.getElementById('btnPause')?.addEventListener('click', () => handleInput('pause'));
-    document.getElementById('btnExport')?.addEventListener('click', exportSave);
-    document.getElementById('btnImport')?.addEventListener('click', () => importFileInput.click());
-    importFileInput?.addEventListener('change', (e) => {
-      const target = e.target as HTMLInputElement;
-      if (target.files?.[0]) { importSave(target.files[0]); target.value = ''; }
-    });
-    ghostToggle?.addEventListener('change', function () { ghostEnabled = this.checked; });
+    const handleGhostToggleChange = () => { ghostEnabled = ghostToggleRef.current?.checked ?? true; };
+    ghostToggleRef.current?.addEventListener('change', handleGhostToggleChange);
 
-    // 触摸事件（移动端）
     let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
-    canvas?.addEventListener('touchstart', (e) => {
+    const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 1) { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; touchStartTime = Date.now(); e.preventDefault(); }
-    }, { passive: false });
-    canvas?.addEventListener('touchend', (e) => {
+    };
+    const handleTouchEnd = (e: TouchEvent) => {
       const dt = Date.now() - touchStartTime;
       const dx = (e.changedTouches[0]?.clientX || touchStartX) - touchStartX;
       const dy = (e.changedTouches[0]?.clientY || touchStartY) - touchStartY;
@@ -798,9 +786,10 @@ export default function TetrisPage() {
       else if (Math.abs(dy) > Math.abs(dx) && dy > 30 && dt < 400) handleInput('harddrop');
       else if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 20) handleInput(dx > 0 ? 'right' : 'left');
       e.preventDefault();
-    }, { passive: false });
+    };
+    canvas?.addEventListener('touchstart', handleTouchStart, { passive: false });
+    canvas?.addEventListener('touchend', handleTouchEnd, { passive: false });
 
-    // 初始化游戏
     highScore = parseInt(localStorage.getItem('tetris_highscore') || '0');
     createBoard(); nextPieceType = getRandomPieceType();
     gameState = STATE_NORMAL; isInputEnabled = true;
@@ -813,6 +802,9 @@ export default function TetrisPage() {
       isMounted.current = false;
       if (gameLoopId.current) cancelAnimationFrame(gameLoopId.current);
       document.removeEventListener('keydown', handleKeyDown);
+      ghostToggleRef.current?.removeEventListener('change', handleGhostToggleChange);
+      canvas?.removeEventListener('touchstart', handleTouchStart);
+      canvas?.removeEventListener('touchend', handleTouchEnd);
     };
   }, []);
 
@@ -829,22 +821,18 @@ export default function TetrisPage() {
       </p>
 
       <div className="flex flex-wrap gap-6 items-start justify-center w-full">
-        {/* 左侧：游戏面板 */}
         <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-4 relative" id="gameWrapper">
-          <canvas id="gameCanvas" width="300" height="600"></canvas>
+          <canvas id="gameCanvas" width="350" height="700"></canvas>
           <div className="flash-overlay" id="flashOverlay"></div>
           <div className="pause-indicator" id="pauseIndicator">⏸ 已暂停</div>
         </div>
 
-        {/* 右侧：操作面板 */}
         <div className="flex flex-col gap-4 min-w-[190px] max-w-[220px]">
-          {/* 下一个方块预览 */}
           <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-4 text-center">
             <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">下一个方块</div>
             <canvas className="preview-canvas" id="previewCanvas" width="120" height="120"></canvas>
           </div>
 
-          {/* 统计数据 2x2 */}
           <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-4">
             <div className="grid grid-cols-2 gap-3">
               <div className="text-center">
@@ -866,38 +854,83 @@ export default function TetrisPage() {
             </div>
           </div>
 
-          {/* 按钮 */}
           <div className="flex flex-col gap-2">
-            <button className="w-full px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-bold rounded-xl transition-colors active:scale-95" id="btnNewGame">
+            <button
+              onClick={() => handleInputRef.current?.('restart')}
+              className="w-full px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-bold rounded-xl transition-colors active:scale-95"
+            >
               🔄 新游戏
             </button>
-            <button className="w-full px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95" id="btnPause">
+            <button
+              onClick={() => handleInputRef.current?.('pause')}
+              className="w-full px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95"
+            >
               ⏸ 暂停/继续
             </button>
             <div className="flex gap-2">
-              <button className="flex-1 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95" id="btnExport">
+              <button
+                onClick={() => exportSaveRef.current?.()}
+                className="flex-1 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95"
+              >
                 💾 导出
               </button>
-              <button className="flex-1 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95" id="btnImport">
+              <button
+                onClick={() => importFileInputRef.current?.click()}
+                className="flex-1 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95"
+              >
                 📥 导入
               </button>
             </div>
           </div>
 
-          {/* 幽灵方块切换 */}
           <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" id="ghostToggle" defaultChecked className="rounded" />
+            <input type="checkbox" ref={ghostToggleRef} defaultChecked className="rounded" />
             <span className="text-xs font-medium text-slate-600 dark:text-slate-300">幽灵方块</span>
           </label>
+
+          <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-4 mt-2">
+            <h3 className="text-xs font-black text-slate-700 dark:text-slate-300 mb-2.5">操作说明</h3>
+            <ul>
+              <li className="flex items-start gap-1.5 py-1.5 text-xs text-slate-500 dark:text-slate-400 border-b border-white/40 dark:border-white/10 last:border-none">
+                <span>← → ↓ ↑</span>
+                <span>移动，软降，旋转</span>
+              </li>
+              <li className="flex items-start gap-1.5 py-1.5 text-xs text-slate-500 dark:text-slate-400 border-b border-white/40 dark:border-white/10 last:border-none">
+                <span>空格</span>
+                <span>硬降（直接落底）</span>
+              </li>
+              <li className="flex items-start gap-1.5 py-1.5 text-xs text-slate-500 dark:text-slate-400 border-b border-white/40 dark:border-white/10 last:border-none">
+                <span>P</span>
+                <span>暂停 / 继续</span>
+              </li>
+              <li className="flex items-start gap-1.5 py-1.5 text-xs text-slate-500 dark:text-slate-400 border-b border-white/40 dark:border-white/10 last:border-none">
+                <span>R</span>
+                <span>重新开始</span>
+              </li>
+              <li className="flex items-start gap-1.5 py-1.5 text-xs text-slate-500 dark:text-slate-400 border-b border-white/40 dark:border-white/10 last:border-none">
+                <span>📱</span>
+                <span>支持触摸：点击旋转，下滑硬降，左右滑移动</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      {/* 游戏结束遮罩 */}
       <div className="fixed inset-0 pointer-events-none z-[100] flex items-center justify-center" id="overlay">
         <div className="overlay-text" id="overlayText">游戏结束</div>
       </div>
 
-      <input type="file" id="importFileInput" style={{ display: 'none' }} accept=".json" />
+      <input
+        type="file"
+        ref={importFileInputRef}
+        style={{ display: 'none' }}
+        accept=".json"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) importSaveRef.current?.(file);
+          e.target.value = '';
+        }}
+      />
     </div>
   );
 }

@@ -4,14 +4,11 @@ import { useEffect, useRef } from "react";
 import BackButton from "@/app/_components/article/BackButton";
 
 export default function Game2048Page() {
-  // 游戏容器引用，用于初始化游戏逻辑
   const gameContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 确保仅在客户端执行
     if (!gameContainerRef.current) return;
 
-    // ==================== 游戏初始化函数 ====================
     const initGame = (container: HTMLElement) => {
       // ----- 获取容器内的 DOM 元素 -----
       const gridBackground = container.querySelector<HTMLElement>("#gridBackground");
@@ -29,22 +26,11 @@ export default function Game2048Page() {
       const modalButtons = container.querySelector<HTMLElement>("#modalButtons");
       const gameBoardContainer = container.querySelector<HTMLElement>("#gameBoardContainer");
 
-      // 如果任何必要元素不存在，则中止初始化
       if (
-        !gridBackground ||
-        !tileLayer ||
-        !scoreDisplay ||
-        !bestScoreDisplay ||
-        !btnNewGame ||
-        !btnExport ||
-        !btnImport ||
-        !importFileInput ||
-        !modalOverlay ||
-        !modalEmoji ||
-        !modalTitle ||
-        !modalMessage ||
-        !modalButtons ||
-        !gameBoardContainer
+        !gridBackground || !tileLayer || !scoreDisplay || !bestScoreDisplay ||
+        !btnNewGame || !btnExport || !btnImport || !importFileInput ||
+        !modalOverlay || !modalEmoji || !modalTitle || !modalMessage ||
+        !modalButtons || !gameBoardContainer
       ) {
         console.error("2048 游戏初始化失败：缺少必要的 DOM 元素");
         return;
@@ -56,7 +42,7 @@ export default function Game2048Page() {
       const NEW_TILE_PROB_2 = 0.9;
       const WIN_VALUE = 2048;
 
-      // ----- 游戏状态（模块级变量，保存在闭包中） -----
+      // ----- 游戏状态 -----
       let grid: (number | null)[][] = [];
       let tileDataMap = new Map<number, { id: number; value: number; row: number; col: number; isNew?: boolean; mergedFrom?: [number, number] | null }>();
       let tileElementMap = new Map<number, HTMLElement>();
@@ -68,7 +54,19 @@ export default function Game2048Page() {
       let isMoving = false;
       let moveTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
-      // ----- 工具函数：获取布局参数 -----
+      // 具名函数引用，用于解绑事件
+      const onNewGame = () => newGame();
+      const onExport = () => exportSave();
+      const onImport = () => importFileInput.click();
+      const onFileChange = (e: Event) => {
+        const target = e.target as HTMLInputElement;
+        if (target.files && target.files.length > 0) {
+          importSave(target.files[0]);
+          target.value = "";
+        }
+      };
+
+      // ----- 工具函数 -----
       const getLayoutParams = () => {
         const style = getComputedStyle(document.documentElement);
         const cellSize = parseInt(style.getPropertyValue("--cell-size").trim()) || 100;
@@ -76,18 +74,12 @@ export default function Game2048Page() {
         return { cellSize, gap };
       };
 
-      // 计算 tile 像素位置
       const getTilePosition = (row: number, col: number) => {
         const { cellSize, gap } = getLayoutParams();
-        return {
-          left: col * (cellSize + gap),
-          top: row * (cellSize + gap),
-          size: cellSize,
-        };
+        return { left: col * (cellSize + gap), top: row * (cellSize + gap), size: cellSize };
       };
 
-      // ----- 初始化背景网格（已在 JSX 中静态生成，此处仅检查） -----
-      // 如果背景网格数量不对，补全（但通常不需要）
+      // ----- 初始化背景网格 -----
       if (gridBackground.children.length !== GRID_SIZE * GRID_SIZE) {
         gridBackground.innerHTML = "";
         for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
@@ -97,7 +89,7 @@ export default function Game2048Page() {
         }
       }
 
-      // ----- 核心游戏逻辑 -----
+      // ----- UI 更新 -----
       const updateScoreDisplay = () => {
         scoreDisplay.textContent = String(score);
         bestScoreDisplay.textContent = String(bestScore);
@@ -106,9 +98,7 @@ export default function Game2048Page() {
       const saveBestScore = () => {
         try {
           localStorage.setItem("2048_bestScore", String(bestScore));
-        } catch (e) {
-          // 忽略
-        }
+        } catch (e) { }
       };
 
       const loadBestScore = () => {
@@ -118,11 +108,24 @@ export default function Game2048Page() {
             const val = parseInt(saved, 10);
             if (!isNaN(val) && val >= 0) bestScore = val;
           }
-        } catch (e) {
-          // 忽略
-        }
+        } catch (e) { }
       };
 
+      const animateScorePop = () => {
+        scoreDisplay.classList.remove("pop");
+        void scoreDisplay.offsetWidth;
+        scoreDisplay.classList.add("pop");
+        setTimeout(() => scoreDisplay.classList.remove("pop"), 420);
+      };
+
+      const animateBestScore = () => {
+        bestScoreDisplay.classList.remove("pop");
+        void bestScoreDisplay.offsetWidth;
+        bestScoreDisplay.classList.add("pop");
+        setTimeout(() => bestScoreDisplay.classList.remove("pop"), 420);
+      };
+
+      // ----- 方块逻辑 -----
       const createTileElement = (data: { value: number; row: number; col: number }) => {
         const el = document.createElement("div");
         el.className = "tile";
@@ -147,7 +150,6 @@ export default function Game2048Page() {
           fragment.appendChild(el);
         }
         tileLayer.appendChild(fragment);
-        // 为新 tile 添加动画类
         requestAnimationFrame(() => {
           for (const [id, data] of tileDataMap) {
             if (data.isNew) {
@@ -162,27 +164,11 @@ export default function Game2048Page() {
         });
       };
 
-      const animateScorePop = () => {
-        scoreDisplay.classList.remove("pop");
-        void scoreDisplay.offsetWidth;
-        scoreDisplay.classList.add("pop");
-        setTimeout(() => scoreDisplay.classList.remove("pop"), 420);
-      };
-
-      const animateBestScore = () => {
-        bestScoreDisplay.classList.remove("pop");
-        void bestScoreDisplay.offsetWidth;
-        bestScoreDisplay.classList.add("pop");
-        setTimeout(() => bestScoreDisplay.classList.remove("pop"), 420);
-      };
-
       const spawnRandomTile = () => {
         const emptyCells: { row: number; col: number }[] = [];
-        for (let r = 0; r < GRID_SIZE; r++) {
-          for (let c = 0; c < GRID_SIZE; c++) {
+        for (let r = 0; r < GRID_SIZE; r++)
+          for (let c = 0; c < GRID_SIZE; c++)
             if (grid[r][c] === null) emptyCells.push({ row: r, col: c });
-          }
-        }
         if (emptyCells.length === 0) return null;
         const { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         const value = Math.random() < NEW_TILE_PROB_2 ? 2 : 4;
@@ -194,12 +180,11 @@ export default function Game2048Page() {
 
       const serializeGrid = () => {
         const arr: string[] = [];
-        for (let r = 0; r < GRID_SIZE; r++) {
+        for (let r = 0; r < GRID_SIZE; r++)
           for (let c = 0; c < GRID_SIZE; c++) {
             const tid = grid[r][c];
             arr.push(tid === null ? "0" : String(tileDataMap.get(tid)?.value ?? "0"));
           }
-        }
         return arr.join(",");
       };
 
@@ -242,30 +227,15 @@ export default function Game2048Page() {
         const result: { id: number | null; value: number; mergedFrom: [number, number] | null }[] = [];
         let i = 0;
         const merged = new Set<number>();
-
         while (i < work.length) {
-          if (
-            i < work.length - 1 &&
-            work[i].value === work[i + 1].value &&
-            !merged.has(i) &&
-            !merged.has(i + 1)
-          ) {
+          if (i < work.length - 1 && work[i].value === work[i + 1].value && !merged.has(i) && !merged.has(i + 1)) {
             const newValue = work[i].value * 2;
             scoreGain += newValue;
-            result.push({
-              id: null,
-              value: newValue,
-              mergedFrom: [work[i].id, work[i + 1].id],
-            });
-            merged.add(i);
-            merged.add(i + 1);
+            result.push({ id: null, value: newValue, mergedFrom: [work[i].id, work[i + 1].id] });
+            merged.add(i); merged.add(i + 1);
             i += 2;
           } else {
-            result.push({
-              id: work[i].id,
-              value: work[i].value,
-              mergedFrom: null,
-            });
+            result.push({ id: work[i].id, value: work[i].value, mergedFrom: null });
             i += 1;
           }
         }
@@ -280,19 +250,13 @@ export default function Game2048Page() {
         let moveScoreGain = 0;
 
         const vectors = getVectorsForDirection(direction);
-
         for (const vec of vectors) {
           const lineTiles: { id: number; value: number; origRow: number; origCol: number }[] = [];
           for (const { row, col } of vec) {
             const tileId = grid[row][col];
             if (tileId !== null) {
               const tileData = tileDataMap.get(tileId)!;
-              lineTiles.push({
-                id: tileId,
-                value: tileData.value,
-                origRow: row,
-                origCol: col,
-              });
+              lineTiles.push({ id: tileId, value: tileData.value, origRow: row, origCol: col });
             }
           }
           if (lineTiles.length === 0) continue;
@@ -301,49 +265,25 @@ export default function Game2048Page() {
           moveScoreGain += result.scoreGain;
 
           for (const { row, col } of vec) grid[row][col] = null;
-
           for (let i = 0; i < result.tiles.length; i++) {
             const t = result.tiles[i];
             const targetPos = vec[i];
             if (t.mergedFrom) {
               const newId = nextTileId++;
               grid[targetPos.row][targetPos.col] = newId;
-              tileDataMap.set(newId, {
-                id: newId,
-                value: t.value,
-                row: targetPos.row,
-                col: targetPos.col,
-                isNew: false,
-                mergedFrom: t.mergedFrom,
-              });
-              merges.push({
-                tileId1: t.mergedFrom[0],
-                tileId2: t.mergedFrom[1],
-                mergedId: newId,
-                value: t.value,
-                row: targetPos.row,
-                col: targetPos.col,
-              });
-              removedTileIds.add(t.mergedFrom[0]);
-              removedTileIds.add(t.mergedFrom[1]);
+              tileDataMap.set(newId, { id: newId, value: t.value, row: targetPos.row, col: targetPos.col, isNew: false, mergedFrom: t.mergedFrom });
+              merges.push({ tileId1: t.mergedFrom[0], tileId2: t.mergedFrom[1], mergedId: newId, value: t.value, row: targetPos.row, col: targetPos.col });
+              removedTileIds.add(t.mergedFrom[0]); removedTileIds.add(t.mergedFrom[1]);
             } else if (t.id) {
               grid[targetPos.row][targetPos.col] = t.id;
               const tileData = tileDataMap.get(t.id)!;
               if (tileData.row !== targetPos.row || tileData.col !== targetPos.col) {
-                moves.push({
-                  tileId: t.id,
-                  fromRow: tileData.row,
-                  fromCol: tileData.col,
-                  toRow: targetPos.row,
-                  toCol: targetPos.col,
-                });
-                tileData.row = targetPos.row;
-                tileData.col = targetPos.col;
+                moves.push({ tileId: t.id, fromRow: tileData.row, fromCol: tileData.col, toRow: targetPos.row, toCol: targetPos.col });
+                tileData.row = targetPos.row; tileData.col = targetPos.col;
               }
             }
           }
         }
-
         for (const tid of removedTileIds) tileDataMap.delete(tid);
 
         if (moveScoreGain > 0) {
@@ -359,7 +299,6 @@ export default function Game2048Page() {
 
         const afterSnapshot = serializeGrid();
         const hasChanged = beforeSnapshot !== afterSnapshot;
-
         if (hasChanged) {
           const newTileInfo = spawnRandomTile();
           renderAfterMove(moves, merges, removedTileIds, newTileInfo);
@@ -373,7 +312,6 @@ export default function Game2048Page() {
         removedTileIds: Set<number>,
         newTileInfo: { id: number; row: number; col: number; value: number } | null
       ) => {
-        // 更新所有保留 tile 的位置
         for (const [id, el] of tileElementMap) {
           if (removedTileIds.has(id)) continue;
           const data = tileDataMap.get(id);
@@ -385,41 +323,28 @@ export default function Game2048Page() {
             el.style.height = size + "px";
           }
         }
-
-        // 被合并的 tile 动画移动到合并位置
         for (const merge of merges) {
           const el1 = tileElementMap.get(merge.tileId1);
           const el2 = tileElementMap.get(merge.tileId2);
           const { left, top, size } = getTilePosition(merge.row, merge.col);
           if (el1) {
-            el1.style.left = left + "px";
-            el1.style.top = top + "px";
-            el1.style.width = size + "px";
-            el1.style.height = size + "px";
-            el1.style.opacity = "0";
-            el1.style.zIndex = "3";
+            el1.style.left = left + "px"; el1.style.top = top + "px";
+            el1.style.width = size + "px"; el1.style.height = size + "px";
+            el1.style.opacity = "0"; el1.style.zIndex = "3";
             el1.style.transition = "left 0.12s ease, top 0.12s ease, opacity 0.08s ease 0.08s, transform 0.1s ease";
           }
           if (el2) {
-            el2.style.left = left + "px";
-            el2.style.top = top + "px";
-            el2.style.width = size + "px";
-            el2.style.height = size + "px";
-            el2.style.opacity = "0";
-            el2.style.zIndex = "3";
+            el2.style.left = left + "px"; el2.style.top = top + "px";
+            el2.style.width = size + "px"; el2.style.height = size + "px";
+            el2.style.opacity = "0"; el2.style.zIndex = "3";
             el2.style.transition = "left 0.12s ease, top 0.12s ease, opacity 0.08s ease 0.08s, transform 0.1s ease";
           }
         }
-
         setTimeout(() => {
           for (const tid of removedTileIds) {
             const el = tileElementMap.get(tid);
-            if (el) {
-              el.remove();
-              tileElementMap.delete(tid);
-            }
+            if (el) { el.remove(); tileElementMap.delete(tid); }
           }
-
           for (const merge of merges) {
             const data = tileDataMap.get(merge.mergedId);
             if (data) {
@@ -430,7 +355,6 @@ export default function Game2048Page() {
               setTimeout(() => el.classList.remove("merging"), 220);
             }
           }
-
           if (newTileInfo && newTileInfo.id) {
             const data = tileDataMap.get(newTileInfo.id);
             if (data) {
@@ -438,52 +362,41 @@ export default function Game2048Page() {
               el.classList.add("new-tile");
               tileElementMap.set(newTileInfo.id, el);
               tileLayer.appendChild(el);
-              setTimeout(() => {
-                el.classList.remove("new-tile");
-                if (data) data.isNew = false;
-              }, 260);
+              setTimeout(() => { el.classList.remove("new-tile"); if (data) data.isNew = false; }, 260);
             }
           }
         }, 100);
-
-        if (merges.length > 0) {
-          animateScorePop();
-        }
+        if (merges.length > 0) animateScorePop();
       };
 
       const checkWin = () => {
         if (hasWon) return false;
-        for (const [, data] of tileDataMap) {
-          if (data.value >= WIN_VALUE) return true;
-        }
+        for (const [, data] of tileDataMap) if (data.value >= WIN_VALUE) return true;
         return false;
       };
 
       const checkLose = () => {
-        for (let r = 0; r < GRID_SIZE; r++) {
-          for (let c = 0; c < GRID_SIZE; c++) {
+        for (let r = 0; r < GRID_SIZE; r++)
+          for (let c = 0; c < GRID_SIZE; c++)
             if (grid[r][c] === null) return false;
-          }
-        }
-        for (let r = 0; r < GRID_SIZE; r++) {
+        for (let r = 0; r < GRID_SIZE; r++)
           for (let c = 0; c < GRID_SIZE - 1; c++) {
             const v1 = tileDataMap.get(grid[r][c]!)?.value;
             const v2 = tileDataMap.get(grid[r][c + 1]!)?.value;
             if (v1 === v2) return false;
           }
-        }
-        for (let r = 0; r < GRID_SIZE - 1; r++) {
+        for (let r = 0; r < GRID_SIZE - 1; r++)
           for (let c = 0; c < GRID_SIZE; c++) {
             const v1 = tileDataMap.get(grid[r][c]!)?.value;
             const v2 = tileDataMap.get(grid[r + 1][c]!)?.value;
             if (v1 === v2) return false;
           }
-        }
         return true;
       };
 
       const hideModal = () => {
         modalOverlay.style.display = "none";
+        // 清除弹窗内容，自动解绑内部按钮事件
         modalButtons.innerHTML = "";
       };
 
@@ -496,7 +409,6 @@ export default function Game2048Page() {
           <button class="px-4 py-2 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95" id="btnModalNewGame">🔄 新游戏</button>
         `;
         modalOverlay.style.display = "flex";
-
         const btnContinue = document.getElementById("btnContinue");
         const btnModalNewGame = document.getElementById("btnModalNewGame");
         btnContinue?.addEventListener("click", () => {
@@ -519,7 +431,6 @@ export default function Game2048Page() {
           <button class="px-4 py-2 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95" id="btnModalClose">✕ 关闭</button>
         `;
         modalOverlay.style.display = "flex";
-
         const btnModalNewGame = document.getElementById("btnModalNewGame");
         const btnModalClose = document.getElementById("btnModalClose");
         btnModalNewGame?.addEventListener("click", () => {
@@ -533,30 +444,24 @@ export default function Game2048Page() {
         if (isMoving || isGameOver) return;
         isMoving = true;
         const hasChanged = executeMove(direction);
-        if (!hasChanged) {
-          isMoving = false;
-          return;
-        }
+        if (!hasChanged) { isMoving = false; return; }
         const debounceTime = ANIMATION_DURATION + 120;
         if (moveTimeoutId) clearTimeout(moveTimeoutId);
         moveTimeoutId = setTimeout(() => {
           isMoving = false;
           moveTimeoutId = null;
-          if (checkWin()) {
-            showWinModal();
-          } else if (checkLose()) {
-            isGameOver = true;
-            showLoseModal();
-          }
+          if (checkWin()) showWinModal();
+          else if (checkLose()) { isGameOver = true; showLoseModal(); }
         }, debounceTime);
       };
 
-      // ----- 导出/导入存档 -----
+      // ----- 导出/导入存档（修复：增加 bestScore 字段） -----
       const exportSave = () => {
         const saveData = {
           version: 1,
           grid: [] as number[][],
           score,
+          bestScore,          // ✅ 保存最高分
           hasWon,
           isGameOver,
           timestamp: new Date().toISOString(),
@@ -624,12 +529,16 @@ export default function Game2048Page() {
               }
             }
             score = saveData.score;
-            hasWon = saveData.hasWon || false;
-            isGameOver = saveData.isGameOver || false;
+            // ✅ 合并最高分：取存档中的 bestScore 和当前本地最高分的较大值
+            if (typeof saveData.bestScore === 'number' && saveData.bestScore > bestScore) {
+              bestScore = saveData.bestScore;
+            }
             if (score > bestScore) {
               bestScore = score;
-              saveBestScore();
             }
+            saveBestScore(); // 更新 localStorage
+            hasWon = saveData.hasWon || false;
+            isGameOver = saveData.isGameOver || false;
             updateScoreDisplay();
             renderAllTiles();
             hideModal();
@@ -666,7 +575,6 @@ export default function Game2048Page() {
         }, 2500);
       };
 
-      // ----- 新游戏 -----
       const newGame = () => {
         grid = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(null));
         tileDataMap.clear();
@@ -686,7 +594,7 @@ export default function Game2048Page() {
         gameBoardContainer.focus();
       };
 
-      // ----- 事件绑定 -----
+      // ----- 事件绑定（使用具名函数，以便清理时移除） -----
       const keydownHandler = (e: KeyboardEvent) => {
         if (modalOverlay.style.display === "flex") {
           if (e.key === "Escape") {
@@ -697,41 +605,21 @@ export default function Game2048Page() {
         }
         let direction: string | null = null;
         switch (e.key) {
-          case "ArrowLeft":
-          case "Left":
-            direction = "left";
-            break;
-          case "ArrowRight":
-          case "Right":
-            direction = "right";
-            break;
-          case "ArrowUp":
-          case "Up":
-            direction = "up";
-            break;
-          case "ArrowDown":
-          case "Down":
-            direction = "down";
-            break;
-          default:
-            return;
+          case "ArrowLeft": case "Left": direction = "left"; break;
+          case "ArrowRight": case "Right": direction = "right"; break;
+          case "ArrowUp": case "Up": direction = "up"; break;
+          case "ArrowDown": case "Down": direction = "down"; break;
+          default: return;
         }
         e.preventDefault();
         handleMove(direction);
       };
 
       document.addEventListener("keydown", keydownHandler);
-
-      btnNewGame.addEventListener("click", newGame);
-      btnExport.addEventListener("click", exportSave);
-      btnImport.addEventListener("click", () => importFileInput.click());
-      importFileInput.addEventListener("change", (e) => {
-        const target = e.target as HTMLInputElement;
-        if (target.files && target.files.length > 0) {
-          importSave(target.files[0]);
-          target.value = "";
-        }
-      });
+      btnNewGame.addEventListener("click", onNewGame);
+      btnExport.addEventListener("click", onExport);
+      btnImport.addEventListener("click", onImport);
+      importFileInput.addEventListener("change", onFileChange);
 
       modalOverlay.addEventListener("click", (e) => {
         if (e.target === modalOverlay) {
@@ -741,37 +629,32 @@ export default function Game2048Page() {
       });
 
       // 触摸滑动支持
-      let touchStartX = 0;
-      let touchStartY = 0;
+      let touchStartX = 0, touchStartY = 0;
       const SWIPE_THRESHOLD = 30;
-
       const touchStartHandler = (e: TouchEvent) => {
         if (e.touches.length === 1) {
           touchStartX = e.touches[0].clientX;
           touchStartY = e.touches[0].clientY;
         }
       };
-
       const touchEndHandler = (e: TouchEvent) => {
         if (isMoving || isGameOver) return;
         if (modalOverlay.style.display === "flex") return;
         const dx = (e.changedTouches[0]?.clientX || touchStartX) - touchStartX;
         const dy = (e.changedTouches[0]?.clientY || touchStartY) - touchStartY;
-        const absDx = Math.abs(dx);
-        const absDy = Math.abs(dy);
+        const absDx = Math.abs(dx), absDy = Math.abs(dy);
         if (Math.max(absDx, absDy) < SWIPE_THRESHOLD) return;
         const direction = absDx > absDy ? (dx > 0 ? "right" : "left") : dy > 0 ? "down" : "up";
         e.preventDefault();
         handleMove(direction);
       };
-
       gameBoardContainer.addEventListener("touchstart", touchStartHandler, { passive: true });
       gameBoardContainer.addEventListener("touchend", touchEndHandler);
       gameBoardContainer.setAttribute("tabindex", "0");
       gameBoardContainer.style.outline = "none";
       gameBoardContainer.addEventListener("click", () => gameBoardContainer.focus());
 
-      // 更新 CSS 变量（响应式）
+      // 响应式更新
       const updateSizeVariables = () => {
         const style = getComputedStyle(document.documentElement);
         const cellSize = parseInt(style.getPropertyValue("--cell-size").trim()) || 100;
@@ -784,31 +667,33 @@ export default function Game2048Page() {
       };
       window.addEventListener("resize", updateSizeVariables);
 
-      // ----- 启动游戏 -----
+      // 启动
       loadBestScore();
       updateSizeVariables();
       newGame();
 
-      // ----- 返回清理函数 -----
+      // ✅ 返回清理函数：移除所有绑定的事件监听器
       return () => {
         document.removeEventListener("keydown", keydownHandler);
         window.removeEventListener("resize", updateSizeVariables);
         gameBoardContainer.removeEventListener("touchstart", touchStartHandler);
         gameBoardContainer.removeEventListener("touchend", touchEndHandler);
+        btnNewGame.removeEventListener("click", onNewGame);
+        btnExport.removeEventListener("click", onExport);
+        btnImport.removeEventListener("click", onImport);
+        importFileInput.removeEventListener("change", onFileChange);
         if (moveTimeoutId) clearTimeout(moveTimeoutId);
-        // 清除弹窗可能的定时器
         modalOverlay.style.display = "none";
       };
     };
 
-    // 调用初始化函数，并保存清理函数
     const cleanup = initGame(gameContainerRef.current!);
-
     return () => {
       if (cleanup) cleanup();
     };
   }, []);
 
+  // ==================== 渲染 JSX ====================
   return (
     <div className="w-[70%] mx-auto py-8 px-4">
       <BackButton />

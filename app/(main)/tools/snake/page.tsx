@@ -16,6 +16,12 @@ export default function SnakePage() {
   const importFileInputRef = useRef<HTMLInputElement>(null);
   const toastRef = useRef<HTMLDivElement>(null);
 
+  // 新增：用于暴露游戏内部函数给 JSX
+  const restartGameRef = useRef<(() => void) | null>(null);
+  const togglePauseRef = useRef<(() => void) | null>(null);
+  const exportSaveRef = useRef<(() => void) | null>(null);
+  const importSaveRef = useRef<((file: File) => void) | null>(null);
+
   // Game state refs (to avoid re-renders)
   const gameStateRef = useRef({
     snake: [] as { row: number; col: number }[],
@@ -57,7 +63,6 @@ export default function SnakePage() {
 
   // ==================== Helper functions ====================
   const getState = () => gameStateRef.current;
-  // const setState = (updates: Record<string, any>) => Object.assign(gameStateRef.current, updates);
 
   // ==================== Game Logic (will be defined inside useEffect) ====================
   useEffect(() => {
@@ -748,6 +753,7 @@ export default function SnakePage() {
         won: s.won,
         moveInterval: s.moveInterval,
         gridSize: GRID_SIZE,
+        highScore: s.highScore,
         timestamp: new Date().toISOString(),
       };
       const json = JSON.stringify(saveData, null, 2);
@@ -795,10 +801,17 @@ export default function SnakePage() {
           s.gameOverAnimStart = s.gameOver ? performance.now() : 0;
           s.foodEatAnim = null;
           s.resetFadeState = null;
+
+          // 合并最高分
+          if (typeof data.highScore === 'number' && data.highScore > s.highScore) {
+            s.highScore = data.highScore;
+            localStorage.setItem("snake_high_score_v2", String(data.highScore));
+          }
           if (s.score > s.highScore) {
             s.highScore = s.score;
             localStorage.setItem("snake_high_score_v2", String(s.highScore));
           }
+
           updateUI();
           if (pauseOverlayRef.current) pauseOverlayRef.current.style.display = s.paused && !s.gameOver && !s.won ? "flex" : "none";
           if (btnPauseRef.current) btnPauseRef.current.textContent = s.paused ? '▶️ 继续' : '⏸ 暂停';
@@ -856,6 +869,12 @@ export default function SnakePage() {
       }, 2200);
     };
 
+    // 保存函数引用供外部使用
+    restartGameRef.current = restartGame;
+    togglePauseRef.current = togglePause;
+    exportSaveRef.current = exportSave;
+    importSaveRef.current = importSave;
+
     // ---- Keyboard handler ----
     const handleKeyDown = (e: KeyboardEvent): void => {
       const key = e.key;
@@ -892,18 +911,7 @@ export default function SnakePage() {
     document.addEventListener("keydown", handleKeyDown);
     initGame();
 
-    // 按钮事件绑定
-    document.getElementById('snake-btn-newgame')?.addEventListener('click', restartGame);
-    document.getElementById('snake-btn-pause')?.addEventListener('click', togglePause);
-    document.getElementById('snake-btn-export')?.addEventListener('click', exportSave);
-    const importBtn = document.getElementById('snake-btn-import');
-    const importInput = document.getElementById('snake-import-input') as HTMLInputElement;
-    importBtn?.addEventListener('click', () => importInput?.click());
-    importInput?.addEventListener('change', (e) => {
-      const target = e.target as HTMLInputElement;
-      if (target.files?.[0]) { importSave(target.files[0]); target.value = ''; }
-    });
-
+    // 清理函数（不再需要解绑按钮事件）
     return () => {
       const s = getState();
       if (s.animationFrameId) cancelAnimationFrame(s.animationFrameId);
@@ -961,20 +969,59 @@ export default function SnakePage() {
 
           {/* 按钮 */}
           <div className="flex flex-col gap-2">
-            <button id="snake-btn-newgame" className="w-full px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-bold rounded-xl transition-colors active:scale-95">
+            <button
+              onClick={() => restartGameRef.current?.()}
+              className="w-full px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-bold rounded-xl transition-colors active:scale-95"
+            >
               🔄 新游戏
             </button>
-            <button id="snake-btn-pause" ref={btnPauseRef} className="w-full px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95">
+            <button
+              onClick={() => togglePauseRef.current?.()}
+              ref={btnPauseRef}
+              className="w-full px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95"
+            >
               ⏸ 暂停
             </button>
             <div className="flex gap-2">
-              <button id="snake-btn-export" className="flex-1 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95">
+              <button
+                onClick={() => exportSaveRef.current?.()}
+                className="flex-1 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95"
+              >
                 💾 导出
               </button>
-              <button id="snake-btn-import" className="flex-1 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95">
+              <button
+                onClick={() => importFileInputRef.current?.click()}
+                className="flex-1 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active:scale-95"
+              >
                 📂 导入
               </button>
             </div>
+          </div>
+          {/* 操作说明 */}
+          <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-4 mt-2">
+            <h3 className="text-xs font-black text-slate-700 dark:text-slate-300 mb-2.5">操作说明</h3>
+            <ul>
+              <li className="flex items-start gap-1.5 py-1.5 text-xs text-slate-500 dark:text-slate-400 border-b border-white/40 dark:border-white/10 last:border-none">
+                <span>← → ↑ ↓</span>
+                <span>移动方向</span>
+              </li>
+              <li className="flex items-start gap-1.5 py-1.5 text-xs text-slate-500 dark:text-slate-400 border-b border-white/40 dark:border-white/10 last:border-none">
+                <span>空格</span>
+                <span>暂停 / 继续</span>
+              </li>
+              <li className="flex items-start gap-1.5 py-1.5 text-xs text-slate-500 dark:text-slate-400 border-b border-white/40 dark:border-white/10 last:border-none">
+                <span>R</span>
+                <span>重新开始</span>
+              </li>
+              <li className="flex items-start gap-1.5 py-1.5 text-xs text-slate-500 dark:text-slate-400 border-b border-white/40 dark:border-white/10 last:border-none">
+                <span>🍎</span>
+                <span>吃到食物增加长度和分数</span>
+              </li>
+              <li className="flex items-start gap-1.5 py-1.5 text-xs text-slate-500 dark:text-slate-400 border-b border-white/40 dark:border-white/10 last:border-none">
+                <span>💀</span>
+                <span>撞墙或撞到自己游戏结束</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -982,7 +1029,17 @@ export default function SnakePage() {
       {/* Toast */}
       <div className="toast-snake" ref={toastRef}></div>
 
-      <input type="file" id="snake-import-input" ref={importFileInputRef} className="hidden" accept=".json" />
+      <input
+        type="file"
+        ref={importFileInputRef}
+        className="hidden"
+        accept=".json"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) importSaveRef.current?.(file);
+          e.target.value = '';
+        }}
+      />
 
       <style>{`
         :root {

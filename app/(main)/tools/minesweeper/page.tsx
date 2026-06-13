@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import BackButton from "@/app/_components/article/BackButton";
 
 export default function MinesweeperPage() {
@@ -8,6 +8,7 @@ export default function MinesweeperPage() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const initialized = useRef(false);
+  const [showGuide, setShowGuide] = useState(false);
 
   useEffect(() => {
     if (initialized.current) return;
@@ -164,6 +165,7 @@ export default function MinesweeperPage() {
         const maxMines = Math.min(this.totalMines, this.rows * this.cols - excluded.size);
         if (maxMines <= 0) {
           this.minesPlaced = true;
+          this.totalMines = 0;
           return;
         }
         const available: { r: number; c: number }[] = [];
@@ -182,6 +184,7 @@ export default function MinesweeperPage() {
         for (let i = 0; i < toPlace; i++) {
           this.mineMap[available[i].r][available[i].c] = true;
         }
+        this.totalMines = toPlace;
         this.minesPlaced = true;
       }
 
@@ -213,6 +216,16 @@ export default function MinesweeperPage() {
           }
         }
         return cells;
+      }
+
+      getAllMinePositions(): { r: number; c: number }[] {
+        const positions: { r: number; c: number }[] = [];
+        for (let r = 0; r < this.rows; r++) {
+          for (let c = 0; c < this.cols; c++) {
+            if (this.mineMap[r][c]) positions.push({ r, c });
+          }
+        }
+        return positions;
       }
 
       revealCell(row: number, col: number): any {
@@ -387,6 +400,8 @@ export default function MinesweeperPage() {
         this.elapsedSeconds = state.elapsedSeconds;
         this.firstClickDone = state.firstClickDone;
         this.minesPlaced = state.minesPlaced;
+        const actualMines = this.mineMap.flat().filter(Boolean).length;
+        this.totalMines = actualMines;
         this.stopTimer();
         if (this.timerStarted && !this.gameOver) {
           this.timerInterval = setInterval(() => {
@@ -402,6 +417,7 @@ export default function MinesweeperPage() {
       revealAnims: any[] = [];
       explosions: any[] = [];
       flagAnims: any[] = [];
+      bombRevealAnims: any[] = [];
       confetti: any[] = [];
       flashCells: any[] = [];
       isRunning = false;
@@ -421,6 +437,10 @@ export default function MinesweeperPage() {
       }
       addFlagAnim(row: number, col: number, type: "place" | "remove") {
         this.flagAnims.push({ row, col, startTime: performance.now(), type });
+        this.ensureRunning();
+      }
+      addBombRevealAnim(row: number, col: number) {
+        this.bombRevealAnims.push({ row, col, startTime: performance.now() });
         this.ensureRunning();
       }
       addConfetti(count = 80) {
@@ -466,6 +486,7 @@ export default function MinesweeperPage() {
         this.revealAnims = this.revealAnims.filter((a) => now - a.startTime < 400);
         this.explosions = this.explosions.filter((e) => now - e.startTime < 600);
         this.flagAnims = this.flagAnims.filter((f) => now - f.startTime < 350);
+        this.bombRevealAnims = this.bombRevealAnims.filter((b) => now - b.startTime < 500);
         this.confetti = this.confetti.filter((c) => c.life < c.maxLife);
         this.flashCells = this.flashCells.filter((f) => now - f.startTime < 500);
 
@@ -474,6 +495,7 @@ export default function MinesweeperPage() {
           this.revealAnims.length > 0 ||
           this.explosions.length > 0 ||
           this.flagAnims.length > 0 ||
+          this.bombRevealAnims.length > 0 ||
           this.confetti.length > 0 ||
           this.flashCells.length > 0;
 
@@ -484,6 +506,7 @@ export default function MinesweeperPage() {
               this.revealAnims.length === 0 &&
               this.explosions.length === 0 &&
               this.flagAnims.length === 0 &&
+              this.bombRevealAnims.length === 0 &&
               this.confetti.length === 0 &&
               this.flashCells.length === 0;
             if (stillEmpty) this.stop();
@@ -501,6 +524,7 @@ export default function MinesweeperPage() {
         this.revealAnims = [];
         this.explosions = [];
         this.flagAnims = [];
+        this.bombRevealAnims = [];
         this.confetti = [];
         this.flashCells = [];
       }
@@ -609,10 +633,21 @@ export default function MinesweeperPage() {
               ctx.stroke();
 
               if (isMine) {
+                const bombAnim = this.animManager.bombRevealAnims.find(a => a.row === r && a.col === c);
+                let bombScale = 1;
+                if (bombAnim) {
+                  const elapsed = now - bombAnim.startTime;
+                  const progress = Math.min(1, elapsed / 400);
+                  bombScale = 0.5 + 0.5 * (1 - Math.pow(1 - progress, 3));
+                }
+                ctx.save();
+                ctx.translate(x + cs / 2, y + cs / 2);
+                ctx.scale(bombScale, bombScale);
                 ctx.font = `${cs * 0.68}px serif`;
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
-                ctx.fillText("💣", x + cs / 2, y + cs / 2);
+                ctx.fillText("💣", 0, 0);
+                ctx.restore();
               } else {
                 const adjMines = this.game.countAdjacentMines(r, c);
                 if (adjMines > 0) {
@@ -737,20 +772,11 @@ export default function MinesweeperPage() {
                 ctx.textBaseline = "middle";
                 ctx.fillText("❌", x + cs / 2, y + cs / 2);
               }
-              if (!this.game.revealed[r][c] && this.game.mineMap[r][c] && !this.game.flagged[r][c]) {
-                const x = this.cellX(c);
-                const y = this.cellY(r);
-                ctx.font = `${cs * 0.55}px serif`;
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.globalAlpha = 0.7;
-                ctx.fillText("💣", x + cs / 2, y + cs / 2);
-                ctx.globalAlpha = 1;
-              }
             }
           }
         }
 
+        // 爆炸动画
         for (const exp of this.animManager.explosions) {
           const elapsed = now - exp.startTime;
           const progress = Math.max(0, Math.min(1, elapsed / 500));
@@ -767,6 +793,7 @@ export default function MinesweeperPage() {
           ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
         }
 
+        // 涟漪
         for (const ripple of this.animManager.ripples) {
           const elapsed = now - ripple.startTime;
           const progress = Math.max(0, Math.min(1, elapsed / 280));
@@ -780,6 +807,7 @@ export default function MinesweeperPage() {
           ctx.fillRect(ripple.x - radius, ripple.y - radius, radius * 2, radius * 2);
         }
 
+        // 闪光格子
         for (const flash of this.animManager.flashCells) {
           const elapsed = now - flash.startTime;
           const progress = Math.max(0, Math.min(1, elapsed / 400));
@@ -799,6 +827,7 @@ export default function MinesweeperPage() {
           ctx.fill();
         }
 
+        // 彩带
         for (const conf of this.animManager.confetti) {
           ctx.save();
           ctx.translate(conf.x, conf.y);
@@ -810,6 +839,7 @@ export default function MinesweeperPage() {
         }
         ctx.globalAlpha = 1;
 
+        // 悬停高亮
         if (this.hoveredCell && !this.game.gameOver) {
           const { row, col } = this.hoveredCell;
           if (!this.game.revealed[row][col]) {
@@ -824,6 +854,7 @@ export default function MinesweeperPage() {
 
       renderLoop() {
         this.draw();
+        updateUI();
         if (this.animManager.isRunning) {
           requestAnimationFrame(() => this.renderLoop());
         }
@@ -832,6 +863,7 @@ export default function MinesweeperPage() {
       startRenderLoop() {
         if (!this.animManager.isRunning && this.animManager.confetti.length === 0) {
           this.draw();
+          updateUI();
           return;
         }
         this.renderLoop();
@@ -848,7 +880,6 @@ export default function MinesweeperPage() {
     const fileInput = fileInputRef.current!;
     const modalContainer = document.getElementById("modalContainer")!;
 
-    // ==================== 游戏初始化 ====================
     const game = new MinesweeperGame();
     const animManager = new AnimationManager();
     const renderer = new Renderer(canvas, game, animManager);
@@ -856,31 +887,56 @@ export default function MinesweeperPage() {
     let prevMineCount = 10;
     let prevElapsed = 0;
 
-    // 高分管理
-    const getHighScoreKey = () => `minesweeper_highscore_${game.difficulty}`;
-    const getHighScore = (): number | null => {
-      const val = localStorage.getItem(getHighScoreKey());
-      return val !== null ? parseInt(val, 10) : null;
+    // ---------- 高分管理（按 rows, cols, mines）----------
+    const HIGHSCORE_STORAGE_KEY = "minesweeper_highscores";
+
+    const getAllHighScores = (): Record<string, number> => {
+      try {
+        const raw = localStorage.getItem(HIGHSCORE_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch { return {}; }
     };
-    const setHighScore = (seconds: number): boolean => {
-      const current = getHighScore();
-      if (current === null || seconds < current) {
-        localStorage.setItem(getHighScoreKey(), seconds.toString());
+
+    const saveAllHighScores = (data: Record<string, number>) => {
+      localStorage.setItem(HIGHSCORE_STORAGE_KEY, JSON.stringify(data));
+    };
+
+    const makeHighScoreKey = (rows: number, cols: number, mines: number) => `${rows}x${cols}_${mines}`;
+
+    const getHighScore = (rows: number, cols: number, mines: number): number | null => {
+      const all = getAllHighScores();
+      const val = all[makeHighScoreKey(rows, cols, mines)];
+      return val !== undefined ? val : null;
+    };
+
+    const setHighScore = (rows: number, cols: number, mines: number, seconds: number): boolean => {
+      const all = getAllHighScores();
+      const key = makeHighScoreKey(rows, cols, mines);
+      const current = all[key];
+      if (current === undefined || seconds < current) {
+        all[key] = seconds;
+        saveAllHighScores(all);
         return true;
       }
       return false;
     };
-    const updateHighScoreDisplay = () => {
-      const hs = getHighScore();
-      highscoreDisplayEl.textContent = hs !== null ? hs.toString() : "--";
-      if (hs !== null) {
-        highscoreDisplayEl.classList.add("highscore-value");
-      } else {
-        highscoreDisplayEl.classList.remove("highscore-value");
+
+    const mergeHighScores = (imported: Record<string, number>) => {
+      const all = getAllHighScores();
+      for (const [key, seconds] of Object.entries(imported)) {
+        if (typeof seconds === "number" && (all[key] === undefined || seconds < all[key])) {
+          all[key] = seconds;
+        }
       }
+      saveAllHighScores(all);
     };
 
-    // UI 更新
+    const updateHighScoreDisplay = () => {
+      const hs = getHighScore(game.rows, game.cols, game.totalMines);
+      highscoreDisplayEl.textContent = hs !== null ? hs.toString() : "--";
+      highscoreDisplayEl.classList.toggle("highscore-value", hs !== null);
+    };
+
     const updateUI = () => {
       const remaining = game.getRemainingMines();
       if (remaining !== prevMineCount) {
@@ -906,9 +962,14 @@ export default function MinesweeperPage() {
       updateHighScoreDisplay();
     };
 
-    const uiInterval = setInterval(updateUI, 200);
+    let uiAnimFrameId: number | null = null;
+    const uiLoop = () => {
+      updateUI();
+      uiAnimFrameId = requestAnimationFrame(uiLoop);
+    };
+    uiLoop();
 
-    // 难度按钮
+    // 难度配置
     const difficultyConfigs: Record<string, { rows: number; cols: number; mines: number }> = {
       beginner: { rows: 9, cols: 9, mines: 10 },
       intermediate: { rows: 16, cols: 16, mines: 40 },
@@ -916,10 +977,10 @@ export default function MinesweeperPage() {
     };
 
     const setActiveDifficultyButton = (difficulty: string) => {
-      document.querySelectorAll("#difficultyPanel .btn-group .btn[data-difficulty]").forEach((b) => {
+      document.querySelectorAll("#difficultyPanel button[data-difficulty]").forEach((b) => {
         b.classList.remove("active-difficulty");
       });
-      const activeBtn = document.querySelector(`#difficultyPanel .btn[data-difficulty="${difficulty}"]`);
+      const activeBtn = document.querySelector(`#difficultyPanel button[data-difficulty="${difficulty}"]`);
       if (activeBtn) activeBtn.classList.add("active-difficulty");
       if (difficulty === "custom") {
         document.getElementById("btnCustom")!.classList.add("active-difficulty");
@@ -944,7 +1005,7 @@ export default function MinesweeperPage() {
       canvasWrapper.scrollLeft = 0;
     };
 
-    document.querySelectorAll("#difficultyPanel .btn-group .btn[data-difficulty]").forEach((btn) => {
+    document.querySelectorAll("#difficultyPanel button[data-difficulty]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const diff = (btn as HTMLElement).dataset.difficulty!;
         if (diff === "custom") {
@@ -966,20 +1027,17 @@ export default function MinesweeperPage() {
       const rowsInput = document.getElementById("customRows") as HTMLInputElement;
       const colsInput = document.getElementById("customCols") as HTMLInputElement;
       const minesInput = document.getElementById("customMines") as HTMLInputElement;
-      const rows = parseInt(rowsInput.value) || 9;
-      const cols = parseInt(colsInput.value) || 9;
-      const mines = parseInt(minesInput.value) || 10;
-      const clampedRows = Math.max(1, Math.min(24, rows));
-      const clampedCols = Math.max(1, Math.min(30, cols));
-      const maxMines = Math.floor(clampedRows * clampedCols * 0.8);
-      const clampedMines = Math.max(0, Math.min(maxMines, mines));
-      rowsInput.value = clampedRows.toString();
-      colsInput.value = clampedCols.toString();
-      minesInput.value = clampedMines.toString();
-      if (mines > maxMines) {
+      const rows = Math.max(1, Math.min(24, parseInt(rowsInput.value) || 9));
+      const cols = Math.max(1, Math.min(30, parseInt(colsInput.value) || 9));
+      const maxMines = Math.floor(rows * cols * 0.8);
+      const mines = Math.max(0, Math.min(maxMines, parseInt(minesInput.value) || 10));
+      rowsInput.value = rows.toString();
+      colsInput.value = cols.toString();
+      minesInput.value = mines.toString();
+      if (parseInt(minesInput.value) > maxMines) {
         showToast(`雷数不能超过格子的80%（最多${maxMines}颗）`, true);
       }
-      switchDifficulty("custom", clampedRows, clampedCols, clampedMines);
+      switchDifficulty("custom", rows, cols, mines);
       customRow.style.display = "none";
       setActiveDifficultyButton("custom");
     });
@@ -1003,6 +1061,75 @@ export default function MinesweeperPage() {
       sfxClick();
     });
 
+    // 游戏结束动画与弹窗
+    const animateLosingMines = () => {
+      const mines = game.getAllMinePositions().filter(m => !game.revealed[m.r][m.c]);
+      let delay = 80;
+      mines.forEach((mine, index) => {
+        setTimeout(() => {
+          game.revealed[mine.r][mine.c] = true;
+          animManager.addExplosion(mine.r, mine.c);
+          renderer.draw();
+        }, delay + index * 120);
+      });
+      const totalTime = delay + mines.length * 120 + 500;
+      setTimeout(() => {
+        showGameOverModal(false);
+      }, totalTime);
+    };
+
+    const animateWinningMines = () => {
+      const mines = game.getAllMinePositions();
+      mines.forEach((mine, index) => {
+        setTimeout(() => {
+          if (!game.revealed[mine.r][mine.c]) {
+            game.revealed[mine.r][mine.c] = true;
+          }
+          animManager.addBombRevealAnim(mine.r, mine.c);
+          renderer.draw();
+        }, 150 + index * 100);
+      });
+      const totalTime = 150 + mines.length * 100 + 400;
+      setTimeout(() => {
+        const isNew = setHighScore(game.rows, game.cols, game.totalMines, game.elapsedSeconds);
+        updateHighScoreDisplay();
+        showGameOverModal(true, isNew);
+      }, totalTime);
+    };
+
+    const showGameOverModal = (won: boolean, isNewRecord = false) => {
+      const overlay = document.createElement("div");
+      overlay.className = "modal-overlay";
+      const dialog = document.createElement("div");
+      dialog.className = "modal-dialog " + (won ? "win" : "lose");
+      const titleClass = won ? "win-title" : "lose-title";
+      const title = won ? "🎉 胜 利！" : "💥 游戏结束";
+      const subtitle = won
+        ? `用时 <span class="modal-highlight">${game.elapsedSeconds}</span> 秒` +
+        (isNewRecord ? ' <span class="modal-highlight">🏆 新纪录！</span>' : "")
+        : "踩到地雷了，再试一次吧！";
+      dialog.innerHTML = `
+        <div class="modal-title ${titleClass}">${title}</div>
+        <div class="modal-subtitle">${subtitle}</div>
+        <button class="modal-close-btn">🔄 再来一局</button>
+      `;
+      overlay.appendChild(dialog);
+      modalContainer.innerHTML = "";
+      modalContainer.appendChild(overlay);
+
+      const closeBtn = dialog.querySelector(".modal-close-btn")!;
+      closeBtn.addEventListener("click", () => {
+        modalContainer.innerHTML = "";
+        document.getElementById("btnNewGame")!.click();
+      });
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+          modalContainer.innerHTML = "";
+          document.getElementById("btnNewGame")!.click();
+        }
+      });
+    };
+
     // Canvas 事件
     const getCanvasPos = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
@@ -1025,7 +1152,7 @@ export default function MinesweeperPage() {
         renderer.draw();
         renderer.startRenderLoop();
         updateUI();
-        setTimeout(() => showGameOverModal(false), 500);
+        animateLosingMines();
       } else if (result.type === "reveal") {
         sfxReveal();
         const maxDepth = Math.max(...result.cells.map((c: any) => c.depth), 0);
@@ -1038,7 +1165,17 @@ export default function MinesweeperPage() {
         updateUI();
         if (result.gameWon) {
           sfxWin();
-          handleWin();
+          for (let r = 0; r < game.rows; r++) {
+            for (let c = 0; c < game.cols; c++) {
+              if (!game.mineMap[r][c] && game.revealed[r][c]) {
+                animManager.addFlashCell(r, c, "rgb(76,217,100)");
+              }
+            }
+          }
+          animManager.addConfetti(100);
+          renderer.draw();
+          renderer.startRenderLoop();
+          animateWinningMines();
         }
       }
     });
@@ -1063,7 +1200,7 @@ export default function MinesweeperPage() {
         renderer.draw();
         renderer.startRenderLoop();
         updateUI();
-        setTimeout(() => showGameOverModal(false), 500);
+        animateLosingMines();
       } else if (result.type === "double_reveal") {
         sfxReveal();
         const cells = result.revealedList || [];
@@ -1077,7 +1214,17 @@ export default function MinesweeperPage() {
         updateUI();
         if (result.gameWon) {
           sfxWin();
-          handleWin();
+          for (let r = 0; r < game.rows; r++) {
+            for (let c = 0; c < game.cols; c++) {
+              if (!game.mineMap[r][c] && game.revealed[r][c]) {
+                animManager.addFlashCell(r, c, "rgb(76,217,100)");
+              }
+            }
+          }
+          animManager.addConfetti(100);
+          renderer.draw();
+          renderer.startRenderLoop();
+          animateWinningMines();
         }
       }
     });
@@ -1141,61 +1288,12 @@ export default function MinesweeperPage() {
       }
     }, { passive: false });
 
-    // 胜利处理
-    const handleWin = () => {
-      const isNewRecord = setHighScore(game.elapsedSeconds);
-      updateHighScoreDisplay();
-      for (let r = 0; r < game.rows; r++) {
-        for (let c = 0; c < game.cols; c++) {
-          if (!game.mineMap[r][c] && game.revealed[r][c]) {
-            animManager.addFlashCell(r, c, "rgb(76,217,100)");
-          }
-        }
-      }
-      animManager.addConfetti(100);
-      renderer.draw();
-      renderer.startRenderLoop();
-      setTimeout(() => showGameOverModal(true, isNewRecord), 600);
-    };
-
-    // 弹窗
-    const showGameOverModal = (won: boolean, isNewRecord = false) => {
-      const overlay = document.createElement("div");
-      overlay.className = "modal-overlay";
-      const dialog = document.createElement("div");
-      dialog.className = "modal-dialog " + (won ? "win" : "lose");
-      const titleClass = won ? "win-title" : "lose-title";
-      const title = won ? "🎉 胜 利！" : "💥 游戏结束";
-      const subtitle = won
-        ? `用时 <span class="modal-highlight">${game.elapsedSeconds}</span> 秒` +
-        (isNewRecord ? ' <span class="modal-highlight">🏆 新纪录！</span>' : "")
-        : "踩到地雷了，再试一次吧！";
-      dialog.innerHTML = `
-        <div class="modal-title ${titleClass}">${title}</div>
-        <div class="modal-subtitle">${subtitle}</div>
-        <button class="modal-close-btn">🔄 再来一局</button>
-      `;
-      overlay.appendChild(dialog);
-      modalContainer.innerHTML = "";
-      modalContainer.appendChild(overlay);
-
-      const closeBtn = dialog.querySelector(".modal-close-btn")!;
-      closeBtn.addEventListener("click", () => {
-        modalContainer.innerHTML = "";
-        document.getElementById("btnNewGame")!.click();
-      });
-      overlay.addEventListener("click", (e) => {
-        if (e.target === overlay) {
-          modalContainer.innerHTML = "";
-          document.getElementById("btnNewGame")!.click();
-        }
-      });
-    };
-
-    // 存档导出
+    // 存档导出（含高分）
     document.getElementById("btnExport")!.addEventListener("click", () => {
       const state = game.getState();
-      const jsonStr = JSON.stringify(state, null, 2);
+      const highscores = getAllHighScores();
+      const exportData = { ...state, highscores };
+      const jsonStr = JSON.stringify(exportData, null, 2);
       const blob = new Blob([jsonStr], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const timestamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
@@ -1207,7 +1305,7 @@ export default function MinesweeperPage() {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showToast("✅ 存档已导出：" + filename);
+      showToast("✅ 存档已导出（含高分记录）");
     });
 
     document.getElementById("btnImport")!.addEventListener("click", () => {
@@ -1230,20 +1328,6 @@ export default function MinesweeperPage() {
           if (missing.length > 0) throw new Error("存档缺少字段：" + missing.join(", "));
           if (state.rows < 1 || state.rows > 24 || state.cols < 1 || state.cols > 30)
             throw new Error("网格尺寸超出范围");
-          if (state.totalMines < 0 || state.totalMines > Math.floor(state.rows * state.cols * 0.8) + 1)
-            throw new Error("雷数不合理");
-          if (
-            !Array.isArray(state.mineMap) || state.mineMap.length !== state.rows ||
-            !Array.isArray(state.revealed) || state.revealed.length !== state.rows ||
-            !Array.isArray(state.flagged) || state.flagged.length !== state.rows
-          ) throw new Error("矩阵数据损坏");
-          for (let r = 0; r < state.rows; r++) {
-            if (
-              state.mineMap[r].length !== state.cols ||
-              state.revealed[r].length !== state.cols ||
-              state.flagged[r].length !== state.cols
-            ) throw new Error("矩阵列数不匹配");
-          }
 
           animManager.stop();
           game.loadState(state);
@@ -1264,7 +1348,15 @@ export default function MinesweeperPage() {
           canvasWrapper.scrollTop = 0;
           canvasWrapper.scrollLeft = 0;
           modalContainer.innerHTML = "";
-          showToast("✅ 存档已恢复");
+
+          if (state.highscores && typeof state.highscores === "object") {
+            mergeHighScores(state.highscores);
+            updateHighScoreDisplay();
+            showToast("✅ 存档已恢复（含高分记录）");
+          } else {
+            showToast("✅ 存档已恢复");
+          }
+
           if (state.gameOver) {
             setTimeout(() => {
               if (state.gameWon) {
@@ -1336,33 +1428,61 @@ export default function MinesweeperPage() {
     timerDisplayEl.textContent = "0";
     updateHighScoreDisplay();
 
-    // 清理函数
     return () => {
-      clearInterval(uiInterval);
+      if (uiAnimFrameId) cancelAnimationFrame(uiAnimFrameId);
       game.stopTimer();
       animManager.stop();
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("keydown", keyHandler);
-      // 移除所有动态添加的事件监听器需要更细致的处理，但组件卸载时 canvas 等 DOM 也会被移除，事件会自动解绑。
-      // 这里为了保险，可以手动移除，但 canvas 监听器通过 addEventListener 添加，需要原函数引用，这里省略。
-      // 实际项目可用 AbortController 等，但鉴于复杂性，交给浏览器 GC 处理。
     };
   }, []);
 
-
   return (
-    <div className="w-[70%] mx-auto py-8 px-4">
+    <div className="w-full max-w-5xl mx-auto py-8 px-4 flex flex-col items-center">
       <BackButton />
 
       <h1 className="text-3xl md:text-4xl font-black tracking-tighter text-slate-900 dark:text-white mb-2">
         💣 扫 雷
       </h1>
-      <p className="text-sm text-slate-500 dark:text-slate-400 mb-8">
+      <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
         经典扫雷游戏，左键翻开格子，右键标记地雷
       </p>
 
+      {/* 操作指南 */}
+      <div className="mb-4 w-full">
+        <button
+          onClick={() => setShowGuide(!showGuide)}
+          className="flex items-center gap-1.5 text-xs font-semibold text-indigo-500 hover:text-indigo-600 transition-colors"
+        >
+          {showGuide ? "🔽 隐藏操作指南" : "📖 操作指南"}
+        </button>
+        {showGuide && (
+          <div className="mt-2 rounded-xl bg-white/30 dark:bg-slate-800/30 backdrop-blur-md border border-white/30 dark:border-white/10 p-3 text-xs text-slate-600 dark:text-slate-300 space-y-1">
+            <p>🖱️ <strong>鼠标操作</strong></p>
+            <ul className="list-disc ml-5 space-y-0.5">
+              <li><strong>左键</strong>：翻开格子</li>
+              <li><strong>右键</strong>：标记/取消旗帜（🚩）</li>
+              <li><strong>双击已翻开数字</strong>：若周围旗帜数等于数字，快速翻开其余格子</li>
+            </ul>
+            <p className="mt-2">📱 <strong>触摸操作</strong></p>
+            <ul className="list-disc ml-5 space-y-0.5">
+              <li><strong>双指同时点击</strong>：标记/取消旗帜</li>
+            </ul>
+            <p className="mt-2">⌨️ <strong>键盘快捷键</strong></p>
+            <ul className="list-disc ml-5 space-y-0.5">
+              <li><strong>Ctrl + N</strong>：新游戏</li>
+            </ul>
+            <p className="mt-2">💾 <strong>存档</strong></p>
+            <ul className="list-disc ml-5 space-y-0.5">
+              <li>点击“导出存档”可保存当前游戏和高分记录</li>
+              <li>点击“导入存档”可恢复游戏并合并最佳成绩</li>
+            </ul>
+          </div>
+        )}
+      </div>
+
       {/* 难度选择 */}
-      <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-3 mb-4" id="difficultyPanel">
+      <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-3 mb-4 w-full" id="difficultyPanel">
         <div className="flex flex-wrap gap-2 items-center justify-center">
           <div className="flex gap-1.5 flex-wrap justify-center">
             <button className="px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all active-difficulty" data-difficulty="beginner">初级 9×9</button>
@@ -1378,15 +1498,18 @@ export default function MinesweeperPage() {
       <div className="flex gap-2 items-center justify-center flex-wrap mb-4" id="customRow" style={{ display: "none" }}>
         <span className="text-xs font-medium text-slate-500 dark:text-slate-400">行</span>
         <input type="number" className="w-14 px-2 py-1.5 rounded-xl bg-white/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 text-sm text-slate-800 dark:text-slate-200 text-center outline-none" id="customRows" defaultValue={9} min={1} max={24} />
+        <span className="text-[10px] text-slate-400 dark:text-slate-500">(1-24)</span>
         <span className="text-xs font-medium text-slate-500 dark:text-slate-400">列</span>
         <input type="number" className="w-14 px-2 py-1.5 rounded-xl bg-white/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 text-sm text-slate-800 dark:text-slate-200 text-center outline-none" id="customCols" defaultValue={9} min={1} max={30} />
+        <span className="text-[10px] text-slate-400 dark:text-slate-500">(1-30)</span>
         <span className="text-xs font-medium text-slate-500 dark:text-slate-400">雷</span>
         <input type="number" className="w-14 px-2 py-1.5 rounded-xl bg-white/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 text-sm text-slate-800 dark:text-slate-200 text-center outline-none" id="customMines" defaultValue={10} min={0} max={99} />
+        <span className="text-[10px] text-slate-400 dark:text-slate-500">(≤80%)</span>
         <button className="px-3 py-1.5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/40 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all" id="btnApplyCustom">✅ 生成</button>
       </div>
 
       {/* 信息栏 */}
-      <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-3 mb-4">
+      <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-3 mb-4 w-full">
         <div className="flex gap-4 items-center justify-center flex-wrap">
           <div className="flex items-center gap-2">
             <span className="text-sm">🚩</span>
@@ -1409,7 +1532,7 @@ export default function MinesweeperPage() {
       </div>
 
       {/* 游戏画布 */}
-      <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-4 mb-4 overflow-auto max-h-[62vh] canvas-wrapper" id="canvasWrapper" ref={wrapperRef}>
+      <div className="rounded-2xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-4 mb-4 overflow-auto max-h-[70vh] w-full flex justify-center canvas-wrapper" id="canvasWrapper" ref={wrapperRef}>
         <canvas id="gameCanvas" ref={canvasRef} className="block"></canvas>
       </div>
 
