@@ -48,6 +48,8 @@ export default function ProjectList() {
 
   return (
     <div>
+      <h1 className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white mb-2">Projects</h1>
+      <p className="text-slate-500 dark:text-slate-400 mb-8">Code, experiments, and builds.</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((p) => (
           <ProjectCard key={p.id} project={p} />

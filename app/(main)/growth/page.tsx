@@ -1,15 +1,22 @@
-import type { Metadata } from "next";
+import { growthMetadata as metadata, breadcrumbSchema } from "@/lib/seo";
 import GrowthClient from "./GrowthClient";
 
-export const metadata: Metadata = {
-  title: "Growth — 博客成长记录",
-  description: "从第一行代码开始的每一次提交，记录栏轩阁博客的技术演进历程。",
-  openGraph: {
-    title: "Growth — 博客成长记录",
-    description: "从第一行代码开始的每一次提交，记录栏轩阁博客的技术演进历程。",
-  },
-};
+export { metadata };
 
 export default function GrowthPage() {
-  return <GrowthClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([
+            { name: "首页", path: "/" },
+            { name: "博客成长", path: "/growth" },
+          ])),
+        }}
+      />
+      <span className="sr-only">{metadata.description}</span>
+      <GrowthClient />
+    </>
+  );
 }

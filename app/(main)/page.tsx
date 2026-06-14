@@ -13,7 +13,7 @@ import Tooltip from "@/app/_components/common/Tooltip";
 import SiteDashboard from "@/app/_components/layout/SiteDashboard";
 import MusicPlayer from "@/app/_components/layout/MusicPlayer";
 import FloatingNav from "@/app/_components/layout/FloatingNav";
-import JsonLd from "@/app/_components/common/JsonLd";
+import { websiteSchema } from "@/lib/seo";
 
 const [GH_OWNER, GH_REPO] = siteConfig.repo.split("/");
 
@@ -66,14 +66,12 @@ export default function Home() {
   return (
     <>
       <FloatingNav />
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        name: siteConfig.title,
-        alternateName: siteConfig.navTitle,
-        description: siteConfig.bio,
-        url: siteConfig.blog ? `https://${siteConfig.blog.replace(/^https?:\/\//, "")}` : (typeof window !== "undefined" ? window.location.origin : ""),
-      }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteSchema()),
+        }}
+      />
       <div className="flex flex-col gap-6 w-full mt-6">
         {/* Row 1: Profile Card + Player */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">

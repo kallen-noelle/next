@@ -12,7 +12,7 @@ import Giscus from "@/app/_components/comment/Giscus";
 import Loading from "@/app/_components/common/Loading";
 import { downloadContentAsZip, downloadMarkdown } from "@/lib/download-content";
 import { showSuccessToast, showErrorToast } from "@/lib/toast";
-import JsonLd from "@/app/_components/common/JsonLd";
+import { jsonLdSchema } from "@/lib/seo";
 
 export default function ProjectDetailClient(props: { params: Promise<{ id: string }> }) {
   const { id } = use(props.params);
@@ -41,14 +41,18 @@ export default function ProjectDetailClient(props: { params: Promise<{ id: strin
   return (
     <>
       {project && (
-        <JsonLd data={{
-          "@context": "https://schema.org",
-          "@type": "CreativeWork",
-          name: project.name,
-          description: project.summary,
-          dateCreated: project.createdAt,
-          image: project.coverImage || undefined,
-        }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLdSchema(
+              "CreativeWork",
+              project.name,
+              project.summary,
+              project.createdAt,
+              project.coverImage,
+            )),
+          }}
+        />
       )}
       <div className="min-h-screen relative pb-20">
         <div className="flex flex-col lg:flex-row gap-8">

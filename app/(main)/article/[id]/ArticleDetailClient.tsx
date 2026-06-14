@@ -13,7 +13,7 @@ import Giscus from "@/app/_components/comment/Giscus";
 import Loading from "@/app/_components/common/Loading";
 import { downloadContentAsZip, downloadMarkdown } from "@/lib/download-content";
 import { showSuccessToast, showErrorToast } from "@/lib/toast";
-import JsonLd from "@/app/_components/common/JsonLd";
+import { jsonLdSchema } from "@/lib/seo";
 
 export default function ArticleDetailClient(props: { params: Promise<{ id: string }> }) {
   const { id } = use(props.params);
@@ -59,15 +59,18 @@ export default function ArticleDetailClient(props: { params: Promise<{ id: strin
   return (
     <>
       {article && (
-        <JsonLd data={{
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: article.title,
-          description: article.summary,
-          datePublished: article.createdAt,
-          author: { "@type": "Person", name: "作者" },
-          image: article.coverImage || undefined,
-        }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLdSchema(
+              "Article",
+              article.title,
+              article.summary,
+              article.createdAt,
+              article.coverImage,
+            )),
+          }}
+        />
       )}
       <div className="min-h-screen relative pb-20">
         <div className="flex flex-col lg:flex-row gap-8">

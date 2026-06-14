@@ -41,6 +41,8 @@ export default function LiteratureList() {
 
   return (
     <div>
+      <h1 className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white mb-2">Literature</h1>
+      <p className="text-slate-500 dark:text-slate-400 mb-8">Poetry, prose, and creative writing.</p>
       {tags.map((tag, idx) => (
         <section key={tag.id} className={idx < tags.length - 1 ? "mb-12" : ""}>
           <h2 className="text-lg font-bold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">

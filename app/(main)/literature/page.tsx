@@ -1,13 +1,21 @@
 import LiteratureList from "@/app/_components/literature/LiteratureList";
-import { literatureMetadata as metadata } from "@/lib/seo";
+import { literatureMetadata as metadata, breadcrumbSchema } from "@/lib/seo";
 
 export { metadata };
 
 export default function LiteraturePage() {
   return (
     <>
-      <h1 className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white mb-2">Literature</h1>
-      <p className="text-slate-500 dark:text-slate-400 mb-8">Poetry, prose, and creative writing.</p>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([
+            { name: "首页", path: "/" },
+            { name: "文学创作", path: "/literature" },
+          ])),
+        }}
+      />
+      <span className="sr-only">{metadata.description}</span>
       <LiteratureList />
     </>
   );

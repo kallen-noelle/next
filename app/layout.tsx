@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import fs from "fs";
-import path from "path";
 import "./globals.css";
 import { ThemeProvider } from "./_components/layout/ThemeProvider";
 import BackgroundEffects from "./_components/common/ParticleBg";
@@ -11,7 +9,7 @@ import SplashScreen from "./_components/layout/SplashScreen";
 import MaskOverlay from "./_components/common/MaskOverlay";
 import Live2DWidget from "./_components/Live2DWidgetWrapper";
 import { siteConfig } from "@/lib/siteConfig";
-import { defaultOgImage } from "@/lib/seo";
+import { defaultOgImage, SITE_KEYWORDS, SITE_URL } from "@/lib/seo";
 import BackgroundSlider from "@/app/_components/layout/BackgroundSwitcher";
 
 const geistSans = localFont({
@@ -30,21 +28,11 @@ const notoSerif = localFont({
   weight: "400 900",
 });
 
-function getSiteUrl(): string {
-  try {
-    const raw = fs.readFileSync(path.join(process.cwd(), "public", "data", "about.json"), "utf-8");
-    const blog = JSON.parse(raw).blog || siteConfig.blog;
-    return blog.startsWith("http") ? blog : `https://${blog}`;
-  } catch {
-    return `https://${siteConfig.blog}`;
-  }
-}
-
 export const metadata: Metadata = {
-  metadataBase: new URL(getSiteUrl()),
+  metadataBase: new URL(SITE_URL),
   title: { default: siteConfig.title, template: `%s | ${siteConfig.title}` },
   description: siteConfig.bio,
-  keywords: ["栏轩阁", "个人博客", "技术博客", "前端开发", "全栈开发", "Web开发", "JavaScript", "TypeScript", "React", "Next.js", "编程", "项目实践", "学习笔记"],
+  keywords: SITE_KEYWORDS,
   robots: { index: true, follow: true },
   openGraph: {
     title: siteConfig.title,
@@ -53,6 +41,12 @@ export const metadata: Metadata = {
     type: "website",
     locale: "zh_CN",
     images: [{ url: defaultOgImage, width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.bio,
+    images: [defaultOgImage],
   },
 };
 

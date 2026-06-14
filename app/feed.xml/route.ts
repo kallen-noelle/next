@@ -1,18 +1,9 @@
 import fs from "fs";
 import path from "path";
 import { siteConfig } from "@/lib/siteConfig";
+import { SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-static";
-
-const SITE_URL = (() => {
-  try {
-    const raw = fs.readFileSync(path.join(process.cwd(), "public", "data", "about.json"), "utf-8");
-    const blog = JSON.parse(raw).blog || siteConfig.blog;
-    return blog.startsWith("http") ? blog : `https://${blog}`;
-  } catch {
-    return `https://${siteConfig.blog}`;
-  }
-})();
 const AUTHOR_NAME = siteConfig.authorName || "Author";
 
 interface ArticleItem {

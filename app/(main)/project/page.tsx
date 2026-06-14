@@ -1,13 +1,21 @@
 import ProjectList from "@/app/_components/project/ProjectList";
-import { projectMetadata as metadata } from "@/lib/seo";
+import { projectMetadata as metadata, breadcrumbSchema } from "@/lib/seo";
 
 export { metadata };
 
 export default function ProjectPage() {
   return (
     <>
-      <h1 className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white mb-2">Projects</h1>
-      <p className="text-slate-500 dark:text-slate-400 mb-8">Code, experiments, and builds.</p>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([
+            { name: "首页", path: "/" },
+            { name: "项目实践", path: "/project" },
+          ])),
+        }}
+      />
+      <span className="sr-only">{metadata.description}</span>
       <ProjectList />
     </>
   );

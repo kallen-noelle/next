@@ -8,7 +8,7 @@ import { getArticleList } from "@/lib/api/op";
 import BackButton from "@/app/_components/article/BackButton";
 import Loading from "@/app/_components/common/Loading";
 import Giscus from "@/app/_components/comment/Giscus";
-import JsonLd from "@/app/_components/common/JsonLd";
+import { jsonLdSchema } from "@/lib/seo";
 import { tagIconMap } from "@/app/_components/literature/tag-icons";
 
 export default function LiteratureDetailPage(props: { params: Promise<{ id: string }> }) {
@@ -76,12 +76,17 @@ export default function LiteratureDetailPage(props: { params: Promise<{ id: stri
   return (
     <>
       {item && (
-        <JsonLd data={{
-          "@context": "https://schema.org",
-          "@type": "CreativeWork",
-          name: item.title,
-          dateCreated: item.writtenAt,
-        }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLdSchema(
+              "CreativeWork",
+              item.title,
+              undefined,
+              item.writtenAt,
+            )),
+          }}
+        />
       )}
       <motion.div
       initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
