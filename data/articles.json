@@ -1,6 +1,38 @@
 {
-  "total": 5,
+  "total": 6,
   "rows": [
+    {
+      "categoryId": 37,
+      "categoryName": "Ai编程",
+      "commentCount": 0,
+      "coverImage": "/data/media/340.png",
+      "createdAt": "2026-06-14T15:14:11.487329",
+      "id": 39,
+      "isPinned": 0,
+      "isPublished": 1,
+      "summary": "详细介绍 Claude Code CLI 的安装、通过 CC Switch 中转接入 DeepSeek 模型的完整流程，以及在终端、VS Code、JetBrains 中的使用配置。",
+      "tags": [
+        {
+          "id": 24,
+          "name": "deepseek"
+        },
+        {
+          "id": 32,
+          "name": "Claude Code"
+        },
+        {
+          "id": 33,
+          "name": "VS Code"
+        },
+        {
+          "id": 34,
+          "name": "JetBrains"
+        }
+      ],
+      "title": "Claude Code 安装及接入 DeepSeek 教程",
+      "updateTime": "2026-06-14T15:17:20.027216",
+      "viewCount": 1
+    },
     {
       "categoryId": 38,
       "categoryName": "网站部署",
@@ -27,7 +59,7 @@
       ],
       "title": "用 Cloudflare Worker 构建博客流量分析 API——从入门到生产级脚本",
       "updateTime": "2026-06-11T08:22:31.298244",
-      "viewCount": 5
+      "viewCount": 7
     },
     {
       "categoryId": 38,
@@ -55,7 +87,7 @@
       ],
       "title": "给我的博客添加监控板块：使用 Cloudflare API 获取网站流量信息",
       "updateTime": "2026-06-11T08:26:47.002639",
-      "viewCount": 4
+      "viewCount": 5
     },
     {
       "categoryId": 38,
