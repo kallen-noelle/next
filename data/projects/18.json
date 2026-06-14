@@ -8,7 +8,7 @@
   "githubUrl": "https://github.com/pc-Blog",
   "id": 18,
   "isPublished": 1,
-  "name": "Dream Blog",
+  "name": "栏轩阁",
   "next": {
     "id": 19,
     "name": "PlaneWar"
@@ -18,7 +18,7 @@
     "name": "守护精灵"
   },
   "sortOrder": 0,
-  "summary": "Dream Blog — 全栈个人博客",
+  "summary": "一个集技术文章、项目展示、摄影图库、文学创作、在线小工具于一体的个人博客系统。前端基于 Next.js 16 App Router 构建，后端由 Spring Boot 3 驱动，支持 GitHub Pages 静态部署与 Docker 容器化运行，配备完整的管理后台与 GitHub 数据同步流水线。",
   "techs": [
     {
       "id": 8,
@@ -33,5 +33,5 @@
       "name": "Next.js"
     }
   ],
-  "updateTime": "2026-06-10T14:42:38.102608"
+  "updateTime": "2026-06-14T16:34:33.771308"
 }
