@@ -1,5 +1,5 @@
 {
-  "articleCount": 5,
+  "articleCount": 6,
   "commentCount": 21,
   "latestComments": [
     {
@@ -36,20 +36,20 @@
       "viewCount": 29
     },
     {
+      "id": 38,
+      "title": "用 Cloudflare Worker 构建博客流量分析 API——从入门到生产级脚本",
+      "viewCount": 7
+    },
+    {
       "id": 36,
       "title": "为 GitHub Pages 博客配置自定义域名与 Cloudflare 加速",
       "viewCount": 6
     },
     {
-      "id": 38,
-      "title": "用 Cloudflare Worker 构建博客流量分析 API——从入门到生产级脚本",
-      "viewCount": 5
-    },
-    {
       "id": 37,
       "title": "给我的博客添加监控板块：使用 Cloudflare API 获取网站流量信息",
-      "viewCount": 4
+      "viewCount": 5
     }
   ],
-  "totalViews": 204
+  "totalViews": 208
 }
