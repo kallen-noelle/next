@@ -8,6 +8,14 @@
     <atom:link href="https://www.lxpavilion.top/feed.xml" rel="self" type="application/rss+xml"/>
     
     <item>
+      <title><![CDATA[Claude Code 安装及接入 DeepSeek 教程]]></title>
+      <link>https://www.lxpavilion.top/article/39/</link>
+      <guid>https://www.lxpavilion.top/article/39/</guid>
+      <pubDate>Sun, 14 Jun 2026 15:14:11 GMT</pubDate>
+      <description><![CDATA[详细介绍 Claude Code CLI 的安装、通过 CC Switch 中转接入 DeepSeek 模型的完整流程，以及在终端、VS Code、JetBrains 中的使用配置。]]></description>
+      <author>ppc</author>
+    </item>
+    <item>
       <title><![CDATA[用 Cloudflare Worker 构建博客流量分析 API——从入门到生产级脚本]]></title>
       <link>https://www.lxpavilion.top/article/38/</link>
       <guid>https://www.lxpavilion.top/article/38/</guid>
