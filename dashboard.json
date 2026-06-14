@@ -1,26 +1,7 @@
 {
   "articleCount": 6,
   "commentCount": 21,
-  "latestComments": [
-    {
-      "id": 30,
-      "authorName": "PC2005-cloud",
-      "content": "111",
-      "createTime": "2026-05-24T15:01:10.841162"
-    },
-    {
-      "id": 29,
-      "authorName": "PC2005-cloud",
-      "content": "111",
-      "createTime": "2026-05-24T15:01:09.53645"
-    },
-    {
-      "id": 28,
-      "authorName": "PC2005-cloud",
-      "content": "111",
-      "createTime": "2026-05-24T15:01:08.079868"
-    }
-  ],
+  "latestComments": [],
   "projectCount": 7,
   "skillCount": 8,
   "timelineCount": 6,
