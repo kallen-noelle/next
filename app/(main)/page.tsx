@@ -8,6 +8,8 @@ import type { DashboardVO } from "@/lib/types";
 import { get } from "@/lib/api/dashboard";
 import { get as getAbout } from "@/lib/api/about";
 import { getArticleList } from "@/lib/api/op";
+import { getPublishedList as getFriendLinks } from "@/lib/api/friend-link";
+import { getPublishedList as getChatters } from "@/lib/api/chatter";
 import ThemeToggleBlock from "@/app/_components/common/ThemeToggle";
 import Tooltip from "@/app/_components/common/Tooltip";
 import SiteDashboard from "@/app/_components/layout/SiteDashboard";
@@ -21,6 +23,8 @@ export default function Home() {
   const [dash, setDash] = useState<DashboardVO | null>(null);
   const [configReady, setConfigReady] = useState(false);
   const [literatureCount, setLiteratureCount] = useState<number | null>(null);
+  const [friendCount, setFriendCount] = useState<number | null>(null);
+  const [chatterCount, setChatterCount] = useState<number | null>(null);
   const [repoStats, setRepoStats] = useState<{ stars: number; forks: number; watchers: number } | null>(null);
 
   useEffect(() => {
@@ -29,6 +33,16 @@ export default function Home() {
     getArticleList().then(d => {
       const total = d.rows.reduce((sum, t) => sum + t.articles.length, 0);
       setLiteratureCount(total);
+    }).catch(() => { });
+
+    // 获取友链数量
+    getFriendLinks().then(list => {
+      setFriendCount(Array.isArray(list) ? list.length : (list as { rows?: unknown[] })?.rows?.length ?? null);
+    }).catch(() => { });
+
+    // 获取说说数量
+    getChatters().then(list => {
+      setChatterCount(Array.isArray(list) ? list.length : (list as { rows?: unknown[] })?.rows?.length ?? null);
     }).catch(() => { });
 
     // 获取 Giscus 实时评论总数
@@ -244,6 +258,8 @@ export default function Home() {
                   { v: dash.commentCount, l: "Comments" },
                   { v: literatureCount ?? "—", l: "Literature" },
                   { v: dash.timelineCount, l: "Milestones" },
+                  { v: friendCount ?? "—", l: "Friends" },
+                  { v: chatterCount ?? "—", l: "Chatter" },
                 ].map((s) => (
                   <div key={s.l}>
                     <span className="font-mono text-2xl font-black text-indigo-500">{s.v}</span>
