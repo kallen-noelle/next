@@ -159,7 +159,7 @@ async function collectMedia(
     if (media.id == null) return false;
     if (!existingManifest) return true;
     return !existingManifest.has(media.id);
-  }).slice(0, 100);  // 每次最多同步 100 张
+  }).slice(0, 10);  // 每次最多同步 10 张
 
   onProgress?.({
     stage: "collecting",
