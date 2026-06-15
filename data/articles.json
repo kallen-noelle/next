@@ -1,6 +1,34 @@
 {
-  "total": 6,
+  "total": 7,
   "rows": [
+    {
+      "categoryId": 38,
+      "categoryName": "网站部署",
+      "commentCount": 0,
+      "coverImage": "/data/media/408.webp",
+      "createdAt": "2026-06-15T09:00:15.054475",
+      "id": 40,
+      "isPinned": 0,
+      "isPublished": 1,
+      "summary": "从 MinIO 本地管理迁移到 Cloudflare R2，利用免费额度搭建博客图床的完整指南，涵盖开通、建桶、自定义域名、CORS 配置、API 密钥及 Python SDK 上传。",
+      "tags": [
+        {
+          "id": 35,
+          "name": "对象存储"
+        },
+        {
+          "id": 28,
+          "name": "Cloudflare"
+        },
+        {
+          "id": 30,
+          "name": "博客"
+        }
+      ],
+      "title": "Cloudflare R2 使用指南：零成本管理博客媒体文件",
+      "updateTime": "2026-06-15T09:00:57.939972",
+      "viewCount": 1
+    },
     {
       "categoryId": 37,
       "categoryName": "Ai编程",

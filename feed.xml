@@ -8,6 +8,14 @@
     <atom:link href="https://www.lxpavilion.top/feed.xml" rel="self" type="application/rss+xml"/>
     
     <item>
+      <title><![CDATA[Cloudflare R2 使用指南：零成本管理博客媒体文件]]></title>
+      <link>https://www.lxpavilion.top/article/40/</link>
+      <guid>https://www.lxpavilion.top/article/40/</guid>
+      <pubDate>Mon, 15 Jun 2026 09:00:15 GMT</pubDate>
+      <description><![CDATA[从 MinIO 本地管理迁移到 Cloudflare R2，利用免费额度搭建博客图床的完整指南，涵盖开通、建桶、自定义域名、CORS 配置、API 密钥及 Python SDK 上传。]]></description>
+      <author>ppc</author>
+    </item>
+    <item>
       <title><![CDATA[Claude Code 安装及接入 DeepSeek 教程]]></title>
       <link>https://www.lxpavilion.top/article/39/</link>
       <guid>https://www.lxpavilion.top/article/39/</guid>
