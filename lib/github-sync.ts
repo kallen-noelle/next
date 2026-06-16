@@ -25,20 +25,35 @@ function base64DecodeUtf8(base64: string): string {
 
 // GitHub API helper
 async function gh(url: string, token: string, method = "GET", body?: unknown) {
-  const res = await fetch(url, {
-    method,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-      Accept: "application/vnd.github+json",
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`GitHub API ${res.status}: ${text.slice(0, 300)}`);
+  const label = `${method} ${url.replace(/token=.*/, "token=***")}`;
+  console.log(`[GH] → ${label}`);
+  const start = performance.now();
+  try {
+    const res = await fetch(url, {
+      method,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/vnd.github+json",
+      },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    const elapsed = (performance.now() - start).toFixed(0);
+    if (!res.ok) {
+      const text = await res.text();
+      console.error(`[GH] ✗ ${label} (${elapsed}ms) → ${res.status}: ${text.slice(0, 300)}`);
+      throw new Error(`GitHub API ${res.status}: ${text.slice(0, 300)}`);
+    }
+    const json = await res.json();
+    console.log(`[GH] ✓ ${label} (${elapsed}ms)`);
+    return json;
+  } catch (e) {
+    const elapsed = (performance.now() - start).toFixed(0);
+    if (e instanceof TypeError) {
+      console.error(`[GH] ✗ ${label} (${elapsed}ms) → NETWORK/CORS ERROR:`, e);
+    }
+    throw e;
   }
-  return res.json();
 }
 
 // Media sync helpers
@@ -115,7 +130,10 @@ async function getExistingMediaManifest(
     for (const item of list) {
       if (item.id != null) result.set(item.id, item);
     }
-  } catch { /* no manifest yet */ }
+  } catch (e) {
+    console.error("[SYNC] Failed to read manifest:", e);
+    /* no manifest yet */
+  }
   return result;
 }
 
@@ -141,7 +159,8 @@ async function collectMedia(
     });
     const body = await res.json() as { code: number; data?: { rows?: Media[] } };
     mediaRows = body.data?.rows || [];
-  } catch {
+  } catch (e) {
+    console.error("[SYNC] Failed to fetch media from API:", e);
     return { mediaItems, mediaMap, deletedIds };
   }
 
@@ -182,8 +201,8 @@ async function collectMedia(
           const filename = `${media.id}${ext}`;
           mediaItems.push({ id: media.id, filename, base64, updateTime: media.updateTime });
           mediaMap.set(media.id, { newPath: `/data/media/${filename}`, originalUrl: media.fileUrl });
-        } catch {
-          console.warn("Failed to download media:", media.id, media.fileUrl);
+        } catch (e) {
+          console.error(`[SYNC] Failed to download media #${media.id}: ${media.fileUrl}`, e);
         }
       })
     );
@@ -227,7 +246,10 @@ async function getExistingMusicManifest(token: string): Promise<Map<number, { id
     for (const item of list) {
       if (item.id != null) result.set(item.id, item);
     }
-  } catch { /* no manifest yet */ }
+  } catch (e) {
+    console.error("[SYNC] Failed to read manifest:", e);
+    /* no manifest yet */
+  }
   return result;
 }
 
@@ -268,7 +290,7 @@ async function collectMusic(
         const url = t.url?.startsWith("http") ? t.url : `${apiBase}${t.url}`;
         const resp = await fetch(url, { method: "HEAD" });
         return { id: t.id, size: Number(resp.headers.get("Content-Length") || 0) };
-      } catch { return { id: t.id, size: 0 }; }
+      } catch (e) { console.error("[SYNC] HEAD request failed for track size:", t.id, t.url, e); return { id: t.id, size: 0 }; }
     }));
     const sizeMap = new Map(sizes.map((s) => [s.id, s.size]));
     toDownload.sort((a, b) => (sizeMap.get(a.id) || 0) - (sizeMap.get(b.id) || 0));
@@ -301,7 +323,9 @@ async function collectMusic(
           newPath: `/data/music/${track.id}${audioExt}`,
         });
         onProgress?.({ stage: "collecting", message: "Downloading music...", log: `[audio #${trackNum}] ${track.title} (${sizeMb} MB)` });
-      } catch { /* skip */ }
+      } catch (e) {
+        console.error(`[SYNC] Failed to download audio #${track.id} ${track.title}:`, e);
+      }
     }
 
     if (track.pictureUrl) {
@@ -317,7 +341,9 @@ async function collectMusic(
           newPath: `/data/music/${track.id}-cover${ext}`,
         });
         onProgress?.({ stage: "collecting", message: "Downloading music...", log: `[cover #${trackNum}] ${track.title} (${sizeKb} KB)` });
-      } catch { /* skip */ }
+      } catch (e) {
+        console.error(`[SYNC] Failed to download cover #${track.id} ${track.title}:`, e);
+      }
     }
   }
 
@@ -367,7 +393,9 @@ async function collectAllData(ghToken?: string, existing?: Map<string, string>, 
       if (nodes) {
         dash.commentCount = nodes.reduce((s: number, n: any) => s + n.comments.totalCount, 0);
       }
-    } catch { /* skip */ }
+    } catch (e) {
+      console.error("[SYNC] GraphQL comment count failed:", e);
+    }
   }
   files.push({ path: "dashboard.json", content: JSON.stringify(dash, null, 2) });
 
@@ -401,13 +429,17 @@ async function collectAllData(ghToken?: string, existing?: Map<string, string>, 
             // 跳过，不输出日志
             continue;
           }
-        } catch { /* fall through to re-fetch */ }
+        } catch (e) {
+          console.warn("[SYNC] Article incremental check failed, re-fetching:", e);
+        }
       }
     }
     try {
       const detail = await apiGet<unknown>(`/article/public/${a.id}`);
       files.push({ path: `articles/${a.id}.json`, content: JSON.stringify(detail, null, 2) });
-    } catch { /* skip */ }
+    } catch (e) {
+      console.error(`[SYNC] Failed to fetch article #${a.id}:`, e);
+    }
   }
 
   const projectList = await apiPost<{ total: number; rows: { id: number }[] }, unknown>(
@@ -425,24 +457,32 @@ async function collectAllData(ghToken?: string, existing?: Map<string, string>, 
             // 跳过，不输出日志
             continue;
           }
-        } catch { /* fall through */ }
+        } catch (e) {
+          console.warn("[SYNC] Project incremental check failed:", e);
+        }
       }
     }
     try {
       const detail = await apiGet<unknown>(`/project/public/${p.id}`);
       files.push({ path: `projects/${p.id}.json`, content: JSON.stringify(detail, null, 2) });
-    } catch { /* skip */ }
+    } catch (e) {
+      console.error(`[SYNC] Failed to fetch project #${p.id}:`, e);
+    }
   }
 
   try {
     const media = await apiPost<unknown, unknown>("/media/page", { pageNum: 1, pageSize: 999 });
     files.push({ path: "media.json", content: JSON.stringify(media, null, 2) });
-  } catch { /* skip */ }
+  } catch (e) {
+    console.error("[SYNC] Failed to fetch media.json:", e);
+  }
 
   try {
     const comments = await apiPost<unknown, unknown>("/comment/page", PAGE);
     files.push({ path: "comments.json", content: JSON.stringify(comments, null, 2) });
-  } catch { /* skip */ }
+  } catch (e) {
+    console.error("[SYNC] Failed to fetch comments:", e);
+  }
 
   // Album / Gallery data
   try {
@@ -453,27 +493,37 @@ async function collectAllData(ghToken?: string, existing?: Map<string, string>, 
       try {
         const photos = await apiGet<unknown>(`/photo/by-album/${a.id}`);
         files.push({ path: `albums/${a.id}.json`, content: JSON.stringify(photos, null, 2) });
-      } catch { /* skip */ }
+      } catch (e) {
+        console.error("[SYNC] Failed to fetch album photos:", e);
+      }
     }
-  } catch { /* skip */ }
+  } catch (e) {
+    console.error("[SYNC] Failed to fetch albums:", e);
+  }
 
   // Chatter / Moments data
   try {
     const chatters = await apiGet<unknown>("/chatter/list");
     files.push({ path: "chatters.json", content: JSON.stringify(chatters, null, 2) });
-  } catch { /* skip */ }
+  } catch (e) {
+    console.error("[SYNC] Failed to fetch chatters:", e);
+  }
 
   // Friend links
   try {
     const friendLinks = await apiGet<unknown>("/friend-link/list");
     files.push({ path: "friendLinks.json", content: JSON.stringify(friendLinks, null, 2) });
-  } catch { /* skip */ }
+  } catch (e) {
+    console.error("[SYNC] Failed to fetch friend links:", e);
+  }
 
   // Op / Literature data
   try {
     const opArticles = await apiPost<unknown, unknown>("/op/article", {});
     files.push({ path: "op-articles.json", content: JSON.stringify(opArticles, null, 2) });
-  } catch { /* skip */ }
+  } catch (e) {
+    console.error("[SYNC] Failed to fetch op-articles:", e);
+  }
 
   files.push({
     path: "index.json",
@@ -503,7 +553,9 @@ async function collectAllData(ghToken?: string, existing?: Map<string, string>, 
         }
       }
     }
-  } catch { /* skip */ }
+  } catch (e) {
+    console.error("[SYNC] Failed to replace media URLs:", e);
+  }
 
   return files;
 }
@@ -536,6 +588,8 @@ async function syncFiles(
   const baseTreeSha: string = currentCommit.tree.sha;
 
   onProgress?.({ stage: "blobs", message: `Creating ${files.length} blobs...` });
+  console.log(`[SYNC] syncFiles start: ${files.length} files, ${deletePaths?.length || 0} delete paths`);
+  console.log(`[SYNC] Files to upload:`, files.map(f => ({ path: f.path, encoding: f.encoding, size: f.content.length })));
   const blobResults: { path: string; sha: string }[] = [];
   let failCount = 0;
 
@@ -554,7 +608,8 @@ async function syncFiles(
       });
     } catch (e) {
       failCount++;
-      const errMsg = e instanceof Error ? e.message.slice(0, 60) : "Unknown error";
+      const errMsg = e instanceof Error ? e.message.slice(0, 120) : "Unknown error";
+      console.error(`[SYNC] Blob FAILED (${i + 1}/${files.length}): ${f.path}`, e);
       onProgress?.({
         stage: "blobs",
         message: `Creating blobs (${i + 1}/${files.length})...`,
@@ -562,6 +617,8 @@ async function syncFiles(
       });
     }
   }
+
+  console.log(`[SYNC] Blobs created: ${blobResults.length} OK, ${failCount} FAILED (out of ${files.length})`);
 
   if (blobResults.length === 0) {
     onProgress?.({ stage: "error", message: "All files failed to upload." });
@@ -582,50 +639,44 @@ async function syncFiles(
   onProgress?.({ stage: "tree", message: "Building tree..." });
   const baseTree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees/${baseTreeSha}`, token);
 
-  const rootPaths = new Set(rootFiles.map((b) => b.path));
-  const dirPaths = new Set(dirFiles.keys());
-  const delPaths = new Set(deletePaths || []);
+  const treeChanges: { path: string; mode?: string; type?: string; sha: string | null }[] = [];
 
-  const treeEntries: { path: string; mode: string; type: string; sha: string }[] = [];
-  for (const entry of baseTree.tree) {
-    const p = entry.path as string;
-    if (!rootPaths.has(p) && !dirPaths.has(p) && !delPaths.has(p)) {
-      treeEntries.push({ path: p, mode: entry.mode, type: entry.type, sha: entry.sha });
-    }
-  }
-
+  // 新增/替换的根级文件
   for (const b of rootFiles) {
-    treeEntries.push({ path: b.path, mode: "100644", type: "blob", sha: b.sha });
+    treeChanges.push({ path: b.path, mode: "100644", type: "blob", sha: b.sha });
   }
 
+  // 处理各个子目录（只传增量，依赖 base_tree 合并）
   for (const [dir, entries] of dirFiles) {
     if (entries.length === 0) continue;
-    const newPaths = new Set(entries.map((e) => e.path));
-    const delPathsSet = new Set(deletePaths || []);
     const baseDir = baseTree.tree.find((e: any) => e.path === dir);
-    let mergedEntries: { path: string; mode: "100644"; type: "blob"; sha: string }[] = [];
-    // 先加入现有子树中未在上传列表且未在删除列表的条目
-    if (baseDir) {
-      try {
-        const subTree = await gh(baseDir.url, token);
-        for (const se of (subTree.tree || []) as any[]) {
-          if (!newPaths.has(se.path) && !delPathsSet.has(`${dir}/${se.path}`)) {
-            mergedEntries.push({ path: se.path, mode: "100644", type: "blob", sha: se.sha });
-          }
-        }
-      } catch { /* skip */ }
-    }
-    // 再加入本次上传的条目
+    console.log(`[SYNC] Processing dir="${dir}": ${entries.length} new entries, baseDir=${!!baseDir}, baseTreeSha=${baseTreeSha.slice(0, 7)}`);
+
+    // 只用增量构建：新增 + 删除
+    const dirChanges: { path: string; mode?: string; type?: string; sha: string | null }[] = [];
     for (const e of entries) {
-      mergedEntries.push({ path: e.path, mode: "100644" as const, type: "blob" as const, sha: e.sha });
+      dirChanges.push({ path: e.path, mode: "100644", type: "blob", sha: e.sha });
     }
+    // 删除的文件（sha=null 表示从树中移除）
+    for (const dp of deletePaths || []) {
+      if (dp.startsWith(`${dir}/`)) {
+        dirChanges.push({ path: dp.slice(dir.length + 1), sha: null });
+      }
+    }
+
+    console.log(`[SYNC]   dirChanges: ${dirChanges.length} entries (${entries.length} new + ${dirChanges.length - entries.length} deletes), bodySize≈${JSON.stringify({ base_tree: baseDir?.sha, tree: dirChanges }).length}B`);
     const mergedTree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees`, token, "POST", {
-      tree: mergedEntries,
+      base_tree: baseDir?.sha,
+      tree: dirChanges,
     });
-    treeEntries.push({ path: dir, mode: "040000", type: "tree", sha: mergedTree.sha as string });
+    treeChanges.push({ path: dir, mode: "040000", type: "tree", sha: mergedTree.sha as string });
   }
 
-  const newTree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees`, token, "POST", { tree: treeEntries });
+  console.log(`[SYNC] Root tree changes: ${treeChanges.length} entries (${rootFiles.length} root + ${[...dirFiles.keys()].length} dirs), base_tree=${baseTreeSha.slice(0, 7)}`);
+  const newTree = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/trees`, token, "POST", {
+    base_tree: baseTreeSha,
+    tree: treeChanges,
+  });
 
   onProgress?.({ stage: "tree", message: "Creating commit..." });
   const newCommit = await gh(`${GH_API}/repos/${OWNER}/${REPO}/git/commits`, token, "POST", {
@@ -642,7 +693,9 @@ async function syncFiles(
 
   const okCount = blobResults.length;
   const suffix = failCount > 0 ? ` (${failCount} failed)` : "";
-  onProgress?.({ stage: "done", message: `Sync complete! ${okCount} files synced${suffix}.` });
+  const finalMsg = `Sync complete! ${okCount} files synced${suffix}.`;
+  console.log(`[SYNC] ${finalMsg} commit=${(newCommit.sha as string).slice(0, 7)} message=${message}`);
+  onProgress?.({ stage: "done", message: finalMsg });
   return { success: failCount === 0, commitSha: newCommit.sha as string, filesCount: okCount };
 }
 
@@ -670,7 +723,9 @@ async function getExistingJsonFiles(
     try {
       const blob = await gh(entry.url, token);
       result.set(entry.path, base64DecodeUtf8(blob.content));
-    } catch { /* skip */ }
+    } catch (e) {
+      console.error("[SYNC] Failed to read blob for entry:", entry?.path, e);
+    }
   }
 
   return result;
@@ -682,6 +737,7 @@ export async function syncJson(
   token: string,
   onProgress?: ProgressCb
 ): Promise<SyncResult> {
+  console.log(`[SYNC JSON] Starting... repo=${OWNER}/${REPO} branch=${BRANCH}`);
   try {
     onProgress?.({ stage: "collecting", message: "Fetching existing data from GitHub..." });
     let existing = new Map<string, string>();
@@ -693,9 +749,13 @@ export async function syncJson(
         try {
           const blob = await gh(e.url, token);
           existing.set(e.path, base64DecodeUtf8(blob.content));
-        } catch { /* skip */ }
+        } catch (e) {
+          console.error("[SYNC] Failed to read existing blob:", e);
+        }
       }
-    } catch { /* no existing data branch yet */ }
+    } catch (e) {
+      console.log("[SYNC] No existing data branch yet (first sync or empty):", e);
+    }
     onProgress?.({ stage: "collecting", message: `Downloaded ${existing.size} existing files. Fetching new data...` });
 
     const files = await collectAllData(token, existing, onProgress);
@@ -745,6 +805,7 @@ export async function syncJson(
     );
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Unknown error";
+    console.error("[SYNC JSON] Error:", err);
     onProgress?.({ stage: "error", message: msg });
     return { success: false, filesCount: 0, error: msg };
   }
@@ -754,6 +815,7 @@ export async function syncMedia(
   token: string,
   onProgress?: ProgressCb
 ): Promise<SyncResult> {
+  console.log(`[SYNC MEDIA] Starting... repo=${OWNER}/${REPO} branch=${BRANCH}`);
   try {
     const apiBase = `http://${siteConfig.backUrl}/api`;
 
@@ -798,6 +860,7 @@ export async function syncMedia(
     return await syncFiles(token, files, commitMsg, onProgress, staleMediaPaths);
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Unknown error";
+    console.error("[SYNC MEDIA] Error:", err);
     onProgress?.({ stage: "error", message: msg });
     return { success: false, filesCount: 0, error: msg };
   }
@@ -807,6 +870,7 @@ export async function syncMusic(
   token: string,
   onProgress?: ProgressCb
 ): Promise<SyncResult> {
+  console.log(`[SYNC MUSIC] Starting... repo=${OWNER}/${REPO} branch=${BRANCH}`);
   try {
     const apiBase = `http://${siteConfig.backUrl}/api`;
 
@@ -862,6 +926,7 @@ export async function syncMusic(
     return await syncFiles(token, files, `${ts} sync music (${audioFiles.length} files)`, onProgress, stalePaths);
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Unknown error";
+    console.error("[SYNC MUSIC] Error:", err);
     onProgress?.({ stage: "error", message: msg });
     return { success: false, filesCount: 0, error: msg };
   }
