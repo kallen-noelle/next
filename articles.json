@@ -1,6 +1,30 @@
 {
-  "total": 7,
+  "total": 8,
   "rows": [
+    {
+      "categoryId": 37,
+      "categoryName": "Ai编程",
+      "commentCount": 0,
+      "coverImage": "/data/media/417.png",
+      "createdAt": "2026-06-16T16:27:16.26017",
+      "id": 41,
+      "isPinned": 0,
+      "isPublished": 1,
+      "summary": "用 Playwright 把 DeepSeek 网页版包装成 Anthropic Messages API 兼容的 HTTP 服务，让 Claude Code 可以直接把 DeepSeek 当后端模型使用——协议翻译、工具调用桥梁、PoW 绕过，三个环节拼出一个能跑的系统。",
+      "tags": [
+        {
+          "id": 24,
+          "name": "deepseek"
+        },
+        {
+          "id": 32,
+          "name": "Claude Code"
+        }
+      ],
+      "title": "让 Claude Code 白嫖 DeepSeek 网页版：一个 API 中转代理的诞生",
+      "updateTime": "2026-06-16T16:27:16.266701",
+      "viewCount": 1
+    },
     {
       "categoryId": 38,
       "categoryName": "网站部署",
