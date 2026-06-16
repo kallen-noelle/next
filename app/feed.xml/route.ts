@@ -42,7 +42,7 @@ export async function GET() {
   <channel>
     <title>${siteConfig.title}</title>
     <link>${SITE_URL}</link>
-    <description>${siteConfig.bio}</description>
+    <description>${siteConfig.seoDescription}</description>
     <language>zh-CN</language>
     <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
     ${items}

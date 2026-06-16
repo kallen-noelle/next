@@ -31,12 +31,12 @@ const notoSerif = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: siteConfig.title, template: `%s | ${siteConfig.title}` },
-  description: siteConfig.bio,
+  description: siteConfig.seoDescription,
   keywords: SITE_KEYWORDS,
   robots: { index: true, follow: true },
   openGraph: {
     title: siteConfig.title,
-    description: siteConfig.bio,
+    description: siteConfig.seoDescription,
     siteName: siteConfig.title,
     type: "website",
     locale: "zh_CN",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title,
-    description: siteConfig.bio,
+    description: siteConfig.seoDescription,
     images: [defaultOgImage],
   },
 };

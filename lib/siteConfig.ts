@@ -3,8 +3,10 @@ export const siteConfig = {
   title: "栏轩阁 - 个人技术博客与作品集",
   /** 作者名称*/
   authorName: "ppc",
-  /** 个人简介 — 首页、侧边栏、SEO description、RSS description */
+  /** 个人简介 — 首页展示、侧边栏、友链 */
   bio: "A personal space for code, science, and thoughts.",
+  /** SEO 描述 — meta description、OG、Twitter Card、RSS 使用此字段 */
+  seoDescription: "栏轩阁 - 个人技术博客，记录后端开发、云原生架构与全栈工程实践，分享从 Spring Boot 微服务到 Vue 3 前端的技术探索与项目心得。",
   /** 导航栏品牌名 */
   navTitle: "栏轩·阁",
   /** 头像路径，相对 public/ */

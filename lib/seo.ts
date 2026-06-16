@@ -67,7 +67,7 @@ export function websiteSchema(url?: string) {
     "@type": "WebSite",
     name: siteConfig.title,
     alternateName: siteConfig.navTitle,
-    description: siteConfig.bio,
+    description: siteConfig.seoDescription,
     url: siteUrl,
   };
 }
@@ -107,7 +107,7 @@ export function personSchema(url?: string) {
     "@context": "https://schema.org",
     "@type": "Person",
     name: siteConfig.authorName,
-    description: siteConfig.bio,
+    description: siteConfig.seoDescription,
     url: url || `https://${siteConfig.blog.replace(/^https?:\/\//, "")}`,
     image: siteConfig.avatarUrl,
     sameAs: sameAs.length > 0 ? sameAs : undefined,
