@@ -1,6 +1,38 @@
 {
-  "total": 8,
+  "total": 9,
   "rows": [
+    {
+      "categoryId": 37,
+      "categoryName": "Ai编程",
+      "commentCount": 0,
+      "coverImage": "/data/media/433.png",
+      "createdAt": "2026-06-16T20:30:12.459236",
+      "id": 42,
+      "isPinned": 0,
+      "isPublished": 1,
+      "summary": "本文基于 Spring AI 1.1.2 + Redis + DashScope 构建的生产级 RAG 项目，完整拆解了从 PDF 文档解析、父子分层分段、向量化存储，到查询扩展、多库并发检索、上下文增强、LLM 流式生成的全链路实现。涵盖 MinerU 云端文档解析、HNSW 向量索引配置、父子分层分段策略、LLM 查询扩展、多存储并发检索、文档 ID 溯源等关键技术的实战经验，以及 5 个常见踩坑与解决方案。适合正在将 RAG 从 Demo 推向生产的技术团队参考。",
+      "tags": [
+        {
+          "id": 36,
+          "name": "RAG"
+        },
+        {
+          "id": 37,
+          "name": "Spring AI"
+        },
+        {
+          "id": 38,
+          "name": "检索增强生成"
+        },
+        {
+          "id": 39,
+          "name": "Redis"
+        }
+      ],
+      "title": "Spring AI RAG 生产级实战：从 PDF 解析到精准回答的完整流水线指南",
+      "updateTime": "2026-06-16T20:33:33.84941",
+      "viewCount": 1
+    },
     {
       "categoryId": 37,
       "categoryName": "Ai编程",
