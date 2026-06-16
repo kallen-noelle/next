@@ -660,7 +660,7 @@ async function syncFiles(
     // 删除的文件（sha=null 表示从树中移除）
     for (const dp of deletePaths || []) {
       if (dp.startsWith(`${dir}/`)) {
-        dirChanges.push({ path: dp.slice(dir.length + 1), sha: null });
+        dirChanges.push({ path: dp.slice(dir.length + 1), mode: "100644", type: "blob", sha: null });
       }
     }
 
