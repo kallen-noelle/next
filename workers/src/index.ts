@@ -1,0 +1,71 @@
+/**
+ * Cloudflare Worker — 博客流量分析 API 代理
+ *
+ * 所有响应统一为 { code, data, msg } 格式。
+ *
+ * 环境变量（必填）:
+ *   CF_API_TOKEN  — Cloudflare API Token（Analytics:Read 权限）
+ *   CF_ZONE_ID    — Cloudflare 区域 ID
+ *
+ * 环境变量（选填——/platform 接口需要）:
+ *   CSDN_USER       — CSDN 用户名
+ *   JUEJIN_USER_ID  — 掘金用户 ID
+ *   CNBLOGS_BLOGAPP — 博客园 blogApp
+ */
+
+import type { Env } from "./types";
+import { corsHeaders, respond } from "./utils/response";
+import { handleAnalytics } from "./analytics/handler";
+import { handlePlatform } from "./platform/handler";
+
+export default {
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext
+  ): Promise<Response> {
+    const url = new URL(request.url);
+    const origin = request.headers.get("Origin");
+
+    // ── OPTIONS 预检（不依赖环境变量，否则浏览器 CORS 失败） ──
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: corsHeaders(origin),
+      });
+    }
+
+    // ── 检查必填环境变量 ──
+    const missing: string[] = [];
+    if (!env.CF_API_TOKEN) missing.push("CF_API_TOKEN");
+    if (!env.CF_ZONE_ID) missing.push("CF_ZONE_ID");
+    if (missing.length > 0) {
+      return respond(
+        null,
+        `Worker 配置不完整：${missing.join(", ")}`,
+        0,
+        origin
+      );
+    }
+
+    // ── 路由 ──
+
+    // GET /ping — 健康检查
+    if (request.method === "GET" && url.pathname === "/ping") {
+      return respond({ status: "ok", message: "Worker is alive" }, "ok", 1, origin);
+    }
+
+    // GET /platform — 多平台统计
+    if (request.method === "GET" && url.pathname === "/platform") {
+      return handlePlatform(request, env, ctx, origin);
+    }
+
+    // POST / — 获取完整分析数据
+    if (request.method === "POST") {
+      return handleAnalytics(request, env, ctx, origin);
+    }
+
+    // 404 兜底
+    return respond(null, "Not Found", 0, origin);
+  },
+};

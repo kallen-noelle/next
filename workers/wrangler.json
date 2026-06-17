@@ -1,7 +1,6 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "cf-analytics",
-  "main": "cf-analytics-worker.js",
+  "name": "blog-api",
+  "main": "src/index.ts",
   "compatibility_date": "2026-06-10",
   "placement": { "mode": "smart" },
   "routes": [
