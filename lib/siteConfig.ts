@@ -34,7 +34,7 @@ export const siteConfig = {
   /** 站点域名 */
   blog: "www.lxpavilion.top",
   /** 是否有域名 */
-  hasDomain: false,
+  hasDomain: ture,
 
   /** 建站日期 */
   buildDate: "2026-05-21T00:00:00",
