@@ -32,7 +32,7 @@ export const siteConfig = {
   content: "个人简介",
 
   /** 站点域名 */
-  blog: "www.lxpavilion.top",
+  blog: "www.kallen-noelle.top",
   /** 是否有域名 */
   hasDomain: ture,
 
