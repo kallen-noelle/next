@@ -1,3 +1,5 @@
+import { assetUrl } from "./asset-url";
+
 /**
  * Static data layer — detects runtime mode and provides local JSON data
  *
@@ -10,7 +12,7 @@ let mode: "static" | "live" | "unknown" = "unknown";
 const cache = new Map<string, unknown>();
 
 function dataUrl(path: string): string {
-  return `/data/${path}`;
+  return assetUrl(`/data/${path}`);
 }
 
 /** Detect whether static data files are available */
