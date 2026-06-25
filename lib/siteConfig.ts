@@ -34,7 +34,7 @@ export const siteConfig = {
   /** 站点域名 */
   blog: "www.kallen-noelle.top",
   /** 是否有域名 */
-  hasDomain: false,
+  hasDomain: true,
 
   /** 建站日期 */
   buildDate: "2026-05-21T00:00:00",
