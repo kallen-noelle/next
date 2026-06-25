@@ -11,7 +11,7 @@ export default function SkillBar() {
 
   useEffect(() => {
     getList(undefined, 1, 200)
-      .then((data) => setSkills(data.rows.sort((a, b) => b.proficiency - a.proficiency)))
+      .then((data) => setSkills(data.rows.sort((a: Skill, b: Skill) => b.proficiency - a.proficiency)))
       .catch(() => setSkills([]))
       .finally(() => setLoading(false));
   }, []);

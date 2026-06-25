@@ -20,34 +20,35 @@ export const siteConfig = {
   ],
 
   /** 社交链接 */
-  github: "github.com/kalle-noelle",
-  email: "2194844980@qq.com",
-  gitee: "gitee.com/peng-chao2005",
-  qq: "2194844980",
-  juejin: "juejin.cn/user/3154917256866522",
-  csdn: "blog.csdn.net/2604_96186443",
-  cnblogs: "home.cnblogs.com/u/pc2005",
+  github: "github.com/kallen-noelle",
+  email: "2758251905@qq.com",
+  gitee: "gitee.com/kallen-noelle",
+  qq: "2758251905",
+  juejin: "juejin.cn/user/11111111111111111",
+  csdn: "blog.csdn.net/2403_88681971",
+  cnblogs: "home.cnblogs.com/u/kallen-noelle",
+
 
   /** 关于页 markdown 正文 */
   content: "个人简介",
 
   /** 站点域名 */
-  blog: "www.lxpavilion.top",
+  blog: "www.kallen-noelle.top",
   /** 是否有域名 */
   hasDomain: true,
 
   /** 建站日期 */
-  buildDate: "2026-05-21T00:00:00",
+  buildDate: "2026-06-21T00:00:00",
 
   /** 获取站点流量的接口 */
-  analytics: "analytics.lxpavilion.top",
+  analytics: "analytics.kallen-noelle.top",
 
   /** 仓库信息 */
-  repo: "pc-Blog/next",
-  repoId: "R_kgDOSk99gw",
+  repo: "kallen-noelle/next",
+  repoId: "R_kgDOTC4CKA",
   /** Giscus 评论分类 */
   giscusCategory: "Announcements",
-  giscusCategoryId: "DIC_kwDOSk99g84C9uoJ",
+  giscusCategoryId: "DIC_kwDOS-WDjM4C_mdx",
 
   /** cloudeflare 相关 */
   ZoneID: "5bf4f5d460e2073282b6ff62d01f2ca4",

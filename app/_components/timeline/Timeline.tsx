@@ -11,7 +11,7 @@ export default function Timeline() {
 
   useEffect(() => {
     getList(undefined, 1, 200)
-      .then((data) => setItems(data.rows.sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime())))
+      .then((data) => setItems(data.rows.sort((a: TimelineType, b: TimelineType) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime())))
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
   }, []);

@@ -15,13 +15,13 @@ const NAV_ITEMS = [
   { name: "Home", href: "/" },
   { name: "Articles", href: "/article" },
   { name: "Projects", href: "/project" },
-  { name: "Literature", href: "/literature" },
+  // { name: "Literature", href: "/literature" },
   { name: "Gallery", href: "/gallery" },
   { name: "Timeline", href: "/timeline" },
   { name: "Chatter", href: "/chatter" },
   { name: "Friends", href: "/friends" },
   { name: "Growth", href: "/growth" },
-  { name: "Analytics", href: "/analytics" },
+  // { name: "Analytics", href: "/analytics" },
   { name: "About", href: "/about" },
 ];
 
