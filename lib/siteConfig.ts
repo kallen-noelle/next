@@ -1,14 +1,14 @@
 export const siteConfig = {
   /** 站点标题*/
-  title: "栏轩阁 - 个人技术博客与作品集",
+  title: "kallen`s place - 个人技术博客与作品集",
   /** 作者名称*/
-  authorName: "ppc",
+  authorName: "dl",
   /** 个人简介 — 首页展示、侧边栏、友链 */
-  bio: "A personal space for code, science, and thoughts.",
+  bio: "This is my place. I make the rule.",
   /** SEO 描述 — meta description、OG、Twitter Card、RSS 使用此字段 */
-  seoDescription: "栏轩阁 - 个人技术博客，记录后端开发、云原生架构与全栈工程实践，分享从 Spring Boot 微服务到 Vue 3 前端的技术探索与项目心得。",
+  seoDescription: "kallen`s place - 个人技术博客，记录后端开发、 前端的技术探索与项目心得。",
   /** 导航栏品牌名 */
-  navTitle: "栏轩·阁",
+  navTitle: "kallen`s place",
   /** 头像路径，相对 public/ */
   avatarUrl: "/bg/1.jpg",
   /** 背景轮播图列表，相对 public/ */
@@ -20,7 +20,7 @@ export const siteConfig = {
   ],
 
   /** 社交链接 */
-  github: "github.com/PC2005-cloud",
+  github: "github.com/kalle-noelle",
   email: "2194844980@qq.com",
   gitee: "gitee.com/peng-chao2005",
   qq: "2194844980",
