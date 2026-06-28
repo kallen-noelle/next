@@ -9,11 +9,15 @@ export const siteConfig = {
   seoDescription: "kallen`s place - 个人技术博客，记录后端开发、 前端的技术探索与项目心得。",
   /** 导航栏品牌名 */
   navTitle: "kallen`s place",
+
+  aboutImage: "/images/bg/13.jpeg",
   /** 头像路径，相对 public/ */
   avatarUrl: "/images/noelle/noelle2.jpeg",
   /** 背景轮播图列表，相对 public/ */
   bgImages: [
-    "/images/bg/7.jpeg",  "/images/bg/1.jpeg", "/images/bg/11.jpeg", 
+    "/images/bg/6.jpeg", 
+    "/images/bg/1.jpeg", 
+    "/images/bg/7.jpeg", 
 
   ],
 

@@ -1,26 +1,20 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import { get } from "@/lib/api/about";
-import { siteConfig, loadConfig } from "@/lib/config";
+import { useState, useEffect } from "react";
+import { siteConfig } from "@/lib/config";
 import ArticleProse from "@/app/_components/article/ArticleProse";
 import Giscus from "@/app/_components/comment/Giscus";
-import Loading from "@/app/_components/common/Loading";
 import { assetUrl } from "@/lib/asset-url";
 
 const linkStyles = "inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors";
 
 export default function AboutPage() {
-  const [configReady, setConfigReady] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [coverImage, setCoverImage] = useState(assetUrl(siteConfig.aboutImage));
 
   useEffect(() => {
-    get().then(about => { loadConfig(about); setConfigReady(true); }).catch(() => setConfigReady(true)).finally(() => setLoading(false));
+    setCoverImage(assetUrl(siteConfig.bgImages[Math.floor(Math.random() * siteConfig.bgImages.length)]));
   }, []);
 
-  const coverImage = useMemo(() => assetUrl(siteConfig.bgImages[Math.floor(Math.random() * siteConfig.bgImages.length)]), []);
-
-  if (loading) return <div className="py-24"><Loading /></div>;
 
   const authorName = siteConfig.authorName;
   const hasContact = siteConfig.email || siteConfig.github || siteConfig.gitee || siteConfig.qq;

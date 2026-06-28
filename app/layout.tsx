@@ -34,6 +34,9 @@ export const metadata: Metadata = {
   description: siteConfig.seoDescription,
   keywords: SITE_KEYWORDS,
   robots: { index: true, follow: true },
+    icons: {
+    icon: { url: "/images/noelle/noelle8.jpeg", type: "image/jpeg" },
+  },
   openGraph: {
     title: siteConfig.title,
     description: siteConfig.seoDescription,
