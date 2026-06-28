@@ -4,8 +4,8 @@ import { detectMode, ensureData } from "@/lib/static-data";
 
 export async function getPublishedList() {
   if ((await detectMode()) === "static") {
-    const all = await ensureData<FriendLink[]>("friendLinks");
-    return (all ?? []).filter((f) => f.isPublished !== 0);
+    const data = await ensureData<PageVO<FriendLink>>("friendLinks");
+    return (data?.rows ?? []).filter((f) => f.isPublished !== 0);
   }
   return api.get<FriendLink[], FriendLink[]>("/friend-link/list");
 }

@@ -6,16 +6,28 @@ import { detectMode, ensureData, getDetailData } from "@/lib/static-data";
 
 export async function getPublishedList() {
   if ((await detectMode()) === "static") {
-    const all = await ensureData<Album[]>("albums");
-    return (all ?? []).filter((a) => a.isPublished !== 0);
+    try {
+      const res = await fetch("/data/albums.json");
+      if (!res.ok) return [];
+      const data = (await res.json()) as { rows: Album[]; total: number };
+      return (data.rows ?? []).filter((a) => a.isPublished !== 0);
+    } catch {
+      return [];
+    }
   }
   return api.get<Album[], Album[]>("/album/list");
-}
+}   
 
 export async function getAlbumDetail(id: number) {
   if ((await detectMode()) === "static") {
-    const all = await ensureData<Album[]>("albums");
-    return (all ?? []).find((a) => a.id === id) ?? null;
+    try {
+      const res = await fetch("/data/albums.json");
+      if (!res.ok) return null;
+      const data = (await res.json()) as { rows: Album[]; total: number };
+      return (data.rows ?? []).find((a) => a.id === id) ?? null;
+    } catch {
+      return null;
+    }
   }
   return api.get<Album, Album>(`/album/${id}`);
 }
@@ -38,8 +50,15 @@ export async function deleteAlbum(id: number) { return api.delete(`/album/${id}`
 
 export async function getPhotosByAlbum(albumId: number) {
   if ((await detectMode()) === "static") {
-    const data = await getDetailData<Photo[]>("albums", albumId);
-    return data ?? [];
+    try {
+      const res = await fetch("/data/albums.json");
+      if (!res.ok) return [];
+      const data = (await res.json()) as { rows: Album[]; total: number };
+      const album = (data.rows ?? []).find((a) => a.id === albumId);
+      return album?.photos ?? [];
+    } catch {
+      return [];
+    }
   }
   return api.get<Photo[], Photo[]>(`/photo/by-album/${albumId}`);
 }

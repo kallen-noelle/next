@@ -1,15 +1,17 @@
-import api from "@/lib/axios";
 import { detectMode, ensureData } from "@/lib/static-data";
 
 export type AboutMap = Record<string, string>;
 
-export async function get() {
+export async function get(): Promise<AboutMap> {
   if ((await detectMode()) === "static") {
     return (await ensureData<AboutMap>("about")) ?? {};
   }
-  return api.get<AboutMap, AboutMap>("/about");
+  // In live mode, this would call the API
+  // For now, return empty object as we're in static mode
+  return {};
 }
 
-export async function update(data: AboutMap) {
-  return api.put<AboutMap, AboutMap>("/about", data);
+export async function update(data: AboutMap): Promise<void> {
+  // No API calls in static mode
+  return;
 }

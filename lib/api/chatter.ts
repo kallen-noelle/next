@@ -4,8 +4,8 @@ import { detectMode, ensureData } from "@/lib/static-data";
 
 export async function getPublishedList() {
   if ((await detectMode()) === "static") {
-    const all = await ensureData<Chatter[]>("chatters");
-    return (all ?? []).filter((c) => c.isPublished !== 0);
+    const data = await ensureData<PageVO<Chatter>>("chatters");
+    return (data?.rows ?? []).filter((c) => c.isPublished !== 0);
   }
   return api.get<Chatter[], Chatter[]>("/chatter/list");
 }
