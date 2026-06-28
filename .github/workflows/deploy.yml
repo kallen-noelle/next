@@ -29,23 +29,17 @@ jobs:
           cp -r data-tmp/. source/public/data/
           rm -rf data-tmp
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
-          cache-dependency-path: source/pnpm-lock.yaml
 
       - name: Install dependencies
         working-directory: ./source
-        run: pnpm ci
-
+        run: npm ci
+      
       - name: Build static site
         working-directory: ./source
-        run: pnpm run build:static
+        run: npm run build:static
         env:
           NEXT_PUBLIC_IS_STATIC: "true"
 
