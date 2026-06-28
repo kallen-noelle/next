@@ -1,0 +1,145 @@
+{
+  "rows": [
+    {
+      "id": 1,
+      "name": "JavaScript",
+      "category": "前端",
+      "proficiency": 85,
+      "sortOrder": 1
+    },
+    {
+      "id": 2,
+      "name": "TypeScript",
+      "category": "前端",
+      "proficiency": 80,
+      "sortOrder": 2
+    },
+    {
+      "id": 3,
+      "name": "React",
+      "category": "前端",
+      "proficiency": 75,
+      "sortOrder": 3
+    },
+    {
+      "id": 4,
+      "name": "Next.js",
+      "category": "前端",
+      "proficiency": 70,
+      "sortOrder": 4
+    },
+    {
+      "id": 5,
+      "name": "Tailwind CSS",
+      "category": "前端",
+      "proficiency": 80,
+      "sortOrder": 5
+    },
+    {
+      "id": 6,
+      "name": "Vue 3",
+      "category": "前端",
+      "proficiency": 65,
+      "sortOrder": 6
+    },
+    {
+      "id": 7,
+      "name": "CSS 3",
+      "category": "前端",
+      "proficiency": 75,
+      "sortOrder": 7
+    },
+    {
+      "id": 8,
+      "name": "HTML 5",
+      "category": "前端",
+      "proficiency": 85,
+      "sortOrder": 8
+    },
+    {
+      "id": 9,
+      "name": "Python",
+      "category": "后端",
+      "proficiency": 90,
+      "sortOrder": 9
+    },
+    {
+      "id": 10,
+      "name": "Java",
+      "category": "后端",
+      "proficiency": 75,
+      "sortOrder": 10
+    },
+    {
+      "id": 11,
+      "name": "Spring Boot",
+      "category": "后端",
+      "proficiency": 70,
+      "sortOrder": 11
+    },
+    {
+      "id": 12,
+      "name": "Node.js",
+      "category": "后端",
+      "proficiency": 70,
+      "sortOrder": 12
+    },
+    {
+      "id": 13,
+      "name": "MySQL",
+      "category": "数据库",
+      "proficiency": 80,
+      "sortOrder": 13
+    },
+    {
+      "id": 14,
+      "name": "Redis",
+      "category": "数据库",
+      "proficiency": 65,
+      "sortOrder": 14
+    },
+    {
+      "id": 15,
+      "name": "MongoDB",
+      "category": "数据库",
+      "proficiency": 60,
+      "sortOrder": 15
+    },
+    {
+      "id": 16,
+      "name": "Git",
+      "category": "工具",
+      "proficiency": 85,
+      "sortOrder": 16
+    },
+    {
+      "id": 17,
+      "name": "Docker",
+      "category": "工具",
+      "proficiency": 60,
+      "sortOrder": 17
+    },
+    {
+      "id": 18,
+      "name": "Webpack",
+      "category": "工具",
+      "proficiency": 70,
+      "sortOrder": 18
+    },
+    {
+      "id": 19,
+      "name": "Vite",
+      "category": "工具",
+      "proficiency": 75,
+      "sortOrder": 19
+    },
+    {
+      "id": 20,
+      "name": "Linux",
+      "category": "工具",
+      "proficiency": 65,
+      "sortOrder": 20
+    }
+  ],
+  "total": 20
+}

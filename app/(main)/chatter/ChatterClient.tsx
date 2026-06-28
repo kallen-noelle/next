@@ -19,6 +19,14 @@ interface Moment {
   createTime: string;
 }
 
+interface ChatterItem {
+  id?: number;
+  content: string;
+  images?: string[];
+  mood?: string;
+  createTime?: string;
+}
+
 interface Photo {
   id: string;
   url: string;
@@ -126,7 +134,7 @@ function ChatterContent() {
         const data = await getPublishedList();
         getAbout().then(about => { loadConfig(about); forceUpdate(n => n + 1); }).catch(() => {});
         if (!active) return;
-        setMoments(data.map((item) => ({
+        setMoments(data.map((item: ChatterItem) => ({
           id: String(item.id),
           content: item.content,
           images: Array.isArray(item.images) ? item.images : [],

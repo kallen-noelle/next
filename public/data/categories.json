@@ -1,0 +1,65 @@
+{
+  "rows": [
+    {
+      "id": 1,
+      "name": "技术",
+      "type": "ARTICLE",
+      "sortOrder": 1
+    },
+    {
+      "id": 2,
+      "name": "生活",
+      "type": "ARTICLE",
+      "sortOrder": 2
+    },
+    {
+      "id": 3,
+      "name": "随笔",
+      "type": "ARTICLE",
+      "sortOrder": 3
+    },
+    {
+      "id": 4,
+      "name": "前端项目",
+      "type": "PROJECT",
+      "sortOrder": 1
+    },
+    {
+      "id": 5,
+      "name": "后端项目",
+      "type": "PROJECT",
+      "sortOrder": 2
+    },
+    {
+      "id": 6,
+      "name": "全栈项目",
+      "type": "PROJECT",
+      "sortOrder": 3
+    },
+    {
+      "id": 7,
+      "name": "AI技术",
+      "type": "ARTICLE",
+      "sortOrder": 4
+    },
+    {
+      "id": 8,
+      "name": "数据库",
+      "type": "ARTICLE",
+      "sortOrder": 5
+    },
+    {
+      "id": 9,
+      "name": "DevOps",
+      "type": "ARTICLE",
+      "sortOrder": 6
+    },
+    {
+      "id": 10,
+      "name": "读书笔记",
+      "type": "ARTICLE",
+      "sortOrder": 7
+    }
+  ],
+  "total": 10
+}

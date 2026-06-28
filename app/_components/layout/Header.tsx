@@ -1,45 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/siteConfig";
-import { useAuthStore } from "@/stores/authStore";
-import { useRouter } from "next/navigation";
 import { useTheme } from "@/app/_components/layout/ThemeProvider";
 import FullscreenToggle from "@/app/_components/common/FullscreenToggle";
 import SettingsPanel from "@/app/_components/common/SettingsPanel";
 import Tooltip from "@/app/_components/common/Tooltip";
+import { useEffect } from "react";
 
 const NAV_ITEMS = [
-  { name: "Home", href: "/" },
-  { name: "Articles", href: "/article" },
-  { name: "Projects", href: "/project" },
+  // { name: "Home", href: "/" },
+  { name: "文章", href: "/article" },
+  // { name: "项目", href: "/project" },
   // { name: "Literature", href: "/literature" },
-  { name: "Gallery", href: "/gallery" },
-  { name: "Timeline", href: "/timeline" },
-  { name: "Chatter", href: "/chatter" },
-  { name: "Friends", href: "/friends" },
-  { name: "Growth", href: "/growth" },
+  { name: "画廊", href: "/gallery" },
+  { name: "时间线", href: "/timeline" },
+  { name: "聊天", href: "/chatter" },
+  { name: "好友", href: "/friends" },
+  { name: "成长", href: "/growth" },
   // { name: "Analytics", href: "/analytics" },
-  { name: "About", href: "/about" },
+  { name: "关于", href: "/about" },
 ];
 
 export default function Navbar() {
   const [showNav, setShowNav] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const pathname = usePathname();
-  const isLoggedIn = useAuthStore((s) => s.isLoggedIn);
-  const user = useAuthStore((s) => s.user);
-  const logout = useAuthStore((s) => s.logout);
   const { isDark, toggleTheme } = useTheme();
-  const router = useRouter();
-  const [isStatic, setIsStatic] = useState(true);
   const [settingsOpen, setSettingsOpen] = useState(false);
-
-  useEffect(() => {
-    setIsStatic(process.env.NEXT_PUBLIC_IS_STATIC === "true");
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -93,37 +83,8 @@ export default function Navbar() {
             );
           })}
 
-          {/* Auth */}
-          {isLoggedIn ? (
-            <div className="flex items-center gap-2 ml-2">
-              {!isStatic && (
-                <Link
-                  href="/admin"
-                  className="text-xs text-indigo-500 hover:text-indigo-400 transition-colors border-r border-slate-300 dark:border-slate-600 pr-2 mr-1"
-                >
-                  Admin
-                </Link>
-              )}
-              <span className="text-xs text-slate-500">
-                {user?.nickname || user?.username || "User"}
-              </span>
-              <button
-                onClick={logout}
-                className="text-xs text-slate-400 hover:text-red-500 transition-colors border-l border-slate-300 dark:border-slate-600 pl-2"
-              >
-                Sign Out
-              </button>
-            </div>
-          ) : !isStatic && (
-            <button
-              onClick={() => router.push("/auth/login")}
-              className="glass-btn !text-xs !py-1 !px-3 ml-2"
-            >
-              Sign In
-            </button>
-          )}
         </nav>
-
+        {/*设置按钮*/}
         <div className="flex items-center gap-2 pl-4 pr-2 border-l border-slate-200 dark:border-slate-700 ml-4">
           <Tooltip text={isDark ? "日间模式" : "夜间模式"}>
             <button onClick={toggleTheme}

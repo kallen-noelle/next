@@ -1,0 +1,126 @@
+{
+  "commits": [
+    {
+      "sha": "a1b2c3d4e5f6789012345678901234567890abcd",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/a1b2c3d4",
+      "author": { "name": "Kallen", "date": "2026-06-20T10:30:00Z" },
+      "message": "feat(gallery): add new image gallery page\n\nImplemented a responsive image gallery with lazy loading and lightbox support."
+    },
+    {
+      "sha": "b2c3d4e5f6a7890123456789012345678901bcde",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/b2c3d4e5",
+      "author": { "name": "Kallen", "date": "2026-06-18T14:20:00Z" },
+      "message": "fix(ui): resolve dark mode flickering issue\n\nFixed the flash of unstyled content when toggling between light and dark modes."
+    },
+    {
+      "sha": "c3d4e5f6a7b890123456789012345678902cdef",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/c3d4e5f6",
+      "author": { "name": "Kallen", "date": "2026-06-15T09:15:00Z" },
+      "message": "refactor(components): extract reusable card component\n\nCreated a unified Card component used across articles, projects, and timeline pages."
+    },
+    {
+      "sha": "d4e5f6a7b8c90123456789012345678903def01",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/d4e5f6a7",
+      "author": { "name": "Kallen", "date": "2026-06-12T16:45:00Z" },
+      "message": "perf(images): implement next-gen image formats\n\nAdded WebP and AVIF support with fallback for older browsers."
+    },
+    {
+      "sha": "e5f6a7b8c9d0123456789012345678904ef0123",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/e5f6a7b8",
+      "author": { "name": "Kallen", "date": "2026-06-10T11:00:00Z" },
+      "message": "feat(seo): add structured data and sitemap\n\nImplemented JSON-LD structured data for better search engine optimization."
+    },
+    {
+      "sha": "f6a7b8c9d0e123456789012345678905f012345",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/f6a7b8c9",
+      "author": { "name": "Kallen", "date": "2026-06-08T13:30:00Z" },
+      "message": "style(css): migrate to Tailwind CSS v4\n\nUpgraded Tailwind CSS to version 4 with new configuration and utilities."
+    },
+    {
+      "sha": "a7b8c9d0e1f2345678901234567890601234567",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/a7b8c9d0",
+      "author": { "name": "Kallen", "date": "2026-06-05T08:20:00Z" },
+      "message": "docs(readme): update project documentation\n\nAdded detailed setup instructions and contribution guidelines."
+    },
+    {
+      "sha": "b8c9d0e1f2a3456789012345678907123456789",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/b8c9d0e1",
+      "author": { "name": "Kallen", "date": "2026-06-03T15:10:00Z" },
+      "message": "feat(timeline): redesign timeline page\n\nComplete overhaul of the timeline page with Framer Motion animations."
+    },
+    {
+      "sha": "c9d0e1f2a3b4567890123456789082345678901",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/c9d0e1f2",
+      "author": { "name": "Kallen", "date": "2026-06-01T10:45:00Z" },
+      "message": "fix(nav): resolve mobile navigation overlay issue\n\nFixed z-index problems causing mobile menu to appear behind content."
+    },
+    {
+      "sha": "d0e1f2a3b4c5678901234567890934567890123",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/d0e1f2a3",
+      "author": { "name": "Kallen", "date": "2026-05-28T14:00:00Z" },
+      "message": "feat(friends): add friend links page with bottle design\n\nCreated a unique drifting bottle style friend links page."
+    },
+    {
+      "sha": "e1f2a3b4c5d678901234567890a456789012345",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/e1f2a3b4",
+      "author": { "name": "Kallen", "date": "2026-05-25T09:30:00Z" },
+      "message": "chore(deps): update dependencies to latest versions\n\nUpdated Next.js, React, and other core dependencies."
+    },
+    {
+      "sha": "f2a3b4c5d6e78901234567890b5678901234567",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/f2a3b4c5",
+      "author": { "name": "Kallen", "date": "2026-05-22T11:15:00Z" },
+      "message": "feat(about): redesign about page with skills showcase\n\nAdded animated skill bars and project highlights to the about page."
+    },
+    {
+      "sha": "a3b4c5d6e7f8901234567890c67890123456789",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/a3b4c5d6",
+      "author": { "name": "Kallen", "date": "2026-05-20T16:30:00Z" },
+      "message": "perf(lcp): optimize largest contentful paint\n\nImproved LCP by optimizing hero image loading and font display."
+    },
+    {
+      "sha": "b4c5d6e7f8a901234567890d789012345678901",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/b4c5d6e7",
+      "author": { "name": "Kallen", "date": "2026-05-18T08:45:00Z" },
+      "message": "feat(articles): add article series support\n\nImplemented article grouping by series with navigation sidebar."
+    },
+    {
+      "sha": "c5d6e7f8a9b01234567890e8901234567890123",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/c5d6e7f8",
+      "author": { "name": "Kallen", "date": "2026-05-15T13:20:00Z" },
+      "message": "fix(search): resolve search indexing delay\n\nFixed issue where new articles were not immediately searchable."
+    },
+    {
+      "sha": "d6e7f8a9b0c1234567890f90123456789012345",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/d6e7f8a9",
+      "author": { "name": "Kallen", "date": "2026-05-12T10:00:00Z" },
+      "message": "style(typography): improve reading experience\n\nAdjusted font sizes, line heights, and paragraph spacing for better readability."
+    },
+    {
+      "sha": "e7f8a9b0c1d234567890a012345678901234567",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/e7f8a9b0",
+      "author": { "name": "Kallen", "date": "2026-05-10T15:45:00Z" },
+      "message": "feat(analytics): add privacy-friendly analytics\n\nIntegrated Plausible Analytics without cookies or personal data collection."
+    },
+    {
+      "sha": "f8a9b0c1d2e34567890b1234567890123456789",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/f8a9b0c1",
+      "author": { "name": "Kallen", "date": "2026-05-08T09:15:00Z" },
+      "message": "refactor(api): unify error handling pattern\n\nStandardized API error responses across all endpoints."
+    },
+    {
+      "sha": "a9b0c1d2e3f4567890c23456789012345678901",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/a9b0c1d2",
+      "author": { "name": "Kallen", "date": "2026-05-05T14:30:00Z" },
+      "message": "feat(comments): add Giscus comment system\n\nIntegrated Giscus for GitHub Discussions-based comments."
+    },
+    {
+      "sha": "b0c1d2e3f4a567890d345678901234567890123",
+      "html_url": "https://github.com/kallen-noelle/myblog/commit/b0c1d2e3",
+      "author": { "name": "Kallen", "date": "2026-05-03T11:00:00Z" },
+      "message": "chore(ci): setup GitHub Actions for automated testing\n\nAdded CI pipeline for linting, type checking, and build verification."
+    }
+  ],
+  "total": 20,
+  "hasMore": false
+}

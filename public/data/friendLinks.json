@@ -1,0 +1,55 @@
+{
+  "rows": [
+    {
+      "id": 1,
+      "name": "Starhiro's Blog",
+      "url": "https://boke.hiromu.top/",
+      "description": "A tech blog about programming and projects",
+      "avatar": "/bg/1.jpg",
+      "themeColor": "#6366f1",
+      "sortOrder": 1,
+      "isPublished": 1
+    },
+    {
+      "id": 2,
+      "name": "MSYDJT Blog",
+      "url": "https://msydjt.com/",
+      "description": "Frontend development and web technologies",
+      "avatar": "/bg/2.jpg",
+      "themeColor": "#8b5cf6",
+      "sortOrder": 2,
+      "isPublished": 1
+    },
+    {
+      "id": 3,
+      "name": "XingHuiSama",
+      "url": "https://xinghuisama.top/",
+      "description": "Tech and life, sharing programming journey",
+      "avatar": "/bg/3.jpg",
+      "themeColor": "#ec4899",
+      "sortOrder": 3,
+      "isPublished": 1
+    },
+    {
+      "id": 4,
+      "name": "Anze Studio",
+      "url": "https://anze.pages.dev/",
+      "description": "Learning and growth, tech and life",
+      "avatar": "/bg/4.jpg",
+      "themeColor": "#14b8a6",
+      "sortOrder": 4,
+      "isPublished": 1
+    },
+    {
+      "id": 5,
+      "name": "TianMiao",
+      "url": "https://tianmiao.studio/",
+      "description": "Independent developer tech blog",
+      "avatar": "/bg/5.jpg",
+      "themeColor": "#f59e0b",
+      "sortOrder": 5,
+      "isPublished": 1
+    }
+  ],
+  "total": 5
+}

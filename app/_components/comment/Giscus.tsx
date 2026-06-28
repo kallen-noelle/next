@@ -4,17 +4,14 @@ import { useEffect, useState } from "react";
 import GiscusLib from "@giscus/react";
 import { siteConfig } from "@/lib/siteConfig";
 
-const GH_CDN = `https://cdn.jsdelivr.net/gh/${siteConfig.repo}@master/public`;
-
 export default function Giscus({ term }: { term?: string }) {
-  const [theme, setTheme] = useState<string | null>(null);
+  const [theme, setTheme] = useState<string>("light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     function resolveTheme(): string {
       const stored = window.localStorage.getItem("blog-theme");
-      const isDark = stored === null || stored === "dark";
-      return isDark ? `${GH_CDN}/giscus-dark.css?v=2` : `${GH_CDN}/giscus-light.css?v=2`;
+      return stored === null || stored === "dark" ? "dark" : "light";
     }
     setTheme(resolveTheme());
     const handler = () => setTheme(resolveTheme());
@@ -22,14 +19,13 @@ export default function Giscus({ term }: { term?: string }) {
     return () => window.removeEventListener("theme-changed", handler);
   }, []);
 
-  // Force remount when term changes
   useEffect(() => {
     setMounted(false);
-    const t = setTimeout(() => setMounted(true), 0);
+    const t = setTimeout(() => setMounted(true), 100);
     return () => clearTimeout(t);
   }, [term]);
 
-  if (theme === null || !mounted) {
+  if (!mounted) {
     return (
       <div className="w-full mt-8 relative">
         <div className="giscus-wrapper relative z-10 pt-6" style={{ borderTop: "1px solid rgba(148,163,184,0.3)" }} />
@@ -49,10 +45,11 @@ export default function Giscus({ term }: { term?: string }) {
           term={term}
           strict="0"
           reactionsEnabled="1"
-          emitMetadata="1"
-          inputPosition="top"
+          emitMetadata="0"
+          inputPosition="bottom"
           theme={theme}
           lang="zh-CN"
+          loading="lazy"
         />
       </div>
     </div>

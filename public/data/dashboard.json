@@ -1,0 +1,22 @@
+{
+  "articleCount": 16,
+  "projectCount": 10,
+  "skillCount": 20,
+  "timelineCount": 14,
+  "commentCount": 128,
+  "totalViews": 5230,
+  "topArticles": [
+    {"id": 4, "title": "React 组件设计模式", "viewCount": 320},
+    {"id": 10, "title": "Spring Boot 快速入门", "viewCount": 289},
+    {"id": 2, "title": "Next.js 16 新特性解析", "viewCount": 256},
+    {"id": 14, "title": "TypeScript 高级类型", "viewCount": 223},
+    {"id": 7, "title": "Docker 容器化实战", "viewCount": 210}
+  ],
+  "latestComments": [
+    {"id": 1, "authorName": "技术爱好者", "content": "博客内容非常精彩，学到了很多！", "createTime": "2026-06-20"},
+    {"id": 2, "authorName": "前端开发者", "content": "Next.js 的文章写得很详细，感谢分享", "createTime": "2026-06-18"},
+    {"id": 3, "authorName": "全栈工程师", "content": "Spring Boot 的入门教程很实用", "createTime": "2026-06-15"},
+    {"id": 4, "authorName": "Python 爱好者", "content": "数据处理技巧那篇文章太棒了", "createTime": "2026-06-10"},
+    {"id": 5, "authorName": "DevOps 从业者", "content": "Docker 的实战经验很有价值", "createTime": "2026-06-05"}
+  ]
+}

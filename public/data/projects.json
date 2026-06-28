@@ -1,0 +1,170 @@
+{
+  "rows": [
+    {
+      "id": 1,
+      "name": "个人博客系统",
+      "summary": "基于 Next.js 16 + Tailwind CSS 的全栈个人博客系统，支持文章管理、项目展示、相册等功能。",
+      "categoryId": 6,
+      "categoryName": "全栈项目",
+      "coverImage": "/bg/noelle2.jpeg",
+      "techs": [
+        {"id": 1, "name": "Next.js"},
+        {"id": 2, "name": "TypeScript"},
+        {"id": 3, "name": "Tailwind CSS"},
+        {"id": 4, "name": "Framer Motion"}
+      ],
+      "githubUrl": "https://github.com/kallen/myblog",
+      "demoUrl": "https://blog.example.com",
+      "isPublished": 1,
+      "createdAt": "2026-06-01"
+    },
+    {
+      "id": 2,
+      "name": "任务管理系统",
+      "summary": "使用 React + Node.js 开发的任务管理应用，支持任务创建、分配、进度跟踪。",
+      "categoryId": 6,
+      "categoryName": "全栈项目",
+      "coverImage": "/bg/6.jpeg",
+      "techs": [
+        {"id": 3, "name": "React"},
+        {"id": 5, "name": "Node.js"},
+        {"id": 6, "name": "MongoDB"}
+      ],
+      "githubUrl": "https://github.com/kallen/task-manager",
+      "isPublished": 1,
+      "createdAt": "2026-03-15"
+    },
+    {
+      "id": 3,
+      "name": "数据可视化平台",
+      "summary": "基于 ECharts + Vue 3 的数据可视化平台，支持多种图表类型和实时数据更新。",
+      "categoryId": 4,
+      "categoryName": "前端项目",
+      "coverImage": "/bg/noelle2.jpeg",
+      "techs": [
+        {"id": 7, "name": "Vue 3"},
+        {"id": 8, "name": "ECharts"},
+        {"id": 2, "name": "TypeScript"}
+      ],
+      "githubUrl": "https://github.com/kallen/data-viz",
+      "demoUrl": "https://viz.example.com",
+      "isPublished": 1,
+      "createdAt": "2026-01-20"
+    },
+    {
+      "id": 4,
+      "name": "API 网关服务",
+      "summary": "使用 Spring Boot 开发的 API 网关，支持路由转发、负载均衡、限流等功能。",
+      "categoryId": 5,
+      "categoryName": "后端项目",
+      "coverImage": "/bg/6.jpeg",
+      "techs": [
+        {"id": 9, "name": "Spring Boot"},
+        {"id": 10, "name": "Redis"},
+        {"id": 11, "name": "Nacos"}
+      ],
+      "githubUrl": "https://github.com/kallen/api-gateway",
+      "isPublished": 1,
+      "createdAt": "2025-12-01"
+    },
+    {
+      "id": 5,
+      "name": "在线代码编辑器",
+      "summary": "支持多种编程语言的在线代码编辑器，集成代码高亮、实时预览功能。",
+      "categoryId": 4,
+      "categoryName": "前端项目",
+      "coverImage": "/bg/noelle2.jpeg",
+      "techs": [
+        {"id": 12, "name": "React"},
+        {"id": 13, "name": "Monaco Editor"},
+        {"id": 2, "name": "TypeScript"}
+      ],
+      "githubUrl": "https://github.com/kallen/code-editor",
+      "demoUrl": "https://editor.example.com",
+      "isPublished": 1,
+      "createdAt": "2025-10-15"
+    },
+    {
+      "id": 6,
+      "name": "用户认证服务",
+      "summary": "基于 JWT 的用户认证服务，支持 OAuth2.0、社交登录等多种认证方式。",
+      "categoryId": 5,
+      "categoryName": "后端项目",
+      "coverImage": "/bg/6.jpeg",
+      "techs": [
+        {"id": 9, "name": "Spring Boot"},
+        {"id": 14, "name": "JWT"},
+        {"id": 15, "name": "MySQL"}
+      ],
+      "githubUrl": "https://github.com/kallen/auth-service",
+      "isPublished": 1,
+      "createdAt": "2025-08-20"
+    },
+    {
+      "id": 7,
+      "name": "即时聊天应用",
+      "summary": "支持一对一聊天、群聊、文件传输的即时通讯应用。",
+      "categoryId": 6,
+      "categoryName": "全栈项目",
+      "coverImage": "/bg/noelle2.jpeg",
+      "techs": [
+        {"id": 12, "name": "React"},
+        {"id": 16, "name": "WebSocket"},
+        {"id": 5, "name": "Node.js"}
+      ],
+      "githubUrl": "https://github.com/kallen/chat-app",
+      "demoUrl": "https://chat.example.com",
+      "isPublished": 1,
+      "createdAt": "2025-06-01"
+    },
+    {
+      "id": 8,
+      "name": "博客管理后台",
+      "summary": "基于 Vue 3 + Element Plus 的博客管理后台，支持文章、标签、分类等管理功能。",
+      "categoryId": 4,
+      "categoryName": "前端项目",
+      "coverImage": "/bg/6.jpeg",
+      "techs": [
+        {"id": 7, "name": "Vue 3"},
+        {"id": 17, "name": "Element Plus"},
+        {"id": 2, "name": "TypeScript"}
+      ],
+      "githubUrl": "https://github.com/kallen/blog-admin",
+      "isPublished": 1,
+      "createdAt": "2025-04-10"
+    },
+    {
+      "id": 9,
+      "name": "消息队列服务",
+      "summary": "基于 RabbitMQ 的消息队列服务，支持消息发布订阅、延迟队列等功能。",
+      "categoryId": 5,
+      "categoryName": "后端项目",
+      "coverImage": "/bg/noelle2.jpeg",
+      "techs": [
+        {"id": 9, "name": "Spring Boot"},
+        {"id": 18, "name": "RabbitMQ"},
+        {"id": 15, "name": "MySQL"}
+      ],
+      "githubUrl": "https://github.com/kallen/mq-service",
+      "isPublished": 1,
+      "createdAt": "2025-02-15"
+    },
+    {
+      "id": 10,
+      "name": "文件存储服务",
+      "summary": "支持文件上传、下载、预览的云存储服务，集成阿里云 OSS。",
+      "categoryId": 5,
+      "categoryName": "后端项目",
+      "coverImage": "/bg/6.jpeg",
+      "techs": [
+        {"id": 9, "name": "Spring Boot"},
+        {"id": 19, "name": "OSS"},
+        {"id": 10, "name": "Redis"}
+      ],
+      "githubUrl": "https://github.com/kallen/file-service",
+      "isPublished": 1,
+      "createdAt": "2025-01-01"
+    }
+  ],
+  "total": 10
+}

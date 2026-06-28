@@ -1,0 +1,26 @@
+{
+  "rows": [
+    {
+      "id": 1,
+      "title": "Inspire",
+      "duration": 180,
+      "url": "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3",
+      "pictureUrl": "/images/noelle/noelle2.jpeg"
+    },
+    {
+      "id": 2,
+      "title": "Summer",
+      "duration": 210,
+      "url": "https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3",
+      "pictureUrl": "/images/music.png"
+    },
+    {
+      "id": 3,
+      "title": "Calm",
+      "duration": 195,
+      "url": "https://cdn.pixabay.com/download/audio/2022/08/02/audio_884fe92c21.mp3",
+      "pictureUrl": "/images/noelle/noelle2.jpeg"
+    }
+  ],
+  "total": 3
+}

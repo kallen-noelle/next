@@ -25,8 +25,8 @@ export default function LiteratureDetailPage(props: { params: Promise<{ id: stri
         setAllTags(data.rows);
         const numId = Number(id);
         const found = data.rows
-          .flatMap((t) => t.articles)
-          .find((a) => a.id === numId || a.title === id);
+          .flatMap((t: OpTag) => t.articles)
+          .find((a: OpArticle) => a.id === numId || a.title === id);
         setItem(found || null);
       } catch {
         setItem(null);

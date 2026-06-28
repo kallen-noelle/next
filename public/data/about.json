@@ -1,0 +1,16 @@
+{
+  "name": "kallen-noelle",
+  "bio": "A personal space for thinking, chatting and coding.",
+  "avatar": "/bg/13.jpeg",
+  "title": "全栈开发工程师 | 开源爱好者",
+  "location": "Hangzhou, China",
+  "education": "计算机科学与技术 | 本科",
+  "interests": ["Web Development", "Open Source", "Reading", "Music"],
+  "skills": {
+    "frontend": ["React", "Next.js", "TypeScript", "Tailwind CSS", "Vue.js"],
+    "backend": ["Node.js", "Python", "Java", "Spring Boot"],
+    "database": ["MySQL", "PostgreSQL", "MongoDB", "Redis"],
+    "devops": ["Docker", "Git", "CI/CD", "Linux"]
+  },
+  "about": "你好！我是 kallen-noelle，一名热爱技术的学生开发者。\n\n我热衷于探索全栈开发的各个领域，从前端界面设计到后端架构搭建都有浓厚的兴趣。喜欢折腾各种新技术，在实践中不断成长。\n\n这个博客用来记录我的学习历程、技术探索和日常思考。希望能在这里与志同道合的朋友们交流学习。\n\n如果你有任何问题或想法，欢迎通过各种方式联系我！"
+}

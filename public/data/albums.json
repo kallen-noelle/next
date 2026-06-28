@@ -1,0 +1,61 @@
+{
+  "rows": [
+    {
+      "id": 1,
+      "title": "动物",
+      "description": "记录动物的瞬间",
+      "sortOrder": 1,
+      "isPublished": 1,
+      "photos": [
+        {"id": 1, "albumId": 1, "url": "/images/动物/1.jpg", "sortOrder": 1},
+        {"id": 2, "albumId": 1, "url": "/images/动物/2.jpg", "sortOrder": 2},
+        {"id": 3, "albumId": 1, "url": "/images/动物/3.jpg", "sortOrder": 3},
+        {"id": 4, "albumId": 1, "url": "/images/动物/4.jpg", "sortOrder": 4}
+      ]
+    },
+
+    
+    {
+      "id": 2,
+      "title": "自然",
+      "description": "山川湖海，大自然的壮美景色",
+      "sortOrder": 2,
+      "isPublished": 1,
+      "photos": [
+        {"id": 4, "albumId": 2, "url": "/images/风景/1.jpg", "sortOrder": 1},
+        {"id": 5, "albumId": 2, "url": "/images/风景/2.jpg", "sortOrder": 2},
+        {"id": 6, "albumId": 2, "url": "/images/风景/3.jpg", "sortOrder": 3},
+        {"id": 7, "albumId": 2, "url": "/images/风景/4.jpg", "sortOrder": 4},
+        {"id": 8, "albumId": 2, "url": "/images/风景/5.jpg", "sortOrder": 5}
+      ]
+    },
+    {
+      "id": 3,
+      "title": "建筑",
+      "description": "城市建筑的艺术之美",
+      "sortOrder": 3,
+      "isPublished": 1,
+      "photos": [
+        {"id": 9, "albumId": 3, "url": "/images/建筑/1.jpg", "sortOrder": 1},
+        {"id": 10, "albumId": 3, "url": "/images/建筑/2.jpg", "sortOrder": 2},
+        {"id": 11, "albumId": 3, "url": "/images/建筑/3.jpg", "sortOrder": 3},
+        {"id": 12, "albumId": 3, "url": "/images/建筑/4.jpg", "sortOrder": 4}
+      ]
+    },  
+    {
+      "id": 4,
+      "title": "植物",
+      "description": "记录植物的瞬间",
+      "sortOrder": 4,
+      "isPublished": 1,
+      "photos": [
+        {"id": 9, "albumId": 4, "url": "/images/植物/1.jpg", "sortOrder": 1},
+        {"id": 10, "albumId": 4, "url": "/images/植物/2.jpg", "sortOrder": 2},
+        {"id": 11, "albumId": 4, "url": "/images/植物/3.jpg", "sortOrder": 3},
+        {"id": 12, "albumId": 4, "url": "/images/植物/4.jpg", "sortOrder": 4}
+      ]
+    }
+  
+  ],
+  "total":4
+}

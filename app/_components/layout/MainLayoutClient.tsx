@@ -10,10 +10,11 @@ export default function MainLayoutClient({
 }) {
   const pathname = usePathname();
   const isChatter = pathname.startsWith("/chatter");
+  const isHome = pathname === "/";
 
   return (
     <main
-      className={`flex-1 w-full mt-28 ${isChatter
+      className={`flex-1 w-full ${isHome ? "" : "mt-28"} ${isChatter
           ? ""
           : "max-w-6xl mx-auto px-4 sm:px-6 lg:px-10"
         }`}

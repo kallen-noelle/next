@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import {  ExternalLink, Globe } from "lucide-react";
 import { siteConfig, loadConfig } from "@/lib/config";
 import { assetUrl } from "@/lib/asset-url";
-import type { DashboardVO } from "@/lib/types";
+import type { DashboardVO, OpTag } from "@/lib/types";
 import { get } from "@/lib/api/dashboard";
 import { get as getAbout } from "@/lib/api/about";
 import { getArticleList } from "@/lib/api/op";
@@ -19,6 +21,70 @@ import { websiteSchema } from "@/lib/seo";
 
 const [GH_OWNER, GH_REPO] = siteConfig.repo.split("/");
 
+function TimeCard() {
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString("zh-CN", { hour12: false });
+  };
+
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString("zh-CN", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      weekday: "short",
+    });
+  };
+
+  const formatWeekday = (date: Date) => {
+    const weekdays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+    return weekdays[date.getDay()];
+  };
+
+  return (
+    <div className="rounded-3xl bg-gradient-to-br from-amber-500/20 to-orange-500/10 dark:from-amber-500/10 dark:to-orange-500/5 backdrop-blur-md border border-amber-500/20 dark:border-amber-500/10 shadow-xl p-5 flex flex-col justify-center min-h-[220px] transition-all duration-700 hover:scale-[1.01] group relative overflow-hidden">
+      <div className="absolute -right-4 -bottom-4 w-20 h-20 bg-amber-500/10 rounded-full blur-2xl"></div>
+      <div className="relative z-10">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center">
+            <span className="text-lg">⏰</span>
+          </div>
+          <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Current Time</span>
+        </div>
+        <div className="font-mono text-3xl font-black text-amber-600 dark:text-amber-400 mb-1">
+          {formatTime(time)}
+        </div>
+        <div className="text-xs text-slate-500 dark:text-slate-400 mb-1">
+          {formatDate(time)}
+        </div>
+        <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+          {formatWeekday(time)}
+        </div>
+        <div className="mt-4 flex items-center gap-1">
+          {[...Array(3)].map((_, i) => (
+            <div
+              key={i}
+              className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
+                i === 0
+                  ? "bg-amber-500 animate-pulse"
+                  : i === 1
+                  ? "bg-amber-400/60"
+                  : "bg-amber-300/40"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [dash, setDash] = useState<DashboardVO | null>(null);
   const [configReady, setConfigReady] = useState(false);
@@ -26,26 +92,35 @@ export default function Home() {
   const [friendCount, setFriendCount] = useState<number | null>(null);
   const [chatterCount, setChatterCount] = useState<number | null>(null);
   const [repoStats, setRepoStats] = useState<{ stars: number; forks: number; watchers: number } | null>(null);
+  const [showContent, setShowContent] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+  const contentY = useTransform(scrollYProgress, [0, 0.8], [100, 0]);
+  const contentOpacity = useTransform(scrollYProgress, [0.3, 0.8], [0, 1]);
 
   useEffect(() => {
     get().then(setDash).catch(() => { });
     getAbout().then(about => { loadConfig(about); setConfigReady(true); }).catch(() => { });
     getArticleList().then(d => {
-      const total = d.rows.reduce((sum, t) => sum + t.articles.length, 0);
+      const total = d.rows.reduce((sum: number, t: OpTag) => sum + t.articles.length, 0);
       setLiteratureCount(total);
     }).catch(() => { });
 
-    // 获取友链数量
     getFriendLinks().then(list => {
       setFriendCount(Array.isArray(list) ? list.length : (list as { rows?: unknown[] })?.rows?.length ?? null);
     }).catch(() => { });
 
-    // 获取说说数量
     getChatters().then(list => {
       setChatterCount(Array.isArray(list) ? list.length : (list as { rows?: unknown[] })?.rows?.length ?? null);
     }).catch(() => { });
 
-    // 获取 Giscus 实时评论总数
     const ghToken = localStorage.getItem("github_token");
     if (ghToken) {
       fetch("https://api.github.com/graphql", {
@@ -63,7 +138,6 @@ export default function Home() {
       }).catch(() => { });
     }
 
-    // 获取 GitHub 仓库统计
     fetch(`https://api.github.com/repos/${siteConfig.repo}`)
       .then(r => r.json())
       .then(d => {
@@ -71,6 +145,15 @@ export default function Home() {
           setRepoStats({ stars: d.stargazers_count, forks: d.forks_count, watchers: d.watchers_count });
         }
       }).catch(() => { });
+
+    // 监听滚动，显示内容区域
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.3) {
+        setShowContent(true);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const authorName = siteConfig.authorName;
@@ -79,18 +162,129 @@ export default function Home() {
 
   return (
     <>
-      <FloatingNav />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(websiteSchema()),
         }}
       />
-      <div className="flex flex-col gap-6 w-full mt-6">
-        {/* Row 1: Profile Card + Player */}
+
+      {/* Hero 区域 - 全屏背景 */}
+      <motion.div
+        ref={heroRef}
+        className="h-screen flex flex-col items-center justify-center relative"
+        style={{ opacity: heroOpacity, scale: heroScale }}
+      >
+        {/* 居中内容 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="text-center px-4"
+        >
+          {/* 头像 */}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 p-1 shadow-2xl mx-auto mb-8"
+          >
+            <img
+              src={assetUrl(siteConfig.avatarUrl)}
+              alt={`${authorName} 的头像`}
+              className="w-full h-full rounded-full object-cover bg-white/80"
+            />
+          </motion.div>
+
+          {/* 名字 */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-4xl sm:text-5xl md:text-6xl font-black text-white dark:text-white mb-4 tracking-tight drop-shadow-lg"
+          >
+            {authorName}
+          </motion.h1>
+
+          {/* 简介 */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="text-lg sm:text-xl text-white/80 dark:text-white/80 mb-8 max-w-md mx-auto drop-shadow"
+          >
+            {bio}
+          </motion.p>
+
+          {/* 社交链接 */}
+          {hasContact && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="flex items-center justify-center gap-3 mb-12"
+            >
+              {siteConfig.github && (
+                <a
+                  href={`https://${siteConfig.github}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="p-3 rounded-full bg-white/20 dark:bg-white/20 backdrop-blur-md text-white hover:bg-white/40 transition-all hover:scale-110"
+                >
+                  <Globe className="w-5 h-5" />
+                </a>
+              )}
+              {siteConfig.email && (
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="p-3 rounded-full bg-white/20 dark:bg-white/20 backdrop-blur-md text-white hover:bg-white/40 transition-all hover:scale-110"
+                >
+                  <Globe className="w-5 h-5" />
+                </a>
+              )}
+              {siteConfig.gitee && (
+                <a
+                  href={`https://${siteConfig.gitee}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="p-3 rounded-full bg-white/20 dark:bg-white/20 backdrop-blur-md text-white hover:bg-white/40 transition-all hover:scale-110"
+                >
+                  <Globe className="w-5 h-5" />
+                </a>
+              )}
+            </motion.div>
+          )}
+        </motion.div>
+
+        {/* 向下滚动提示 */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.2 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="flex flex-col items-center text-white/60 dark:text-white/60"
+          >
+            <span className="text-xs font-medium mb-2">向下滚动探索更多</span>
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+
+      {/* 主内容区域 */}
+      <motion.div
+        className="flex flex-col gap-6 w-full pb-16"
+        style={{ y: showContent ? 0 : contentY, opacity: showContent ? 1 : contentOpacity }}
+      >
+        {/* Row 1: Profile Card + Player + Toolbar */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
-          {/* ProfileCard — 7 cols */}
-          <div className="col-span-1 lg:col-span-7 rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-5 sm:p-6 md:p-8 flex flex-col justify-between transition-all duration-700 hover:scale-[1.01] group relative overflow-hidden min-h-[220px]">
+          {/* ProfileCard — 5 cols */}
+          <div className="col-span-1 lg:col-span-5 rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-5 sm:p-6 md:p-8 flex flex-col justify-between transition-all duration-700 hover:scale-[1.01] group relative overflow-hidden min-h-[220px]">
             <Link href="/about">
               <div className="flex items-start justify-between relative z-10">
                 <div className="flex items-center gap-4 md:gap-6 w-full">
@@ -120,7 +314,7 @@ export default function Home() {
 
             </Link>
 
-            {/* Star 引导 + GitHub Repo Stats — outside Link to prevent navigation */}
+            {/* Star 引导 + GitHub Repo Stats */}
             <div className="mt-4 pt-3 border-t border-slate-200/50 dark:border-white/5 relative z-10">
               <div className="flex items-center gap-3 flex-wrap">
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -174,7 +368,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Contact links — outside Link to prevent navigation */}
+            {/* Contact links */}
             {hasContact && (
               <div className="flex items-center gap-1 mt-4 relative z-10">
                 {siteConfig.email && (
@@ -223,30 +417,82 @@ export default function Home() {
             )}
           </div>
 
-          {/* Player — 5 cols */}
-          <div className="col-span-1 lg:col-span-5">
+          {/* Player — 4 cols */}
+          <div className="col-span-1 lg:col-span-4">
             <MusicPlayer />
+          </div>
+
+          {/* Time Card — 3 cols */}
+          <div className="col-span-1 lg:col-span-3">
+            <TimeCard />
           </div>
         </div>
 
-        {/* Row 2: Article Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
-          <Link href="/article" className="rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-6 transition-all duration-700 hover:scale-[1.02] group">
-            <span className="inline-block px-2 py-0.5 text-[10px] font-bold rounded-md bg-indigo-500/80 text-white backdrop-blur-lg mb-3">Read</span>
-            <h3 className="text-lg font-black text-slate-900 dark:text-white group-hover:-translate-y-0.5 transition-transform">Articles</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Tech &amp; Research</p>
+        {/* Row 2: Feature Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+          <Link href="/article" className="rounded-3xl bg-gradient-to-br from-indigo-500/20 to-indigo-400/10 dark:from-indigo-500/10 dark:to-indigo-400/5 backdrop-blur-md border border-indigo-500/20 dark:border-indigo-500/10 shadow-xl p-6 transition-all duration-700 hover:scale-[1.02] group relative overflow-hidden">
+            <div className="absolute -right-4 -top-4 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl"></div>
+            <div className="relative z-10">
+              <div className="w-12 h-12 rounded-xl bg-indigo-500/20 dark:bg-indigo-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-2xl">📝</span>
+              </div>
+              <span className="inline-block px-2 py-0.5 text-[10px] font-bold rounded-md bg-indigo-500/80 text-white backdrop-blur-lg mb-2">Read</span>
+              <h3 className="text-lg font-black text-slate-900 dark:text-white group-hover:-translate-y-0.5 transition-transform">Articles</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Tech &amp; Research</p>
+              <div className="mt-4 flex items-center gap-2">
+                <span className="text-2xl font-black text-indigo-600 dark:text-indigo-400">{dash?.articleCount ?? "—"}</span>
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">posts</span>
+              </div>
+            </div>
           </Link>
-          <Link href="/project" className="rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-6 transition-all duration-700 hover:scale-[1.02] group">
-            <span className="inline-block px-2 py-0.5 text-[10px] font-bold rounded-md bg-purple-500/80 text-white backdrop-blur-lg mb-3">Build</span>
-            <h3 className="text-lg font-black text-slate-900 dark:text-white group-hover:-translate-y-0.5 transition-transform">Projects</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Code &amp; Portfolio</p>
+          <Link href="/project" className="rounded-3xl bg-gradient-to-br from-purple-500/20 to-purple-400/10 dark:from-purple-500/10 dark:to-purple-400/5 backdrop-blur-md border border-purple-500/20 dark:border-purple-500/10 shadow-xl p-6 transition-all duration-700 hover:scale-[1.02] group relative overflow-hidden">
+            <div className="absolute -right-4 -top-4 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl"></div>
+            <div className="relative z-10">
+              <div className="w-12 h-12 rounded-xl bg-purple-500/20 dark:bg-purple-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-2xl">🛠️</span>
+              </div>
+              <span className="inline-block px-2 py-0.5 text-[10px] font-bold rounded-md bg-purple-500/80 text-white backdrop-blur-lg mb-2">Build</span>
+              <h3 className="text-lg font-black text-slate-900 dark:text-white group-hover:-translate-y-0.5 transition-transform">Projects</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Code &amp; Portfolio</p>
+              <div className="mt-4 flex items-center gap-2">
+                <span className="text-2xl font-black text-purple-600 dark:text-purple-400">{dash?.projectCount ?? "—"}</span>
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">works</span>
+              </div>
+            </div>
           </Link>
-          <Link href="/timeline" className="rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-6 transition-all duration-700 hover:scale-[1.02] group">
-            <span className="inline-block px-2 py-0.5 text-[10px] font-bold rounded-md bg-pink-500/80 text-white backdrop-blur-lg mb-3">Learn</span>
-            <h3 className="text-lg font-black text-slate-900 dark:text-white group-hover:-translate-y-0.5 transition-transform">Timeline</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Learning Path</p>
+          <Link href="/timeline" className="rounded-3xl bg-gradient-to-br from-pink-500/20 to-pink-400/10 dark:from-pink-500/10 dark:to-pink-400/5 backdrop-blur-md border border-pink-500/20 dark:border-pink-500/10 shadow-xl p-6 transition-all duration-700 hover:scale-[1.02] group relative overflow-hidden">
+            <div className="absolute -right-4 -top-4 w-24 h-24 bg-pink-500/10 rounded-full blur-2xl"></div>
+            <div className="relative z-10">
+              <div className="w-12 h-12 rounded-xl bg-pink-500/20 dark:bg-pink-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-2xl">📚</span>
+              </div>
+              <span className="inline-block px-2 py-0.5 text-[10px] font-bold rounded-md bg-pink-500/80 text-white backdrop-blur-lg mb-2">Learn</span>
+              <h3 className="text-lg font-black text-slate-900 dark:text-white group-hover:-translate-y-0.5 transition-transform">Timeline</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Learning Path</p>
+              <div className="mt-4 flex items-center gap-2">
+                <span className="text-2xl font-black text-pink-600 dark:text-pink-400">{dash?.timelineCount ?? "—"}</span>
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">milestones</span>
+              </div>
+            </div>
+          </Link>
+          <Link href="/tools" className="rounded-3xl bg-gradient-to-br from-cyan-500/20 to-cyan-400/10 dark:from-cyan-500/10 dark:to-cyan-400/5 backdrop-blur-md border border-cyan-500/20 dark:border-cyan-500/10 shadow-xl p-6 transition-all duration-700 hover:scale-[1.02] group relative overflow-hidden">
+            <div className="absolute -right-4 -top-4 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl"></div>
+            <div className="relative z-10">
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/20 dark:bg-cyan-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-2xl">🔧</span>
+              </div>
+              <span className="inline-block px-2 py-0.5 text-[10px] font-bold rounded-md bg-cyan-500/80 text-white backdrop-blur-lg mb-2">Tools</span>
+              <h3 className="text-lg font-black text-slate-900 dark:text-white group-hover:-translate-y-0.5 transition-transform">Toolkit</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Utilities &amp; Fun</p>
+              <div className="mt-4 flex items-center gap-2">
+                <span className="text-2xl font-black text-cyan-600 dark:text-cyan-400">15+</span>
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">tools</span>
+              </div>
+            </div>
           </Link>
         </div>
+       
+
 
         {/* Row 3: Dashboard stats + Theme toggle */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
@@ -269,15 +515,16 @@ export default function Home() {
               </div>
             )}
           </div>
-          {/* Theme toggle — 4 cols */}
-          <div className="col-span-1 lg:col-span-4 min-h-[80px]">
+            <div className="col-span-1 lg:col-span-4 min-h-[80px]">
             <ThemeToggleBlock />
           </div>
         </div>
 
-        {/* Row 4: Site Dashboard */}
-        <SiteDashboard />
-      </div>
+        {/* Row 4: FloatingNav */}
+        <FloatingNav />
+
+        
+      </motion.div>
     </>
   );
 }

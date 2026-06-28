@@ -10,13 +10,14 @@ export const siteConfig = {
   /** 导航栏品牌名 */
   navTitle: "kallen`s place",
   /** 头像路径，相对 public/ */
-  avatarUrl: "/bg/1.jpg",
+  avatarUrl: "/images/noelle/noelle2.jpeg",
   /** 背景轮播图列表，相对 public/ */
   bgImages: [
-    "/bg/1.jpg", "/bg/2.jpg", "/bg/3.jpg",
-    "/bg/4.jpg", "/bg/5.PNG", "/bg/6.png",
-    "/bg/7.JPG", "/bg/8.JPG", "/bg/9.jpg",
-    "/bg/10.jpg"
+    "/images/bg/7.jpeg",  "/images/bg/1.jpeg", "/images/bg/11.jpeg", 
+    "/images/bg/13.jpg",
+    "/images/bg/4.jpeg",  "/images/bg/6.jpeg",
+   "/images/bg/8.jpeg", "/images/bg/9.jpeg",
+    "/images/bg/10.jpeg"
   ],
 
   /** 社交链接 */

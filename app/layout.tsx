@@ -5,12 +5,12 @@ import { ThemeProvider } from "./_components/layout/ThemeProvider";
 import BackgroundEffects from "./_components/common/ParticleBg";
 import DanmakuBackground from "./_components/layout/DanmakuBackground";
 import ClickEffect from "./_components/common/ClickEffect";
-import SplashScreen from "./_components/layout/SplashScreen";
 import MaskOverlay from "./_components/common/MaskOverlay";
 import Live2DWidget from "./_components/Live2DWidgetWrapper";
+
 import { siteConfig } from "@/lib/siteConfig";
 import { defaultOgImage, SITE_KEYWORDS, SITE_URL } from "@/lib/seo";
-import BackgroundSlider from "@/app/_components/layout/BackgroundSwitcher";
+import ParallaxBackground from "@/app/_components/layout/ParallaxBackground";
 
 const geistSans = localFont({
   src: "../public/fonts/geist-latin.woff2",
@@ -61,33 +61,14 @@ export default function RootLayout({
     >
       <head>
         <meta charSet="utf-8" />
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-              #app-mount-root { opacity: 0; visibility: hidden; pointer-events: none; }
-              html.splash-seen #app-mount-root { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
-            `,
-          }}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                if (sessionStorage.getItem('hasSeenSplash') === 'true') {
-                  document.documentElement.classList.add('splash-seen');
-                }
-              } catch (e) {}
-            `,
-          }}
-        />
       </head>
       <body className="w-full overflow-y-scroll min-h-full flex flex-col relative transition-colors duration-1000 bg-slate-50 dark:bg-slate-950 font-serif">
         <ThemeProvider>
-          <SplashScreen />
-          <div id="app-mount-root" className="flex-1 flex flex-col min-h-0 transition-opacity duration-1000">
+          <div id="app-mount-root" className="flex-1 flex flex-col min-h-0">
             {/* Background layers */}
             <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
-              <BackgroundSlider />
+              {/*背景层*/}
+              <ParallaxBackground />
               <MaskOverlay />
               <div
                 className="absolute inset-0 z-[-8] opacity-60 dark:opacity-20 mix-blend-color transition-opacity duration-1000 transform-gpu"
@@ -97,8 +78,8 @@ export default function RootLayout({
                   animation: "gradientMove 15s ease infinite",
                 }}
               />
-              <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/40 dark:bg-indigo-900/20 blur-[100px] rounded-full z-[-7] md:mix-blend-overlay" />
-              <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-400/30 dark:bg-purple-900/30 blur-[100px] rounded-full z-[-7] md:mix-blend-overlay" />
+              <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/40 dark:bg-indigo-900/20 blur-[60px] rounded-full z-[-7] md:mix-blend-overlay" />
+              <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-400/30 dark:bg-purple-900/30 blur-[60px] rounded-full z-[-7] md:mix-blend-overlay" />
               <div className="hidden md:block absolute inset-0 w-full h-full">
                 <BackgroundEffects />
               </div>
