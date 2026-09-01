@@ -12,7 +12,7 @@ export const defaultOgImage = "/seo/logo.png";
 
 /** 站点关键词 */
 export const SITE_KEYWORDS = [
-  "栏轩阁", "个人博客", "技术博客", "前端开发", "全栈开发",
+  "kallen's place", "个人博客", "技术博客", "前端开发", "全栈开发",
   "Web开发", "JavaScript", "TypeScript", "React", "Next.js",
   "编程", "项目实践", "学习笔记",
 ];
@@ -179,7 +179,7 @@ export const friendsMetadata: Metadata = meta(
 /** 关于页 */
 export const aboutMetadata: Metadata = meta(
   "关于博主",
-  "关于栏轩阁博主 - 个人简介、技术栈、联系方式与社交媒体。了解博客背后的创作者，欢迎交流与合作。",
+  "关于 kallen - 个人简介、技术栈、联系方式与社交媒体。了解博客背后的创作者，欢迎交流与合作。",
   SEO_IMAGE,
 );
 
@@ -200,6 +200,6 @@ export const analyticsMetadata: Metadata = meta(
 /** 成长记录页 */
 export const growthMetadata: Metadata = meta(
   "博客成长记录",
-  "从第一行代码开始的每一次提交，记录栏轩阁博客的技术演进历程。",
+  "从第一行代码开始的每一次提交，记录 kallen's place 博客的技术演进历程。",
   SEO_IMAGE,
 );
