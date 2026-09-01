@@ -4,7 +4,7 @@
 
 ## 项目概述
 
-栏轩阁 — 个人博客系统，基于 Next.js 16 (App Router) + Tailwind CSS + TypeScript。
+kallen‘space，基于 Next.js 16 (App Router) + Tailwind CSS + TypeScript。
 
 代码托管：Git
 
