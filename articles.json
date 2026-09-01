@@ -24,6 +24,31 @@
       "title": "codex安装及接入deepseek教程",
       "updateTime": "2026-06-10T14:42:38.102608",
       "viewCount": 160
+    },
+
+      {
+      "categoryId": 38,
+      "categoryName": "网站部署",
+      "commentCount": 0,
+      "coverImage": "/data/media/40.webp",
+      "createdAt": "2026-05-26T10:23:39.694181",
+      "id": 35,
+      "isPinned": 0,
+      "isPublished": 1,
+      "summary": "本教程将指导你如何将个人网站/博客提交到 Bing 搜索引擎，让 Bing 用户能够搜索到你的内容",
+      "tags": [
+        {
+          "id": 25,
+          "name": "bing"
+        },
+        {
+          "id": 24,
+          "name": "deepseek"
+        }
+      ],
+      "title": "将个人网址录入Bing搜索引擎",
+      "updateTime": "2026-06-10T14:42:38.102608",
+      "viewCount": 160
     }
   ]
 }
