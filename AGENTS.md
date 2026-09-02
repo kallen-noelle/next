@@ -18,10 +18,6 @@ kallen‘space，基于 Next.js 16 (App Router) + Tailwind CSS + TypeScript。
 
 ## 核心约束
 
-- ❌ 禁止使用 `any` 类型（渐进目标，现有代码中的 `any` 逐步清理）
-
-- ❌ 禁止直接修改 `node_modules`
-
 - ✅ 组件统一使用 `export default function`
 
 - ✅ 样式优先使用 Tailwind 类名，复杂样式才写自定义 CSS（参照 STYLE-GUIDE.md）

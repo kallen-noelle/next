@@ -1,20 +1,19 @@
 <div align="center">
 
-# 栏轩阁 · LanXuan Pavilion
+# kallen's place · kallen-noelle
 
 **个人技术博客与作品集 — 全栈一体化博客系统**
-[![GitHub Pages](https://img.shields.io/github/actions/workflow/status/pc-Blog/next/deploy.yml?branch=master&label=GitHub%20Pages)](https://github.com/pc-Blog/next/actions)
-[![GitHub release](https://img.shields.io/github/v/release/pc-Blog/next?include_prereleases&logo=next.js&label=Release)](https://github.com/pc-Blog/next/releases)
+[![GitHub Pages](https://img.shields.io/github/actions/workflow/status/kallen-noelle/next/deploy.yml?branch=master&label=GitHub%20Pages)](https://github.com/kallen-noelle/next/actions)
 [![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
 [![Node](https://img.shields.io/badge/Node-%3E%3D18-339933?logo=node.js&logoColor=white)](package.json)
 [![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=next.js&logoColor=white)](package.json)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](package.json)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](package.json)
-[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen)](https://github.com/pc-Blog/next/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen)](https://github.com/kallen-noelle/next/pulls)
 
-**在线体验：[https://www.lxpavilion.top](https://www.lxpavilion.top)** ✨
-**项目介绍：[https://www.lxpavilion.top/project/18/](https://www.lxpavilion.top/project/18/)**
+**在线体验：[https://www.kallen-noelle.top](https://www.kallen-noelle.top)** ✨
+**源码仓库（Gitee 主 / GitHub 备）：** [gitee.com/kallen-noelle/next](https://gitee.com/kallen-noelle/next) / [github.com/kallen-noelle/next](https://github.com/kallen-noelle/next)
 
 </div>
 
@@ -60,31 +59,33 @@
 ### 前置要求
 
 - **Node.js** >= 18（推荐 22，Docker 镜像基于 Node 22）
-- **npm** 或 **pnpm**
-- （可选）后端服务：请搭配 [pc-Blog/springBoot](https://github.com/pc-Blog/springBoot) 使用
+- **pnpm**（包管理，用户偏好；也支持 npm）
+- （可选）后端服务：搭配自建的 Spring Boot 博客后端使用
 
 ### 安装与运行
 
 ```bash
 # 克隆仓库
-git clone https://github.com/pc-Blog/next.git
+git clone https://gitee.com/kallen-noelle/next.git    # Gitee 主仓
+# 或
+git clone https://github.com/kallen-noelle/next.git   # GitHub 备仓（镜像同步）
 cd next
 
 # 安装依赖
-npm install
+pnpm install
 
 # 启动开发服务器（Turbopack）
-npm run dev          # 访问 http://localhost:3000
+pnpm dev                    # 访问 http://localhost:3000
 ```
 
 ### 生产构建
 
 ```bash
 # Docker 模式（standalone 输出）
-npm run build
+pnpm build
 
 # 静态导出（GitHub Pages）
-npm run build:static    # 产物输出到 out/
+pnpm build:static           # 产物输出到 out/
 ```
 
 ### 关键配置
@@ -112,26 +113,28 @@ npm run build:static    # 产物输出到 out/
 在管理后台（`/admin`）中登录后：
 
 1. 进入 **文章管理** → **新建文章**
-2. 使用 Markdown 编辑器撰写内容，支持图片上传（自动上传到后端 MinIO）
+2. 使用 Markdown 编辑器撰写内容，支持图片上传（自动上传到后端 MinIO / 对象存储）
 3. 选择分类和标签，设置是否置顶/发布
 4. 保存后即可在前台文章列表查看
 
 ### 数据同步（GitHub Pages 静态部署）
 
-后台提供一键数据同步功能，将后端数据同步到 GitHub `data` 分支：
+后台提供一键数据同步功能，将后端数据同步到 GitHub / Gitee `data` 分支：
 
 1. 在后台 **数据同步** 页面输入 GitHub Token（需 `repo` 权限）
 2. 分别触发 **JSON 同步**、**媒体同步**、**音乐同步**
 3. 推送 `master` 或 `data` 分支后，GitHub Actions 自动构建并部署
 
+> 仓库托管：代码提交到 **Gitee 主仓**，Gitee → GitHub 镜像同步由 Gitee 的"仓库同步"功能自动完成，GitHub Actions 从镜像仓读取并部署到 gh-pages。
+
 ### 常用命令
 
 ```bash
-npm run dev             # 启动开发服务器（Turbopack）
-npm run build           # 生产构建（standalone 输出，用于 Docker）
-npm run build:static    # 静态导出（用于 GitHub Pages）
-npm run start           # 启动生产服务器
-npm run lint            # ESLint 代码检查
+pnpm dev                 # 启动开发服务器（Turbopack）
+pnpm build               # 生产构建（standalone 输出，用于 Docker）
+pnpm build:static        # 静态导出（用于 GitHub Pages）
+pnpm start               # 启动生产服务器
+pnpm lint                # ESLint 代码检查
 ```
 
 ### 自定义主题
@@ -213,7 +216,7 @@ next/
 ├── stores/                           # Zustand 全局状态
 │   ├── authStore.ts                  # 认证状态
 │   ├── musicStore.ts                 # 音乐播放器状态
-│   └── settingsStore.ts             # 用户设置
+│   └── settingsStore.ts              # 用户设置
 ├── workers/                          # Cloudflare Workers
 │   ├── cf-analytics-worker.js        # 流量分析代理 + 多平台统计
 │   └── wrangler.json                 # Worker 配置
@@ -258,24 +261,35 @@ docker run -d \
 
 ```bash
 # 本地构建
-npm run build:static    # 产物输出到 out/
+pnpm build:static    # 产物输出到 out/
 ```
 
 **CI/CD 自动化部署**（[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)）：
 
-1. 推送 `master` 或 `data` 分支触发 Actions
+1. 推送 `master` 或 `data` 分支触发 Actions（Gitee → GitHub 镜像同步会自动触发 GitHub Actions）
 2. Actions 检出源代码 + `data` 分支的静态数据
 3. 将数据文件复制到 `public/data/` 目录
-4. 执行 `npm run build:static`（环境变量 `NEXT_PUBLIC_IS_STATIC=true`）
+4. 执行 `pnpm run build:static`（环境变量 `NEXT_PUBLIC_IS_STATIC=true`）
 5. 根据 `siteConfig.hasDomain` 自动生成 CNAME 文件
 6. 通过 `peaceiris/actions-gh-pages` 推送到 `gh-pages` 分支
+
+**自定义域名 + Cloudflare 加速配置：**
+
+> 本站使用 Cloudflare + GitHub Pages，推荐按以下方式配置（已在本仓库实测可用）：
+>
+> 1. **DNS 记录：** `www` → CNAME → `<user>.github.io`（Proxy 开 / 橙色云）
+> 2. **GitHub Pages Custom domain:** `www.kallen-noelle.top`（首次签发证书时临时切灰色云 DNS only，签发成功后改回橙色云）
+> 3. **Redirect Rule:** 裸域 `kallen-noelle.top` → `www.kallen-noelle.top`（301 保留 query string）
+> 4. **Enforce HTTPS:** GitHub Pages 签完证书后勾选
 
 **数据同步流水线：**
 
 ```
 后端 API  →  数据同步脚本（GitHub Token）  →  data 分支（JSON + 媒体 + 音乐）
                                                                   ↓
-用户访问  ←  GitHub Pages  ←  gh-pages 分支  ←  CI 构建（build:static）
+用户访问  ←  GitHub Pages (gh-pages)  ←  CI 构建（build:static）
+                 ↑
+           Cloudflare CDN 加速/防攻击
 ```
 
 ---
@@ -329,13 +343,13 @@ wrangler deploy
 
 | 变量 | 说明 | 必填 |
 |------|------|------|
-| `CF_API_TOKEN` | Cloudflare API Token（需 `Analytics:Read` 权限，在Cloudflare 面板设置） | ✅ |
+| `CF_API_TOKEN` | Cloudflare API Token（需 `Analytics:Read` 权限，在 Cloudflare 面板设置） | ✅ |
 | `CF_ZONE_ID` | Cloudflare 区域 ID | ✅ |
 | `CSDN_USER` | CSDN 用户名（用于 `/platform` 多平台统计） | ❌ |
 | `JUEJIN_USER_ID` | 掘金用户 ID | ❌ |
 | `CNBLOGS_BLOGAPP` | 博客园 blogApp | ❌ |
 
-**配置路由：** 修改 `workers/wrangler.json` 中的 `routes` 字段，将 `analytics.lxpavilion.top` 替换为你的域名。Worker 配置了 `custom_domain: true`，也可在 Cloudflare 面板绑定自定义域。
+**配置路由：** 修改 `workers/wrangler.json` 中的 `routes` 字段，将 `analytics.kallen-noelle.top` 替换为你的域名。Worker 配置了 `custom_domain: true`，也可在 Cloudflare 面板绑定自定义域。
 
 **2. CDN / 缓存加速**
 
@@ -369,10 +383,9 @@ wrangler deploy
 - [Recharts](https://recharts.org/) — 图表库
 - [Zustand](https://github.com/pmndrs/zustand) — 状态管理
 - [Pio Live2D](https://github.com/dsrkafuu/live2d-widget) — Live2D 看板娘框架
-- 后端支持：[pc-Blog/springBoot](https://github.com/pc-Blog/springBoot)
 
 ---
 
 <div align="center">
-  <sub>Built with ❤️ by <a href="https://github.com/PC2005-cloud">ppc</a></sub>
+  <sub>Built with ❤️ by <a href="https://github.com/kallen-noelle">kallen-noelle</a></sub>
 </div>
