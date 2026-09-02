@@ -1,0 +1,3 @@
+# GitHub Pages / Cloudflare Pages 重定向规则
+# Next.js output: "export" 已为每个路由生成独立 HTML，无需 SPA catch-all
+# 如未来需要路径重定向，在此添加。格式: /from /to <status>
